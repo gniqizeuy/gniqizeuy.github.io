@@ -1,0 +1,68 @@
+redisCmd
+Redis Command
+redis 
+
+
+<h3 id="toc_0">全局命令</h3>
+
+<h5 id="toc_1">1. 查看所有键：</h5>
+
+<pre><code class="shell">keys *
+</code></pre>
+
+<h5 id="toc_2">2. 键总数：</h5>
+
+<pre><code class="shell">dbsize
+</code></pre>
+
+<h5 id="toc_3">3. 检查键是否存在</h5>
+
+<pre><code class="shell">exists key # 存在返回1，不存在返回0
+</code></pre>
+
+<h5 id="toc_4">4. 删除键</h5>
+
+<pre><code class="shell">del key [key ...] # 通用命令 无论值是什么类型都可删除 返回结果为成功删除键的个数，删除不存在的键，就会返回0
+</code></pre>
+
+<h5 id="toc_5">5. 键过期</h5>
+
+<pre><code class="shell">expire key seconds
+</code></pre>
+
+<p>ttl 命令返回键的剩余过期时间，有三种返回值</p>
+
+<ul>
+<li>[ ] 大于等于0的整数：键剩余的过期时间</li>
+<li>[ ] -1：键没设置过期时间</li>
+<li>[ ] -2：键不存在</li>
+</ul>
+
+<h5 id="toc_6">6. 键的数据结构类型</h5>
+
+<pre><code class="shell">type key # 键不存在，则返回none
+</code></pre>
+
+<h3 id="toc_7">字符串</h3>
+
+<h4 id="toc_8">1 常用命令</h4>
+
+<p>(1) 设置值</p>
+
+<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+</code></pre>
+
+<p>set 命令有几个选项</p>
+
+<ul>
+<li>[ ] ex seconds：为键设置秒级过期时间。</li>
+<li>[ ] px milliseconds：为键设置毫秒级过期时间</li>
+<li>[ ] nx： 键必须不存在，才可以设置成功，用于添加</li>
+<li>[ ] xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
+</ul>
+
+<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+
+<pre><code class="shell">setnx key seconds value
+setnx key value
+</code></pre>
