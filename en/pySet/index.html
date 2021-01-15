@@ -1,0 +1,66 @@
+pySet
+Python Set
+python 
+
+
+<p>​       &ldquo;集&rdquo; 这个概念在Pyhton中算是比较年轻的，同时使用率也较低。set和它的不可变姊妹类型frozenset直到Pyhton2.3才首次以模块的形式出现，然后在Python2.6中它们升级成为内置类型</p>
+
+<p>​       集合的本质是<font color=red>许多唯一对象</font>的集合。因此，集合可以去重：</p>
+
+<pre><code class="python">&gt;&gt;&gt; l = ['spam', 'spam', 'eggs', 'spam']
+&gt;&gt;&gt; set(l)
+&gt;&gt;&gt; {'eggs', 'spam'}
+&gt;&gt;&gt; list(set(l))
+&gt;&gt;&gt; ['eggs', 'spam']
+</code></pre>
+
+<p>​       集合中的元素必须是<font color=red>可散列</font>的，set类型本身是不可散列的，但是frozenset可以。因此可以创建一个包含不同frozenset的set。</p>
+
+<p>​       除了保证唯一性，集合还实现了很多基础的中缀运算符。给定两个集合a和b, <strong>a|b</strong> 返回的是它们的<strong>合集</strong>，</p>
+
+<p><strong>a &amp; b</strong>得到的是<strong>交集</strong>，而a - b得到的是<strong>差集</strong>。合理地利用这些操作，可使代码行数变少，还能减少Python程序的运行时间。亦可使代码更易读，从而更容易判断程序的正确性，因为利用这些运算符可以省去不必要的循环和逻辑操作。</p>
+
+<p>​       例1：needles中元素在haystack里出现次数，两个变量都是set类型。</p>
+
+<pre><code class="python">found = len(needles &amp; haystack)
+</code></pre>
+
+<p>​       例2：for循环实现。</p>
+
+<pre><code class="python">found =  0
+for n in needles
+    if n in haystack
+        found += 1
+</code></pre>
+
+<p>​       例1比例2速度要快一些，另一方面，例2可以用在任何可迭代对象上，例1则要求两者皆为集合。若没有集合，可随时建立集合，如例3所示。</p>
+
+<p>​       例3：转化为set进行交集操作</p>
+
+<pre><code class="python">found = len(set(needles) &amp; set(haystack))
+</code></pre>
+
+<p>​       另一种写法</p>
+
+<pre><code class="python">found = len(set(needles).intersection(haystack))
+</code></pre>
+
+<p>​       例3写法会牵制到把对象转化为集合的成本，不过如果 needles 或 haystack 中任一为集合，那么例3的方案比例2更高效。</p>
+
+<p>​       以上所有例子的运行时间都能在3毫秒左右，在含有10000000个元素的haystack里搜索1000个值，算下来大概时每个元素3微妙。</p>
+
+<p>除了速度极快的查找功能（这归功于背后的散列表），内置的 set 和 frozenset 提供了丰富的功能和操作，不但让创建集合的方式丰富多彩，且对于 set 来讲，我们还可以对集合里已有的元素进行修改。在讨论操作之前，先看下相关的句法。</p>
+
+<h5 id="toc_0">集合字面量</h5>
+
+<p>​       除空集之外，集合的字面量——{1}、{1, 2}，等到——看起来与数学形式一摸一样。若是空集，则必须写成</p>
+
+<p>set()的形式</p>
+
+<p>​       tip：创建空集，必须使用不带任何参数的构造方法 set()，如果只写成 {} 的形式，跟以前一样，你创建的其实是个空字典</p>
+
+<p>​       在python3中，除了空集，集合的字符串表示形式总是以 {&hellip;} 的形式出现。</p>
+
+<p>​       字面量句法 {1, 2, 3} 相比构造方法 (set([1, 2, 3])) 要更快更易读，后者的速度要慢一些，因为Pyhton 必须先从这个名字来查询构造方法，然后新建一个列表，最后再把这个列表传入到构造方法中，但如果是字面量的形式，Python会利用一个专门的叫做 BUILD_SET 的字节码来创建集合。</p>
+
+<p>​</p>
