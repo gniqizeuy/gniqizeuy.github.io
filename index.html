@@ -120,6 +120,10 @@
         <ol>
           
           <li class="rule tag-python ">
+            <a href="#pySUmmary">Python Summary</a>
+          </li>
+          
+          <li class="rule tag-python ">
             <a href="#pyDict">Python Dict</a>
           </li>
           
@@ -136,7 +140,7 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redisCmd">Redis Command</a>
+            <a href="#redisString">Redis String</a>
           </li>
           
         </ol>
@@ -145,6 +149,10 @@
         <ol>
           
           <li class="rule tag-python ">
+            <a href="#pySUmmary">Python Summary</a>
+          </li>
+          
+          <li class="rule tag-python ">
             <a href="#pyDict">Python Dict</a>
           </li>
           
@@ -161,7 +169,7 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redisCmd">Redis Command</a>
+            <a href="#redisString">Redis String</a>
           </li>
           
         </ol>
@@ -172,6 +180,79 @@
 
 <div class="container">
   <div class="row">
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+
+        <div id="pySUmmary"></div>
+        <span class="hidden" itemprop="alternateName">pySUmmary</span>
+
+        <h2>
+            <a itemprop="url" href="#pySUmmary">
+                <span itemprop="name">Python Summary</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/pySUmmary.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">python</span>
+        
+
+        <div itemprop="description">
+            
+
+<h2 id="toc_0">写给大忙人看</h2>
+
+<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
+
+<h4 id="toc_2">字面量与构造方法</h4>
+
+<h5 id="toc_3">1. 字典</h5>
+
+<p>（1）字面量</p>
+
+<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
+</code></pre>
+
+<p>（2）构造方法
+~~~python
+lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
+      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
+      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
+      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
+~~~</p>
+
+<h5 id="toc_4">2. 集合</h5>
+
+<p>（1）字面量(set)</p>
+
+<pre><code class="python">fav_player = {'kobe', 'lebra'}
+</code></pre>
+
+<p>（2）构造方法</p>
+
+<pre><code class="python">fav_player = set({'kobe', 'lebra'})
+</code></pre>
+
+<p>​         frozenset没有字面量句法</p>
+
+<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
+</code></pre>
+
+<p>​         空集合必须写成 set()，{}只会表示为空字典</p>
+
+<pre><code class="python">empty_set = set()
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
@@ -316,9 +397,7 @@ for n in needles
 
 <h5 id="toc_0">集合字面量</h5>
 
-<p>​       除空集之外，集合的字面量——{1}、{1, 2}，等到——看起来与数学形式一摸一样。若是空集，则必须写成</p>
-
-<p>set()的形式</p>
+<p>​       除空集之外，集合的字面量——{1}、{1, 2}，等到——看起来与数学形式一摸一样。若是空集，则必须写成set()的形式</p>
 
 <p>​       tip：创建空集，必须使用不带任何参数的构造方法 set()，如果只写成 {} 的形式，跟以前一样，你创建的其实是个空字典</p>
 
@@ -575,16 +654,16 @@ brpop key [key ...] timout
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
 
-        <div id="redisCmd"></div>
-        <span class="hidden" itemprop="alternateName">redisCmd</span>
+        <div id="redisString"></div>
+        <span class="hidden" itemprop="alternateName">redisString</span>
 
         <h2>
-            <a itemprop="url" href="#redisCmd">
-                <span itemprop="name">Redis Command</span>
+            <a itemprop="url" href="#redisString">
+                <span itemprop="name">Redis String</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redisCmd.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redisString.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 

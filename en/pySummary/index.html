@@ -1,0 +1,47 @@
+pySUmmary
+Python Summary
+python 
+
+
+<h2 id="toc_0">写给大忙人看</h2>
+
+<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
+
+<h4 id="toc_2">字面量与构造方法</h4>
+
+<h5 id="toc_3">1. 字典</h5>
+
+<p>（1）字面量</p>
+
+<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
+</code></pre>
+
+<p>（2）构造方法
+~~~python
+lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
+      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
+      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
+      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
+~~~</p>
+
+<h5 id="toc_4">2. 集合</h5>
+
+<p>（1）字面量(set)</p>
+
+<pre><code class="python">fav_player = {'kobe', 'lebra'}
+</code></pre>
+
+<p>（2）构造方法</p>
+
+<pre><code class="python">fav_player = set({'kobe', 'lebra'})
+</code></pre>
+
+<p>​         frozenset没有字面量句法</p>
+
+<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
+</code></pre>
+
+<p>​         空集合必须写成 set()，{}只会表示为空字典</p>
+
+<pre><code class="python">empty_set = set()
+</code></pre>
