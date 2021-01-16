@@ -72,6 +72,10 @@
       </li>
       
       <li>
+        <a onclick="clickTag('js');">Js</a>
+      </li>
+      
+      <li>
         <a onclick="clickTag('python');">Python</a>
       </li>
       
@@ -106,7 +110,7 @@
     <div class="col-xs-12">
       
         
-        <p><span style="color: red">code</span> <span style="color: green">eat</span> <span style="color: yellow">sleep</span></p>
+        <p><span style="color: red; font-size: 20px">code</span> <span style="color: green; font-size: 20px">eat</span> <span style="color: blue; font-size: 20px">sleep</span></p>
       
     </div>
   </div>
@@ -121,6 +125,10 @@
           
           <li class="rule tag-python ">
             <a href="#pySUmmary">Python Summary</a>
+          </li>
+          
+          <li class="rule tag-js ">
+            <a href="#jswebsocket">Web Socket</a>
           </li>
           
           <li class="rule tag-python ">
@@ -150,6 +158,10 @@
           
           <li class="rule tag-python ">
             <a href="#pySUmmary">Python Summary</a>
+          </li>
+          
+          <li class="rule tag-js ">
+            <a href="#jswebsocket">Web Socket</a>
           </li>
           
           <li class="rule tag-python ">
@@ -246,6 +258,123 @@ lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
 <p>​         空集合必须写成 set()，{}只会表示为空字典</p>
 
 <pre><code class="python">empty_set = set()
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+
+        <div id="jswebsocket"></div>
+        <span class="hidden" itemprop="alternateName">jswebsocket</span>
+
+        <h2>
+            <a itemprop="url" href="#jswebsocket">
+                <span itemprop="name">Web Socket</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/jswebsocket.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            
+
+<p>web socket（套接字）的目标是通过一个长时连接实现与服务器全双工、双向的通信。在js中创建web socket时，一个HTTP请求会发送到服务器以初始化连接。服务器响应后，连接使用HTTP的Upgrade头部从HTTP协议切换到Web Socket协议。这意味着Web Socket不能通过标准Http服务器实现，而必须使用支持该协议的专有服务器。</p>
+
+<p>因为Web Socket使用了自定义协议，所以URL方案（scheme）稍有变化：不能再使用http://或https://，而要使用ws://和wss://。前者是不安全的连接，后者是安全连接。在指定 Web Socket  URL时，必须包含URL方案，因为将来有可能支持其他方案。</p>
+
+<p>使用自定义协议而非HTTP协议的好处是，客户端与服务器之间可以发送非常少的数据，不会对HTTP造成任何负担。使用更小的数据包让Web Socket非常适合带宽和延迟问题比较明显的移动应用。缺点是，定义协议的时间比定义Javascript API要长。Web Socket得到了所有浏览器的支持。</p>
+
+<h5 id="toc_0">API</h5>
+
+<p>创建一个新的 Web Socket，就要实例化一个WebSocket 对象并传入提供连接的URL</p>
+
+<pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
+</code></pre>
+
+<p>tip: 必须给WebSocket构造函数传入一个绝对URL。同源策略不适用于WebSocket，因此可以打开到任意站点的连接。至于是否与特定源的页面通信，则完全取决于服务器（在握手阶段就可以确定请求来自哪里）</p>
+
+<p>浏览器会在初始化 WebSocket 对象之后立即创建连接。与XHR类似，WebSocket 也有一个readyState 属性表示当前状态。不过，这个值与XHR中的值不一样。</p>
+
+<ul>
+<li>WebSocket.OPENING（0）：连接正在建立。</li>
+<li>WebSocket.OPEN（1）：连接已经建立。</li>
+<li>WebSokket.CLOSING（2）：连接正在关闭。</li>
+<li>WebSocket.CLOSE（3）：连接已经关闭。</li>
+</ul>
+
+<p>WebSocket 对象没有 readystatechange 事件，而是有与上述不同状态对应的其他事件。readyState值从0开始。</p>
+
+<p>任何时候都可以调用 close() 方法关闭Web Socket连接：</p>
+
+<pre><code class="javascript">socket.close()
+</code></pre>
+
+<h5 id="toc_1">发送和接受数据</h5>
+
+<p>打开Web Socket 之后，可通过连接发送和接收数据。要向服务器发送数据，使用send() 方法并传入一个字符串、ArrayBuffer 或 Blob，如下所示：</p>
+
+<pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
+
+let stringData = &quot;Hello World!&quot;
+let arrayBufferData = Uint8Array.from['f', 'o', 'o']
+let blobData = new Blob(['f', 'o', 'o'])
+
+socket.send(stringData)
+socket.send(arrayBufferData.buffer)
+socket.send(blobData)
+</code></pre>
+
+<p>服务器向客户端发送消息时，WebSocket 对象上会触发message事件。这个message事件与其他消息协议类似，可以通过event.data属性访问到有效载荷：</p>
+
+<pre><code class="javascript">socket.onmessage = function(event) {
+    let data = event.data
+    // 对数据执行某些操作
+}
+</code></pre>
+
+<p>与通过send()方法发送的数据类似，event.data返回的数据也可能是ArrayBuffer 或 Blob。这由 WebSocket 对象的 binaryType 属性决定，该属性可能是&rdquo;blob&rdquo;或&rdquo;arraybuffer&rdquo;。</p>
+
+<h5 id="toc_2">其他事件</h5>
+
+<p>websocket 对象在连接周期中可能触发3个其他事件。</p>
+
+<ul>
+<li>open：在连接成功建立时触发。</li>
+<li>error：在发生错误时触发。连接无法续存。</li>
+<li>close：在连接关闭时触发。</li>
+</ul>
+
+<p>WebSocket 对象不支持 DOM Level 2事件监听器，因此需要使用DOM Level 0风格的事件处理程序来监听这些事件：</p>
+
+<pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
+socket.onopen = function() {
+    alert(&quot;Connection established.&quot;)
+}
+socket.onerror = function() {
+    alert(&quot;Connection error.&quot;)
+}
+socket.oncloes = function() {
+    alert(&quot;Connection closed.&quot;)
+}
+</code></pre>
+
+<p>在这些事件中，只有 close 事件的 event 对象上有额外信息。这个对象上有3个额外属性：wasClean、code 和 reason。其中，weaClean 是一个布尔值，表示连接是否干净地关闭；code 是一个来自服务器的数值状态码；reason 是一个字符串，包含服务器发来的消息。可以将这些信息显示给用户或记录到日志:</p>
+
+<pre><code class="javascript">socket.onclose = function(event) {
+    console.log('as clean? $(event.wasClean) code=${event.code) Rason = ${event.reason}')
+}
 </code></pre>
 
         </div>
