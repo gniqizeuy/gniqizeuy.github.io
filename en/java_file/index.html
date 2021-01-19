@@ -3,7 +3,7 @@ Java file
 java 
 
 
-<h5 id="toc_0">try-with-resources 优先于 try-finally</h5>
+<h3 id="toc_0">try-with-resources 优先于 try-finally</h3>
 
 <p>java7 中引入了 try-with-resources语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含了单个返回 void 的 close 方法。java 类库与第三方类库中许多类和接口，现在都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
 

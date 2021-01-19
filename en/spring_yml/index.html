@@ -1,0 +1,90 @@
+spring_yml
+Spring YML
+spring 
+
+
+<h2 id="toc_0">数据格式</h2>
+
+<ul>
+<li>基本类型</li>
+</ul>
+
+<pre><code class="yaml">  name: taicang
+  age: 18
+</code></pre>
+
+<ul>
+<li>键值对</li>
+</ul>
+
+<pre><code class="yaml">  person:
+    name: taicang
+    age: 18
+</code></pre>
+
+<ul>
+<li>数组</li>
+</ul>
+
+<pre><code class="yaml">  favplayer:
+    - kobe
+    - lebra
+</code></pre>
+
+<h2 id="toc_1">读取方式</h2>
+
+<ul>
+<li>@Value</li>
+</ul>
+
+<pre><code class="yaml">  server:
+    port: 8080
+</code></pre>
+
+<p>java</p>
+
+<pre><code class="java">  @Value(&quot;${server.port}&quot;)
+  private String port
+</code></pre>
+
+<ul>
+<li>ConfigurationProperties</li>
+</ul>
+
+<pre><code class="yaml">student:
+    name: jackma
+    age: 18
+</code></pre>
+
+<p>javabean（需prefix (前缀) 参数）</p>
+
+<pre><code class="java">@Component
+  @Lombok
+@ConfigurationProperties(prefix = &quot;student&quot;)
+  public class Student {
+      private String name;
+  
+      private Integer age;
+  }
+</code></pre>
+
+<ul>
+<li>Environment</li>
+</ul>
+
+<pre><code class="yaml">  mes:
+    url: xxxxxxx
+</code></pre>
+
+<p>java</p>
+
+<pre><code class="java">  @Resource
+  private Environment env;
+  
+  @GetMapping(&quot;/mes&quot;)
+  public String getMesUrl() {
+      String url = env.getProperty(&quot;mes.url&quot;);
+      
+      return url;
+  }
+</code></pre>

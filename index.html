@@ -80,11 +80,19 @@
       </li>
       
       <li>
+        <a onclick="clickTag('other');">Other</a>
+      </li>
+      
+      <li>
         <a onclick="clickTag('python');">Python</a>
       </li>
       
       <li>
         <a onclick="clickTag('redis');">Redis</a>
+      </li>
+      
+      <li>
+        <a onclick="clickTag('spring');">Spring</a>
       </li>
       
     </ul>
@@ -132,6 +140,10 @@
           </li>
           
           <li class="rule tag-python ">
+            <a href="#py_summary">Python Summary</a>
+          </li>
+          
+          <li class="rule tag-python ">
             <a href="#py_dict">Python Dict</a>
           </li>
           
@@ -139,12 +151,20 @@
             <a href="#py_set">Python Set</a>
           </li>
           
-          <li class="rule tag-python ">
-            <a href="#py_summary">Python Summary</a>
+          <li class="rule tag-spring ">
+            <a href="#spring_yml">Spring YML</a>
           </li>
           
           <li class="rule tag-js ">
-            <a href="#js_websocket">Web Socket</a>
+            <a href="#js_storage">Js Storage</a>
+          </li>
+          
+          <li class="rule tag-js ">
+            <a href="#js_websocket">Js Web Socket</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_string">Redis String</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -159,8 +179,8 @@
             <a href="#redis_list">Redis List</a>
           </li>
           
-          <li class="rule tag-redis ">
-            <a href="#redis_string">Redis String</a>
+          <li class="rule tag-other ">
+            <a href="#mac">MAC adr</a>
           </li>
           
         </ol>
@@ -173,6 +193,10 @@
           </li>
           
           <li class="rule tag-python ">
+            <a href="#py_summary">Python Summary</a>
+          </li>
+          
+          <li class="rule tag-python ">
             <a href="#py_dict">Python Dict</a>
           </li>
           
@@ -180,12 +204,20 @@
             <a href="#py_set">Python Set</a>
           </li>
           
-          <li class="rule tag-python ">
-            <a href="#py_summary">Python Summary</a>
+          <li class="rule tag-spring ">
+            <a href="#spring_yml">Spring YML</a>
           </li>
           
           <li class="rule tag-js ">
-            <a href="#js_websocket">Web Socket</a>
+            <a href="#js_websocket">Js Web Socket</a>
+          </li>
+          
+          <li class="rule tag-js ">
+            <a href="#js_storage">Js Storage</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_string">Redis String</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -200,8 +232,8 @@
             <a href="#redis_list">Redis List</a>
           </li>
           
-          <li class="rule tag-redis ">
-            <a href="#redis_string">Redis String</a>
+          <li class="rule tag-other ">
+            <a href="#mac">MAC adr</a>
           </li>
           
         </ol>
@@ -237,7 +269,7 @@
         <div itemprop="description">
             
 
-<h5 id="toc_0">try-with-resources 优先于 try-finally</h5>
+<h3 id="toc_0">try-with-resources 优先于 try-finally</h3>
 
 <p>java7 中引入了 try-with-resources语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含了单个返回 void 的 close 方法。java 类库与第三方类库中许多类和接口，现在都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
 
@@ -279,6 +311,79 @@
 </code></pre>
 
 <p>这个firstLineOfFile 方法没有抛出异常，但是如果它无法打开文件，或者无法从中读取，就会返回一个默认值。在处理必须关闭的资源时，始终要优先考虑用try-with-resources，而不是用 try-finally。这样得到的代码将更加简洁、清晰、产生的异常也更有价值。</p>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+
+        <div id="py_summary"></div>
+        <span class="hidden" itemprop="alternateName">py_summary</span>
+
+        <h2>
+            <a itemprop="url" href="#py_summary">
+                <span itemprop="name">Python Summary</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_summary.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">python</span>
+        
+
+        <div itemprop="description">
+            
+
+<h2 id="toc_0">写给大忙人看</h2>
+
+<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
+
+<h4 id="toc_2">字面量与构造方法</h4>
+
+<h5 id="toc_3">1. 字典</h5>
+
+<p>（1）字面量</p>
+
+<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
+</code></pre>
+
+<p>（2）构造方法
+~~~python
+lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
+      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
+      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
+      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
+~~~</p>
+
+<h5 id="toc_4">2. 集合</h5>
+
+<p>（1）字面量(set)</p>
+
+<pre><code class="python">fav_player = {'kobe', 'lebra'}
+</code></pre>
+
+<p>（2）构造方法</p>
+
+<pre><code class="python">fav_player = set({'kobe', 'lebra'})
+</code></pre>
+
+<p>​         frozenset没有字面量句法</p>
+
+<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
+</code></pre>
+
+<p>​         空集合必须写成 set()，{}只会表示为空字典</p>
+
+<pre><code class="python">empty_set = set()
+</code></pre>
 
         </div>
         <br>
@@ -446,71 +551,144 @@ for n in needles
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
 
-        <div id="py_summary"></div>
-        <span class="hidden" itemprop="alternateName">py_summary</span>
+        <div id="spring_yml"></div>
+        <span class="hidden" itemprop="alternateName">spring_yml</span>
 
         <h2>
-            <a itemprop="url" href="#py_summary">
-                <span itemprop="name">Python Summary</span>
+            <a itemprop="url" href="#spring_yml">
+                <span itemprop="name">Spring YML</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_summary.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/spring_yml.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
         Tags:
         
-            <span class="tags label label-default">python</span>
+            <span class="tags label label-default">spring</span>
         
 
         <div itemprop="description">
             
 
-<h2 id="toc_0">写给大忙人看</h2>
+<h2 id="toc_0">数据格式</h2>
 
-<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
+<ul>
+<li>基本类型</li>
+</ul>
 
-<h4 id="toc_2">字面量与构造方法</h4>
-
-<h5 id="toc_3">1. 字典</h5>
-
-<p>（1）字面量</p>
-
-<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
+<pre><code class="yaml">  name: taicang
+  age: 18
 </code></pre>
 
-<p>（2）构造方法
-~~~python
-lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
-      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
-      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
-      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
-~~~</p>
+<ul>
+<li>键值对</li>
+</ul>
 
-<h5 id="toc_4">2. 集合</h5>
-
-<p>（1）字面量(set)</p>
-
-<pre><code class="python">fav_player = {'kobe', 'lebra'}
+<pre><code class="yaml">  person:
+    name: taicang
+    age: 18
 </code></pre>
 
-<p>（2）构造方法</p>
+<ul>
+<li>数组</li>
+</ul>
 
-<pre><code class="python">fav_player = set({'kobe', 'lebra'})
+<pre><code class="yaml">  favplayer:
+    - kobe
+    - lebra
 </code></pre>
 
-<p>​         frozenset没有字面量句法</p>
+<h2 id="toc_1">读取方式</h2>
 
-<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
+<ul>
+<li>@Value</li>
+</ul>
+
+<pre><code class="yaml">  server:
+    port: 8080
 </code></pre>
 
-<p>​         空集合必须写成 set()，{}只会表示为空字典</p>
+<p>java</p>
 
-<pre><code class="python">empty_set = set()
+<pre><code class="java">  @Value(&quot;${server.port}&quot;)
+  private String port
 </code></pre>
+
+<ul>
+<li>ConfigurationProperties</li>
+</ul>
+
+<pre><code class="yaml">student:
+    name: jackma
+    age: 18
+</code></pre>
+
+<p>javabean（需prefix (前缀) 参数）</p>
+
+<pre><code class="java">@Component
+  @Lombok
+@ConfigurationProperties(prefix = &quot;student&quot;)
+  public class Student {
+      private String name;
+  
+      private Integer age;
+  }
+</code></pre>
+
+<ul>
+<li>Environment</li>
+</ul>
+
+<pre><code class="yaml">  mes:
+    url: xxxxxxx
+</code></pre>
+
+<p>java</p>
+
+<pre><code class="java">  @Resource
+  private Environment env;
+  
+  @GetMapping(&quot;/mes&quot;)
+  public String getMesUrl() {
+      String url = env.getProperty(&quot;mes.url&quot;);
+      
+      return url;
+  }
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+
+        <div id="js_storage"></div>
+        <span class="hidden" itemprop="alternateName">js_storage</span>
+
+        <h2>
+            <a itemprop="url" href="#js_storage">
+                <span itemprop="name">Js Storage</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/js_storage.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            <p>cookie、浏览器存储API，IndexedDB</p>
 
         </div>
         <br>
@@ -526,7 +704,7 @@ lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
 
         <h2>
             <a itemprop="url" href="#js_websocket">
-                <span itemprop="name">Web Socket</span>
+                <span itemprop="name">Js Web Socket</span>
             </a>
         </h2>
 
@@ -627,6 +805,60 @@ socket.oncloes = function() {
 <pre><code class="javascript">socket.onclose = function(event) {
     console.log('as clean? $(event.wasClean) code=${event.code) Rason = ${event.reason}')
 }
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_string"></div>
+        <span class="hidden" itemprop="alternateName">redis_string</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_string">
+                <span itemprop="name">Redis String</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_string.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">字符串</h3>
+
+<h4 id="toc_1">1 常用命令</h4>
+
+<p>(1) 设置值</p>
+
+<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+</code></pre>
+
+<p>set 命令有几个选项</p>
+
+<ul>
+<li>ex seconds：为键设置秒级过期时间。</li>
+<li>px milliseconds：为键设置毫秒级过期时间</li>
+<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
+<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
+</ul>
+
+<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+
+<pre><code class="shell">setnx key seconds value
+setnx key value
 </code></pre>
 
         </div>
@@ -955,52 +1187,95 @@ brpop key [key ...] timout
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-other " style="padding-bottom:1em;">
 
-        <div id="redis_string"></div>
-        <span class="hidden" itemprop="alternateName">redis_string</span>
+        <div id="mac"></div>
+        <span class="hidden" itemprop="alternateName">mac</span>
 
         <h2>
-            <a itemprop="url" href="#redis_string">
-                <span itemprop="name">Redis String</span>
+            <a itemprop="url" href="#mac">
+                <span itemprop="name">MAC adr</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_string.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/mac.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
         Tags:
         
-            <span class="tags label label-default">redis</span>
+            <span class="tags label label-default">other</span>
         
 
         <div itemprop="description">
             
 
-<h3 id="toc_0">字符串</h3>
+<p><strong>MAC地址</strong>（<strong>英语：Media Access Control Address）</strong>，直译为<strong>媒体访问控制地址</strong>，也称为<strong>局域网地址</strong>（LAN Address），<strong>以太网地址</strong>（Ethernet Address）或<strong>物理地址</strong>（Physical Address），它是一个用来确认网络设备位置的地址。在<a href="https://zh.wikipedia.org/wiki/OSI模型">OSI模型</a>中，第三层网络层负责IP地址，第二层数据链接层则负责MAC地址。MAC地址用于在网络中唯一标示一个网卡，一台设备若有一或多个网卡，则每个网卡都需要并会有一个唯一的MAC地址。</p>
 
-<h4 id="toc_1">1 常用命令</h4>
+<h2 id="toc_0">格式</h2>
 
-<p>(1) 设置值</p>
+<p>MAC地址共48位（6个字节），以十六进制表示。</p>
 
-<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+<p>第1Bit为广播地址(0)/群播地址(1)，第2Bit为广域地址(0)/区域地址(1)。前3~24位由<a href="https://zh.wikipedia.org/wiki/IEEE">IEEE</a>决定如何分配给每一家制造商，且不重复，后24位由实际生产该网络设备的厂商自行指定且不重复。</p>
+
+<p>ff:ff:ff:ff:ff:ff则作为广播地址。</p>
+
+<p>01:xx:xx:xx:xx:xx是多播地址，01:00:5e:xx:xx:xx是<a href="https://zh.wikipedia.org/wiki/IPv4">IPv4</a>多播地址。</p>
+
+<h2 id="toc_1">举例</h2>
+
+<p>假设现有一台路由器，含有一个WAN端口及四个LAN端口。它的WAN端口会有一个如61.61.61.61的IP地址，也会有一个如00:0A:02:0B:03:0C的MAC地址。而它的四个LAN端口会各分配到一个例如192.168.1.0/24的IP地址，四个端口各会有一个不同的MAC地址。</p>
+
+<h2 id="toc_2">查看MAC地址</h2>
+
+<h3 id="toc_3">Windows</h3>
+
+<p>在Windows命令提示符（cmd.exe）下运行 ipconfig /all 命令。假设运行结果含：</p>
+
+<pre><code class="powershell">        Physical Address. . . . . . . . . : 00-05-5D-E8-0F-A3
 </code></pre>
 
-<p>set 命令有几个选项</p>
+<p>那么其中的00-05-5D-E8-0F-A3就是本机网卡的MAC地址。如果计算机上有多个网络设备（无论物理或虚拟），则会有多组信息及MAC地址，需辨识相应的设备。</p>
 
-<ul>
-<li>ex seconds：为键设置秒级过期时间。</li>
-<li>px milliseconds：为键设置毫秒级过期时间</li>
-<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
-<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
-</ul>
+<h3 id="toc_4">Linux</h3>
 
-<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+<p>第一种： 在 Linux下运行 ifconfig 命令，如下：</p>
 
-<pre><code class="shell">setnx key seconds value
-setnx key value
+<pre><code class="shell"> $ ifconfig
+ eth0    Link encap:Ethernet HWaddr 00:0C:29:01:98:27
+         inet addr:192.168.1.88  Bcast:192.168.1.255  Mask:255.255.255.0
+         UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+         RX packets:74978 errors:0 dropped:0 overruns:0 frame:0
+         TX packets:38451 errors:0 dropped:0 overruns:0 carrier:0
+         collisions:0 txqueuelen:100
+         RX bytes:14157042 (13.5 Mb)  TX bytes:5063398 (4.8 Mb)
+         Interrupt:18 Base address:0x1080
+ 
+ lo      Link encap:Local Loopback
+         inet addr:127.0.0.1  Mask:255.0.0.0
+         UP LOOPBACK RUNNING  MTU:16436  Metric:1
+         RX packets:1097 errors:0 dropped:0 overruns:0 frame:0
+         TX packets:1097 errors:0 dropped:0 overruns:0 carrier:0
+         collisions:0 txqueuelen:0
+         RX bytes:151393 (147.8 Kb)  TX bytes:151393 (147.8 Kb)
 </code></pre>
+
+<p>eth0 为第一块物理网卡， HWaddr 00:0C:29:01:98:27 就是MAC地址，lo为本地回环地址。</p>
+
+<p>第二种： 运行 ip命令(是一个命令，不是Tcp/Ip里的ip)，示例如下：</p>
+
+<pre><code> $ ip link show
+ 1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+ 2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 28:d2:44:d4:e6:ea brd ff:ff:ff:ff:ff:ff
+</code></pre>
+
+<p>其中$是linux下的命令提示符，一般情况下：$ 表示一般用户，# 表示root用户</p>
+
+<h2 id="toc_5">如何修改MAC地址</h2>
+
+<p>网卡MAC地址可以通过Windows设备管理员或其他工具修改。对于某些手机、平板电脑设备来说，其MAC地址／产品序号均由厂方连同销售或保修时的客户资料一并记录在案，而有关的MAC地址也不可通过常规手段来修改。</p>
 
         </div>
         <br>
