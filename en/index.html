@@ -140,7 +140,7 @@
           </li>
           
           <li class="rule tag-python ">
-            <a href="#py_set">Python Set</a>
+            <a href="#py_summary">Python Summary</a>
           </li>
           
           <li class="rule tag-python ">
@@ -148,7 +148,7 @@
           </li>
           
           <li class="rule tag-python ">
-            <a href="#py_summary">Python Summary</a>
+            <a href="#py_set">Python Set</a>
           </li>
           
           <li class="rule tag-spring ">
@@ -173,6 +173,10 @@
           
           <li class="rule tag-redis ">
             <a href="#redis_config">Redis Config</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_list">Redis List</a>
           </li>
           
           <li class="rule tag-other ">
@@ -189,7 +193,7 @@
           </li>
           
           <li class="rule tag-python ">
-            <a href="#py_set">Python Set</a>
+            <a href="#py_summary">Python Summary</a>
           </li>
           
           <li class="rule tag-python ">
@@ -197,7 +201,7 @@
           </li>
           
           <li class="rule tag-python ">
-            <a href="#py_summary">Python Summary</a>
+            <a href="#py_set">Python Set</a>
           </li>
           
           <li class="rule tag-spring ">
@@ -205,11 +209,11 @@
           </li>
           
           <li class="rule tag-js ">
-            <a href="#js_storage">Js Storage</a>
+            <a href="#js_websocket">Js WebSocket</a>
           </li>
           
           <li class="rule tag-js ">
-            <a href="#js_websocket">Js WebSocket</a>
+            <a href="#js_storage">Js Storage</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -222,6 +226,10 @@
           
           <li class="rule tag-redis ">
             <a href="#redis_config">Redis Config</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_list">Redis List</a>
           </li>
           
           <li class="rule tag-other ">
@@ -313,6 +321,148 @@
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
 
+        <div id="py_summary"></div>
+        <span class="hidden" itemprop="alternateName">py_summary</span>
+
+        <h2>
+            <a itemprop="url" href="#py_summary">
+                <span itemprop="name">Python Summary</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_summary.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">python</span>
+        
+
+        <div itemprop="description">
+            
+
+<h2 id="toc_0">写给大忙人看</h2>
+
+<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
+
+<h4 id="toc_2">字面量与构造方法</h4>
+
+<h5 id="toc_3">1. 字典</h5>
+
+<p>（1）字面量</p>
+
+<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
+</code></pre>
+
+<p>（2）构造方法
+~~~python
+lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
+      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
+      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
+      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
+~~~</p>
+
+<h5 id="toc_4">2. 集合</h5>
+
+<p>（1）字面量(set)</p>
+
+<pre><code class="python">fav_player = {'kobe', 'lebra'}
+</code></pre>
+
+<p>（2）构造方法</p>
+
+<pre><code class="python">fav_player = set({'kobe', 'lebra'})
+</code></pre>
+
+<p>​         frozenset没有字面量句法</p>
+
+<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
+</code></pre>
+
+<p>​         空集合必须写成 set()，{}只会表示为空字典</p>
+
+<pre><code class="python">empty_set = set()
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+
+        <div id="py_dict"></div>
+        <span class="hidden" itemprop="alternateName">py_dict</span>
+
+        <h2>
+            <a itemprop="url" href="#py_dict">
+                <span itemprop="name">Python Dict</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_dict.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">python</span>
+        
+
+        <div itemprop="description">
+            
+
+<p><font color=red>散列表</font>是字典类型性能出众的根本原因</p>
+
+<p>　　字典提供了多种构造函数 点击<a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">Built-in Types</a> 有例子说明创建字典的不同形式</p>
+
+<pre><code class="python">&gt;&gt;&gt; a = dict(one=1, two=2, three=3)
+&gt;&gt;&gt; b = {'one': 1, 'two': 2, 'three': 3}
+&gt;&gt;&gt; c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
+&gt;&gt;&gt; d = dict([('two', 2), ('one', 1), ('three', 3)])
+&gt;&gt;&gt; e = dict({'three': 3, 'one': 1, 'two': 2})
+&gt;&gt;&gt; a == b == c == d == e
+True
+</code></pre>
+
+<h5 id="toc_0">字典推导</h5>
+
+<p>　　自python 2.7以来，列表和生成器表达式的概念移植到字典上,从而有个字典推导（后面还会看到集合推到）</p>
+
+<p>　　字典推导（dictcomp）可以从<font color=red>任何以键值对作为元素的可选迭代对象</font>中构建字典</p>
+
+<p>　　下例展示利用字典推导可以把一个装满元组的列表变成两个不同的字典。</p>
+
+<pre><code class="python">&gt;&gt;&gt; simple_list = [
+    (1, 'a'),
+    (2, 'b'),
+    (3, 'c'),
+    (4, 'd'),
+    (5, 'e'),
+    (6, 'f'),
+    (7, 'g'),
+]
+
+&gt;&gt;&gt; res = {num: char for char num in simple_list}
+&gt;&gt;&gt; res
+{'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}
+
+&gt;&gt;&gt; {num: char.upper() for char, code in res.items() if num &lt; 4}
+{1: 'a', 2: 'b', 3: 'c'}
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+
         <div id="py_set"></div>
         <span class="hidden" itemprop="alternateName">py_set</span>
 
@@ -393,148 +543,6 @@ for n in needles
 <p>　　字面量句法 {1, 2, 3} 相比构造方法 (set([1, 2, 3])) 要更快更易读，后者的速度要慢一些，因为Pyhton 必须先从这个名字来查询构造方法，然后新建一个列表，最后再把这个列表传入到构造方法中，但如果是字面量的形式，Python会利用一个专门的叫做 BUILD_SET 的字节码来创建集合。</p>
 
 <p>​</p>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
-
-        <div id="py_dict"></div>
-        <span class="hidden" itemprop="alternateName">py_dict</span>
-
-        <h2>
-            <a itemprop="url" href="#py_dict">
-                <span itemprop="name">Python Dict</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_dict.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">python</span>
-        
-
-        <div itemprop="description">
-            
-
-<p><font color=red>散列表</font>是字典类型性能出众的根本原因</p>
-
-<p>　　字典提供了多种构造函数 点击<a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">Built-in Types</a> 有例子说明创建字典的不同形式</p>
-
-<pre><code class="python">&gt;&gt;&gt; a = dict(one=1, two=2, three=3)
-&gt;&gt;&gt; b = {'one': 1, 'two': 2, 'three': 3}
-&gt;&gt;&gt; c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
-&gt;&gt;&gt; d = dict([('two', 2), ('one', 1), ('three', 3)])
-&gt;&gt;&gt; e = dict({'three': 3, 'one': 1, 'two': 2})
-&gt;&gt;&gt; a == b == c == d == e
-True
-</code></pre>
-
-<h5 id="toc_0">字典推导</h5>
-
-<p>　　自python 2.7以来，列表和生成器表达式的概念移植到字典上,从而有个字典推导（后面还会看到集合推到）</p>
-
-<p>　　字典推导（dictcomp）可以从<font color=red>任何以键值对作为元素的可选迭代对象</font>中构建字典</p>
-
-<p>　　下例展示利用字典推导可以把一个装满元组的列表变成两个不同的字典。</p>
-
-<pre><code class="python">&gt;&gt;&gt; simple_list = [
-    (1, 'a'),
-    (2, 'b'),
-    (3, 'c'),
-    (4, 'd'),
-    (5, 'e'),
-    (6, 'f'),
-    (7, 'g'),
-]
-
-&gt;&gt;&gt; res = {num: char for char num in simple_list}
-&gt;&gt;&gt; res
-{'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}
-
-&gt;&gt;&gt; {num: char.upper() for char, code in res.items() if num &lt; 4}
-{1: 'a', 2: 'b', 3: 'c'}
-</code></pre>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
-
-        <div id="py_summary"></div>
-        <span class="hidden" itemprop="alternateName">py_summary</span>
-
-        <h2>
-            <a itemprop="url" href="#py_summary">
-                <span itemprop="name">Python Summary</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_summary.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">python</span>
-        
-
-        <div itemprop="description">
-            
-
-<h2 id="toc_0">写给大忙人看</h2>
-
-<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
-
-<h4 id="toc_2">字面量与构造方法</h4>
-
-<h5 id="toc_3">1. 字典</h5>
-
-<p>（1）字面量</p>
-
-<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
-</code></pre>
-
-<p>（2）构造方法
-~~~python
-lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
-      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
-      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
-      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
-~~~</p>
-
-<h5 id="toc_4">2. 集合</h5>
-
-<p>（1）字面量(set)</p>
-
-<pre><code class="python">fav_player = {'kobe', 'lebra'}
-</code></pre>
-
-<p>（2）构造方法</p>
-
-<pre><code class="python">fav_player = set({'kobe', 'lebra'})
-</code></pre>
-
-<p>​         frozenset没有字面量句法</p>
-
-<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
-</code></pre>
-
-<p>​         空集合必须写成 set()，{}只会表示为空字典</p>
-
-<pre><code class="python">empty_set = set()
-</code></pre>
 
         </div>
         <br>
@@ -1080,6 +1088,248 @@ setnx key value
 </tr>
 </tbody>
 </table>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_list"></div>
+        <span class="hidden" itemprop="alternateName">redis_list</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_list">
+                <span itemprop="name">Redis List</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_list.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">列表</h3>
+
+<p>列表的四种操作类型</p>
+
+<table>
+<thead>
+<tr>
+<td>操作类型</td>
+<td>操作</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>添加</td>
+<td>rpush    lpush    linsert</td>
+</tr>
+
+<tr>
+<td>查</td>
+<td>lrange    lindex   len</td>
+</tr>
+
+<tr>
+<td>删除</td>
+<td>lpop     rpop     lrem    ltrim</td>
+</tr>
+
+<tr>
+<td>修改</td>
+<td>lset</td>
+</tr>
+
+<tr>
+<td>阻塞操作</td>
+<td>blop   brpop</td>
+</tr>
+</tbody>
+</table>
+
+<h5 id="toc_1">1.添加操作</h5>
+
+<p>（1）从右边插入元素</p>
+
+<pre><code class="shell">rpush key value [value ...]
+</code></pre>
+
+<p>lrang 0 -1 命令可以从左到右获取列表的所有元素</p>
+
+<p>（2）从左边插入元素</p>
+
+<pre><code class="shell">lpush key value [value ....]
+</code></pre>
+
+<p>（3）向某个元素前或者后插入元素</p>
+
+<pre><code class="shell">linsert key before|after privot value
+</code></pre>
+
+<p>linsert 命令会从列表中找到等于pivot的元素，在其前（before）或者后（after）插入新元素value</p>
+
+<p>返回当前命令长度</p>
+
+<h5 id="toc_2">2.查找</h5>
+
+<p>（1）获取指定范围内的元素列表</p>
+
+<pre><code class="powershell">lrange key start end
+</code></pre>
+
+<p>lrange操作会获取列表指定索引范围所有的元素。索引下标有两个特点：</p>
+
+<p>第一，索引下标从左到右分别是0到N-1，但从右到左分别是-1 到 -N</p>
+
+<p>第二，lrange中的end选项包含了自身</p>
+
+<p>（2）获取列表指定索引下标的元素</p>
+
+<pre><code class="powershell">lindex key index
+</code></pre>
+
+<p>（3）获取列表长度</p>
+
+<pre><code class="powershell">llen key
+</code></pre>
+
+<h5 id="toc_3">3.删除</h5>
+
+<p>（1）从列表左侧弹出元素</p>
+
+<pre><code class="powershell">lpop key
+</code></pre>
+
+<p>（2）从列表右侧弹出</p>
+
+<pre><code class="powershell">rpop key
+</code></pre>
+
+<p>（3）删除指定元素</p>
+
+<pre><code class="powershell">lrem key count value
+</code></pre>
+
+<p>lrem 会从列表中找到等于value 的元素进行删除，根据count的不同分为三种情况：</p>
+
+<ul>
+<li>count&gt;0，从左到右，删除最多count个元素。</li>
+<li>count&lt;0，从右到左，删除最多count绝对值个元素</li>
+<li>count=0，删除所有</li>
+</ul>
+
+<p>（4）按照索引范围修剪列表</p>
+
+<pre><code class="powershell">ltrim key start end
+</code></pre>
+
+<h5 id="toc_4">4. 修改</h5>
+
+<p>修改指定索引下标的元素：</p>
+
+<pre><code class="powershell">lset key index newValue
+</code></pre>
+
+<h5 id="toc_5">5. 阻塞操作</h5>
+
+<p>阻塞式弹出如下：</p>
+
+<pre><code class="powershell">blpop key [key ...] timout
+brpop key [key ...] timout
+</code></pre>
+
+<p>blpop 和 brpop 是 lpop 和 rpop 的阻塞版本，它们除了弹出方式不同，使用方法基本相同，所以下面以brpop命令进行说明,brpop命令包含两个参数:</p>
+
+<ul>
+<li><p>key [key &hellip;]：多个列表的键。</p></li>
+
+<li><p>timeout：阻塞时间（单位：秒）</p></li>
+</ul>
+
+<p>1）列表为空：如果 timeout=3，那么客户端要等到 3 秒后返回，timeout=0，客户端会一直阻塞等下去</p>
+
+<pre><code class="powershell">127.0.0.1:6379&gt; brpop list:test 3
+(nill)
+(3.10s)
+127.0.0.1:6379&gt; brpop list:test 3
+...阻塞...
+</code></pre>
+
+<p>如果此期间添加了数据 element1，客户端立即返回：</p>
+
+<pre><code class="powershell">127.0.0.1:6379&gt; brpop list:test 3
+1) &quot;list:test&quot;
+2) &quot;element1&quot;
+(2.06s)
+</code></pre>
+
+<p>2）列表不为空：客户端会立刻返回。</p>
+
+<pre><code class="powershell">127.0.0.1:6379&gt; brpop list:test 0
+1) &quot;list:test&quot;
+2) &quot;element1&quot;
+</code></pre>
+
+<p>在使用 bprop 时，有两点需要注意。</p>
+
+<p>第一点，如果是多个键，那么 brpop 会从左至右遍历键，一旦有个键能弹出元素，客户端立即回：</p>
+
+<pre><code class="powershell">127.0.0.1:6379&gt; brpop list:1 list:2 list:3
+...阻塞...
+</code></pre>
+
+<p>此时另一个客户端分别向 list:2 和 list:3 插入元素：
+~~~powershell
+client-lpush&gt; lpush list:2 element2
+(integer) 1
+client-lpush&gt; lpish list:3 element3
+(integer) 1
+~~~
+客户端会立即返回 list:2 中的 element2，因为 list:2 最先有可能弹出的元素：
+~~~powershell
+127.0.0.1：6379&gt; bprop list:1 list:2 list:3 0
+1) &ldquo;list:2&rdquo;
+2) &ldquo;element2_1&rdquo;
+~~~
+第二点，如果多个客户端对同一个键执行 bprop，那么最先执行 brpop 命令的客户端可以获取到出的值：
+客户端1：
+~~~powershell
+client-1&gt; bprop list:test 0
+&hellip;阻塞&hellip;
+~~~
+客户端2：
+~~~powershell
+client-2&gt; bprop list:test 0
+&hellip;阻塞&hellip;
+~~~
+客户端3：
+~~~powershell
+client-3&gt; bprop list:test 0
+&hellip;阻塞&hellip;
+~~~
+此时另一个客户端 lpush 一个元素到 list:test 列表中：
+~~~powershell
+client-lpush&gt; lpush list:test element
+(integer) 1
+~~~
+那么客户端 1 最会获取到元素，因为客户端 1 最先执行 brpop，而客户端2 和 3 继续阻塞
+~~~powershell
+client&gt; bprop list:test 0
+1) &ldquo;list:test&rdquo;
+2) &ldquo;elememt&rdquo;<br />
+~~~</p>
 
         </div>
         <br>
