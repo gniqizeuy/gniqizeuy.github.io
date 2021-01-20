@@ -137,6 +137,81 @@ brpop key [key ...] timout
 <p>　　blpop 和 brpop 是 lpop 和 rpop 的阻塞版本，它们除了弹出方式不同，使用方法基本相同，所以下面以brpop命令进行说明,brpop命令包含两个参数:</p>
 
 <ul>
-<li>key [key &hellip;]：多个列表的键。</li>
-<li>timeout：阻塞时间（单位：秒）</li>
+<li><p>key [key &hellip;]：多个列表的键。</p></li>
+
+<li><p>timeout：阻塞时间（单位：秒）</p></li>
 </ul>
+
+<p>1）列表为空：如果 timeout=3，那么客户端要等到 3 秒后返回，timeout=0，客户端会一直阻塞等下去</p>
+
+<pre><code>  127.0.0.1:6379&gt; brpop list:test 3
+  (nill)
+  (3.10s)
+  127.0.0.1:6379&gt; brpop list:test 3
+  ...阻塞...
+</code></pre>
+
+<p>如果此期间添加了数据 element1，客户端立即返回：</p>
+
+<pre><code>  127.0.0.1:6379&gt; brpop list:test 3
+  1) &quot;list:test&quot;
+  2) &quot;element1&quot;
+  (2.06s)
+</code></pre>
+
+<p>2）列表不为空：客户端会立刻返回。</p>
+
+<pre><code>  127.0.0.1:6379&gt; brpop list:test 0
+  1) &quot;list:test&quot;
+  2) &quot;element1&quot;
+</code></pre>
+
+<p>在使用 bprop 时，有两点需要注意。</p>
+
+<p>第一点，如果是多个键，那么 brpop 会从左至右遍历键，一旦有个键能弹出元素，客户端立即返回：</p>
+
+<pre><code>  127.0.0.1:6379&gt; brpop list:1 list:2 list:3
+  ...阻塞...
+</code></pre>
+
+<p>此时另一个客户端分别向 list:2 和 list:3 插入元素：
+  ~~~
+  client-lpush&gt; lpush list:2 element2
+  (integer) 1
+  client-lpush&gt; lpish list:3 element3
+  (integer) 1
+  ~~~
+  客户端会立即返回 list:2 中的 element2，因为 list:2 最先有可能弹出的元素：
+  ~~~
+  127.0.0.1：6379&gt; bprop list:1 list:2 list:3 0
+  1) &ldquo;list:2&rdquo;
+  2) &ldquo;element2_1&rdquo;
+  ~~~
+  第二点，如果多个客户端对同一个键执行 bprop，那么最先执行 brpop 命令的客户端可以获取到弹出的值：
+  客户端1：
+  ~~~
+  client-1&gt; bprop list:test 0
+  &hellip;阻塞&hellip;
+  ~~~
+  客户端2：
+  ~~~
+  client-2&gt; bprop list:test 0
+  &hellip;阻塞&hellip;
+  ~~~
+  客户端3：
+  ~~~
+  client-3&gt; bprop list:test 0
+  &hellip;阻塞&hellip;
+  ~~~
+  此时另一个客户端 lpush 一个元素到 list:test 列表中：
+  ~~~
+  client-lpush&gt; lpush list:test element
+  (integer) 1
+  ~~~
+  那么客户端 1 最会获取到元素，因为客户端 1 最先执行 brpop，而客户端2 和 3 继续阻塞
+  ~~~
+  client&gt; bprop list:test 0
+  1) &ldquo;list:test&rdquo;
+  2) &ldquo;elememt&rdquo;</p>
+
+<p>~~~</p>
