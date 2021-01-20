@@ -1290,46 +1290,52 @@ brpop key [key ...] timout
 ...阻塞...
 </code></pre>
 
-<p>此时另一个客户端分别向 list:2 和 list:3 插入元素：
-~~~powershell
-client-lpush&gt; lpush list:2 element2
+<p>此时另一个客户端分别向 list:2 和 list:3 插入元素：</p>
+
+<pre><code class="powershell">client-lpush&gt; lpush list:2 element2
 (integer) 1
 client-lpush&gt; lpish list:3 element3
 (integer) 1
-~~~
-客户端会立即返回 list:2 中的 element2，因为 list:2 最先有可能弹出的元素：
-~~~powershell
-127.0.0.1：6379&gt; bprop list:1 list:2 list:3 0
-1) &ldquo;list:2&rdquo;
-2) &ldquo;element2_1&rdquo;
-~~~
-第二点，如果多个客户端对同一个键执行 bprop，那么最先执行 brpop 命令的客户端可以获取到出的值：
-客户端1：
-~~~powershell
-client-1&gt; bprop list:test 0
-&hellip;阻塞&hellip;
-~~~
-客户端2：
-~~~powershell
-client-2&gt; bprop list:test 0
-&hellip;阻塞&hellip;
-~~~
-客户端3：
-~~~powershell
-client-3&gt; bprop list:test 0
-&hellip;阻塞&hellip;
-~~~
-此时另一个客户端 lpush 一个元素到 list:test 列表中：
-~~~powershell
-client-lpush&gt; lpush list:test element
+</code></pre>
+
+<p>客户端会立即返回 list:2 中的 element2，因为 list:2 最先有可能弹出的元素：</p>
+
+<pre><code class="powershell">127.0.0.1：6379&gt; bprop list:1 list:2 list:3 0
+1) &quot;list:2&quot;
+2) &quot;element2_1&quot;
+</code></pre>
+
+<p>第二点，如果多个客户端对同一个键执行 bprop，那么最先执行 brpop 命令的客户端可以获取到出的值：
+客户端1：</p>
+
+<pre><code class="powershell">client-1&gt; bprop list:test 0
+...阻塞...
+</code></pre>
+
+<p>客户端2：</p>
+
+<pre><code class="powershell">client-2&gt; bprop list:test 0
+...阻塞...
+</code></pre>
+
+<p>客户端3：</p>
+
+<pre><code class="powershell">client-3&gt; bprop list:test 0
+...阻塞...
+</code></pre>
+
+<p>此时另一个客户端 lpush 一个元素到 list:test 列表中：</p>
+
+<pre><code class="powershell">client-lpush&gt; lpush list:test element
 (integer) 1
-~~~
-那么客户端 1 最会获取到元素，因为客户端 1 最先执行 brpop，而客户端2 和 3 继续阻塞
-~~~powershell
-client&gt; bprop list:test 0
-1) &ldquo;list:test&rdquo;
-2) &ldquo;elememt&rdquo;<br />
-~~~</p>
+</code></pre>
+
+<p>那么客户端 1 最会获取到元素，因为客户端 1 最先执行 brpop，而客户端2 和 3 继续阻塞</p>
+
+<pre><code class="powershell">client&gt; bprop list:test 0
+1) &quot;list:test&quot;
+2) &quot;elememt&quot;  
+</code></pre>
 
         </div>
         <br>
