@@ -139,8 +139,8 @@
             <a href="#java_file">Java file</a>
           </li>
           
-          <li class="rule tag-python ">
-            <a href="#py_summary">Python Summary</a>
+          <li class="rule tag-spring ">
+            <a href="#spring_yml">Spring YML</a>
           </li>
           
           <li class="rule tag-python ">
@@ -151,20 +151,28 @@
             <a href="#py_set">Python Set</a>
           </li>
           
-          <li class="rule tag-spring ">
-            <a href="#spring_yml">Spring YML</a>
+          <li class="rule tag-python ">
+            <a href="#py_summary">Python Summary</a>
           </li>
           
           <li class="rule tag-js ">
-            <a href="#js_storage">Js Storage</a>
+            <a href="#java_collections">Java Collections</a>
+          </li>
+          
+          <li class="rule tag-java ">
+            <a href="#java_sort">java sort</a>
           </li>
           
           <li class="rule tag-js ">
             <a href="#js_websocket">Js WebSocket</a>
           </li>
           
+          <li class="rule tag-js ">
+            <a href="#js_storage">Js Storage</a>
+          </li>
+          
           <li class="rule tag-redis ">
-            <a href="#redis_string">Redis String</a>
+            <a href="#redis_clients">Redis Clients</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -172,11 +180,15 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_config">Redis Config</a>
+            <a href="#redis_list">Redis List</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_list">Redis List</a>
+            <a href="#redis_string">Redis String</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_config">Redis Config</a>
           </li>
           
           <li class="rule tag-other ">
@@ -192,8 +204,8 @@
             <a href="#java_file">Java file</a>
           </li>
           
-          <li class="rule tag-python ">
-            <a href="#py_summary">Python Summary</a>
+          <li class="rule tag-spring ">
+            <a href="#spring_yml">Spring YML</a>
           </li>
           
           <li class="rule tag-python ">
@@ -204,8 +216,8 @@
             <a href="#py_set">Python Set</a>
           </li>
           
-          <li class="rule tag-spring ">
-            <a href="#spring_yml">Spring YML</a>
+          <li class="rule tag-python ">
+            <a href="#py_summary">Python Summary</a>
           </li>
           
           <li class="rule tag-js ">
@@ -213,11 +225,19 @@
           </li>
           
           <li class="rule tag-js ">
+            <a href="#java_collections">Java Collections</a>
+          </li>
+          
+          <li class="rule tag-java ">
+            <a href="#java_sort">java sort</a>
+          </li>
+          
+          <li class="rule tag-js ">
             <a href="#js_storage">Js Storage</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_string">Redis String</a>
+            <a href="#redis_clients">Redis Clients</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -225,11 +245,15 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_config">Redis Config</a>
+            <a href="#redis_list">Redis List</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_list">Redis List</a>
+            <a href="#redis_string">Redis String</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_config">Redis Config</a>
           </li>
           
           <li class="rule tag-other ">
@@ -319,70 +343,113 @@
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
 
-        <div id="py_summary"></div>
-        <span class="hidden" itemprop="alternateName">py_summary</span>
+        <div id="spring_yml"></div>
+        <span class="hidden" itemprop="alternateName">spring_yml</span>
 
         <h2>
-            <a itemprop="url" href="#py_summary">
-                <span itemprop="name">Python Summary</span>
+            <a itemprop="url" href="#spring_yml">
+                <span itemprop="name">Spring YML</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_summary.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/spring_yml.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
         Tags:
         
-            <span class="tags label label-default">python</span>
+            <span class="tags label label-default">spring</span>
         
 
         <div itemprop="description">
             
 
-<h2 id="toc_0">写给大忙人看</h2>
+<h2 id="toc_0">数据格式</h2>
 
-<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
+<ul>
+<li>基本类型</li>
+</ul>
 
-<h4 id="toc_2">字面量与构造方法</h4>
-
-<h5 id="toc_3">1. 字典</h5>
-
-<p>（1）字面量</p>
-
-<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
+<pre><code class="yaml">  name: taicang
+  age: 18
 </code></pre>
 
-<p>（2）构造方法
-~~~python
-lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
-      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
-      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
-      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
-~~~</p>
+<ul>
+<li>键值对</li>
+</ul>
 
-<h5 id="toc_4">2. 集合</h5>
-
-<p>（1）字面量(set)</p>
-
-<pre><code class="python">fav_player = {'kobe', 'lebra'}
+<pre><code class="yaml">  person:
+    name: taicang
+    age: 18
 </code></pre>
 
-<p>（2）构造方法</p>
+<ul>
+<li>数组</li>
+</ul>
 
-<pre><code class="python">fav_player = set({'kobe', 'lebra'})
+<pre><code class="yaml">  favplayer:
+    - kobe
+    - lebra
 </code></pre>
 
-<p>​         frozenset没有字面量句法</p>
+<h2 id="toc_1">读取方式</h2>
 
-<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
+<ul>
+<li>@Value</li>
+</ul>
+
+<pre><code class="yaml">  server:
+    port: 8080
 </code></pre>
 
-<p>​         空集合必须写成 set()，{}只会表示为空字典</p>
+<p>java</p>
 
-<pre><code class="python">empty_set = set()
+<pre><code class="java">  @Value(&quot;${server.port}&quot;)
+  private String port
+</code></pre>
+
+<ul>
+<li>ConfigurationProperties</li>
+</ul>
+
+<pre><code class="yaml">student:
+    name: jackma
+    age: 18
+</code></pre>
+
+<p>javabean（需prefix (前缀) 参数）</p>
+
+<pre><code class="java">@Component
+@Lombok
+@ConfigurationProperties(prefix = &quot;student&quot;)
+  public class Student {
+      private String name;
+  
+      private Integer age;
+  }
+</code></pre>
+
+<ul>
+<li>Environment</li>
+</ul>
+
+<pre><code class="yaml">  mes:
+    url: xxxxxxx
+</code></pre>
+
+<p>java</p>
+
+<pre><code class="java">  @Resource
+  private Environment env;
+  
+  @GetMapping(&quot;/mes&quot;)
+  public String getMesUrl() {
+      String url = env.getProperty(&quot;mes.url&quot;);
+      
+      return url;
+  }
 </code></pre>
 
         </div>
@@ -551,113 +618,70 @@ for n in needles
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
 
-        <div id="spring_yml"></div>
-        <span class="hidden" itemprop="alternateName">spring_yml</span>
+        <div id="py_summary"></div>
+        <span class="hidden" itemprop="alternateName">py_summary</span>
 
         <h2>
-            <a itemprop="url" href="#spring_yml">
-                <span itemprop="name">Spring YML</span>
+            <a itemprop="url" href="#py_summary">
+                <span itemprop="name">Python Summary</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/spring_yml.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_summary.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
         Tags:
         
-            <span class="tags label label-default">spring</span>
+            <span class="tags label label-default">python</span>
         
 
         <div itemprop="description">
             
 
-<h2 id="toc_0">数据格式</h2>
+<h2 id="toc_0">写给大忙人看</h2>
 
-<ul>
-<li>基本类型</li>
-</ul>
+<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
 
-<pre><code class="yaml">  name: taicang
-  age: 18
+<h4 id="toc_2">字面量与构造方法</h4>
+
+<h5 id="toc_3">1. 字典</h5>
+
+<p>（1）字面量</p>
+
+<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
 </code></pre>
 
-<ul>
-<li>键值对</li>
-</ul>
+<p>（2）构造方法
+~~~python
+lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
+      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
+      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
+      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
+~~~</p>
 
-<pre><code class="yaml">  person:
-    name: taicang
-    age: 18
+<h5 id="toc_4">2. 集合</h5>
+
+<p>（1）字面量(set)</p>
+
+<pre><code class="python">fav_player = {'kobe', 'lebra'}
 </code></pre>
 
-<ul>
-<li>数组</li>
-</ul>
+<p>（2）构造方法</p>
 
-<pre><code class="yaml">  favplayer:
-    - kobe
-    - lebra
+<pre><code class="python">fav_player = set({'kobe', 'lebra'})
 </code></pre>
 
-<h2 id="toc_1">读取方式</h2>
+<p>​         frozenset没有字面量句法</p>
 
-<ul>
-<li>@Value</li>
-</ul>
-
-<pre><code class="yaml">  server:
-    port: 8080
+<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
 </code></pre>
 
-<p>java</p>
+<p>​         空集合必须写成 set()，{}只会表示为空字典</p>
 
-<pre><code class="java">  @Value(&quot;${server.port}&quot;)
-  private String port
-</code></pre>
-
-<ul>
-<li>ConfigurationProperties</li>
-</ul>
-
-<pre><code class="yaml">student:
-    name: jackma
-    age: 18
-</code></pre>
-
-<p>javabean（需prefix (前缀) 参数）</p>
-
-<pre><code class="java">@Component
-@Lombok
-@ConfigurationProperties(prefix = &quot;student&quot;)
-  public class Student {
-      private String name;
-  
-      private Integer age;
-  }
-</code></pre>
-
-<ul>
-<li>Environment</li>
-</ul>
-
-<pre><code class="yaml">  mes:
-    url: xxxxxxx
-</code></pre>
-
-<p>java</p>
-
-<pre><code class="java">  @Resource
-  private Environment env;
-  
-  @GetMapping(&quot;/mes&quot;)
-  public String getMesUrl() {
-      String url = env.getProperty(&quot;mes.url&quot;);
-      
-      return url;
-  }
+<pre><code class="python">empty_set = set()
 </code></pre>
 
         </div>
@@ -667,108 +691,90 @@ for n in needles
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
 
-        <div id="js_storage"></div>
-        <span class="hidden" itemprop="alternateName">js_storage</span>
+        <div id="java_sort"></div>
+        <span class="hidden" itemprop="alternateName">java_sort</span>
 
         <h2>
-            <a itemprop="url" href="#js_storage">
-                <span itemprop="name">Js Storage</span>
+            <a itemprop="url" href="#java_sort">
+                <span itemprop="name">java sort</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/js_storage.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_sort.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
         Tags:
         
-            <span class="tags label label-default">js</span>
+            <span class="tags label label-default">java</span>
         
 
         <div itemprop="description">
             
 
-<p>cookie、浏览器存储API，IndexedDB</p>
+<h3 id="toc_0">排序算法类的模板</h3>
 
-<h2 id="toc_0">背景：</h2>
-
-<p>　　直接在客户端存储用户信息出于用户想要将与自身有关的信息保存在用户的机器上。无聊是登录信息、个人偏好，还是其他数据。Web应用程序提供者需要将它们保存在用户的机器上。对此第一个解决方案就是cookie。cookie是古老的网景公司发明，由一份名为 <em>Persistent Client State: HTTP Cookies</em> 的规范定义。今天 cookie 只是在客户端存储数据的一个选项。</p>
-
-<h3 id="toc_1">1. cookie</h3>
-
-<p>　　HTTP cookie 通常也叫做 cookie，最初用于在客户端存储会话信息。这个规范要求服务器在响应 HTTP 请求时，通过发送 Set-Cookie HTTP 头部包含会话信息。例下面是包含这个头部的一个 HTTP 响应：</p>
-
-<pre><code>HTTP/1.1 200 OK
-Content-type: text/html
-Set-Cookie: name=value
-Other-header: other-header-value
+<pre><code class="java">public class Example {
+    public static void stort (Compareable[] a) {
+        // 见算法 2.1、2.2、2.3、2.4、2.5 或 2.7
+    }
+    
+    private static boolean less (Comparable v, Comparable w) {
+        return v.compareTo(w) &lt; 0;
+    }
+    
+    private static void exah (Comparable[] a, int i, int j) {
+        Comparable t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+    }
+    
+    private static void show (Comparable[] a) {
+        // 在单行中打印数组
+        for (int i=0; i&lt;a.length; i++)
+            System.out.print(a[i] + &quot;&quot;);
+        System.out.println();
+    }
+    
+    private static boolean isStored (Comparable[] a) {
+        // 测试数组元素是否有序
+        for (int i=1; i&lt;a.length; i++)
+            if (less(a[i], a[i-1])) return false;
+        return true;
+    }
+    
+    public static void main(String[] args) {
+        // 从标准输入读取字符串，将它们排序并输出
+        String[] a = In.readString();
+        sort(a);
+        assert isStored(a);
+        show(a);
+    }
+}
 </code></pre>
 
-<p>　　这个 HTTP 响应会设置一个名为&rdquo;name&rdquo;，值为&rdquo;value&rdquo;的 cookie。键和值在发送时都会经过 URL 编码。浏览器会存储这些会话信息，并在之后的每个请求中都会通过 HTTP 头部 cookie 再将它们发回服务器，比如：</p>
+<h3 id="toc_1">算法2.1 选择排序</h3>
 
-<pre><code>GET /index.js HTTP/1.1
-Cookie: name=value
-Other-header: other-header-value
+<p>找到数组中最小的元素，将它和数组的第一个元素交换位置（如果第一个元素就是最小元素则它和自己交换。）再在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置。如此往复，直到将整个数组排序。此为*选择排序*，因为它在不断选择剩余元素之中的最小值。</p>
+
+<pre><code class="java">public class Selection {
+    public static void sort(Comparable[] a) {
+        // 将 a[] 按升序排序
+        for (int i=0; i&lt;N; i++) {
+            // 将 a[i] 和 a[i+1..N] 中最小的元素交换
+            int min = i;
+            for (int j = i+1; j&lt;N; j++)
+                if (less(a[j], a[min])) min = j;
+            exah(a, i, min);
+        }
+    }
+    // less()、exch()、isSorted() 和 main() 方法见 “排序算法类模板”
+}
 </code></pre>
 
-<p>　　这些发送回服务器的额外信息可用于唯一标识发送请求的客户端。</p>
-
-<h3 id="toc_2">2. 限制</h3>
-
-<p>　　cookie 是与特定域绑定的。设置 cookie 后，它会与请求一起发送到创建它的域。这个限制能保证 cookie 中存储的信息只对认可的接收者开放，不被其他域访问。</p>
-
-<p>　　因为 cookie 存储在客户端机器上，所以为保证它不会被恶意利用，浏览器会施加限制。同时，cookie 也不会占用太多磁盘空间。通常，只要遵守以下大致的限制，就不会在任何浏览器中碰到问题</p>
-
-<ul>
-<li>不超过 300 个 cookie；</li>
-<li>每个 cookie 不超过 4096 字节；</li>
-<li>每个域不超过 20 个 cookie；</li>
-<li>每个域不超过 81920 字节。</li>
-</ul>
-
-<p>　　每个域能设置的 cookie 总数也是受限的，但不同浏览器的限制不同</p>
-
-<p>　　Safari 和 Chrome 对每个域的 cookie 数没有硬性限制。</p>
-
-<p>　　如果 cookie 总数超过单个域的上限，浏览器就会删除之前设置的 cookie。</p>
-
-<h2 id="toc_3">Web Storage</h2>
-
-<p>　　Web Storage 的目的是解决通过客户端存储不需要频繁发送回服务器的数据时使用 cookie 的问题。</p>
-
-<p>　　Web Storage 规范最新的版本是第2版，这一版规范主要有两个目标：</p>
-
-<ul>
-<li><p>提供在 cookie 之外的存储会话数据的途径；</p></li>
-
-<li><p>提供跨会话持久化存储大量数据的机制。</p></li>
-</ul>
-
-<p>　　web storage 的第2版定义了两个对象：localStorage 和 sessionStorage。localStorage 是 <strong>永久存储机制</strong>，sessionStorage 是<strong>跨会话</strong>的存储机制。这两种浏览器 API 提供了在浏览器中不受页面刷新影响而存储数据的两种方式。2009年之后所有主要供应商发布的浏览器版本在window 对象上支持 localStorage 和 sessionStorage。（web storage 第一版曾用过 globalStorage，不过现已废弃）。</p>
-
-<p>### Storage 类型</p>
-
-<p>　　Storage 类型用于保存键值对数据，直到存储空间上限（由浏览器决定）。Storage 的实例与其他对象一样，但增加了以下方法</p>
-
-<ul>
-<li>clear()：删除所有值，不在 Firefox 中实现。</li>
-<li>getItem(<em>name</em>)：取得给定 <em>name</em> 的值。</li>
-<li>key(<em>index</em>)：取得给定数值位置的名称。</li>
-<li>removeItem(<em>name</em>)：删除给定的 <em>name</em> 的键值对。</li>
-<li>setItem(<em>name</em>, <em>value</em>)：设置给定 <em>name</em> 的值。</li>
-</ul>
-
-<p>　　getItem() 、remove() 和 setItem() 方法可以直接或间接通过 Storage 对象调用。因为每个数据项都作为属性存储在该对象上。所以可以使用点或方括号访问这些属性，通过同样操作来设置值，也可以使用 delete 操作符删除属性。即便如此，通常还是建议使用方法而非属性来执行这些操作，以免意外重写某个已存在的对象成员。</p>
-
-<p>　　通过 length 属性可以确定 Storage 对象中保存了多少键值对。我们无法确定对象中所有数据占用的空间大小，尽管 IE8 提供了 remainingSpace 属性用于确定还有多少存储空间（以字节计）可用。</p>
-
-<p>　　Storage 类型只能存储<strong>字符串</strong>。非字符串数据在存储之后会自动转换为字符串。注意，这种转换不能在获取数据时撤销。</p>
-
-<h3 id="toc_4">SessionStorage</h3>
-
-<p>　　SessionStorage 对象只存储<strong>会话信息</strong>，即数据只会存储到浏览器关闭。这跟浏览器关闭时会消失的会话 cookie 类似。存储在 SessionStorage 中的数据不受页面刷新影响，可以在浏览器崩溃并重启后恢复。（取决于浏览器，Firefox 和 WebKit支持，IE不支持）</p>
+<h3 id="toc_2">算法2.2 插入排序</h3>
 
         </div>
         <br>
@@ -891,18 +897,207 @@ socket.oncloes = function() {
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
 
-        <div id="redis_string"></div>
-        <span class="hidden" itemprop="alternateName">redis_string</span>
+        <div id="java_collections"></div>
+        <span class="hidden" itemprop="alternateName">java_collections</span>
 
         <h2>
-            <a itemprop="url" href="#redis_string">
-                <span itemprop="name">Redis String</span>
+            <a itemprop="url" href="#java_collections">
+                <span itemprop="name">Java Collections</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_string.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_collections.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">标准库中的集合与映射</h3>
+
+<p>####　关于 Set 接口</p>
+
+<p>　　Set 接口代表不允许重复元的 Collection。由接口 SortedSet 给出的一种特殊类型的 Set 保证其中的各项处于有序的状态。因为一个</p>
+
+<p>Set IS-A Collection，所以用于访问继承 Collection 的 List 的项的方法也对 Set 有效。</p>
+
+<p>　　由 Set 所要求的一些特殊的操作是一些插入，删除以及（有效地）执行基本查找的能力。对于 Set，add 方法如果执行成功则返回 true，否则返回 false，因为被添加的项已经存在。保持各项以有序状态的 Set 的实现是 TreeSet。TreeSet 类的基本操作花费对数最坏情形时间。</p>
+
+<p>　　默认情况下，排序假设 TreeSet 中的项实现 Comparable 接口。另一种排序可以通过用 Comparator 实例化 TreeSet 来确定。例如，可以创建一个存储 String 对象的 TreeSet，通过使用 CaseInsensitiveCompare 函数对象忽略大小写。下面代码中，Set s 大小为1。</p>
+
+<pre><code class="java">Class CaseInsensitiveCompare implements Comparator&lt;String&gt; {
+    public int compare(String lhs, String rhs) {
+        return lhs.compareToIgnoreCase(rhs);
+    }
+}
+
+Set&lt;String&gt; s = new TreeSet&lt;&gt;(new CaseInsensitiveCompare());
+s.add(&quot;Hello&quot;);
+s.add(&quot;HeLLo&quot;);
+System.out.print(&quot;The size is: &quot; + s.size());
+</code></pre>
+
+<h4 id="toc_1">关于 Map 接口</h4>
+
+<p>　　Map 是一个接口，代表由键以及值组成的一些项的集合。键必须是唯一的，但是若干键可以映射到一些相同的值。因此，值不必是唯一的。在 SortedMap 接口中，映射中的关键字保持逻辑上有序状态。SortedMap 接口的一种实现是 TreeMap 类。Map的基本操作包括诸如 isEmpty、clear、size 等方法，而且最重要的是包含以下方法：</p>
+
+<pre><code class="java">boolean containsKey(keyType key);
+ValueType get(keyType key);
+ValueType put(KeyType key, ValueType value);
+</code></pre>
+
+<p>　　get 返回 Map 中与 key 相关的值，或当 key 不存在时返回 null。如果在 Map 中不存在 null 值，那么由 get 返回的值可以用来确定 key 是否存在 Map 中。然而，如果存在 null，那么必须使用 containsKey。方法 put 把键值对置入 Map 中，或者返回 null，或者返回与key 相联系的值。</p>
+
+<p>　　通过一个 Map 进行迭代要比 Collection 复杂，因为 Map 不提供迭代器，而是根据 3 种方法，将 Map 对象的视图作为 Collection 对象返回。由于这些视图本身就是 Collection，因此它们可以被迭代。所提供的 3 种方法如下：</p>
+
+<pre><code class="java">Set&lt;KeyType&gt; keySet();
+Collection&lt;ValueType&gt; values();
+Set&lt;Map.Entry&lt;KeyType, ValueType&gt;&gt; entrySet()
+</code></pre>
+
+<p>　　方法 keySet 和 values 返回简单的集合（键不包含重复元，因此以一个 Set 对象的形式返回）。entrySet 方法是作为一些项而形成的 Set 对象被返回的（由于键唯一，因此不存在重复项）。每一项均由被嵌套的接口 Map.Entry 表示。对于类型 Map.Entry 的对象，其现有的方法包含访问键、键的值、以及改变键对应的值：</p>
+
+<pre><code class="java">KeyType getKey();
+ValueType getValue();
+ValueType setValue(ValueType newValue);
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+
+        <div id="js_storage"></div>
+        <span class="hidden" itemprop="alternateName">js_storage</span>
+
+        <h2>
+            <a itemprop="url" href="#js_storage">
+                <span itemprop="name">Js Storage</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/js_storage.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            
+
+<p>cookie、浏览器存储API，IndexedDB</p>
+
+<h2 id="toc_0">背景：</h2>
+
+<p>　　直接在客户端存储用户信息出于用户想要将与自身有关的信息保存在用户的机器上。无聊是登录信息、个人偏好，还是其他数据。Web应用程序提供者需要将它们保存在用户的机器上。对此第一个解决方案就是cookie。cookie是古老的网景公司发明，由一份名为 <em>Persistent Client State: HTTP Cookies</em> 的规范定义。今天 cookie 只是在客户端存储数据的一个选项。</p>
+
+<h3 id="toc_1">1. cookie</h3>
+
+<p>　　HTTP cookie 通常也叫做 cookie，最初用于在客户端存储会话信息。这个规范要求服务器在响应 HTTP 请求时，通过发送 Set-Cookie HTTP 头部包含会话信息。例下面是包含这个头部的一个 HTTP 响应：</p>
+
+<pre><code>HTTP/1.1 200 OK
+Content-type: text/html
+Set-Cookie: name=value
+Other-header: other-header-value
+</code></pre>
+
+<p>　　这个 HTTP 响应会设置一个名为&rdquo;name&rdquo;，值为&rdquo;value&rdquo;的 cookie。键和值在发送时都会经过 URL 编码。浏览器会存储这些会话信息，并在之后的每个请求中都会通过 HTTP 头部 cookie 再将它们发回服务器，比如：</p>
+
+<pre><code>GET /index.js HTTP/1.1
+Cookie: name=value
+Other-header: other-header-value
+</code></pre>
+
+<p>　　这些发送回服务器的额外信息可用于唯一标识发送请求的客户端。</p>
+
+<h3 id="toc_2">2. 限制</h3>
+
+<p>　　cookie 是与特定域绑定的。设置 cookie 后，它会与请求一起发送到创建它的域。这个限制能保证 cookie 中存储的信息只对认可的接收者开放，不被其他域访问。</p>
+
+<p>　　因为 cookie 存储在客户端机器上，所以为保证它不会被恶意利用，浏览器会施加限制。同时，cookie 也不会占用太多磁盘空间。通常，只要遵守以下大致的限制，就不会在任何浏览器中碰到问题</p>
+
+<ul>
+<li>不超过 300 个 cookie；</li>
+<li>每个 cookie 不超过 4096 字节；</li>
+<li>每个域不超过 20 个 cookie；</li>
+<li>每个域不超过 81920 字节。</li>
+</ul>
+
+<p>　　每个域能设置的 cookie 总数也是受限的，但不同浏览器的限制不同</p>
+
+<p>　　Safari 和 Chrome 对每个域的 cookie 数没有硬性限制。</p>
+
+<p>　　如果 cookie 总数超过单个域的上限，浏览器就会删除之前设置的 cookie。</p>
+
+<h2 id="toc_3">Web Storage</h2>
+
+<p>　　Web Storage 的目的是解决通过客户端存储不需要频繁发送回服务器的数据时使用 cookie 的问题。</p>
+
+<p>　　Web Storage 规范最新的版本是第2版，这一版规范主要有两个目标：</p>
+
+<ul>
+<li><p>提供在 cookie 之外的存储会话数据的途径；</p></li>
+
+<li><p>提供跨会话持久化存储大量数据的机制。</p></li>
+</ul>
+
+<p>　　web storage 的第2版定义了两个对象：localStorage 和 sessionStorage。localStorage 是 <strong>永久存储机制</strong>，sessionStorage 是<strong>跨会话</strong>的存储机制。这两种浏览器 API 提供了在浏览器中不受页面刷新影响而存储数据的两种方式。2009年之后所有主要供应商发布的浏览器版本在window 对象上支持 localStorage 和 sessionStorage。（web storage 第一版曾用过 globalStorage，不过现已废弃）。</p>
+
+<p>### Storage 类型</p>
+
+<p>　　Storage 类型用于保存键值对数据，直到存储空间上限（由浏览器决定）。Storage 的实例与其他对象一样，但增加了以下方法</p>
+
+<ul>
+<li>clear()：删除所有值，不在 Firefox 中实现。</li>
+<li>getItem(<em>name</em>)：取得给定 <em>name</em> 的值。</li>
+<li>key(<em>index</em>)：取得给定数值位置的名称。</li>
+<li>removeItem(<em>name</em>)：删除给定的 <em>name</em> 的键值对。</li>
+<li>setItem(<em>name</em>, <em>value</em>)：设置给定 <em>name</em> 的值。</li>
+</ul>
+
+<p>　　getItem() 、remove() 和 setItem() 方法可以直接或间接通过 Storage 对象调用。因为每个数据项都作为属性存储在该对象上。所以可以使用点或方括号访问这些属性，通过同样操作来设置值，也可以使用 delete 操作符删除属性。即便如此，通常还是建议使用方法而非属性来执行这些操作，以免意外重写某个已存在的对象成员。</p>
+
+<p>　　通过 length 属性可以确定 Storage 对象中保存了多少键值对。我们无法确定对象中所有数据占用的空间大小，尽管 IE8 提供了 remainingSpace 属性用于确定还有多少存储空间（以字节计）可用。</p>
+
+<p>　　Storage 类型只能存储<strong>字符串</strong>。非字符串数据在存储之后会自动转换为字符串。注意，这种转换不能在获取数据时撤销。</p>
+
+<h3 id="toc_4">SessionStorage</h3>
+
+<p>　　SessionStorage 对象只存储<strong>会话信息</strong>，即数据只会存储到浏览器关闭。这跟浏览器关闭时会消失的会话 cookie 类似。存储在 SessionStorage 中的数据不受页面刷新影响，可以在浏览器崩溃并重启后恢复。（取决于浏览器，Firefox 和 WebKit支持，IE不支持）</p>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_clients"></div>
+        <span class="hidden" itemprop="alternateName">redis_clients</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_clients">
+                <span itemprop="name">Redis Clients</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_clients.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -914,28 +1109,81 @@ socket.oncloes = function() {
         <div itemprop="description">
             
 
-<h3 id="toc_0">字符串</h3>
+<h4 id="toc_0">Python 客户端 redis-py</h4>
 
-<h4 id="toc_1">1 常用命令</h4>
+<p>　　、redis-py 的基本使用方法、redis-py 的 Pipeline 的使用和 redis-py 的 Lua 脚本使用。</p>
 
-<p>(1) 设置值</p>
+<h4 id="toc_1">获取 redis-py</h4>
 
-<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+<p>redis-py 需要 Python 2.7 以上版本。获取方式如下：</p>
+
+<pre><code class="shell"># 使用 pip 进行安装
+pip install redis
+
+# 使用 easy_install 安装
+easy_install redis
+
+# 源码安装：以2.10.5为例
+wget https://guthub.com/andymccurdy/redis-py/archive/2.10.5.zip
+uzip redis-2.10.5.zip
+cd redis-2.10.5
+# 安装 redis-py
+python setup.py install
 </code></pre>
 
-<p>set 命令有几个选项</p>
+<h4 id="toc_2">redis-py 的基本使用方法</h4>
 
-<ul>
-<li>ex seconds：为键设置秒级过期时间。</li>
-<li>px milliseconds：为键设置毫秒级过期时间</li>
-<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
-<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
-</ul>
+<pre><code class="python">import redis
 
-<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+# 生产客户端连接：需 Redis 实例 IP 和端口两个参数
+client = redis.StrictRedis(host='127.0.0.1', port=6379)
 
-<pre><code class="shell">setnx key seconds value
-setnx key value
+# 执行命令，redis-py API 保留了 Redis API 的原始风格
+client.set(key, &quot;python-redis&quot;) # True
+client.get(key) # world
+</code></pre>
+
+<h4 id="toc_3">redis-py 中的 Pipeline 的只使用方法</h4>
+
+<pre><code class="python">pipline = client.pipline(transaction=False) # transaction False 代表不使用事务
+
+# 将命令封装到 Pipline 中，此时命令并没有真正执行
+pipline.set('hello', 'world')
+pipline.incr('counter')
+
+# 执行 Pipline
+result = pipline.execute() # [True, 3]
+</code></pre>
+
+<h4 id="toc_4">redis-py 中的 Lua 脚本使用方法</h4>
+
+<p>redid-py 提供了三个重要的函数实现 Lua 脚本的执行：</p>
+
+<pre><code class="python">eval(String script, int keyCount, String... params)
+script_load(String script)
+evalsha(String sha1, int keyCount, String... params)
+</code></pre>
+
+<p>script：Lua 脚本内容；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
+
+<p>return redis.call(&lsquo;get&rsquo;, KEYS[1])  在 redis-py 中实现如下</p>
+
+<pre><code class="python">script = 'return redis.call('get', KEYS[1]) '
+client.eval(script, 1, 'hello') # world
+</code></pre>
+
+<p>script_load 和 evalsha 函数一起使用，首先使用 script_load 将脚本加载到 Redis 中</p>
+
+<pre><code class="python">scriptSha = client.script_load(script)
+</code></pre>
+
+<p>evalsha 函数用来执行脚本的哈希值，需要三个参数：</p>
+
+<p>scriptSha：脚本的 SHA1；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
+
+<p>执行效果如下</p>
+
+<pre><code class="python">client.evalsha(scriptSha, 1, 'hello')
 </code></pre>
 
         </div>
@@ -1007,87 +1255,6 @@ setnx key value
 
 <pre><code class="shell">type key # 键不存在，则返回none
 </code></pre>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_config"></div>
-        <span class="hidden" itemprop="alternateName">redis_config</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_config">
-                <span itemprop="name">Redis Config</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_config.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">启动</h3>
-
-<h4 id="toc_1">默认配置</h4>
-
-<p>​       redis-service  建议使用配置文件启动</p>
-
-<h4 id="toc_2">运行配置</h4>
-
-<p>​       redis-service &ndash;configKey &ndash;configValue &ndash;configKey2 &ndash; configValue2</p>
-
-<p>​       例：redis-server &ndash;port &ndash;6379</p>
-
-<h4 id="toc_3">配置文件启动</h4>
-
-<p>​       例：配置文件写在/opt/redis/redis.config</p>
-
-<p>​       redis-server /opt/redis/redis.config</p>
-
-<p>一些重要配置如下</p>
-
-<table>
-<thead>
-<tr>
-<td>配置名</td>
-<td>配置说明</td>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>port</td>
-<td>端口</td>
-</tr>
-
-<tr>
-<td>logfile</td>
-<td>日志文件</td>
-</tr>
-
-<tr>
-<td>dir</td>
-<td>Redis工作目录（存放持久化文件和日志文件）</td>
-</tr>
-
-<tr>
-<td>dacmonize</td>
-<td>是否以守护进程的方式启动Redis</td>
-</tr>
-</tbody>
-</table>
 
         </div>
         <br>
@@ -1336,6 +1503,141 @@ client-lpush&gt; lpish list:3 element3
 1) &quot;list:test&quot;
 2) &quot;elememt&quot;  
 </code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_string"></div>
+        <span class="hidden" itemprop="alternateName">redis_string</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_string">
+                <span itemprop="name">Redis String</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_string.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">字符串</h3>
+
+<h4 id="toc_1">1 常用命令</h4>
+
+<p>(1) 设置值</p>
+
+<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+</code></pre>
+
+<p>set 命令有几个选项</p>
+
+<ul>
+<li>ex seconds：为键设置秒级过期时间。</li>
+<li>px milliseconds：为键设置毫秒级过期时间</li>
+<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
+<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
+</ul>
+
+<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+
+<pre><code class="shell">setnx key seconds value
+setnx key value
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_config"></div>
+        <span class="hidden" itemprop="alternateName">redis_config</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_config">
+                <span itemprop="name">Redis Config</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_config.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">启动</h3>
+
+<h4 id="toc_1">默认配置</h4>
+
+<p>​       redis-service  建议使用配置文件启动</p>
+
+<h4 id="toc_2">运行配置</h4>
+
+<p>​       redis-service &ndash;configKey &ndash;configValue &ndash;configKey2 &ndash; configValue2</p>
+
+<p>​       例：redis-server &ndash;port &ndash;6379</p>
+
+<h4 id="toc_3">配置文件启动</h4>
+
+<p>​       例：配置文件写在/opt/redis/redis.config</p>
+
+<p>​       redis-server /opt/redis/redis.config</p>
+
+<p>一些重要配置如下</p>
+
+<table>
+<thead>
+<tr>
+<td>配置名</td>
+<td>配置说明</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>port</td>
+<td>端口</td>
+</tr>
+
+<tr>
+<td>logfile</td>
+<td>日志文件</td>
+</tr>
+
+<tr>
+<td>dir</td>
+<td>Redis工作目录（存放持久化文件和日志文件）</td>
+</tr>
+
+<tr>
+<td>dacmonize</td>
+<td>是否以守护进程的方式启动Redis</td>
+</tr>
+</tbody>
+</table>
 
         </div>
         <br>
