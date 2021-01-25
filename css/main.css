@@ -21,13 +21,13 @@ h2 .glyphicon {
 }
 
 table {
-	font-size: 15px;
-	border: 1px solid;
+	font-size: 15px!important;
+	border: 1px solid!important;
 }
 
 td, th {
-	padding: 9px 20px;
-	border: 1px solid;
+	padding: 9px 20px!important;
+	border: 1px solid!important;
 }
 
 .label {
