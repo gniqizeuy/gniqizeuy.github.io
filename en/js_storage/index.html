@@ -1,5 +1,5 @@
 js_storage
-Js Storage
+Js 客户端存储
 js 
 
 
@@ -7,11 +7,11 @@ js
 
 <h2 id="toc_0">背景：</h2>
 
-<p>　　直接在客户端存储用户信息出于用户想要将与自身有关的信息保存在用户的机器上。无聊是登录信息、个人偏好，还是其他数据。Web应用程序提供者需要将它们保存在用户的机器上。对此第一个解决方案就是cookie。cookie是古老的网景公司发明，由一份名为 <em>Persistent Client State: HTTP Cookies</em> 的规范定义。今天 cookie 只是在客户端存储数据的一个选项。</p>
+<p>直接在客户端存储用户信息出于用户想要将与自身有关的信息保存在用户的机器上。无聊是登录信息、个人偏好，还是其他数据。Web应用程序提供者需要将它们保存在用户的机器上。对此第一个解决方案就是cookie。cookie是古老的网景公司发明，由一份名为 <em>Persistent Client State: HTTP Cookies</em> 的规范定义。今天 cookie 只是在客户端存储数据的一个选项。</p>
 
 <h3 id="toc_1">1. cookie</h3>
 
-<p>　　HTTP cookie 通常也叫做 cookie，最初用于在客户端存储会话信息。这个规范要求服务器在响应 HTTP 请求时，通过发送 Set-Cookie HTTP 头部包含会话信息。例下面是包含这个头部的一个 HTTP 响应：</p>
+<p>HTTP cookie 通常也叫做 cookie，最初用于在客户端存储会话信息。这个规范要求服务器在响应 HTTP 请求时，通过发送 Set-Cookie HTTP 头部包含会话信息。例下面是包含这个头部的一个 HTTP 响应：</p>
 
 <pre><code>HTTP/1.1 200 OK
 Content-type: text/html
@@ -19,39 +19,38 @@ Set-Cookie: name=value
 Other-header: other-header-value
 </code></pre>
 
-<p>　　这个 HTTP 响应会设置一个名为&rdquo;name&rdquo;，值为&rdquo;value&rdquo;的 cookie。键和值在发送时都会经过 URL 编码。浏览器会存储这些会话信息，并在之后的每个请求中都会通过 HTTP 头部 cookie 再将它们发回服务器，比如：</p>
+<p>这个 HTTP 响应会设置一个名为&rdquo;name&rdquo;，值为&rdquo;value&rdquo;的 cookie。键和值在发送时都会经过 URL 编码。浏览器会存储这些会话信息，并在之后的每个请求中都会通过 HTTP 头部 cookie 再将它们发回服务器，比如：</p>
 
 <pre><code>GET /index.js HTTP/1.1
 Cookie: name=value
 Other-header: other-header-value
 </code></pre>
 
-<p>　　这些发送回服务器的额外信息可用于唯一标识发送请求的客户端。</p>
+<p>这些发送回服务器的额外信息可用于唯一标识发送请求的客户端。</p>
 
 <h3 id="toc_2">2. 限制</h3>
 
-<p>　　cookie 是与特定域绑定的。设置 cookie 后，它会与请求一起发送到创建它的域。这个限制能保证 cookie 中存储的信息只对认可的接收者开放，不被其他域访问。</p>
+<p>cookie 是与特定域绑定的。设置 cookie 后，它会与请求一起发送到创建它的域。这个限制能保证 cookie 中存储的信息只对认可的接收者开放，不被其他域访问。</p>
 
-<p>　　因为 cookie 存储在客户端机器上，所以为保证它不会被恶意利用，浏览器会施加限制。同时，cookie 也不会占用太多磁盘空间。通常，只要遵守以下大致的限制，就不会在任何浏览器中碰到问题</p>
+<p>因为 cookie 存储在客户端机器上，所以为保证它不会被恶意利用，浏览器会施加限制。同时，cookie 也不会占用太多磁盘空间。通常，只要遵守以下大致的限制，就不会在任何浏览器中碰到问题</p>
 
 <ul>
 <li>不超过 300 个 cookie；</li>
 <li>每个 cookie 不超过 4096 字节；</li>
 <li>每个域不超过 20 个 cookie；</li>
 <li>每个域不超过 81920 字节。</li>
+<li>每个域能设置的 cookie 总数也是受限的，但不同浏览器的限制不同</li>
 </ul>
 
-<p>　　每个域能设置的 cookie 总数也是受限的，但不同浏览器的限制不同</p>
+<p>Safari 和 Chrome 对每个域的 cookie 数没有硬性限制。</p>
 
-<p>　　Safari 和 Chrome 对每个域的 cookie 数没有硬性限制。</p>
-
-<p>　　如果 cookie 总数超过单个域的上限，浏览器就会删除之前设置的 cookie。</p>
+<p>如果 cookie 总数超过单个域的上限，浏览器就会删除之前设置的 cookie。</p>
 
 <h2 id="toc_3">Web Storage</h2>
 
-<p>　　Web Storage 的目的是解决通过客户端存储不需要频繁发送回服务器的数据时使用 cookie 的问题。</p>
+<p>Web Storage 的目的是解决通过客户端存储不需要频繁发送回服务器的数据时使用 cookie 的问题。</p>
 
-<p>　　Web Storage 规范最新的版本是第2版，这一版规范主要有两个目标：</p>
+<p>Web Storage 规范最新的版本是第2版，这一版规范主要有两个目标：</p>
 
 <ul>
 <li><p>提供在 cookie 之外的存储会话数据的途径；</p></li>
@@ -59,11 +58,11 @@ Other-header: other-header-value
 <li><p>提供跨会话持久化存储大量数据的机制。</p></li>
 </ul>
 
-<p>　　web storage 的第2版定义了两个对象：localStorage 和 sessionStorage。localStorage 是 <strong>永久存储机制</strong>，sessionStorage 是<strong>跨会话</strong>的存储机制。这两种浏览器 API 提供了在浏览器中不受页面刷新影响而存储数据的两种方式。2009年之后所有主要供应商发布的浏览器版本在window 对象上支持 localStorage 和 sessionStorage。（web storage 第一版曾用过 globalStorage，不过现已废弃）。</p>
+<p>web storage 的第2版定义了两个对象：localStorage 和 sessionStorage。localStorage 是 <strong>永久存储机制</strong>，sessionStorage 是<strong>跨会话</strong>的存储机制。这两种浏览器 API 提供了在浏览器中不受页面刷新影响而存储数据的两种方式。2009年之后所有主要供应商发布的浏览器版本在window 对象上支持 localStorage 和 sessionStorage。（web storage 第一版曾用过 globalStorage，不过现已废弃）。</p>
 
 <p>### Storage 类型</p>
 
-<p>　　Storage 类型用于保存键值对数据，直到存储空间上限（由浏览器决定）。Storage 的实例与其他对象一样，但增加了以下方法</p>
+<p>Storage 类型用于保存键值对数据，直到存储空间上限（由浏览器决定）。Storage 的实例与其他对象一样，但增加了以下方法</p>
 
 <ul>
 <li>clear()：删除所有值，不在 Firefox 中实现。</li>
@@ -73,12 +72,12 @@ Other-header: other-header-value
 <li>setItem(<em>name</em>, <em>value</em>)：设置给定 <em>name</em> 的值。</li>
 </ul>
 
-<p>　　getItem() 、remove() 和 setItem() 方法可以直接或间接通过 Storage 对象调用。因为每个数据项都作为属性存储在该对象上。所以可以使用点或方括号访问这些属性，通过同样操作来设置值，也可以使用 delete 操作符删除属性。即便如此，通常还是建议使用方法而非属性来执行这些操作，以免意外重写某个已存在的对象成员。</p>
+<p>getItem() 、remove() 和 setItem() 方法可以直接或间接通过 Storage 对象调用。因为每个数据项都作为属性存储在该对象上。所以可以使用点或方括号访问这些属性，通过同样操作来设置值，也可以使用 delete 操作符删除属性。即便如此，通常还是建议使用方法而非属性来执行这些操作，以免意外重写某个已存在的对象成员。</p>
 
-<p>　　通过 length 属性可以确定 Storage 对象中保存了多少键值对。我们无法确定对象中所有数据占用的空间大小，尽管 IE8 提供了 remainingSpace 属性用于确定还有多少存储空间（以字节计）可用。</p>
+<p>通过 length 属性可以确定 Storage 对象中保存了多少键值对。我们无法确定对象中所有数据占用的空间大小，尽管 IE8 提供了 remainingSpace 属性用于确定还有多少存储空间（以字节计）可用。</p>
 
-<p>　　Storage 类型只能存储<strong>字符串</strong>。非字符串数据在存储之后会自动转换为字符串。注意，这种转换不能在获取数据时撤销。</p>
+<p>Storage 类型只能存储<strong>字符串</strong>。非字符串数据在存储之后会自动转换为字符串。注意，这种转换不能在获取数据时撤销。</p>
 
 <h3 id="toc_4">SessionStorage</h3>
 
-<p>　　SessionStorage 对象只存储<strong>会话信息</strong>，即数据只会存储到浏览器关闭。这跟浏览器关闭时会消失的会话 cookie 类似。存储在 SessionStorage 中的数据不受页面刷新影响，可以在浏览器崩溃并重启后恢复。（取决于浏览器，Firefox 和 WebKit支持，IE不支持）</p>
+<p>SessionStorage 对象只存储<strong>会话信息</strong>，即数据只会存储到浏览器关闭。这跟浏览器关闭时会消失的会话 cookie 类似。存储在 SessionStorage 中的数据不受页面刷新影响，可以在浏览器崩溃并重启后恢复。（取决于浏览器，Firefox 和 WebKit支持，IE不支持）</p>

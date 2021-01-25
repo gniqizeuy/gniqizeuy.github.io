@@ -20,6 +20,16 @@ h2 .glyphicon {
   font-size: 15px;
 }
 
+table {
+	font-size: 15px;
+	border: 1px solid;
+}
+
+td, th {
+	padding: 9px 20px;
+	border: 1px solid;
+}
+
 .label {
   line-height: 4;
 }

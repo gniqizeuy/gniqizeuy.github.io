@@ -5,51 +5,39 @@ spring
 
 <h2 id="toc_0">数据格式</h2>
 
-<ul>
-<li>基本类型</li>
-</ul>
+<h3 id="toc_1">基本类型</h3>
 
-<pre><code class="yaml">  name: taicang
-  age: 18
+<pre><code class="yaml">name: taicang
+age: 18
 </code></pre>
 
-<ul>
-<li>键值对</li>
-</ul>
+<h3 id="toc_2">键值对</h3>
 
-<pre><code class="yaml">  person:
+<pre><code class="yaml">person:
     name: taicang
     age: 18
 </code></pre>
 
-<ul>
-<li>数组</li>
-</ul>
+<h3 id="toc_3">数组</h3>
 
-<pre><code class="yaml">  favplayer:
+<pre><code class="yaml">favplayer:
     - kobe
     - lebra
 </code></pre>
 
-<h2 id="toc_1">读取方式</h2>
+<h2 id="toc_4">读取方式</h2>
 
-<ul>
-<li>@Value</li>
-</ul>
+<h3 id="toc_5">@Value</h3>
 
-<pre><code class="yaml">  server:
+<pre><code class="yaml">server:
     port: 8080
 </code></pre>
 
-<p>java</p>
-
-<pre><code class="java">  @Value(&quot;${server.port}&quot;)
-  private String port
+<pre><code class="java">@Value(&quot;${server.port}&quot;)
+private String port
 </code></pre>
 
-<ul>
-<li>ConfigurationProperties</li>
-</ul>
+<h3 id="toc_6">ConfigurationProperties</h3>
 
 <pre><code class="yaml">student:
     name: jackma
@@ -61,30 +49,26 @@ spring
 <pre><code class="java">@Component
 @Lombok
 @ConfigurationProperties(prefix = &quot;student&quot;)
-  public class Student {
-      private String name;
-  
-      private Integer age;
-  }
+public class Student {
+    private String name;
+
+    private Integer age;
+}
 </code></pre>
 
-<ul>
-<li>Environment</li>
-</ul>
+<h3 id="toc_7">Environment</h3>
 
-<pre><code class="yaml">  mes:
+<pre><code class="yaml">mes:
     url: xxxxxxx
 </code></pre>
 
-<p>java</p>
+<pre><code class="java">@Resource
+private Environment env;
 
-<pre><code class="java">  @Resource
-  private Environment env;
-  
-  @GetMapping(&quot;/mes&quot;)
-  public String getMesUrl() {
-      String url = env.getProperty(&quot;mes.url&quot;);
-      
-      return url;
-  }
+@GetMapping(&quot;/mes&quot;)
+public String getMesUrl() {
+    String url = env.getProperty(&quot;mes.url&quot;);
+    
+    return url;
+}
 </code></pre>

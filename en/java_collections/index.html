@@ -1,5 +1,5 @@
 java_collections
-Java Collections
+Java 集合与映射
 js 
 
 
@@ -7,13 +7,13 @@ js
 
 <p>####　关于 Set 接口</p>
 
-<p>　　Set 接口代表不允许重复元的 Collection。由接口 SortedSet 给出的一种特殊类型的 Set 保证其中的各项处于有序的状态。因为一个</p>
+<p>Set 接口代表不允许重复元的 Collection。由接口 SortedSet 给出的一种特殊类型的 Set 保证其中的各项处于有序的状态。因为一个</p>
 
 <p>Set IS-A Collection，所以用于访问继承 Collection 的 List 的项的方法也对 Set 有效。</p>
 
-<p>　　由 Set 所要求的一些特殊的操作是一些插入，删除以及（有效地）执行基本查找的能力。对于 Set，add 方法如果执行成功则返回 true，否则返回 false，因为被添加的项已经存在。保持各项以有序状态的 Set 的实现是 TreeSet。TreeSet 类的基本操作花费对数最坏情形时间。</p>
+<p>由 Set 所要求的一些特殊的操作是一些插入，删除以及（有效地）执行基本查找的能力。对于 Set，add 方法如果执行成功则返回 true，否则返回 false，因为被添加的项已经存在。保持各项以有序状态的 Set 的实现是 TreeSet。TreeSet 类的基本操作花费对数最坏情形时间。</p>
 
-<p>　　默认情况下，排序假设 TreeSet 中的项实现 Comparable 接口。另一种排序可以通过用 Comparator 实例化 TreeSet 来确定。例如，可以创建一个存储 String 对象的 TreeSet，通过使用 CaseInsensitiveCompare 函数对象忽略大小写。下面代码中，Set s 大小为1。</p>
+<p>默认情况下，排序假设 TreeSet 中的项实现 Comparable 接口。另一种排序可以通过用 Comparator 实例化 TreeSet 来确定。例如，可以创建一个存储 String 对象的 TreeSet，通过使用 CaseInsensitiveCompare 函数对象忽略大小写。下面代码中，Set s 大小为1。</p>
 
 <pre><code class="java">Class CaseInsensitiveCompare implements Comparator&lt;String&gt; {
     public int compare(String lhs, String rhs) {
@@ -29,23 +29,23 @@ System.out.print(&quot;The size is: &quot; + s.size());
 
 <h4 id="toc_1">关于 Map 接口</h4>
 
-<p>　　Map 是一个接口，代表由键以及值组成的一些项的集合。键必须是唯一的，但是若干键可以映射到一些相同的值。因此，值不必是唯一的。在 SortedMap 接口中，映射中的关键字保持逻辑上有序状态。SortedMap 接口的一种实现是 TreeMap 类。Map的基本操作包括诸如 isEmpty、clear、size 等方法，而且最重要的是包含以下方法：</p>
+<p>Map 是一个接口，代表由键以及值组成的一些项的集合。键唯一。在 SortedMap 接口中，映射中的关键字保持逻辑上有序状态。SortedMap 接口的一种实现是 TreeMap 类。Map的基本操作包括诸如 isEmpty、clear、size 等方法，而且最重要的是包含以下方法：</p>
 
 <pre><code class="java">boolean containsKey(keyType key);
 ValueType get(keyType key);
 ValueType put(KeyType key, ValueType value);
 </code></pre>
 
-<p>　　get 返回 Map 中与 key 相关的值，或当 key 不存在时返回 null。如果在 Map 中不存在 null 值，那么由 get 返回的值可以用来确定 key 是否存在 Map 中。然而，如果存在 null，那么必须使用 containsKey。方法 put 把键值对置入 Map 中，或者返回 null，或者返回与key 相联系的值。</p>
+<p>get 返回 Map 中与 key 相关的值，或当 key 不存在时返回 null。如果在 Map 中不存在 null 值，那么由 get 返回的值可以用来确定 key 是否存在 Map 中。然而，如果存在 null，那么必须使用 containsKey。方法 put 把键值对置入 Map 中，或者返回 null，或者返回与key 相联系的值。</p>
 
-<p>　　通过一个 Map 进行迭代要比 Collection 复杂，因为 Map 不提供迭代器，而是根据 3 种方法，将 Map 对象的视图作为 Collection 对象返回。由于这些视图本身就是 Collection，因此它们可以被迭代。所提供的 3 种方法如下：</p>
+<p>通过一个 Map 进行迭代要比 Collection 复杂，因为 Map 不提供迭代器，而是根据 3 种方法，将 Map 对象的视图作为 Collection 对象返回。由于这些视图本身就是 Collection，因此它们可以被迭代。所提供的 3 种方法如下：</p>
 
 <pre><code class="java">Set&lt;KeyType&gt; keySet();
 Collection&lt;ValueType&gt; values();
 Set&lt;Map.Entry&lt;KeyType, ValueType&gt;&gt; entrySet()
 </code></pre>
 
-<p>　　方法 keySet 和 values 返回简单的集合（键不包含重复元，因此以一个 Set 对象的形式返回）。entrySet 方法是作为一些项而形成的 Set 对象被返回的（由于键唯一，因此不存在重复项）。每一项均由被嵌套的接口 Map.Entry 表示。对于类型 Map.Entry 的对象，其现有的方法包含访问键、键的值、以及改变键对应的值：</p>
+<p>方法 keySet 和 values 返回简单的集合（键不包含重复元，因此以一个 Set 对象的形式返回）。entrySet 方法是作为一些项而形成的 Set 对象被返回的（由于键唯一，因此不存在重复项）。每一项均由被嵌套的接口 Map.Entry 表示。对于类型 Map.Entry 的对象，其现有的方法包含访问键、键的值、以及改变键对应的值：</p>
 
 <pre><code class="java">KeyType getKey();
 ValueType getValue();

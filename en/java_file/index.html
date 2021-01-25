@@ -1,13 +1,13 @@
 java_file
-Java file
+Java 文件
 java 
 
 
 <h3 id="toc_0">try-with-resources 优先于 try-finally</h3>
 
-<p>　　java7 中引入了 try-with-resources语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含了单个返回 void 的 close 方法。java 类库与第三方类库中许多类和接口，现在都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
+<p>java7 中引入了 try-with-resources语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含了单个返回 void 的 close 方法。java 类库与第三方类库中许多类和接口，现在都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
 
-<p>　范例1：</p>
+<p>范例1：</p>
 
 <pre><code class="java">static String firstLineOfFile(String path) throws IOException {
     try (BufferedReader br = new BufferReader(new FileReader(path))) {
@@ -16,7 +16,7 @@ java
 }
 </code></pre>
 
-<p>　范例2：</p>
+<p>范例2：</p>
 
 <pre><code class="java">static void copy(String src, String dst) throws IOException {
     try (
@@ -31,9 +31,9 @@ java
 }
 </code></pre>
 
-<p>　　使用 try-with-resources 不仅使代码变得简洁易懂，也更容易诊断。以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 getSuppressed 方法还可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
+<p>使用 try-with-resources 不仅使代码变得简洁易懂，也更容易诊断。以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 getSuppressed 方法还可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
 
-<p>　　在 try-with-resources 语句中还可以使用 catch 子句，就像在平时的 try-finally 语句中一样。这样既可以处理异常，又不需要再套用一层代码。</p>
+<p>在 try-with-resources 语句中还可以使用 catch 子句，和 try-finally 语句一样。这样既可以处理异常，又不需要再套用一层代码。</p>
 
 <pre><code class="java">static String firstLineOfFile(String path, String defaultVal) {
     try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -44,4 +44,4 @@ java
 }
 </code></pre>
 
-<p>　　这个firstLineOfFile 方法没有抛出异常，但是如果它无法打开文件，或者无法从中读取，就会返回一个默认值。在处理必须关闭的资源时，始终要优先考虑用try-with-resources，而不是用 try-finally。这样得到的代码将更加简洁、清晰、产生的异常也更有价值。</p>
+<p>firstLineOfFile 方法没有抛出异常，但是如果它无法打开文件，或者无法从中读取，就会返回一个默认值。在处理必须关闭的资源时，始终要优先考虑用try-with-resources，而不是用 try-finally。这样得到的代码将更加简洁、清晰、产生的异常也更有价值。</p>
