@@ -17,6 +17,7 @@
  
     <link rel="stylesheet" href="https://gniqizeuy.github.io//css/bootstrap.min.css">
     <link rel="stylesheet" href="https://gniqizeuy.github.io//css/main.css">
+    <link href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" rel="stylesheet">
   </head>
 
   <body>
@@ -107,6 +108,10 @@
         <a onclick="clickTag('spring');">Spring</a>
       </li>
       
+      <li>
+        <a onclick="clickTag('test');">Test</a>
+      </li>
+      
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
@@ -151,10 +156,6 @@
             <a href="#java_file">Java 文件</a>
           </li>
           
-          <li class="rule tag-spring ">
-            <a href="#spring_yml">Spring YML</a>
-          </li>
-          
           <li class="rule tag-python ">
             <a href="#py_dict">Python 字典</a>
           </li>
@@ -167,8 +168,12 @@
             <a href="#py_summary">Python 总结</a>
           </li>
           
-          <li class="rule tag-java ">
-            <a href="#java_sort">java 排序</a>
+          <li class="rule tag-spring ">
+            <a href="#spring_yml">Spring YML</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_memory">Redis 内存优化</a>
           </li>
           
           <li class="rule tag-js ">
@@ -183,16 +188,8 @@
             <a href="#linux%20%e6%96%87%e4%bb%b6%e4%b8%8e%e7%9b%ae%e5%bd%95%e6%9d%83%e9%99%90">Linux file permissions and directory configuration</a>
           </li>
           
-          <li class="rule tag-Java ">
-            <a href="#java_list">Java 抽象数据类型</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_memory">Redis 内存优化</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_clients">Redis 客户端API</a>
+          <li class="rule tag-test ">
+            <a href="#%e5%be%97%e5%88%b0%e7%9a%84">Js Storsssage</a>
           </li>
           
           <li class="rule tag-js ">
@@ -201,6 +198,18 @@
           
           <li class="rule tag-design ">
             <a href="#design_pattern">设计模式</a>
+          </li>
+          
+          <li class="rule tag-Java ">
+            <a href="#java_list">Java 抽象数据类型</a>
+          </li>
+          
+          <li class="rule tag-java ">
+            <a href="#java_sort">java 排序</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_clients">Redis 客户端API</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -212,11 +221,11 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_string">Redis String</a>
+            <a href="#redis_list">Redis List</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_list">Redis List</a>
+            <a href="#redis_string">Redis String</a>
           </li>
           
           <li class="rule tag-css ">
@@ -236,14 +245,6 @@
             <a href="#java_file">Java 文件</a>
           </li>
           
-          <li class="rule tag-spring ">
-            <a href="#spring_yml">Spring YML</a>
-          </li>
-          
-          <li class="rule tag-python ">
-            <a href="#py_dict">Python 字典</a>
-          </li>
-          
           <li class="rule tag-python ">
             <a href="#py_set">Python Set</a>
           </li>
@@ -252,8 +253,28 @@
             <a href="#py_summary">Python 总结</a>
           </li>
           
+          <li class="rule tag-spring ">
+            <a href="#spring_yml">Spring YML</a>
+          </li>
+          
+          <li class="rule tag-python ">
+            <a href="#py_dict">Python 字典</a>
+          </li>
+          
+          <li class="rule tag-test ">
+            <a href="#%e5%be%97%e5%88%b0%e7%9a%84">Js Storsssage</a>
+          </li>
+          
+          <li class="rule tag-design ">
+            <a href="#design_pattern">设计模式</a>
+          </li>
+          
           <li class="rule tag-Java ">
             <a href="#java_list">Java 抽象数据类型</a>
+          </li>
+          
+          <li class="rule tag-java ">
+            <a href="#java_sort">java 排序</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -264,16 +285,8 @@
             <a href="#java_collections">Java 集合与映射</a>
           </li>
           
-          <li class="rule tag-design ">
-            <a href="#design_pattern">设计模式</a>
-          </li>
-          
           <li class="rule tag-redis ">
             <a href="#redis_memory">Redis 内存优化</a>
-          </li>
-          
-          <li class="rule tag-java ">
-            <a href="#java_sort">java 排序</a>
           </li>
           
           <li class="rule tag-js ">
@@ -297,11 +310,11 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_string">Redis String</a>
+            <a href="#redis_list">Redis List</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_list">Redis List</a>
+            <a href="#redis_string">Redis String</a>
           </li>
           
           <li class="rule tag-css ">
@@ -387,6 +400,79 @@
 </code></pre>
 
 <p>firstLineOfFile 方法没有抛出异常，但是如果它无法打开文件，或者无法从中读取，就会返回一个默认值。在处理必须关闭的资源时，始终要优先考虑用try-with-resources，而不是用 try-finally。这样得到的代码将更加简洁、清晰、产生的异常也更有价值。</p>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+
+        <div id="py_summary"></div>
+        <span class="hidden" itemprop="alternateName">py_summary</span>
+
+        <h2>
+            <a itemprop="url" href="#py_summary">
+                <span itemprop="name">Python 总结</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_summary.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">python</span>
+        
+
+        <div itemprop="description">
+            
+
+<h2 id="toc_0">写给大忙人看</h2>
+
+<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
+
+<h4 id="toc_2">字面量与构造方法</h4>
+
+<h5 id="toc_3">1. 字典</h5>
+
+<p>（1）字面量</p>
+
+<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
+</code></pre>
+
+<p>（2）构造方法
+~~~python
+lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
+      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
+      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
+      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
+~~~</p>
+
+<h5 id="toc_4">2. 集合</h5>
+
+<p>（1）字面量(set)</p>
+
+<pre><code class="python">fav_player = {'kobe', 'lebra'}
+</code></pre>
+
+<p>（2）构造方法</p>
+
+<pre><code class="python">fav_player = set({'kobe', 'lebra'})
+</code></pre>
+
+<p>frozenset没有字面量句法</p>
+
+<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
+</code></pre>
+
+<p>空集合必须写成 set()，{}只会表示为空字典</p>
+
+<pre><code class="python">empty_set = set()
+</code></pre>
 
         </div>
         <br>
@@ -654,70 +740,104 @@ for n in needles
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
 
-        <div id="py_summary"></div>
-        <span class="hidden" itemprop="alternateName">py_summary</span>
+        <div id="redis_clients"></div>
+        <span class="hidden" itemprop="alternateName">redis_clients</span>
 
         <h2>
-            <a itemprop="url" href="#py_summary">
-                <span itemprop="name">Python 总结</span>
+            <a itemprop="url" href="#redis_clients">
+                <span itemprop="name">Redis 客户端API</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_summary.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_clients.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
         Tags:
         
-            <span class="tags label label-default">python</span>
+            <span class="tags label label-default">redis</span>
         
 
         <div itemprop="description">
             
 
-<h2 id="toc_0">写给大忙人看</h2>
+<h4 id="toc_0">Python 客户端 redis-py</h4>
 
-<h5 id="toc_1">哈哈哈，若感兴趣可点击相应文章查阅（其实只有你会看）😀小丑竟是我自己。</h5>
+<p>redis-py 的基本使用方法、redis-py 的 Pipeline 的使用和 redis-py 的 Lua 脚本使用。</p>
 
-<h4 id="toc_2">字面量与构造方法</h4>
+<h4 id="toc_1">获取 redis-py</h4>
 
-<h5 id="toc_3">1. 字典</h5>
+<p>redis-py 需要 Python 2.7 以上版本。获取方式如下：</p>
 
-<p>（1）字面量</p>
+<pre><code class="shell"># 使用 pip 进行安装
+pip install redis
 
-<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
+# 使用 easy_install 安装
+easy_install redis
+
+# 源码安装：以2.10.5为例
+wget https://guthub.com/andymccurdy/redis-py/archive/2.10.5.zip
+uzip redis-2.10.5.zip
+cd redis-2.10.5
+# 安装 redis-py
+python setup.py install
 </code></pre>
 
-<p>（2）构造方法
-~~~python
-lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
-      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
-      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
-      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
-~~~</p>
+<h4 id="toc_2">redis-py 的基本使用方法</h4>
 
-<h5 id="toc_4">2. 集合</h5>
+<pre><code class="python">import redis
 
-<p>（1）字面量(set)</p>
+# 生产客户端连接：需 Redis 实例 IP 和端口两个参数
+client = redis.StrictRedis(host='127.0.0.1', port=6379)
 
-<pre><code class="python">fav_player = {'kobe', 'lebra'}
+# 执行命令，redis-py API 保留了 Redis API 的原始风格
+client.set(key, &quot;python-redis&quot;) # True
+client.get(key) # world
 </code></pre>
 
-<p>（2）构造方法</p>
+<h4 id="toc_3">redis-py 中的 Pipeline 的只使用方法</h4>
 
-<pre><code class="python">fav_player = set({'kobe', 'lebra'})
+<pre><code class="python">pipline = client.pipline(transaction=False) # transaction False 代表不使用事务
+
+# 将命令封装到 Pipline 中，此时命令并没有真正执行
+pipline.set('hello', 'world')
+pipline.incr('counter')
+
+# 执行 Pipline
+result = pipline.execute() # [True, 3]
 </code></pre>
 
-<p>frozenset没有字面量句法</p>
+<h4 id="toc_4">redis-py 中的 Lua 脚本使用方法</h4>
 
-<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
+<p>redid-py 提供了三个重要的函数实现 Lua 脚本的执行：</p>
+
+<pre><code class="python">eval(String script, int keyCount, String... params)
+script_load(String script)
+evalsha(String sha1, int keyCount, String... params)
 </code></pre>
 
-<p>空集合必须写成 set()，{}只会表示为空字典</p>
+<p>script：Lua 脚本内容；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
 
-<pre><code class="python">empty_set = set()
+<p>return redis.call(&lsquo;get&rsquo;, KEYS[1])  在 redis-py 中实现如下</p>
+
+<pre><code class="python">script = 'return redis.call('get', KEYS[1]) '
+client.eval(script, 1, 'hello') # world
+</code></pre>
+
+<p>script_load 和 evalsha 函数一起使用，首先使用 script_load 将脚本加载到 Redis 中</p>
+
+<pre><code class="python">scriptSha = client.script_load(script)
+</code></pre>
+
+<p>evalsha 函数用来执行脚本的哈希值，需要三个参数：</p>
+
+<p>scriptSha：脚本的 SHA1；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
+
+<p>执行效果如下</p>
+
+<pre><code class="python">client.evalsha(scriptSha, 1, 'hello')
 </code></pre>
 
         </div>
@@ -1065,239 +1185,6 @@ socket.oncloes = function() {
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
-
-        <div id="java_sort"></div>
-        <span class="hidden" itemprop="alternateName">java_sort</span>
-
-        <h2>
-            <a itemprop="url" href="#java_sort">
-                <span itemprop="name">java 排序</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_sort.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">java</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">排序算法类的模板</h3>
-
-<pre><code class="java">public class Example {
-    public static void stort (Compareable[] a) {
-        // 见算法 2.1、2.2、2.3、2.4、2.5 或 2.7
-    }
-    
-    private static boolean less (Comparable v, Comparable w) {
-        return v.compareTo(w) &lt; 0;
-    }
-    
-    private static void exah (Comparable[] a, int i, int j) {
-        Comparable t = a[i];
-        a[i] = a[j];
-        a[j] = t;
-    }
-    
-    private static void show (Comparable[] a) {
-        // 在单行中打印数组
-        for (int i=0; i&lt;a.length; i++)
-            System.out.print(a[i] + &quot;&quot;);
-        System.out.println();
-    }
-    
-    private static boolean isStored (Comparable[] a) {
-        // 测试数组元素是否有序
-        for (int i=1; i&lt;a.length; i++)
-            if (less(a[i], a[i-1])) return false;
-        return true;
-    }
-    
-    public static void main(String[] args) {
-        // 从标准输入读取字符串，将它们排序并输出
-        String[] a = In.readString();
-        sort(a);
-        assert isStored(a);
-        show(a);
-    }
-}
-</code></pre>
-
-<h3 id="toc_1">算法2.1 选择排序</h3>
-
-<p>找到数组中最小的元素，将它和数组的第一个元素交换位置（如果第一个元素就是最小元素则它和自己交换。）再在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置。如此往复，直到将整个数组排序。此为*选择排序*，因为它在不断选择剩余元素之中的最小值。</p>
-
-<pre><code class="java">public class Selection {
-    public static void sort(Comparable[] a) {
-        // 将 a[] 按升序排序
-        for (int i=0; i&lt;N; i++) {
-            // 将 a[i] 和 a[i+1..N] 中最小的元素交换
-            int min = i;
-            for (int j = i+1; j&lt;N; j++)
-                if (less(a[j], a[min])) min = j;
-            exah(a, i, min);
-        }
-    }
-    // less()、exch()、isSorted() 和 main() 方法见 “排序算法类模板”
-}
-</code></pre>
-
-<h3 id="toc_2">算法2.2 插入排序</h3>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-Java " style="padding-bottom:1em;">
-
-        <div id="java_list"></div>
-        <span class="hidden" itemprop="alternateName">java_list</span>
-
-        <h2>
-            <a itemprop="url" href="#java_list">
-                <span itemprop="name">Java 抽象数据类型</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_list.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">Java</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">抽象数据类型</h3>
-
-<p>　　抽象数据类型（abstract data type，ADT）是带有<strong>一组操作的一些对象的集合</strong></p>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_clients"></div>
-        <span class="hidden" itemprop="alternateName">redis_clients</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_clients">
-                <span itemprop="name">Redis 客户端API</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_clients.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h4 id="toc_0">Python 客户端 redis-py</h4>
-
-<p>redis-py 的基本使用方法、redis-py 的 Pipeline 的使用和 redis-py 的 Lua 脚本使用。</p>
-
-<h4 id="toc_1">获取 redis-py</h4>
-
-<p>redis-py 需要 Python 2.7 以上版本。获取方式如下：</p>
-
-<pre><code class="shell"># 使用 pip 进行安装
-pip install redis
-
-# 使用 easy_install 安装
-easy_install redis
-
-# 源码安装：以2.10.5为例
-wget https://guthub.com/andymccurdy/redis-py/archive/2.10.5.zip
-uzip redis-2.10.5.zip
-cd redis-2.10.5
-# 安装 redis-py
-python setup.py install
-</code></pre>
-
-<h4 id="toc_2">redis-py 的基本使用方法</h4>
-
-<pre><code class="python">import redis
-
-# 生产客户端连接：需 Redis 实例 IP 和端口两个参数
-client = redis.StrictRedis(host='127.0.0.1', port=6379)
-
-# 执行命令，redis-py API 保留了 Redis API 的原始风格
-client.set(key, &quot;python-redis&quot;) # True
-client.get(key) # world
-</code></pre>
-
-<h4 id="toc_3">redis-py 中的 Pipeline 的只使用方法</h4>
-
-<pre><code class="python">pipline = client.pipline(transaction=False) # transaction False 代表不使用事务
-
-# 将命令封装到 Pipline 中，此时命令并没有真正执行
-pipline.set('hello', 'world')
-pipline.incr('counter')
-
-# 执行 Pipline
-result = pipline.execute() # [True, 3]
-</code></pre>
-
-<h4 id="toc_4">redis-py 中的 Lua 脚本使用方法</h4>
-
-<p>redid-py 提供了三个重要的函数实现 Lua 脚本的执行：</p>
-
-<pre><code class="python">eval(String script, int keyCount, String... params)
-script_load(String script)
-evalsha(String sha1, int keyCount, String... params)
-</code></pre>
-
-<p>script：Lua 脚本内容；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
-
-<p>return redis.call(&lsquo;get&rsquo;, KEYS[1])  在 redis-py 中实现如下</p>
-
-<pre><code class="python">script = 'return redis.call('get', KEYS[1]) '
-client.eval(script, 1, 'hello') # world
-</code></pre>
-
-<p>script_load 和 evalsha 函数一起使用，首先使用 script_load 将脚本加载到 Redis 中</p>
-
-<pre><code class="python">scriptSha = client.script_load(script)
-</code></pre>
-
-<p>evalsha 函数用来执行脚本的哈希值，需要三个参数：</p>
-
-<p>scriptSha：脚本的 SHA1；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
-
-<p>执行效果如下</p>
-
-<pre><code class="python">client.evalsha(scriptSha, 1, 'hello')
-</code></pre>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
 
         <div id="java_collections"></div>
@@ -1368,6 +1255,39 @@ Set&lt;Map.Entry&lt;KeyType, ValueType&gt;&gt; entrySet()
 <pre><code class="java">KeyType getKey();
 ValueType getValue();
 ValueType setValue(ValueType newValue);
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-test " style="padding-bottom:1em;">
+
+        <div id="得到的"></div>
+        <span class="hidden" itemprop="alternateName">得到的</span>
+
+        <h2>
+            <a itemprop="url" href="#%e5%be%97%e5%88%b0%e7%9a%84">
+                <span itemprop="name">Js Storsssage</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/%e5%be%97%e5%88%b0%e7%9a%84.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">test</span>
+        
+
+        <div itemprop="description">
+            <pre><code class="java">public void hello() {
+    System.out.println(&quot;hello&quot;);
+}
 </code></pre>
 
         </div>
@@ -1471,6 +1391,132 @@ ValueType setValue(ValueType newValue);
 <p>4) <strong>对对象表示或实现的依赖</strong> 知道对象怎样表示、保存、定位或实现的客户在对象发生变化时可能也需要变化。对客户隐藏这些信息能阻止连锁变化。</p>
 
 <p>*设计模式*：Abstract Factory，Bridge，Memento，Proxy。</p>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-Java " style="padding-bottom:1em;">
+
+        <div id="java_list"></div>
+        <span class="hidden" itemprop="alternateName">java_list</span>
+
+        <h2>
+            <a itemprop="url" href="#java_list">
+                <span itemprop="name">Java 抽象数据类型</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_list.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">Java</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">抽象数据类型</h3>
+
+<p>　　抽象数据类型（abstract data type，ADT）是带有<strong>一组操作的一些对象的集合</strong></p>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
+
+        <div id="java_sort"></div>
+        <span class="hidden" itemprop="alternateName">java_sort</span>
+
+        <h2>
+            <a itemprop="url" href="#java_sort">
+                <span itemprop="name">java 排序</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_sort.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">java</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">排序算法类的模板</h3>
+
+<pre><code class="java">public class Example {
+    public static void stort (Compareable[] a) {
+        // 见算法 2.1、2.2、2.3、2.4、2.5 或 2.7
+    }
+    
+    private static boolean less (Comparable v, Comparable w) {
+        return v.compareTo(w) &lt; 0;
+    }
+    
+    private static void exah (Comparable[] a, int i, int j) {
+        Comparable t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+    }
+    
+    private static void show (Comparable[] a) {
+        // 在单行中打印数组
+        for (int i=0; i&lt;a.length; i++)
+            System.out.print(a[i] + &quot;&quot;);
+        System.out.println();
+    }
+    
+    private static boolean isStored (Comparable[] a) {
+        // 测试数组元素是否有序
+        for (int i=1; i&lt;a.length; i++)
+            if (less(a[i], a[i-1])) return false;
+        return true;
+    }
+    
+    public static void main(String[] args) {
+        // 从标准输入读取字符串，将它们排序并输出
+        String[] a = In.readString();
+        sort(a);
+        assert isStored(a);
+        show(a);
+    }
+}
+</code></pre>
+
+<h3 id="toc_1">算法2.1 选择排序</h3>
+
+<p>找到数组中最小的元素，将它和数组的第一个元素交换位置（如果第一个元素就是最小元素则它和自己交换。）再在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置。如此往复，直到将整个数组排序。此为*选择排序*，因为它在不断选择剩余元素之中的最小值。</p>
+
+<pre><code class="java">public class Selection {
+    public static void sort(Comparable[] a) {
+        // 将 a[] 按升序排序
+        for (int i=0; i&lt;N; i++) {
+            // 将 a[i] 和 a[i+1..N] 中最小的元素交换
+            int min = i;
+            for (int j = i+1; j&lt;N; j++)
+                if (less(a[j], a[min])) min = j;
+            exah(a, i, min);
+        }
+    }
+    // less()、exch()、isSorted() 和 main() 方法见 “排序算法类模板”
+}
+</code></pre>
+
+<h3 id="toc_2">算法2.2 插入排序</h3>
 
         </div>
         <br>
@@ -1622,60 +1668,6 @@ ValueType setValue(ValueType newValue);
 </tr>
 </tbody>
 </table>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_string"></div>
-        <span class="hidden" itemprop="alternateName">redis_string</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_string">
-                <span itemprop="name">Redis String</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_string.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">字符串</h3>
-
-<h4 id="toc_1">1 常用命令</h4>
-
-<p>(1) 设置值</p>
-
-<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
-</code></pre>
-
-<p>set 命令有几个选项</p>
-
-<ul>
-<li>ex seconds：为键设置秒级过期时间。</li>
-<li>px milliseconds：为键设置毫秒级过期时间</li>
-<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
-<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
-</ul>
-
-<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
-
-<pre><code class="shell">setnx key seconds value
-setnx key value
-</code></pre>
 
         </div>
         <br>
@@ -2101,6 +2093,60 @@ for article in {articles}
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_string"></div>
+        <span class="hidden" itemprop="alternateName">redis_string</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_string">
+                <span itemprop="name">Redis String</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_string.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">字符串</h3>
+
+<h4 id="toc_1">1 常用命令</h4>
+
+<p>(1) 设置值</p>
+
+<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+</code></pre>
+
+<p>set 命令有几个选项</p>
+
+<ul>
+<li>ex seconds：为键设置秒级过期时间。</li>
+<li>px milliseconds：为键设置毫秒级过期时间</li>
+<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
+<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
+</ul>
+
+<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+
+<pre><code class="shell">setnx key seconds value
+setnx key value
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-css " style="padding-bottom:1em;">
 
         <div id="css_bg&amp;bd"></div>
@@ -2313,5 +2359,7 @@ outline: 5px solid deeppink;
     <noscript></noscript>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="https://gniqizeuy.github.io//js/main.js"></script>
+    <script src="https://cdn.staticfile.org/highlight.js/10.0.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
   </body>
 </html>
