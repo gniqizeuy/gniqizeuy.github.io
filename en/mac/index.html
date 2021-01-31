@@ -5,7 +5,7 @@ other
 
 <p><strong>MAC地址</strong>（<strong>英语：Media Access Control Address）</strong>，直译为<strong>媒体访问控制地址</strong>，也称为<strong>局域网地址</strong>（LAN Address），<strong>以太网地址</strong>（Ethernet Address）或<strong>物理地址</strong>（Physical Address），它是一个用来确认网络设备位置的地址。在<a href="https://zh.wikipedia.org/wiki/OSI模型">OSI模型</a>中，第三层网络层负责IP地址，第二层数据链接层则负责MAC地址。MAC地址用于在网络中唯一标示一个网卡，一台设备若有一或多个网卡，则每个网卡都需要并会有一个唯一的MAC地址。</p>
 
-<h2 id="toc_0">格式</h2>
+<h3 id="toc_0">格式</h3>
 
 <p>MAC地址共48位（6个字节），以十六进制表示。</p>
 
@@ -15,13 +15,13 @@ other
 
 <p>01:xx:xx:xx:xx:xx是多播地址，01:00:5e:xx:xx:xx是<a href="https://zh.wikipedia.org/wiki/IPv4">IPv4</a>多播地址。</p>
 
-<h2 id="toc_1">举例</h2>
+<h3 id="toc_1">举例</h3>
 
 <p>假设现有一台路由器，含有一个WAN端口及四个LAN端口。它的WAN端口会有一个如61.61.61.61的IP地址，也会有一个如00:0A:02:0B:03:0C的MAC地址。而它的四个LAN端口会各分配到一个例如192.168.1.0/24的IP地址，四个端口各会有一个不同的MAC地址。</p>
 
-<h2 id="toc_2">查看MAC地址</h2>
+<h3 id="toc_2">查看MAC地址</h3>
 
-<h3 id="toc_3">Windows</h3>
+<h4 id="toc_3">Windows</h4>
 
 <p>在Windows命令提示符（cmd.exe）下运行 ipconfig /all 命令。假设运行结果含：</p>
 
@@ -30,7 +30,7 @@ other
 
 <p>那么其中的00-05-5D-E8-0F-A3就是本机网卡的MAC地址。如果计算机上有多个网络设备（无论物理或虚拟），则会有多组信息及MAC地址，需辨识相应的设备。</p>
 
-<h3 id="toc_4">Linux</h3>
+<h4 id="toc_4">Linux</h4>
 
 <p>第一种： 在 Linux下运行 ifconfig 命令，如下：</p>
 
@@ -66,6 +66,6 @@ other
 
 <p>其中$是linux下的命令提示符，一般情况下：$ 表示一般用户，# 表示root用户</p>
 
-<h2 id="toc_5">如何修改MAC地址</h2>
+<h3 id="toc_5">如何修改MAC地址</h3>
 
 <p>网卡MAC地址可以通过Windows设备管理员或其他工具修改。对于某些手机、平板电脑设备来说，其MAC地址／产品序号均由厂方连同销售或保修时的客户资料一并记录在案，而有关的MAC地址也不可通过常规手段来修改。</p>
