@@ -1,0 +1,71 @@
+js_module
+Js Module
+js 
+
+
+<h3 id="toc_0">使用ES6模块</h3>
+
+<p>ES6 最大的一个改进就是引入模块规范，这个规范全方位简化了之前出现的模块加载器，原生浏览器都支持意味着加载器及其他预处理都不再必要。从很多方面看，ES6 模块系统是集 AMD 和 CommonJS 之大成者。</p>
+
+<h4 id="toc_1">模块标签及定义</h4>
+
+<p>ECMAScript 6 模块是作为一整块 JavaScript 代码而存在的。带有 type=&ldquo;module&rdquo; 属性的 &lt;script&gt; 标签会告诉浏览器相关代码应该作为模块执行，而不是作为传统的脚本执行。模块可以嵌入在网页中，也可以作为外部文件引入：</p>
+
+<pre><code class="javascript">&lt;script type=&quot;module&quot;&gt;
+  // 模块代码
+&lt;/script&gt;
+
+&lt;script type=&quot;module&quot; src=&quot;path/to/myModule.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<p>即使与常规的 JavaScript 文件处理方式不同，Javascript 模块文件也没有专门的内容类型。</p>
+
+<p>与传统脚本不同，所有模块都会像 &lt;script defer&gt; 加载的脚本一样按顺序执行。解析到 &lt;script type=&ldquo;module&rdquo;&gt; 标签后会立即下载模块文件，但执行会延迟到文档解析完成。无论对嵌入的模块代码，还是引入的外部模块文件，都是这样。&lt;script type=&ldquo;module&rdquo;&gt; 在页面中出现的顺序就是它们的执行顺序。与 &lt;script defer&gt; 一样，修改模块标签的位置，无论是在 &lt;head&gt; 还是在 &lt;body&gt; 中，只会影响文件什么时候加载，而不会影响模块什么时候加载。</p>
+
+<p>下面演示了嵌入模块代码的执行顺序：</p>
+
+<pre><code class="javascript">&lt;!-- 第二个执行 --&gt;
+&lt;script type=&quot;module&quot;&gt;&lt;/script&gt;
+
+&lt;!-- 第三个执行 --&gt;
+&lt;script type=&quot;module&quot;&gt;&lt;/script&gt;
+
+&lt;!-- 第一个执行 --&gt;
+&lt;script&gt;&lt;/script&gt;
+</code></pre>
+
+<p>另外，可以改为外部 JS 模块定义：</p>
+
+<pre><code class="javascript">&lt;!-- 第二个执行 --&gt;
+&lt;script type=&quot;module&quot; src=&quot;module.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- 第三个执行 --&gt;
+&lt;script type=&quot;module&quot; src=&quot;module.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- 第一个执行 --&gt;
+&lt;script&gt;&lt;/script&gt;
+</code></pre>
+
+<p>也可以给模块标签添加 async 属性。这样影响就是双重的；不仅模块执行顺序不在与 &lt;script&gt; 标签在页面中的顺序绑定，模块也不会等待文档完成解析才执行。不过，入口模块仍必须等待其他依赖加载完成。</p>
+
+<p>与 &lt;script type=&ldquo;module&rdquo;&gt; 标签关联的 ES6 模块被认为是模块图中的入口模块。一个页面上有多少个入口模块没有限制，吃哦宁国府加载同一个模块也没有限制。同一个模块无论在一个页面中被加载多少次，也不管它是如何加载的，实际上都只会加载一次。</p>
+
+<pre><code class="javascript">&lt;-- moduleA 在这个页面只会被加载一次 --&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  improt './moduleA.js'
+&lt;/script&gt;
+&lt;script type=&quot;module&quot;&gt;
+  improt './moduleA.js'
+&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;./moduleA.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;./moduleA.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<p>嵌入的模块定义代码不能使用 import 加载到其他模块。只有通过外部文件加载的模块才可以使用 import 加载。因此，嵌入模块只适合作为入口模块。</p>
+
+<h4 id="toc_2">模块加载</h4>
+
+<p>ESMAScript6 模块的独特之处在于，既可以通过浏览器原生加载，也可以与第三方加载器和构建工具一起加载。有点浏览器还没有原生支持 ES6 模块，因此可能还需要第三方工具。事实上，很多时候使用第三方工具可能会更方便。</p>
+
+<p>完全支持 ESMAScript6 模块的浏览器可以从顶级模块加载整个依赖图，且是异步完成的。浏览器会解析入口模块。确定依赖。并发送对依赖模块的请求，这些文件通过网络返回后，浏览器就会解析它们的内容、确定它们的依赖、如果这些耳机依赖还没有加载，则会发送更多请求。这个异步递归加载过程会持续到整个应用程序的依赖图都解析完成。解析完依赖图，应用程序就可以正式加载模块了。</p>

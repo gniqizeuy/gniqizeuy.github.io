@@ -17,7 +17,7 @@
  
     <link rel="stylesheet" href="https://gniqizeuy.github.io//css/bootstrap.min.css">
     <link rel="stylesheet" href="https://gniqizeuy.github.io//css/main.css">
-    <link href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/vs2015.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/night-owl.min.css" rel="stylesheet">
   </head>
 
   <body>
@@ -53,10 +53,10 @@
         <span class="pull-right links">
           <ul>
             <li>
-              <a href="http://yslow.org/"><img height=24 src="https://gniqizeuy.github.io//img/yslow.png">YSlow.org</a>
+              <a href="https://github.com/gohugoio/hugo/releases/tag/v0.10"><img height=24 src="https://gniqizeuy.github.io//img/checkmyws.png">HUGO v0.10</a>
             </li>
             <li>
-              <a href="http://www.checkmy.ws/"><img width=24 src="https://gniqizeuy.github.io//img/checkmyws.png">Check my Website</a>
+              <a href="https://github.com/checkmyws/yslow-rules"><img width=24 src="https://gniqizeuy.github.io//img/yslow.png">yslow-rules</a>
             </li>
           </ul>
         </span>
@@ -108,10 +108,6 @@
         <a onclick="clickTag('spring');">Spring</a>
       </li>
       
-      <li>
-        <a onclick="clickTag('test');">Test</a>
-      </li>
-      
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
@@ -139,7 +135,9 @@
     <div class="col-xs-12">
       
         
-        <p><span style="color: red; font-size: 20px">code</span> <span style="color: green; font-size: 20px">eat</span> <span style="color: blue; font-size: 20px">sleep</span></p>
+        <p style="font-size: 20px;">
+    博客由HUGO搭建，使用yshow主题，HUGO版本为0.10
+</p>
       
     </div>
   </div>
@@ -153,15 +151,7 @@
         <ol>
           
           <li class="rule tag-java ">
-            <a href="#java_file">Java 文件</a>
-          </li>
-          
-          <li class="rule tag-python ">
-            <a href="#py_dict">Python 字典</a>
-          </li>
-          
-          <li class="rule tag-python ">
-            <a href="#py_set">Python Set</a>
+            <a href="#java_file">Java try with res</a>
           </li>
           
           <li class="rule tag-python ">
@@ -172,12 +162,28 @@
             <a href="#spring_yml">Spring YML</a>
           </li>
           
+          <li class="rule tag-python ">
+            <a href="#py_dict">Python Dict</a>
+          </li>
+          
+          <li class="rule tag-python ">
+            <a href="#py_set">Python Set</a>
+          </li>
+          
           <li class="rule tag-redis ">
-            <a href="#redis_memory">Redis 内存优化</a>
+            <a href="#redis_clients">Redis Client API</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_memory">Redis Memory</a>
           </li>
           
           <li class="rule tag-js ">
-            <a href="#js_storage">Js 客户端存储</a>
+            <a href="#js_module">Js Module</a>
+          </li>
+          
+          <li class="rule tag-js ">
+            <a href="#js_storage">Js Storage</a>
           </li>
           
           <li class="rule tag-js ">
@@ -188,16 +194,16 @@
             <a href="#linux%20%e6%96%87%e4%bb%b6%e4%b8%8e%e7%9b%ae%e5%bd%95%e6%9d%83%e9%99%90">Linux file permissions and directory configuration</a>
           </li>
           
-          <li class="rule tag-test ">
-            <a href="#%e5%be%97%e5%88%b0%e7%9a%84">Js Storsssage</a>
-          </li>
-          
           <li class="rule tag-js ">
             <a href="#java_collections">Java 集合与映射</a>
           </li>
           
           <li class="rule tag-design ">
-            <a href="#design_pattern">设计模式</a>
+            <a href="#abstract_factory">Abstract Factory</a>
+          </li>
+          
+          <li class="rule tag-design ">
+            <a href="#design_pattern">Design Pattern</a>
           </li>
           
           <li class="rule tag-Java ">
@@ -205,15 +211,11 @@
           </li>
           
           <li class="rule tag-java ">
-            <a href="#java_sort">java 排序</a>
+            <a href="#java_sort">java Sort</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_clients">Redis 客户端API</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_cmd">Redis 命令</a>
+            <a href="#redis_cmd">Redis Command</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -242,7 +244,11 @@
         <ol>
           
           <li class="rule tag-java ">
-            <a href="#java_file">Java 文件</a>
+            <a href="#java_file">Java try with res</a>
+          </li>
+          
+          <li class="rule tag-python ">
+            <a href="#py_dict">Python Dict</a>
           </li>
           
           <li class="rule tag-python ">
@@ -257,42 +263,6 @@
             <a href="#spring_yml">Spring YML</a>
           </li>
           
-          <li class="rule tag-python ">
-            <a href="#py_dict">Python 字典</a>
-          </li>
-          
-          <li class="rule tag-test ">
-            <a href="#%e5%be%97%e5%88%b0%e7%9a%84">Js Storsssage</a>
-          </li>
-          
-          <li class="rule tag-design ">
-            <a href="#design_pattern">设计模式</a>
-          </li>
-          
-          <li class="rule tag-Java ">
-            <a href="#java_list">Java 抽象数据类型</a>
-          </li>
-          
-          <li class="rule tag-java ">
-            <a href="#java_sort">java 排序</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_clients">Redis 客户端API</a>
-          </li>
-          
-          <li class="rule tag-js ">
-            <a href="#java_collections">Java 集合与映射</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_memory">Redis 内存优化</a>
-          </li>
-          
-          <li class="rule tag-js ">
-            <a href="#js_storage">Js 客户端存储</a>
-          </li>
-          
           <li class="rule tag-js ">
             <a href="#js_websocket">Js WebSocket</a>
           </li>
@@ -301,8 +271,44 @@
             <a href="#linux%20%e6%96%87%e4%bb%b6%e4%b8%8e%e7%9b%ae%e5%bd%95%e6%9d%83%e9%99%90">Linux file permissions and directory configuration</a>
           </li>
           
+          <li class="rule tag-design ">
+            <a href="#abstract_factory">Abstract Factory</a>
+          </li>
+          
+          <li class="rule tag-design ">
+            <a href="#design_pattern">Design Pattern</a>
+          </li>
+          
+          <li class="rule tag-Java ">
+            <a href="#java_list">Java 抽象数据类型</a>
+          </li>
+          
+          <li class="rule tag-java ">
+            <a href="#java_sort">java Sort</a>
+          </li>
+          
+          <li class="rule tag-js ">
+            <a href="#java_collections">Java 集合与映射</a>
+          </li>
+          
           <li class="rule tag-redis ">
-            <a href="#redis_cmd">Redis 命令</a>
+            <a href="#redis_clients">Redis Client API</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_memory">Redis Memory</a>
+          </li>
+          
+          <li class="rule tag-js ">
+            <a href="#js_module">Js Module</a>
+          </li>
+          
+          <li class="rule tag-js ">
+            <a href="#js_storage">Js Storage</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_cmd">Redis Command</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -342,7 +348,7 @@
 
         <h2>
             <a itemprop="url" href="#java_file">
-                <span itemprop="name">Java 文件</span>
+                <span itemprop="name">Java try with res</span>
             </a>
         </h2>
 
@@ -588,7 +594,7 @@ public String getMesUrl() {
 
         <h2>
             <a itemprop="url" href="#py_dict">
-                <span itemprop="name">Python 字典</span>
+                <span itemprop="name">Python Dict</span>
             </a>
         </h2>
 
@@ -740,6 +746,132 @@ for n in needles
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-Java " style="padding-bottom:1em;">
+
+        <div id="java_list"></div>
+        <span class="hidden" itemprop="alternateName">java_list</span>
+
+        <h2>
+            <a itemprop="url" href="#java_list">
+                <span itemprop="name">Java 抽象数据类型</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_list.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">Java</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">抽象数据类型</h3>
+
+<p>　　抽象数据类型（abstract data type，ADT）是带有<strong>一组操作的一些对象的集合</strong></p>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
+
+        <div id="java_sort"></div>
+        <span class="hidden" itemprop="alternateName">java_sort</span>
+
+        <h2>
+            <a itemprop="url" href="#java_sort">
+                <span itemprop="name">java Sort</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_sort.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">java</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">排序算法类的模板</h3>
+
+<pre><code class="java">public class Example {
+    public static void stort (Compareable[] a) {
+        // 见算法 2.1、2.2、2.3、2.4、2.5 或 2.7
+    }
+    
+    private static boolean less (Comparable v, Comparable w) {
+        return v.compareTo(w) &lt; 0;
+    }
+    
+    private static void exah (Comparable[] a, int i, int j) {
+        Comparable t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+    }
+    
+    private static void show (Comparable[] a) {
+        // 在单行中打印数组
+        for (int i=0; i&lt;a.length; i++)
+            System.out.print(a[i] + &quot;&quot;);
+        System.out.println();
+    }
+    
+    private static boolean isStored (Comparable[] a) {
+        // 测试数组元素是否有序
+        for (int i=1; i&lt;a.length; i++)
+            if (less(a[i], a[i-1])) return false;
+        return true;
+    }
+    
+    public static void main(String[] args) {
+        // 从标准输入读取字符串，将它们排序并输出
+        String[] a = In.readString();
+        sort(a);
+        assert isStored(a);
+        show(a);
+    }
+}
+</code></pre>
+
+<h3 id="toc_1">算法2.1 选择排序</h3>
+
+<p>找到数组中最小的元素，将它和数组的第一个元素交换位置（如果第一个元素就是最小元素则它和自己交换。）再在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置。如此往复，直到将整个数组排序。此为*选择排序*，因为它在不断选择剩余元素之中的最小值。</p>
+
+<pre><code class="java">public class Selection {
+    public static void sort(Comparable[] a) {
+        // 将 a[] 按升序排序
+        for (int i=0; i&lt;N; i++) {
+            // 将 a[i] 和 a[i+1..N] 中最小的元素交换
+            int min = i;
+            for (int j = i+1; j&lt;N; j++)
+                if (less(a[j], a[min])) min = j;
+            exah(a, i, min);
+        }
+    }
+    // less()、exch()、isSorted() 和 main() 方法见 “排序算法类模板”
+}
+</code></pre>
+
+<h3 id="toc_2">算法2.2 插入排序</h3>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
 
         <div id="redis_clients"></div>
@@ -747,7 +879,7 @@ for n in needles
 
         <h2>
             <a itemprop="url" href="#redis_clients">
-                <span itemprop="name">Redis 客户端API</span>
+                <span itemprop="name">Redis Client API</span>
             </a>
         </h2>
 
@@ -854,7 +986,7 @@ client.eval(script, 1, 'hello') # world
 
         <h2>
             <a itemprop="url" href="#redis_memory">
-                <span itemprop="name">Redis 内存优化</span>
+                <span itemprop="name">Redis Memory</span>
             </a>
         </h2>
 
@@ -928,12 +1060,109 @@ void *ptr                           // 数据指针
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
 
+        <div id="js_module"></div>
+        <span class="hidden" itemprop="alternateName">js_module</span>
+
+        <h2>
+            <a itemprop="url" href="#js_module">
+                <span itemprop="name">Js Module</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/js_module.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">使用ES6模块</h3>
+
+<p>ES6 最大的一个改进就是引入模块规范，这个规范全方位简化了之前出现的模块加载器，原生浏览器都支持意味着加载器及其他预处理都不再必要。从很多方面看，ES6 模块系统是集 AMD 和 CommonJS 之大成者。</p>
+
+<h4 id="toc_1">模块标签及定义</h4>
+
+<p>ECMAScript 6 模块是作为一整块 JavaScript 代码而存在的。带有 type=&ldquo;module&rdquo; 属性的 &lt;script&gt; 标签会告诉浏览器相关代码应该作为模块执行，而不是作为传统的脚本执行。模块可以嵌入在网页中，也可以作为外部文件引入：</p>
+
+<pre><code class="javascript">&lt;script type=&quot;module&quot;&gt;
+  // 模块代码
+&lt;/script&gt;
+
+&lt;script type=&quot;module&quot; src=&quot;path/to/myModule.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<p>即使与常规的 JavaScript 文件处理方式不同，Javascript 模块文件也没有专门的内容类型。</p>
+
+<p>与传统脚本不同，所有模块都会像 &lt;script defer&gt; 加载的脚本一样按顺序执行。解析到 &lt;script type=&ldquo;module&rdquo;&gt; 标签后会立即下载模块文件，但执行会延迟到文档解析完成。无论对嵌入的模块代码，还是引入的外部模块文件，都是这样。&lt;script type=&ldquo;module&rdquo;&gt; 在页面中出现的顺序就是它们的执行顺序。与 &lt;script defer&gt; 一样，修改模块标签的位置，无论是在 &lt;head&gt; 还是在 &lt;body&gt; 中，只会影响文件什么时候加载，而不会影响模块什么时候加载。</p>
+
+<p>下面演示了嵌入模块代码的执行顺序：</p>
+
+<pre><code class="javascript">&lt;!-- 第二个执行 --&gt;
+&lt;script type=&quot;module&quot;&gt;&lt;/script&gt;
+
+&lt;!-- 第三个执行 --&gt;
+&lt;script type=&quot;module&quot;&gt;&lt;/script&gt;
+
+&lt;!-- 第一个执行 --&gt;
+&lt;script&gt;&lt;/script&gt;
+</code></pre>
+
+<p>另外，可以改为外部 JS 模块定义：</p>
+
+<pre><code class="javascript">&lt;!-- 第二个执行 --&gt;
+&lt;script type=&quot;module&quot; src=&quot;module.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- 第三个执行 --&gt;
+&lt;script type=&quot;module&quot; src=&quot;module.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- 第一个执行 --&gt;
+&lt;script&gt;&lt;/script&gt;
+</code></pre>
+
+<p>也可以给模块标签添加 async 属性。这样影响就是双重的；不仅模块执行顺序不在与 &lt;script&gt; 标签在页面中的顺序绑定，模块也不会等待文档完成解析才执行。不过，入口模块仍必须等待其他依赖加载完成。</p>
+
+<p>与 &lt;script type=&ldquo;module&rdquo;&gt; 标签关联的 ES6 模块被认为是模块图中的入口模块。一个页面上有多少个入口模块没有限制，吃哦宁国府加载同一个模块也没有限制。同一个模块无论在一个页面中被加载多少次，也不管它是如何加载的，实际上都只会加载一次。</p>
+
+<pre><code class="javascript">&lt;-- moduleA 在这个页面只会被加载一次 --&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  improt './moduleA.js'
+&lt;/script&gt;
+&lt;script type=&quot;module&quot;&gt;
+  improt './moduleA.js'
+&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;./moduleA.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;./moduleA.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<p>嵌入的模块定义代码不能使用 import 加载到其他模块。只有通过外部文件加载的模块才可以使用 import 加载。因此，嵌入模块只适合作为入口模块。</p>
+
+<h4 id="toc_2">模块加载</h4>
+
+<p>ESMAScript6 模块的独特之处在于，既可以通过浏览器原生加载，也可以与第三方加载器和构建工具一起加载。有点浏览器还没有原生支持 ES6 模块，因此可能还需要第三方工具。事实上，很多时候使用第三方工具可能会更方便。</p>
+
+<p>完全支持 ESMAScript6 模块的浏览器可以从顶级模块加载整个依赖图，且是异步完成的。浏览器会解析入口模块。确定依赖。并发送对依赖模块的请求，这些文件通过网络返回后，浏览器就会解析它们的内容、确定它们的依赖、如果这些耳机依赖还没有加载，则会发送更多请求。这个异步递归加载过程会持续到整个应用程序的依赖图都解析完成。解析完依赖图，应用程序就可以正式加载模块了。</p>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+
         <div id="js_storage"></div>
         <span class="hidden" itemprop="alternateName">js_storage</span>
 
         <h2>
             <a itemprop="url" href="#js_storage">
-                <span itemprop="name">Js 客户端存储</span>
+                <span itemprop="name">Js Storage</span>
             </a>
         </h2>
 
@@ -1027,6 +1256,85 @@ Other-header: other-header-value
 <h3 id="toc_4">SessionStorage</h3>
 
 <p>SessionStorage 对象只存储<strong>会话信息</strong>，即数据只会存储到浏览器关闭。这跟浏览器关闭时会消失的会话 cookie 类似。存储在 SessionStorage 中的数据不受页面刷新影响，可以在浏览器崩溃并重启后恢复。（取决于浏览器，Firefox 和 WebKit支持，IE不支持）</p>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+
+        <div id="java_collections"></div>
+        <span class="hidden" itemprop="alternateName">java_collections</span>
+
+        <h2>
+            <a itemprop="url" href="#java_collections">
+                <span itemprop="name">Java 集合与映射</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_collections.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">标准库中的集合与映射</h3>
+
+<p>####　关于 Set 接口</p>
+
+<p>Set 接口代表不允许重复元的 Collection。由接口 SortedSet 给出的一种特殊类型的 Set 保证其中的各项处于有序的状态。因为一个</p>
+
+<p>Set IS-A Collection，所以用于访问继承 Collection 的 List 的项的方法也对 Set 有效。</p>
+
+<p>由 Set 所要求的一些特殊的操作是一些插入，删除以及（有效地）执行基本查找的能力。对于 Set，add 方法如果执行成功则返回 true，否则返回 false，因为被添加的项已经存在。保持各项以有序状态的 Set 的实现是 TreeSet。TreeSet 类的基本操作花费对数最坏情形时间。</p>
+
+<p>默认情况下，排序假设 TreeSet 中的项实现 Comparable 接口。另一种排序可以通过用 Comparator 实例化 TreeSet 来确定。例如，可以创建一个存储 String 对象的 TreeSet，通过使用 CaseInsensitiveCompare 函数对象忽略大小写。下面代码中，Set s 大小为1。</p>
+
+<pre><code class="java">Class CaseInsensitiveCompare implements Comparator&lt;String&gt; {
+    public int compare(String lhs, String rhs) {
+        return lhs.compareToIgnoreCase(rhs);
+    }
+}
+
+Set&lt;String&gt; s = new TreeSet&lt;&gt;(new CaseInsensitiveCompare());
+s.add(&quot;Hello&quot;);
+s.add(&quot;HeLLo&quot;);
+System.out.print(&quot;The size is: &quot; + s.size());
+</code></pre>
+
+<h4 id="toc_1">关于 Map 接口</h4>
+
+<p>Map 是一个接口，代表由键以及值组成的一些项的集合。键唯一。在 SortedMap 接口中，映射中的关键字保持逻辑上有序状态。SortedMap 接口的一种实现是 TreeMap 类。Map的基本操作包括诸如 isEmpty、clear、size 等方法，而且最重要的是包含以下方法：</p>
+
+<pre><code class="java">boolean containsKey(keyType key);
+ValueType get(keyType key);
+ValueType put(KeyType key, ValueType value);
+</code></pre>
+
+<p>get 返回 Map 中与 key 相关的值，或当 key 不存在时返回 null。如果在 Map 中不存在 null 值，那么由 get 返回的值可以用来确定 key 是否存在 Map 中。然而，如果存在 null，那么必须使用 containsKey。方法 put 把键值对置入 Map 中，或者返回 null，或者返回与key 相联系的值。</p>
+
+<p>通过一个 Map 进行迭代要比 Collection 复杂，因为 Map 不提供迭代器，而是根据 3 种方法，将 Map 对象的视图作为 Collection 对象返回。由于这些视图本身就是 Collection，因此它们可以被迭代。所提供的 3 种方法如下：</p>
+
+<pre><code class="java">Set&lt;KeyType&gt; keySet();
+Collection&lt;ValueType&gt; values();
+Set&lt;Map.Entry&lt;KeyType, ValueType&gt;&gt; entrySet()
+</code></pre>
+
+<p>方法 keySet 和 values 返回简单的集合（键不包含重复元，因此以一个 Set 对象的形式返回）。entrySet 方法是作为一些项而形成的 Set 对象被返回的（由于键唯一，因此不存在重复项）。每一项均由被嵌套的接口 Map.Entry 表示。对于类型 Map.Entry 的对象，其现有的方法包含访问键、键的值、以及改变键对应的值：</p>
+
+<pre><code class="java">KeyType getKey();
+ValueType getValue();
+ValueType setValue(ValueType newValue);
+</code></pre>
 
         </div>
         <br>
@@ -1185,109 +1493,113 @@ socket.oncloes = function() {
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-design " style="padding-bottom:1em;">
 
-        <div id="java_collections"></div>
-        <span class="hidden" itemprop="alternateName">java_collections</span>
+        <div id="abstract_factory"></div>
+        <span class="hidden" itemprop="alternateName">abstract_factory</span>
 
         <h2>
-            <a itemprop="url" href="#java_collections">
-                <span itemprop="name">Java 集合与映射</span>
+            <a itemprop="url" href="#abstract_factory">
+                <span itemprop="name">Abstract Factory</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_collections.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/abstract_factory.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
         Tags:
         
-            <span class="tags label label-default">js</span>
+            <span class="tags label label-default">design</span>
         
 
         <div itemprop="description">
             
 
-<h3 id="toc_0">标准库中的集合与映射</h3>
+<p>###　（Abstract Factory）抽象工厂模式——对象创建型模式</p>
 
-<p>####　关于 Set 接口</p>
+<h4 id="toc_0">１.　意图：</h4>
 
-<p>Set 接口代表不允许重复元的 Collection。由接口 SortedSet 给出的一种特殊类型的 Set 保证其中的各项处于有序的状态。因为一个</p>
+<p>提供一个接口以创建一系列相关或相互依赖的对象，而无需指定它们具体的类</p>
 
-<p>Set IS-A Collection，所以用于访问继承 Collection 的 List 的项的方法也对 Set 有效。</p>
+<h4 id="toc_1">2.  别名</h4>
 
-<p>由 Set 所要求的一些特殊的操作是一些插入，删除以及（有效地）执行基本查找的能力。对于 Set，add 方法如果执行成功则返回 true，否则返回 false，因为被添加的项已经存在。保持各项以有序状态的 Set 的实现是 TreeSet。TreeSet 类的基本操作花费对数最坏情形时间。</p>
+<p>Kit</p>
 
-<p>默认情况下，排序假设 TreeSet 中的项实现 Comparable 接口。另一种排序可以通过用 Comparator 实例化 TreeSet 来确定。例如，可以创建一个存储 String 对象的 TreeSet，通过使用 CaseInsensitiveCompare 函数对象忽略大小写。下面代码中，Set s 大小为1。</p>
+<h4 id="toc_2">3. 动机</h4>
 
-<pre><code class="java">Class CaseInsensitiveCompare implements Comparator&lt;String&gt; {
-    public int compare(String lhs, String rhs) {
-        return lhs.compareToIgnoreCase(rhs);
-    }
-}
+<p>考虑一个支持多种视感（look-and-feel）标准的用户界面工具包，例如 Motif 和 Presentation Manager。不同的视感风格诸如滚动条、窗口和按钮等用户界面“窗口组件”定义不同的外观和行为。为保证视感风格标准之间的可移植性，一个应用不应该为一个特定的视感外观硬编码它的窗口组件。在整个应用中实例化特定视感风格的窗口组件类将使得以后很难改变视感风格。</p>
 
-Set&lt;String&gt; s = new TreeSet&lt;&gt;(new CaseInsensitiveCompare());
-s.add(&quot;Hello&quot;);
-s.add(&quot;HeLLo&quot;);
-System.out.print(&quot;The size is: &quot; + s.size());
-</code></pre>
+<p>为解决这一问题，可以定义一个抽象的 WidgeFactory 类，这个类声明一个用来创建每一类的基本窗口组件的接口。每一个窗口组件都有一个抽象类，而具体子类则实现了窗口组件的特定视感风格。对于每一个抽象窗口组件类，WidgeFactory  接口都有一个返回新窗口组件对象的操作。客户调用这些操作以获得窗口组件实例，但客户并不知道其正在使用的是哪些具体类。这样客户就不依赖于一般的视感风格，如下图所示。</p>
 
-<h4 id="toc_1">关于 Map 接口</h4>
+<h4 id="toc_3">4. 适用性</h4>
 
-<p>Map 是一个接口，代表由键以及值组成的一些项的集合。键唯一。在 SortedMap 接口中，映射中的关键字保持逻辑上有序状态。SortedMap 接口的一种实现是 TreeMap 类。Map的基本操作包括诸如 isEmpty、clear、size 等方法，而且最重要的是包含以下方法：</p>
+<p>在一下情况下使用 Abstract Factory 模式</p>
 
-<pre><code class="java">boolean containsKey(keyType key);
-ValueType get(keyType key);
-ValueType put(KeyType key, ValueType value);
-</code></pre>
+<ul>
+<li>一个系统要独立于它的产品的创建、组合和表示</li>
+<li>一个系统要由多个产品系列中的一个来配置</li>
+<li>要强调一系列相关的产品对象的设计以便进行联合使用</li>
+<li>提供一个产品类库，但只想现实它们的接口而不是实现。</li>
+</ul>
 
-<p>get 返回 Map 中与 key 相关的值，或当 key 不存在时返回 null。如果在 Map 中不存在 null 值，那么由 get 返回的值可以用来确定 key 是否存在 Map 中。然而，如果存在 null，那么必须使用 containsKey。方法 put 把键值对置入 Map 中，或者返回 null，或者返回与key 相联系的值。</p>
+<h4 id="toc_4">5. 结构</h4>
 
-<p>通过一个 Map 进行迭代要比 Collection 复杂，因为 Map 不提供迭代器，而是根据 3 种方法，将 Map 对象的视图作为 Collection 对象返回。由于这些视图本身就是 Collection，因此它们可以被迭代。所提供的 3 种方法如下：</p>
+<h4 id="toc_5">6. 参与者</h4>
 
-<pre><code class="java">Set&lt;KeyType&gt; keySet();
-Collection&lt;ValueType&gt; values();
-Set&lt;Map.Entry&lt;KeyType, ValueType&gt;&gt; entrySet()
-</code></pre>
+<ul>
+<li>AbstractFactory （WidgetFactory）</li>
+</ul>
 
-<p>方法 keySet 和 values 返回简单的集合（键不包含重复元，因此以一个 Set 对象的形式返回）。entrySet 方法是作为一些项而形成的 Set 对象被返回的（由于键唯一，因此不存在重复项）。每一项均由被嵌套的接口 Map.Entry 表示。对于类型 Map.Entry 的对象，其现有的方法包含访问键、键的值、以及改变键对应的值：</p>
+<p>— 声明一个创建抽象产品对象的操作接口</p>
 
-<pre><code class="java">KeyType getKey();
-ValueType getValue();
-ValueType setValue(ValueType newValue);
-</code></pre>
+<ul>
+<li>ConcreteFactory （MotifWidgetFactory、PMWidgetFactory）</li>
+</ul>
 
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-test " style="padding-bottom:1em;">
+<p>— 实现创建具体产品对象的组件</p>
 
-        <div id="得到的"></div>
-        <span class="hidden" itemprop="alternateName">得到的</span>
+<ul>
+<li>AbstractProduct （Window、ScrollBar）</li>
+</ul>
 
-        <h2>
-            <a itemprop="url" href="#%e5%be%97%e5%88%b0%e7%9a%84">
-                <span itemprop="name">Js Storsssage</span>
-            </a>
-        </h2>
+<p>— 为一类产品对象声明一个接口</p>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/%e5%be%97%e5%88%b0%e7%9a%84.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
+<ul>
+<li>ConcreteProduct（MotifWindow、MotifScrollBar）</li>
+</ul>
 
-        Tags:
-        
-            <span class="tags label label-default">test</span>
-        
+<p>— 定义一个将被相应的具体工厂创建的产品对象。</p>
 
-        <div itemprop="description">
-            <pre><code class="java">public void hello() {
-    System.out.println(&quot;hello&quot;);
-}
+<p>— 实现 AbstractProduct 接口。</p>
+
+<ul>
+<li>Client</li>
+</ul>
+
+<p>— 仅使用由 AbstractFactory 和 AbstractProduct 类声明的接口。</p>
+
+<h4 id="toc_6">7. 协作</h4>
+
+<p>通常在运行时创建一个 ConcreteFactory 类的实例。这一具体的工厂创建具有特定实现的产品对象。为创建不同的产品对象，客户应使用不同的具体工厂。</p>
+
+<p>AbstractFactory 将产品对象的创建延迟到它的 ConcreteFactory 子类。</p>
+
+<h4 id="toc_7">8. 效果</h4>
+
+<p>AbstractFactory 模式有以下优点和缺点：</p>
+
+<p>1）<strong>它分离了具体的类</strong>　Abstract Factory 模式帮助你控制一个应用创建的对象的类。因为一个工厂封装创建产品对象的责任和过程，他将客户与类的实现分离。客户通过它们的抽象接口操纵实例。产品的类名也在具体工厂的实现中被隔离，即它们不出现在客户代码中。</p>
+
+<p>2）<strong>它是的易于交换产品系列</strong>　一个具体工厂类在一个应用中仅出现一次——在它初始化的时候。这使得该百年一个应用的具体工厂变得很容易。只需要该百年具体的工厂即可使用不同的产品配置。这是因为一个抽象工厂创建了一个完整的产品系列，所以整个产品系列会立刻改变。在用户界面的例子中，仅需转换到相应的工厂对象并重新从创建接口，就可实现从 Motif 窗口组件转换为 Presentation Manager 窗组件。</p>
+
+<p>3）<strong>它有利于产品的一致性</strong>　当一个系列中的产品对象被设计成一起工作时吗，一个应用一次只能使用同一个系列中的对象，这一点很重要，而 AbstractFactory 很容易做到这一点</p>
+
+<p>4）<strong>难以支持新种类的产品</strong>　难以扩产抽象工厂以生产新种类的产品。这是因为 AbstractFactory 接口确定了可以被创建的产品集合。支持新种类的产品就需要扩展该工厂接口，这将涉及 AbstractFactory 和及其所有子类的改变。在实现一节中会讨论这个问题的一个解决办法。</p>
+
+<h4 id="toc_8">9. 实现</h4>
+
+<pre><code class="java">
 </code></pre>
 
         </div>
@@ -1304,7 +1616,7 @@ ValueType setValue(ValueType newValue);
 
         <h2>
             <a itemprop="url" href="#design_pattern">
-                <span itemprop="name">设计模式</span>
+                <span itemprop="name">Design Pattern</span>
             </a>
         </h2>
 
@@ -1399,132 +1711,6 @@ ValueType setValue(ValueType newValue);
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-Java " style="padding-bottom:1em;">
-
-        <div id="java_list"></div>
-        <span class="hidden" itemprop="alternateName">java_list</span>
-
-        <h2>
-            <a itemprop="url" href="#java_list">
-                <span itemprop="name">Java 抽象数据类型</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_list.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">Java</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">抽象数据类型</h3>
-
-<p>　　抽象数据类型（abstract data type，ADT）是带有<strong>一组操作的一些对象的集合</strong></p>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
-
-        <div id="java_sort"></div>
-        <span class="hidden" itemprop="alternateName">java_sort</span>
-
-        <h2>
-            <a itemprop="url" href="#java_sort">
-                <span itemprop="name">java 排序</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_sort.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">java</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">排序算法类的模板</h3>
-
-<pre><code class="java">public class Example {
-    public static void stort (Compareable[] a) {
-        // 见算法 2.1、2.2、2.3、2.4、2.5 或 2.7
-    }
-    
-    private static boolean less (Comparable v, Comparable w) {
-        return v.compareTo(w) &lt; 0;
-    }
-    
-    private static void exah (Comparable[] a, int i, int j) {
-        Comparable t = a[i];
-        a[i] = a[j];
-        a[j] = t;
-    }
-    
-    private static void show (Comparable[] a) {
-        // 在单行中打印数组
-        for (int i=0; i&lt;a.length; i++)
-            System.out.print(a[i] + &quot;&quot;);
-        System.out.println();
-    }
-    
-    private static boolean isStored (Comparable[] a) {
-        // 测试数组元素是否有序
-        for (int i=1; i&lt;a.length; i++)
-            if (less(a[i], a[i-1])) return false;
-        return true;
-    }
-    
-    public static void main(String[] args) {
-        // 从标准输入读取字符串，将它们排序并输出
-        String[] a = In.readString();
-        sort(a);
-        assert isStored(a);
-        show(a);
-    }
-}
-</code></pre>
-
-<h3 id="toc_1">算法2.1 选择排序</h3>
-
-<p>找到数组中最小的元素，将它和数组的第一个元素交换位置（如果第一个元素就是最小元素则它和自己交换。）再在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置。如此往复，直到将整个数组排序。此为*选择排序*，因为它在不断选择剩余元素之中的最小值。</p>
-
-<pre><code class="java">public class Selection {
-    public static void sort(Comparable[] a) {
-        // 将 a[] 按升序排序
-        for (int i=0; i&lt;N; i++) {
-            // 将 a[i] 和 a[i+1..N] 中最小的元素交换
-            int min = i;
-            for (int j = i+1; j&lt;N; j++)
-                if (less(a[j], a[min])) min = j;
-            exah(a, i, min);
-        }
-    }
-    // less()、exch()、isSorted() 和 main() 方法见 “排序算法类模板”
-}
-</code></pre>
-
-<h3 id="toc_2">算法2.2 插入排序</h3>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
 
         <div id="redis_cmd"></div>
@@ -1532,7 +1718,7 @@ ValueType setValue(ValueType newValue);
 
         <h2>
             <a itemprop="url" href="#redis_cmd">
-                <span itemprop="name">Redis 命令</span>
+                <span itemprop="name">Redis Command</span>
             </a>
         </h2>
 
