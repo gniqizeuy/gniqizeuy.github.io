@@ -37,7 +37,57 @@ age: 18
 private String port
 </code></pre>
 
-<h4 id="toc_6">ConfigurationProperties</h4>
+<h4 id="toc_6">使用 EL 表达式解析 list、map、set</h4>
+
+<h5 id="toc_7">List</h5>
+
+<pre><code class="yaml">test:
+  list: aaa,bbb,ccc
+</code></pre>
+
+<p>调用时，借助 EL 表达式的 split() 函数进行切分</p>
+
+<pre><code class="java">@Value(&quot;#{'${test.list:}'.split(',')}&quot;)
+private List&lt;String&gt; testList;
+</code></pre>
+
+<p><code>:</code> 添加默认值，避免不配置这个 key 时程序报错。</p>
+
+<p>此时，若不配置 key 值，默认值为空串，长度 length=1 （不同于数组长度为0）解析出来的 list 元素个数不为空，解决方法如下</p>
+
+<pre><code class="java">@Value(&quot;#{'${test.list:}'.empty ? null : ''${test.list:}'.split(',')}&quot;)
+private List&lt;String&gt; testList;
+</code></pre>
+
+<h5 id="toc_8">Set</h5>
+
+<pre><code class="yaml">test:
+  list: 111,222,333,111
+</code></pre>
+
+<pre><code class="java">@Value(&quot;#{'${test.list:}'.empty ? null : ''${test.list:}'.split(',')}&quot;)
+private List&lt;Integer&gt; testList;
+
+// output: [111, 222, 333]
+</code></pre>
+
+<h5 id="toc_9">map</h5>
+
+<p>value 为 map 的 JSON 格式。</p>
+
+<pre><code class="yaml">test:
+  map: '{&quot;name&quot;: &quot;zhangsan&quot;, &quot;sex&quot;: &quot;male&quot;}'
+</code></pre>
+
+<pre><code class="java">@Value(&quot;#{${test.map}}&quot;)
+private Map&lt;String,String&gt; map;
+</code></pre>
+
+<p>Tip：- 使用此方式，必须在配置文件中配置 key 与 value。</p>
+
+<p>​         - @Value 注解不能和 @AllArgsConstructor 注解同时使用，否则会报错。</p>
+
+<h4 id="toc_10">ConfigurationProperties</h4>
 
 <pre><code class="yaml">student:
     name: jackma
@@ -56,7 +106,7 @@ public class Student {
 }
 </code></pre>
 
-<h4 id="toc_7">Environment</h4>
+<h4 id="toc_11">Environment</h4>
 
 <pre><code class="yaml">mes:
     url: xxxxxxx
