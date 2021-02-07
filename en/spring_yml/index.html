@@ -3,31 +3,31 @@ Spring YML
 spring 
 
 
-<h2 id="toc_0">数据格式</h2>
+<h3 id="toc_0">数据格式</h3>
 
-<h3 id="toc_1">基本类型</h3>
+<h4 id="toc_1">基本类型</h4>
 
 <pre><code class="yaml">name: taicang
 age: 18
 </code></pre>
 
-<h3 id="toc_2">键值对</h3>
+<h4 id="toc_2">键值对</h4>
 
 <pre><code class="yaml">person:
     name: taicang
     age: 18
 </code></pre>
 
-<h3 id="toc_3">数组</h3>
+<h4 id="toc_3">数组</h4>
 
 <pre><code class="yaml">favplayer:
     - kobe
     - lebra
 </code></pre>
 
-<h2 id="toc_4">读取方式</h2>
+<h3 id="toc_4">读取方式</h3>
 
-<h3 id="toc_5">@Value</h3>
+<h4 id="toc_5">@Value</h4>
 
 <pre><code class="yaml">server:
     port: 8080
@@ -37,7 +37,7 @@ age: 18
 private String port
 </code></pre>
 
-<h3 id="toc_6">ConfigurationProperties</h3>
+<h4 id="toc_6">ConfigurationProperties</h4>
 
 <pre><code class="yaml">student:
     name: jackma
@@ -56,7 +56,7 @@ public class Student {
 }
 </code></pre>
 
-<h3 id="toc_7">Environment</h3>
+<h4 id="toc_7">Environment</h4>
 
 <pre><code class="yaml">mes:
     url: xxxxxxx

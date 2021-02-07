@@ -5,11 +5,11 @@ js
 
 <p>cookie、浏览器存储API，IndexedDB</p>
 
-<h2 id="toc_0">背景：</h2>
+<h4 id="toc_0">背景：</h4>
 
 <p>直接在客户端存储用户信息出于用户想要将与自身有关的信息保存在用户的机器上。无聊是登录信息、个人偏好，还是其他数据。Web应用程序提供者需要将它们保存在用户的机器上。对此第一个解决方案就是cookie。cookie是古老的网景公司发明，由一份名为 <em>Persistent Client State: HTTP Cookies</em> 的规范定义。今天 cookie 只是在客户端存储数据的一个选项。</p>
 
-<h3 id="toc_1">1. cookie</h3>
+<h4 id="toc_1">1. cookie</h4>
 
 <p>HTTP cookie 通常也叫做 cookie，最初用于在客户端存储会话信息。这个规范要求服务器在响应 HTTP 请求时，通过发送 Set-Cookie HTTP 头部包含会话信息。例下面是包含这个头部的一个 HTTP 响应：</p>
 
@@ -28,7 +28,7 @@ Other-header: other-header-value
 
 <p>这些发送回服务器的额外信息可用于唯一标识发送请求的客户端。</p>
 
-<h3 id="toc_2">2. 限制</h3>
+<h4 id="toc_2">2. 限制</h4>
 
 <p>cookie 是与特定域绑定的。设置 cookie 后，它会与请求一起发送到创建它的域。这个限制能保证 cookie 中存储的信息只对认可的接收者开放，不被其他域访问。</p>
 
@@ -46,7 +46,7 @@ Other-header: other-header-value
 
 <p>如果 cookie 总数超过单个域的上限，浏览器就会删除之前设置的 cookie。</p>
 
-<h2 id="toc_3">Web Storage</h2>
+<h3 id="toc_3">Web Storage</h3>
 
 <p>Web Storage 的目的是解决通过客户端存储不需要频繁发送回服务器的数据时使用 cookie 的问题。</p>
 
@@ -60,7 +60,7 @@ Other-header: other-header-value
 
 <p>web storage 的第2版定义了两个对象：localStorage 和 sessionStorage。localStorage 是 <strong>永久存储机制</strong>，sessionStorage 是<strong>跨会话</strong>的存储机制。这两种浏览器 API 提供了在浏览器中不受页面刷新影响而存储数据的两种方式。2009年之后所有主要供应商发布的浏览器版本在window 对象上支持 localStorage 和 sessionStorage。（web storage 第一版曾用过 globalStorage，不过现已废弃）。</p>
 
-<p>### Storage 类型</p>
+<h4 id="toc_4">Storage 类型</h4>
 
 <p>Storage 类型用于保存键值对数据，直到存储空间上限（由浏览器决定）。Storage 的实例与其他对象一样，但增加了以下方法</p>
 
@@ -78,6 +78,6 @@ Other-header: other-header-value
 
 <p>Storage 类型只能存储<strong>字符串</strong>。非字符串数据在存储之后会自动转换为字符串。注意，这种转换不能在获取数据时撤销。</p>
 
-<h3 id="toc_4">SessionStorage</h3>
+<h4 id="toc_5">SessionStorage</h4>
 
 <p>SessionStorage 对象只存储<strong>会话信息</strong>，即数据只会存储到浏览器关闭。这跟浏览器关闭时会消失的会话 cookie 类似。存储在 SessionStorage 中的数据不受页面刷新影响，可以在浏览器崩溃并重启后恢复。（取决于浏览器，Firefox 和 WebKit支持，IE不支持）</p>
