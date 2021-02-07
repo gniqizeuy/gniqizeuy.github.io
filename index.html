@@ -203,15 +203,15 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_memory">Redis Memory</a>
-          </li>
-          
-          <li class="rule tag-redis ">
             <a href="#redis_string">Redis String</a>
           </li>
           
+          <li class="rule tag-spring ">
+            <a href="#spring_swagger">Spring Swagger</a>
+          </li>
+          
           <li class="rule tag-redis ">
-            <a href="#redis_list">Redis List</a>
+            <a href="#redis_memory">Redis Memory</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -224,6 +224,10 @@
           
           <li class="rule tag-redis ">
             <a href="#redis_config">Redis Config</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_list">Redis List</a>
           </li>
           
           <li class="rule tag-java ">
@@ -304,15 +308,15 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_memory">Redis Memory</a>
-          </li>
-          
-          <li class="rule tag-redis ">
             <a href="#redis_string">Redis String</a>
           </li>
           
+          <li class="rule tag-spring ">
+            <a href="#spring_swagger">Spring Swagger</a>
+          </li>
+          
           <li class="rule tag-redis ">
-            <a href="#redis_list">Redis List</a>
+            <a href="#redis_memory">Redis Memory</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -325,6 +329,10 @@
           
           <li class="rule tag-redis ">
             <a href="#redis_config">Redis Config</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_list">Redis List</a>
           </li>
           
           <li class="rule tag-java ">
@@ -1575,6 +1583,186 @@ public String getMesUrl() {
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
 
+        <div id="redis_string"></div>
+        <span class="hidden" itemprop="alternateName">redis_string</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_string">
+                <span itemprop="name">Redis String</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_string.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">字符串</h3>
+
+<h4 id="toc_1">1 常用命令</h4>
+
+<p>(1) 设置值</p>
+
+<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+</code></pre>
+
+<p>set 命令有几个选项</p>
+
+<ul>
+<li>ex seconds：为键设置秒级过期时间。</li>
+<li>px milliseconds：为键设置毫秒级过期时间</li>
+<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
+<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
+</ul>
+
+<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+
+<pre><code class="shell">setnx key seconds value
+setnx key value
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
+
+        <div id="spring_swagger"></div>
+        <span class="hidden" itemprop="alternateName">spring_swagger</span>
+
+        <h2>
+            <a itemprop="url" href="#spring_swagger">
+                <span itemprop="name">Spring Swagger</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/spring_swagger.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">spring</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">配置 Swagger</h3>
+
+<h4 id="toc_1">1）添加 Swagger 依赖</h4>
+
+<pre><code class="xml">&lt;!--Swagger 依赖--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
+    &lt;version&gt;3.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!--Swagger-UI 依赖--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
+    &lt;version&gt;3.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+
+</code></pre>
+
+<h4 id="toc_2">2）创建 Swagger 配置类</h4>
+
+<pre><code class="java">/**
+ * Swagger 配置文件
+ */
+@Configuration
+public class SwaggerConfig {
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage(&quot;com.example.demo.controller&quot;))
+
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title(&quot; RESTful APIs&quot;)
+                .description(&quot;RESTful APIs&quot;)
+                .termsOfServiceUrl(&quot;http://localhost:8080/&quot;)
+                .contact(&quot;long&quot;)
+                .version(&quot;1.0&quot;)
+                .build();
+    }
+}
+</code></pre>
+
+<p><code>@Configuration</code> ：让 spring 来加载该类配置</p>
+
+<p><code>@EnableSwagger2</code> ：启用 Swagger2.createRestApi 函数创建 Docket 的 Bean</p>
+
+<p><code>apiInfo()</code> ：用来展示该 API 的基本信息</p>
+
+<p><code>select()</code> ：返回一个 ApiSelectorBuilder 实例，用来控制哪些接口暴露给 Swagger 来展示</p>
+
+<p><code>api(RequestHandlerSelectors.basePackage())</code> ：配置包扫描路径。Swagger 会扫描包下面所有 Controller 定义的 API，并产生文档内容。如果不想产生 API，则使用注解 @Apilgnore</p>
+
+<h4 id="toc_3">3）编写接口文档</h4>
+
+<p><code>@Api</code> ：描述类/接口的主要路径</p>
+
+<p><code>@ApiOperation</code> ：描述方法用途，给 API 增加说明</p>
+
+<p><code>@ApiImplicitParam</code> ：描述方法的参数，给参数增加说明</p>
+
+<p><code>@ApiImplicitParams</code> ：描述方法的参数（ Multi-Params ），给参数增加说明</p>
+
+<p><code>@Apilgnore</code> ：忽略某类/方法/参数的文档</p>
+
+<pre><code class="java">@RestController
+public class HelloWorldController {
+    @ApiOperation(value = &quot;hello&quot;, notes = &quot;notes &quot;)
+    @RequestMapping(&quot;/hello&quot;)
+    public String hello() throws Exception {
+        return &quot;HelloWorld ,Spring Boot!&quot;;
+    }
+    //使用该注解忽略这个API
+    @ApiIgnore
+    @RequestMapping(value = &quot;/ignoreApi&quot;)
+    public String  ignoreApi() {
+        return &quot;HelloWorld ,Spring Boot!&quot;;
+    }
+
+
+    @ApiOperation(value = &quot;删除文章&quot;, notes = &quot;根据URL的id来指定删除对象&quot;)
+    @ApiImplicitParam(name = &quot;id&quot;, value = &quot;文章ID&quot;, required = true, dataType = &quot;Long&quot;)
+    @RequestMapping(value = &quot;/{id}&quot;, method = RequestMethod.DELETE)
+    public String del(@PathVariable(&quot;id&quot;) long id) {
+        //articleRepository.deleteById(id);
+        return &quot;success&quot;;
+    }
+}
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
         <div id="redis_memory"></div>
         <span class="hidden" itemprop="alternateName">redis_memory</span>
 
@@ -1654,16 +1842,16 @@ void *ptr                           // 数据指针
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
 
-        <div id="redis_string"></div>
-        <span class="hidden" itemprop="alternateName">redis_string</span>
+        <div id="redis_clients"></div>
+        <span class="hidden" itemprop="alternateName">redis_clients</span>
 
         <h2>
-            <a itemprop="url" href="#redis_string">
-                <span itemprop="name">Redis String</span>
+            <a itemprop="url" href="#redis_clients">
+                <span itemprop="name">Redis Client API</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_string.md" target="_blank">
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_clients.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -1675,29 +1863,233 @@ void *ptr                           // 数据指针
         <div itemprop="description">
             
 
-<h3 id="toc_0">字符串</h3>
+<h4 id="toc_0">Python 客户端 redis-py</h4>
 
-<h4 id="toc_1">1 常用命令</h4>
+<p>redis-py 的基本使用方法、redis-py 的 Pipeline 的使用和 redis-py 的 Lua 脚本使用。</p>
 
-<p>(1) 设置值</p>
+<h4 id="toc_1">获取 redis-py</h4>
 
-<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+<p>redis-py 需要 Python 2.7 以上版本。获取方式如下：</p>
+
+<pre><code class="shell"># 使用 pip 进行安装
+pip install redis
+
+# 使用 easy_install 安装
+easy_install redis
+
+# 源码安装：以2.10.5为例
+wget https://guthub.com/andymccurdy/redis-py/archive/2.10.5.zip
+uzip redis-2.10.5.zip
+cd redis-2.10.5
+# 安装 redis-py
+python setup.py install
 </code></pre>
 
-<p>set 命令有几个选项</p>
+<h4 id="toc_2">redis-py 的基本使用方法</h4>
+
+<pre><code class="python">import redis
+
+# 生产客户端连接：需 Redis 实例 IP 和端口两个参数
+client = redis.StrictRedis(host='127.0.0.1', port=6379)
+
+# 执行命令，redis-py API 保留了 Redis API 的原始风格
+client.set(key, &quot;python-redis&quot;) # True
+client.get(key) # world
+</code></pre>
+
+<h4 id="toc_3">redis-py 中的 Pipeline 的只使用方法</h4>
+
+<pre><code class="python">pipline = client.pipline(transaction=False) # transaction False 代表不使用事务
+
+# 将命令封装到 Pipline 中，此时命令并没有真正执行
+pipline.set('hello', 'world')
+pipline.incr('counter')
+
+# 执行 Pipline
+result = pipline.execute() # [True, 3]
+</code></pre>
+
+<h4 id="toc_4">redis-py 中的 Lua 脚本使用方法</h4>
+
+<p>redid-py 提供了三个重要的函数实现 Lua 脚本的执行：</p>
+
+<pre><code class="python">eval(String script, int keyCount, String... params)
+script_load(String script)
+evalsha(String sha1, int keyCount, String... params)
+</code></pre>
+
+<p>script：Lua 脚本内容；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
+
+<p>return redis.call(&lsquo;get&rsquo;, KEYS[1])  在 redis-py 中实现如下</p>
+
+<pre><code class="python">script = 'return redis.call('get', KEYS[1]) '
+client.eval(script, 1, 'hello') # world
+</code></pre>
+
+<p>script_load 和 evalsha 函数一起使用，首先使用 script_load 将脚本加载到 Redis 中</p>
+
+<pre><code class="python">scriptSha = client.script_load(script)
+</code></pre>
+
+<p>evalsha 函数用来执行脚本的哈希值，需要三个参数：</p>
+
+<p>scriptSha：脚本的 SHA1；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
+
+<p>执行效果如下</p>
+
+<pre><code class="python">client.evalsha(scriptSha, 1, 'hello')
+</code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_cmd"></div>
+        <span class="hidden" itemprop="alternateName">redis_cmd</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_cmd">
+                <span itemprop="name">Redis Command</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_cmd.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">全局命令</h3>
+
+<h5 id="toc_1">1. 查看所有键：</h5>
+
+<pre><code class="shell">keys *
+</code></pre>
+
+<h5 id="toc_2">2. 键总数：</h5>
+
+<pre><code class="shell">dbsize
+</code></pre>
+
+<h5 id="toc_3">3. 检查键是否存在</h5>
+
+<pre><code class="shell">exists key # 存在返回1，不存在返回0
+</code></pre>
+
+<h5 id="toc_4">4. 删除键</h5>
+
+<pre><code class="shell">del key [key ...] # 通用命令 无论值是什么类型都可删除 返回结果为成功删除键的个数，删除不存在的键，就会返回0
+</code></pre>
+
+<h5 id="toc_5">5. 键过期</h5>
+
+<pre><code class="shell">expire key seconds
+</code></pre>
+
+<p>ttl 命令返回键的剩余过期时间，有三种返回值</p>
 
 <ul>
-<li>ex seconds：为键设置秒级过期时间。</li>
-<li>px milliseconds：为键设置毫秒级过期时间</li>
-<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
-<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
+<li>大于等于0的整数：键剩余的过期时间</li>
+<li>-1：键没设置过期时间</li>
+<li>-2：键不存在</li>
 </ul>
 
-<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+<h5 id="toc_6">6. 键的数据结构类型</h5>
 
-<pre><code class="shell">setnx key seconds value
-setnx key value
+<pre><code class="shell">type key # 键不存在，则返回none
 </code></pre>
+
+        </div>
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_config"></div>
+        <span class="hidden" itemprop="alternateName">redis_config</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_config">
+                <span itemprop="name">Redis Config</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_config.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">启动</h3>
+
+<h4 id="toc_1">默认配置</h4>
+
+<p>redis-service  建议使用配置文件启动</p>
+
+<h4 id="toc_2">运行配置</h4>
+
+<p>redis-service &ndash;configKey &ndash;configValue &ndash;configKey2 &ndash; configValue2</p>
+
+<p>例：redis-server &ndash;port &ndash;6379</p>
+
+<h4 id="toc_3">配置文件启动</h4>
+
+<p>例：配置文件写在/opt/redis/redis.config</p>
+
+<p>redis-server /opt/redis/redis.config</p>
+
+<p>一些重要配置如下</p>
+
+<table>
+<thead>
+<tr>
+<td>配置名</td>
+<td>配置说明</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>port</td>
+<td>端口</td>
+</tr>
+
+<tr>
+<td>logfile</td>
+<td>日志文件</td>
+</tr>
+
+<tr>
+<td>dir</td>
+<td>Redis工作目录（存放持久化文件和日志文件）</td>
+</tr>
+
+<tr>
+<td>dacmonize</td>
+<td>是否以守护进程的方式启动Redis</td>
+</tr>
+</tbody>
+</table>
 
         </div>
         <br>
@@ -2115,264 +2507,6 @@ for article in {articles}
 <li>lpush + ltrim = Capped Collection（有限集合）</li>
 <li>lpush + brpop = Message Queue（消息队列）</li>
 </ul>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_clients"></div>
-        <span class="hidden" itemprop="alternateName">redis_clients</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_clients">
-                <span itemprop="name">Redis Client API</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_clients.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h4 id="toc_0">Python 客户端 redis-py</h4>
-
-<p>redis-py 的基本使用方法、redis-py 的 Pipeline 的使用和 redis-py 的 Lua 脚本使用。</p>
-
-<h4 id="toc_1">获取 redis-py</h4>
-
-<p>redis-py 需要 Python 2.7 以上版本。获取方式如下：</p>
-
-<pre><code class="shell"># 使用 pip 进行安装
-pip install redis
-
-# 使用 easy_install 安装
-easy_install redis
-
-# 源码安装：以2.10.5为例
-wget https://guthub.com/andymccurdy/redis-py/archive/2.10.5.zip
-uzip redis-2.10.5.zip
-cd redis-2.10.5
-# 安装 redis-py
-python setup.py install
-</code></pre>
-
-<h4 id="toc_2">redis-py 的基本使用方法</h4>
-
-<pre><code class="python">import redis
-
-# 生产客户端连接：需 Redis 实例 IP 和端口两个参数
-client = redis.StrictRedis(host='127.0.0.1', port=6379)
-
-# 执行命令，redis-py API 保留了 Redis API 的原始风格
-client.set(key, &quot;python-redis&quot;) # True
-client.get(key) # world
-</code></pre>
-
-<h4 id="toc_3">redis-py 中的 Pipeline 的只使用方法</h4>
-
-<pre><code class="python">pipline = client.pipline(transaction=False) # transaction False 代表不使用事务
-
-# 将命令封装到 Pipline 中，此时命令并没有真正执行
-pipline.set('hello', 'world')
-pipline.incr('counter')
-
-# 执行 Pipline
-result = pipline.execute() # [True, 3]
-</code></pre>
-
-<h4 id="toc_4">redis-py 中的 Lua 脚本使用方法</h4>
-
-<p>redid-py 提供了三个重要的函数实现 Lua 脚本的执行：</p>
-
-<pre><code class="python">eval(String script, int keyCount, String... params)
-script_load(String script)
-evalsha(String sha1, int keyCount, String... params)
-</code></pre>
-
-<p>script：Lua 脚本内容；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
-
-<p>return redis.call(&lsquo;get&rsquo;, KEYS[1])  在 redis-py 中实现如下</p>
-
-<pre><code class="python">script = 'return redis.call('get', KEYS[1]) '
-client.eval(script, 1, 'hello') # world
-</code></pre>
-
-<p>script_load 和 evalsha 函数一起使用，首先使用 script_load 将脚本加载到 Redis 中</p>
-
-<pre><code class="python">scriptSha = client.script_load(script)
-</code></pre>
-
-<p>evalsha 函数用来执行脚本的哈希值，需要三个参数：</p>
-
-<p>scriptSha：脚本的 SHA1；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
-
-<p>执行效果如下</p>
-
-<pre><code class="python">client.evalsha(scriptSha, 1, 'hello')
-</code></pre>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_cmd"></div>
-        <span class="hidden" itemprop="alternateName">redis_cmd</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_cmd">
-                <span itemprop="name">Redis Command</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_cmd.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">全局命令</h3>
-
-<h5 id="toc_1">1. 查看所有键：</h5>
-
-<pre><code class="shell">keys *
-</code></pre>
-
-<h5 id="toc_2">2. 键总数：</h5>
-
-<pre><code class="shell">dbsize
-</code></pre>
-
-<h5 id="toc_3">3. 检查键是否存在</h5>
-
-<pre><code class="shell">exists key # 存在返回1，不存在返回0
-</code></pre>
-
-<h5 id="toc_4">4. 删除键</h5>
-
-<pre><code class="shell">del key [key ...] # 通用命令 无论值是什么类型都可删除 返回结果为成功删除键的个数，删除不存在的键，就会返回0
-</code></pre>
-
-<h5 id="toc_5">5. 键过期</h5>
-
-<pre><code class="shell">expire key seconds
-</code></pre>
-
-<p>ttl 命令返回键的剩余过期时间，有三种返回值</p>
-
-<ul>
-<li>大于等于0的整数：键剩余的过期时间</li>
-<li>-1：键没设置过期时间</li>
-<li>-2：键不存在</li>
-</ul>
-
-<h5 id="toc_6">6. 键的数据结构类型</h5>
-
-<pre><code class="shell">type key # 键不存在，则返回none
-</code></pre>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_config"></div>
-        <span class="hidden" itemprop="alternateName">redis_config</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_config">
-                <span itemprop="name">Redis Config</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_config.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">启动</h3>
-
-<h4 id="toc_1">默认配置</h4>
-
-<p>redis-service  建议使用配置文件启动</p>
-
-<h4 id="toc_2">运行配置</h4>
-
-<p>redis-service &ndash;configKey &ndash;configValue &ndash;configKey2 &ndash; configValue2</p>
-
-<p>例：redis-server &ndash;port &ndash;6379</p>
-
-<h4 id="toc_3">配置文件启动</h4>
-
-<p>例：配置文件写在/opt/redis/redis.config</p>
-
-<p>redis-server /opt/redis/redis.config</p>
-
-<p>一些重要配置如下</p>
-
-<table>
-<thead>
-<tr>
-<td>配置名</td>
-<td>配置说明</td>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>port</td>
-<td>端口</td>
-</tr>
-
-<tr>
-<td>logfile</td>
-<td>日志文件</td>
-</tr>
-
-<tr>
-<td>dir</td>
-<td>Redis工作目录（存放持久化文件和日志文件）</td>
-</tr>
-
-<tr>
-<td>dacmonize</td>
-<td>是否以守护进程的方式启动Redis</td>
-</tr>
-</tbody>
-</table>
 
         </div>
         <br>

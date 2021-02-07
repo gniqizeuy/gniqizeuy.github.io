@@ -12,13 +12,13 @@
   color: #fff;
 }
 
-h2, h3, h4, h5 {
-  margin-bottom: 20px!important;
-  font-weight: 400!important;
-}
-
 h1 {
   font-weight: 400;
+}
+
+h3, h4, h5 {
+  margin-bottom: 21px!important;
+  font-weight: 600!important;
 }
 
 h2 .glyphicon {
