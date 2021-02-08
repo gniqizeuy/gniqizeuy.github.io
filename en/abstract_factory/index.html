@@ -21,7 +21,7 @@ design
 
 <h4 id="toc_3">4. 适用性</h4>
 
-<p>在一下情况下使用 Abstract Factory 模式</p>
+<p>在以下情况下使用 Abstract Factory 模式</p>
 
 <ul>
 <li>一个系统要独立于它的产品的创建、组合和表示</li>
@@ -86,5 +86,61 @@ design
 
 <h4 id="toc_8">9. 实现</h4>
 
-<pre><code class="java">
+<p>下面是实现 Abstract Factor 模式的一些有用技术：</p>
+
+<p>1）<strong>将工厂作为单件</strong></p>
+
+<p>一个应用中每个产品系列只需要一个 ConcreteFactory 的实例。因此工厂通常最好实现为一个 Singleton（）</p>
+
+<p>2）<strong>创建产品</strong></p>
+
+<p>Abstract Factory 仅声明一个创建产品的接口，真正创建产品是由 ConcreteFactory  子类实现的。最通常的方法是为每一个产品定义一个工厂方法。一个具体的工厂将为每个产品重定义该工厂方法以指定产品。虽然这样的实现很简单，但他要求每个产品系列都要有一个新的具体工厂子类，即使这些产品系列的差别很小。</p>
+
+<p>如果有多个可能的产品系列，具体工厂也可以使用 Prototype 模式来实现。具体工厂使用产品系列中每一个产品的原型实例来初始化，且它通过复制它的原型来创建新的产品。基于原型的的方法使得并非每个新的产品系列都需要一个新的具体工厂类。</p>
+
+<p>此处是 Smalltalk 中实现一个基于原型的工厂的方法。具体工厂在一个被称为 partCatalog 的字典中存储将被赋值的原型。方法 make：检索该原型并复制它。</p>
+
+<pre><code class="c++">make : partName
+     ^ (partCatalog at : partName) copy
+</code></pre>
+
+<p>具体工厂有一个方法用来向该目录中增加部件。</p>
+
+<pre><code class="c++">addPart : partTemplate named : partNum
+    partCatalog at : partName put : partTemplate
+</code></pre>
+
+<p>原型用一个符号标记它们，从而被增加到工厂中：</p>
+
+<pre><code class="c++">aFactory addPart : aPrototype named : #ACMEWidget
+</code></pre>
+
+<p>在将类作为第一类对象的语言中，这个基于原型的方法可能有所变化。你可以将这些语言中的类堪称是退化的工厂，它仅创建一种产品。你可以将类存储在一个具体工厂中，这个具体工厂在变量中创建了新的实例。你可以通过使用产品的类还不是子类初始化一个具体工厂实例来定义一个新的具体工厂。这一方法利用了语言的特点，而纯基于原型的方法是与语言无关的。</p>
+
+<h4 id="toc_9">10. 代码示例</h4>
+
+<p>使用 Abstract Factor 模式创建迷宫。</p>
+
+<p>类 MazeFactory 可以创建迷宫的构建。它构造房间、墙壁和房间之间的们。它可以用于从一个文件中读取迷宫说明图并建造相应迷宫的程序，或者用于一个随机建造迷宫的程序。建造迷宫的程序将 MazeFactory 作为一个参数，这样程序员就能指定要创建的房间、墙壁和门等类。</p>
+
+<pre><code class="c++">class MazeFactory {
+public:
+    MazeFactory();
+    
+    virtual Maze* MakeMaze() const {
+        return new Maze;
+    }
+    
+    virtual Wall* MakeWall() const {
+        return new Wall;
+    }
+    
+    virtual Room* MakeRoom(int n) const {
+        return new Room(n);
+    }
+    
+    virtual Door* MakeDoor(Room* r1, Room* r2) const {
+        return new Door(r1, r2);
+    }
+}
 </code></pre>

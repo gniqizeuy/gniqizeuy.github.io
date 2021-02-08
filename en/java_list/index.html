@@ -6,3 +6,121 @@ Java
 <h3 id="toc_0">抽象数据类型</h3>
 
 <p>　　抽象数据类型（abstract data type，ADT）是带有<strong>一组操作的一些对象的集合</strong></p>
+
+<h3 id="toc_1">Java Collections API 中的表</h3>
+
+<p>在类库中，Java 包含一些普通数据结构的实现。叫做 <strong>Collections API</strong>。表 ADT 是在 Collections API 中实现的数据结构之一。</p>
+
+<h4 id="toc_2">collection 接口</h4>
+
+<p>Collections API 位于 java.util 包中。集合（collection）的概念在 Collection 接口中得到抽象，它存储一组类型相同的对象，以下是接口一些重要的部分</p>
+
+<pre><code class="java">public interface Collection&lt;AnyType&gt; extends Interable&lt;AnyType&gt; {
+    int size(); // 返回集合中项数
+    boolean isEmpty();  // 当且仅当集合的大小为 0 时返回 true
+    void clear();   // 
+    boolean contains(AnyType x);
+    boolean add(AnyType x); // 添加元素，成功返回 true 特定集合不允许重复，插入重复项时， add可能会失败
+    boolean remove(AnyType x);  // 删除元素，成功返回 true 删除项不在集合中，返回false
+    java.util.Iterator&lt;AnyType&gt; iterator();
+}
+</code></pre>
+
+<p>Collection 接口扩展了 Iterable 接口。<strong>实现 Iterable 接口的类可以拥有增强的 for 循环</strong>。下面例程用来打印任意集合中的所有项。</p>
+
+<pre><code class="java">public static &lt;AnyType&gt; void print(Collection&lt;AnyType&gt; coll) {
+    for(AnyType item : coll)
+        System.out,println(item);
+}
+</code></pre>
+
+<h4 id="toc_3">Iterator 接口</h4>
+
+<p>实现 Iterable 接口的集合必须提供一个 iterator 方法，该方法返回一个 Iterator 类型的对象。该 Iterator 是一个在 java.util 包中定义的接口</p>
+
+<pre><code class="java">public interface Iterator&lt;AnyType&gt; {
+    boolean hasNext();
+    AnyType next();
+    void remove();
+}
+</code></pre>
+
+<p>Iterator 接口的思路是，通过 iterator 方法，每个集合均可创建并返回给客户一个实现 Iterator 接口的对象，并将当前位置的概念在对象内部存储下来。</p>
+
+<p>每次对 next 的调用都给出集合的（尚未见到的）下一项。因此，第1次调用 next 给出第1项，第2此调用给出第2项。hasNext 用来告诉是否存在下一项。当编译器见到一个正在用于 Iterable 的对象的增强的 for 循环时，它会用对 iterator 方法的那些调用代替增强的 for 循环以得到一个 Iterator 对象，然后调用 next 和 hasNext。因此之前 print 例程由编译器重写。</p>
+
+<pre><code class="java">public static &lt;AnyType&gt; void print(Collection&lt;AnyType&gt; coll) {
+    Iterator&lt;AnyType&gt; itr = coll.iterator();
+    
+    while(itr.hasNext()) {
+        AnyType item = itr.next();
+        System.out,println(item);
+    }
+}
+</code></pre>
+
+<p>由于 Iterator 接口中的现有方法有限，因此，很难使用 Iterator 做简单遍历 Collection 以外的任何工作，Iterator 接口还包含 remove 方法。该方法可以<strong>删除由 next 最新返回的项</strong>（此后将不能再调用 remove，直到对 next 再一次调用以后）。虽然 Collection 接口也包含一个 remove 方法，但使用 Iterator 的 remove 方法有更多的优点。</p>
+
+<p>Iterator 的 remove 方法主要优点在于：Collection 的 remove 方法必须首先找出要被删除的项。如果知道所要删除的项的准确位置，那么删除它的开销会小的多</p>
+
+<p>当直接使用 Iterator （而不是通过一个增强的 for 循环间接使用）时，重要的是要记住一个基本原则：如果对正在被迭代的集合进行<strong>结构上的改变</strong>（即 add、remove 或 clear 方法），<strong>那么迭代器就不再合法</strong>（并且在其后使用该迭代器时将会有 Concurrent-ModificationException 异常被抛出）。为避免迭代器准备给出某一项作为下一项而该项此后或者被删除，或者也许一个新的项正好插入该项的前面。有必要记住上述法则。这意味着，只有在需要立即使用一个迭代器的时候，才应该获取迭代器。然而，如果迭代器调用了自己的 remove 方法，那么这个迭代器就仍然是合法的。这是使用迭代器进行 remove 的第二个原因。</p>
+
+<h4 id="toc_4">List 接口、ArrayList 类和 LinkedList 类</h4>
+
+<p>List 接口继承了 Collection 接口，因此它包含 Collection 接口的所有方法，外加一些其他方法。</p>
+
+<pre><code class="java">public interface List&lt;AnyType&gt; extends Collection&lt;AnyType&gt; {
+    AnyType get(int idx);
+    AnyType set(int idx, AnyType newVal);
+    void add(int idx, AnyType newVal);
+    void remove(int idx);
+    
+    ListIterator&lt;AnyType&gt; listIterator(int pos);
+}
+</code></pre>
+
+<p>get 和 set 可以访问或改变通过由位置牵引 idx 给定的表中指定位置上的项。索引 0 位于表的前端，索引 size() -1 代表表中最后一项，而索引 size() 表示新添加的项可以被放置的位置。add 使得在位置 idx 处置入一个新的项（并把其后的项向后推移一个位置）。除以 AnyType 作为参数的标准的 remove 外，remove 还被重载以删除指定位置上的项。最后，List 接口指定 ListIterator 方法，它产生必通常认为的还要复杂的迭代器。</p>
+
+<p>List ADT 有两种流行的实现方式。</p>
+
+<p><strong>ArrayList</strong> 类提供了 List ADT 的一种<strong>可增长数组</strong>的实现。使用 ArrayList 的优点在于，对 get 和 set 的调用花费<strong>常数时间</strong>。缺点是新项的插入和现有项的删除代价昂贵，除非变动在 ArrayList 的末端进行。</p>
+
+<p><strong>LinkedList</strong> 类则提供了 List ADT 的<strong>双链表</strong>实现 。使用 LinkedList 的优点在于，新项的插入和现有项的删除开销很小，这里假设变动项的位置是已知的，这意味着，在表的前端进行添加和删除均花费常数时间，由此， LinkedList 提供了方法 <code>addFirst</code> 和 <code>removeFirst</code>、<code>addLast</code> 和 <code>removeLast</code>、以及 <code>getFirst</code> 和 <code>getLast</code> 等有效的添加、删除和访问表两端的项。使用 LinkedList 的缺点是它不容易作索引，因此对 get 的调用是昂贵的，除非调用非常接近表的端点（如果对 get 的调用是对接近表后端的项进行，那么搜索的进行可以从表的后部开始）。</p>
+
+<p>为了看出差别，考察一个对 List 进行操作的某些方法。首先通过在末端添加一些项来构造一个 List</p>
+
+<pre><code class="java">public static void makeList1(List&lt;Integer&gt; lkt, int N) {
+    list.clear();
+    for(int i = 0; i &lt; N; i++)
+        list.add(i);
+}
+</code></pre>
+
+<p>不管是 ArrayList 还是 LinkedList 作为参数被传递，makeList1 的运行时间都是 *O(N)*，因为对 add 的每次调用都是在表的末端进行从而均花费常数时间（可以忽略对 ArrayList 偶尔进行的扩展）。另一方面，如果我们通过在表的前端添加一些项来构造一个 List。</p>
+
+<pre><code class="java">public static void makeList1(List&lt;Integer&gt; lkt, int N) {
+    list.clear();
+    for(int i = 0; i &lt; N; i++)
+        list.add(0, i);
+}
+</code></pre>
+
+<p>那么，对于 LinkedList 它的运行时间是 <em>O(N)*，但是对于 ArrayList 其运行时间则是*O(N^2)*，因为在 ArrayList 中，在前端进行添加时一个 *O(N)</em> 操作。</p>
+
+<p>下一个例子是计算 List 中的数的和：</p>
+
+<pre><code class="java">public static int sun(List&lt;Integer&gt; lst) {
+    int total = 0;
+    for(int i = 0; i &lt; N; i++)
+        total += list.get(i);
+    return total
+}
+</code></pre>
+
+<p>这里，ArrayList 的运行时间为*O(N)*，但对于 LinkedList 来说，其运行时间为*O(N^2)*，因为在 LinkList 中，对 get 的调用为*O(N)*。可是，要是使用一个增强的 for 循环，那么它对任意 List 的运行时间都是*O(N)*，因为迭代器将有效地从一项到下一项推进。</p>
+
+<p>对搜索而言，ArrayList 和 LinkedList 都是低效地，对 Collection 的 contains 和 remove 两个方法（以 AnyType 为参数）的调用均花费线性时间。</p>
+
+<p>在 ArrayList 中有一个容器的概念，它表示基础数组的大小。在需要的时候，ArrayList 将自动增加其容量以保证它至少具有表的大小。如果该大小的早期估计存在，那么 ensureCapacity 可以设置容量为一个足够大的量以避免数组容量以后的扩展。再有，trimToSize 可以在所有的 ArrayList 添加操作完成之后使用以避免浪费空间。</p>
+
+<p><strong>remove 方法对 LinkedList 类的使用</strong></p>
