@@ -7,7 +7,6 @@
 }
 
 .header {
-  background-color: #303658;
   padding-top: 60px;
   color: #fff;
 }
@@ -17,7 +16,7 @@ h1 {
 }
 
 pre {
-  background-color: #1e1e1e;
+  background-color: #fff;
 }
 
 h3, h4, h5 {
