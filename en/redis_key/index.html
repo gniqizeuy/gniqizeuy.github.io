@@ -1,0 +1,58 @@
+redis_key
+Redis key
+redis 
+
+
+<h3 id="toc_0">Redis 键管理</h3>
+
+<p>单个键、遍历键、数据库管理</p>
+
+<h4 id="toc_1">单个键管理</h4>
+
+<h5 id="toc_2">1.  键重命名</h5>
+
+<pre><code class="shell">rename key newkey
+</code></pre>
+
+<p>如果在 rename 之前，键已存在，那么它的值也将被覆盖</p>
+
+<p>防止强行 rename key，Redis 提供了 renamex 命令，确保只有 newkey 不存在时才被覆盖，newkey 存在时返回 0 代表未完成重命名。</p>
+
+<p>在使用重命名命令时，有两点需要注意</p>
+
+<ul>
+<li>由于重命名键期间会执行 del 命令删除旧的键，如果键对应的值比较大，会存在阻塞 Redis 的可能性，这点不要忽略</li>
+<li>如果 rename 和 renamex 中的 key 和 newkey 如果是相同的，在 Redis 3.2 和之前版本返回结果略有不同。</li>
+</ul>
+
+<p>Redis 3.2 中会返回 OK</p>
+
+<p>Redis 3.2 之前版本会提示错误</p>
+
+<pre><code class="shell">127.0.0.1&gt; rename key key
+(error) ERR source and destination objects are the same
+</code></pre>
+
+<h5 id="toc_3">2.  随机返回一个键</h5>
+
+<pre><code class="shell">randomkey
+</code></pre>
+
+<h5 id="toc_4">3. 键过期</h5>
+
+<p>除了 expire、ttl 命令以外，Redis 还提供了 expireat、pexpire、pexpireat、pttl、persist 等一系列命令</p>
+
+<ul>
+<li><code>expire key seconds</code>：键在 seconds 秒后过期</li>
+<li><code>expireat key timestamp</code>：键在秒级时间戳 timestamp 后过期</li>
+</ul>
+
+<p>ttl 命令和 pttl 都可以查询键的剩余过期时间，但是 pttl 精度更高可以达到毫秒级别，有 3 种返回值：</p>
+
+<ul>
+<li>大于等于 0 的整数：键剩余的过期时间（ttl 是秒，pttl 是毫秒）</li>
+<li>-1：键没有设置过期时间</li>
+<li>-2：键不存在</li>
+</ul>
+
+<p>expireat 命令可以设置秒的</p>
