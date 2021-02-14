@@ -28,15 +28,16 @@
 <div id="top"></div>
 
 <div class="header">
-  <div class="hidden-xs stars_1"></div>
-  <div class="hidden-xs stars_2"></div>
-
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <a class="navbar-brand" href="#">taicang</a>
       <ul class="nav navbar-nav">
         <li>
           <a onclick="clickTag('all');">All</a>
+        </li>
+        
+        <li>
+          <a onclick="clickTag('');"></a>
         </li>
         
         <li>
@@ -102,30 +103,35 @@
     </nav>
 </div>
 
-<div class="container">
+<div style="display: grid; grid-template-columns: 31.5% 68.5%">
+  <div style="padding-top: 30px; padding-left: 22em">
   <div class="row">
     <div class="col-xs-12">
-      <div class="summary hidden-xs">
+      <div class="hidden-xs">
         <ol>
           
-          <li class="rule tag-js ">
-            <a href="#java_collections">Java collections</a>
+          <li class="rule tag-java ">
+            <a href="#java_file">Java try with res</a>
+          </li>
+          
+          <li class="rule tag- ">
+            <a href="#java_tree">Java Tree</a>
           </li>
           
           <li class="rule tag-java ">
             <a href="#java_primitive">Java Primitive</a>
           </li>
           
-          <li class="rule tag-java ">
-            <a href="#java_file">Java try with res</a>
-          </li>
-          
           <li class="rule tag-Java ">
             <a href="#java_list">Java list</a>
           </li>
           
+          <li class="rule tag-js ">
+            <a href="#java_collections">Java collections</a>
+          </li>
+          
           <li class="rule tag-python ">
-            <a href="#py_set">Python Set</a>
+            <a href="#py_dict">Python Dict</a>
           </li>
           
           <li class="rule tag-python ">
@@ -133,11 +139,7 @@
           </li>
           
           <li class="rule tag-python ">
-            <a href="#py_dict">Python Dict</a>
-          </li>
-          
-          <li class="rule tag-js ">
-            <a href="#js_module">Js Module</a>
+            <a href="#py_set">Python Set</a>
           </li>
           
           <li class="rule tag-js ">
@@ -148,12 +150,16 @@
             <a href="#js_websocket">Js WebSocket</a>
           </li>
           
-          <li class="rule tag-spring ">
-            <a href="#spring_yml">Spring YML</a>
+          <li class="rule tag-js ">
+            <a href="#js_event">Js event</a>
           </li>
           
-          <li class="rule tag-spring ">
-            <a href="#spring_test">Spring Test</a>
+          <li class="rule tag-js ">
+            <a href="#js_module">Js Module</a>
+          </li>
+          
+          <li class="rule tag-js ">
+            <a href="#js_promise">Js Promise</a>
           </li>
           
           <li class="rule tag-spring ">
@@ -164,16 +170,24 @@
             <a href="#spring_swagger">Spring Swagger</a>
           </li>
           
+          <li class="rule tag-spring ">
+            <a href="#spring_yml">Spring YML</a>
+          </li>
+          
+          <li class="rule tag-spring ">
+            <a href="#spring_test">Spring Test</a>
+          </li>
+          
           <li class="rule tag-linux ">
             <a href="#linux%20%e6%96%87%e4%bb%b6%e4%b8%8e%e7%9b%ae%e5%bd%95%e6%9d%83%e9%99%90">Linux permissions</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_string">Redis String</a>
+            <a href="#redis_memory">Redis Memory</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_memory">Redis Memory</a>
+            <a href="#redis_string">Redis String</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -213,116 +227,7 @@
           </li>
           
           <li class="rule tag-other ">
-            <a href="#mac">MAC adr</a>
-          </li>
-          
-        </ol>
-      </div>
-      <div class="summary-small visible-xs">
-        <ol>
-          
-          <li class="rule tag-java ">
-            <a href="#java_file">Java try with res</a>
-          </li>
-          
-          <li class="rule tag-java ">
-            <a href="#java_primitive">Java Primitive</a>
-          </li>
-          
-          <li class="rule tag-Java ">
-            <a href="#java_list">Java list</a>
-          </li>
-          
-          <li class="rule tag-js ">
-            <a href="#java_collections">Java collections</a>
-          </li>
-          
-          <li class="rule tag-python ">
-            <a href="#py_summary">Python Summary</a>
-          </li>
-          
-          <li class="rule tag-python ">
-            <a href="#py_set">Python Set</a>
-          </li>
-          
-          <li class="rule tag-python ">
-            <a href="#py_dict">Python Dict</a>
-          </li>
-          
-          <li class="rule tag-js ">
-            <a href="#js_module">Js Module</a>
-          </li>
-          
-          <li class="rule tag-js ">
-            <a href="#js_storage">Js Storage</a>
-          </li>
-          
-          <li class="rule tag-js ">
-            <a href="#js_websocket">Js WebSocket</a>
-          </li>
-          
-          <li class="rule tag-spring ">
-            <a href="#spring_swagger">Spring Swagger</a>
-          </li>
-          
-          <li class="rule tag-spring ">
-            <a href="#spring_yml">Spring YML</a>
-          </li>
-          
-          <li class="rule tag-spring ">
-            <a href="#spring_test">Spring Test</a>
-          </li>
-          
-          <li class="rule tag-spring ">
-            <a href="#spring_transactional">Spring transactional</a>
-          </li>
-          
-          <li class="rule tag-linux ">
-            <a href="#linux%20%e6%96%87%e4%bb%b6%e4%b8%8e%e7%9b%ae%e5%bd%95%e6%9d%83%e9%99%90">Linux permissions</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_string">Redis String</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_memory">Redis Memory</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_clients">Redis Client API</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_cmd">Redis Command</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_config">Redis Config</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_list">Redis List</a>
-          </li>
-          
-          <li class="rule tag-java ">
-            <a href="#java_sort">java Sort</a>
-          </li>
-          
-          <li class="rule tag-design ">
-            <a href="#abstract_factory">Abstract Factory</a>
-          </li>
-          
-          <li class="rule tag-design ">
-            <a href="#design_pattern">Design Pattern</a>
-          </li>
-          
-          <li class="rule tag-css ">
-            <a href="#css_bg%26bd">CSS background border</a>
-          </li>
-          
-          <li class="rule tag-mybatis ">
-            <a href="#mybatis_cursor">Mybatis Cursor</a>
+            <a href="#git">git</a>
           </li>
           
           <li class="rule tag-other ">
@@ -331,26 +236,346 @@
           
         </ol>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   </div>
 </div>
 
-<div class="container">
+  <div class="container">
   <div class="row">
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#java_file">
+                <span itemprop="name">Java try with res</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_file.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">java</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">try-with-resources 优先于 try-finally</h3>
+
+<p>java7 中引入了 try-with-resources语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含了单个返回 void 的 close 方法。java 类库与第三方类库中许多类和接口，现在都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
+
+<p>范例1：</p>
+
+<pre><code class="java">static String firstLineOfFile(String path) throws IOException {
+    try (BufferedReader br = new BufferReader(new FileReader(path))) {
+        return br.readLine();
+    }
+}
+</code></pre>
+
+<p>范例2：</p>
+
+<pre><code class="java">static void copy(String src, String dst) throws IOException {
+    try (
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst)
+    ) {
+        byte[] buf = new byte[BUFFER_SIZE];
+        int n;
+        while ((n = in.read(buf)) &gt;= 0)
+            out.write(buf, 0, n);
+    }
+}
+</code></pre>
+
+<p>使用 try-with-resources 不仅使代码变得简洁易懂，也更容易诊断。以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 getSuppressed 方法还可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
+
+<p>在 try-with-resources 语句中还可以使用 catch 子句，和 try-finally 语句一样。这样既可以处理异常，又不需要再套用一层代码。</p>
+
+<pre><code class="java">static String firstLineOfFile(String path, String defaultVal) {
+    try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+        return br.readLine();
+    } catch (IOException e) {
+        return dafaultVal
+    }
+}
+</code></pre>
+
+<p>firstLineOfFile 方法没有抛出异常，但是如果它无法打开文件，或者无法从中读取，就会返回一个默认值。在处理必须关闭的资源时，始终要优先考虑用try-with-resources，而不是用 try-finally。这样得到的代码将更加简洁、清晰、产生的异常也更有价值。</p>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag- " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#java_tree">
+                <span itemprop="name">Java Tree</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_tree.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default"></span>
+        
+
+        <div itemprop="description">
+            <p>对于大量的输入数据，链表的线性访问时间太慢，不宜使用。</p>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#java_primitive">
+                <span itemprop="name">Java Primitive</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_primitive.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">java</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">基本类型优于装箱基本类型</h3>
+
+<p>Java 中有一个类型系统由两部分组成，基本类型（primitive）以及引用类型（reference type）。每个基本类型都有一个对位的引用类型，称作装箱基本类型（boxed primitive）。</p>
+
+<p>自动装箱（autoboxing）和自动拆箱（auto-unboxing）模糊了但并没有完全抹去基本类型和装箱基本类型之间的区别。</p>
+
+<p>两者有三个主要区别：</p>
+
+<ol>
+<li>基本类型只有值，而装箱基本类型则具有与它们的值不同的同一性。即两个装箱基本类型可以具有相同的值和不同的同一性。</li>
+<li>基本类型<strong>只有函数值</strong>，而每个装箱基本类型则<strong>都有一个非函数值</strong>，除了它对应的基本类型的所有函数值之外，还有个null。</li>
+<li>基本类型通常比装箱基本类型更节省时间和空间。</li>
+</ol>
+
+<h4 id="toc_1">问题一：比较</h4>
+
+<p>以下示例被用来表示 Integer 值的递增数字顺序。</p>
+
+<pre><code class="java">Comparator&lt;Integer&gt; naturalOrder = (i, j) -&gt; (i &lt; j) ? -1: (i == j ? 0 ： 1);
+</code></pre>
+
+<p>上述比较器有严重的缺陷，打印 naturalOrder.Compare(new Integer(42), new Integer(42)) 时，实际输出的是 1 不是 0，表明第一个Integer值大于第二个</p>
+
+<p>原因在于对表达式 i &lt; j 执行计算会导致 i 和 j 引用的 Integer 实例被自动拆箱；从而对值进行比较，但在执行表达式 i == j 时，执行的其实是*同一性比较*（identity comparision）。</p>
+
+<p>对代码修改实现如下：(先拆箱再比较)</p>
+
+<pre><code class="java">Comparator&lt;Integer&gt; naturalOrder = (iBoxed, jBoxedBoxed) -&gt; {
+    int i = iBoxed, j = jBoxed;
+    return i &lt; j ? -1 : (i == j ? 0 : 1);
+}
+</code></pre>
+
+<p>如果需要比较器描述一个类型的自然顺序，使用 Comparator.naturalOrder() 即可，自己编写比较器，则应该使用比较器构造方法，或者在基本类型上使用静态比较方法。</p>
+
+<p>以下小程序会导致 <em>NullPointerException</em> 异常</p>
+
+<pre><code class="java">public Class Unbelievable {
+    static Integer i;
+    
+    public static void main(String[] args) {
+        if (i == 42)
+            System.out.println(&quot;Unbelievable&quot;);
+    }
+}
+</code></pre>
+
+<p>i 是个 Integer 与所有的对象引用域一样，它的初始值为 null。当程序计算表达式 (i == 42) 时，他会将 Integer 与 int 进行比较，混用基本类型和装箱基本类型时，<strong>装箱基本类型会自动拆箱</strong>。如果 null 对象引用被自动拆箱，就会抛出一个 <em>NullPointerException</em> 异常。</p>
+
+<h4 id="toc_2">问题二：性能</h4>
+
+<pre><code class="java">public static void main(String[] args) {
+    long sum = 0L;
+    for (long i = 0; i &lt; Integer.MAX_VALUE; i++)
+        sum += 1;
+    System.out.println(sum);
+}
+</code></pre>
+
+<p>此程序运行起来与预计的要慢一些，因为它将一个局部变量（sum）声明为时装箱类型 Long，而不是基本类型 long。程序编译起来没有错误或警告，变量被反复地拆箱和装箱，导致明显的性能下降。</p>
+
+<h4 id="toc_3">什么时候应该使用装箱基本类型：</h4>
+
+<ol>
+<li>作为集合中得元素、键和值。集合中不能存放基本类型，因此必须使用装箱基本类型。</li>
+<li>在参数化类型和方法中，必须使用装箱基本类型作为类型参数，因为 Java 不允许使用基本类型。例 ThreadLocal&lt;Integer&gt;</li>
+<li>在进行反射得方法调用时，必须使用装箱基本类型。</li>
+</ol>
+
+<p>当可以选择的时候，基本类型要优于装箱基本类型。基本类型更加简单，也更加快速。使用装箱基本类型时，要特别小心，<strong>自动装箱减少了使用装箱基本类型的烦琐性，但是并没有减少它的风险</strong>。当程序用 == 操作符比较两个装箱基本类型时，它做了统一性比较，这也许并不是你想要的。当程序进行设计装箱和拆箱基本类型的混合类型计算时，它会进行拆箱，当程序进行拆箱时，会抛出 <em>NullPointerException</em> 异常。最后，当程序装箱了基本类型值时，会导致较高的资源消耗和不必要的对象创建。</p>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-Java " style="padding-bottom:1em;">
-
-        <div id="java_list"></div>
-        <span class="hidden" itemprop="alternateName">java_list</span>
-
         <h2>
             <a itemprop="url" href="#java_list">
                 <span itemprop="name">Java list</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_list.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_list.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -485,107 +710,7 @@
 <p><strong>remove 方法对 LinkedList 类的使用</strong></p>
 
         </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
 
-        <div id="java_primitive"></div>
-        <span class="hidden" itemprop="alternateName">java_primitive</span>
-
-        <h2>
-            <a itemprop="url" href="#java_primitive">
-                <span itemprop="name">Java Primitive</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_primitive.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">java</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">基本类型优于装箱基本类型</h3>
-
-<p>Java 中有一个类型系统由两部分组成，基本类型（primitive）以及引用类型（reference type）。每个基本类型都有一个对位的引用类型，称作装箱基本类型（boxed primitive）。</p>
-
-<p>自动装箱（autoboxing）和自动拆箱（auto-unboxing）模糊了但并没有完全抹去基本类型和装箱基本类型之间的区别。</p>
-
-<p>两者有三个主要区别：</p>
-
-<ol>
-<li>基本类型只有值，而装箱基本类型则具有与它们的值不同的同一性。即两个装箱基本类型可以具有相同的值和不同的同一性。</li>
-<li>基本类型<strong>只有函数值</strong>，而每个装箱基本类型则<strong>都有一个非函数值</strong>，除了它对应的基本类型的所有函数值之外，还有个null。</li>
-<li>基本类型通常比装箱基本类型更节省时间和空间。</li>
-</ol>
-
-<h4 id="toc_1">问题一：比较</h4>
-
-<p>以下示例被用来表示 Integer 值的递增数字顺序。</p>
-
-<pre><code class="java">Comparator&lt;Integer&gt; naturalOrder = (i, j) -&gt; (i &lt; j) ? -1: (i == j ? 0 ： 1);
-</code></pre>
-
-<p>上述比较器有严重的缺陷，打印 naturalOrder.Compare(new Integer(42), new Integer(42)) 时，实际输出的是 1 不是 0，表明第一个Integer值大于第二个</p>
-
-<p>原因在于对表达式 i &lt; j 执行计算会导致 i 和 j 引用的 Integer 实例被自动拆箱；从而对值进行比较，但在执行表达式 i == j 时，执行的其实是*同一性比较*（identity comparision）。</p>
-
-<p>对代码修改实现如下：(先拆箱再比较)</p>
-
-<pre><code class="java">Comparator&lt;Integer&gt; naturalOrder = (iBoxed, jBoxedBoxed) -&gt; {
-    int i = iBoxed, j = jBoxed;
-    return i &lt; j ? -1 : (i == j ? 0 : 1);
-}
-</code></pre>
-
-<p>如果需要比较器描述一个类型的自然顺序，使用 Comparator.naturalOrder() 即可，自己编写比较器，则应该使用比较器构造方法，或者在基本类型上使用静态比较方法。</p>
-
-<p>以下小程序会导致 <em>NullPointerException</em> 异常</p>
-
-<pre><code class="java">public Class Unbelievable {
-    static Integer i;
-    
-    public static void main(String[] args) {
-        if (i == 42)
-            System.out.println(&quot;Unbelievable&quot;);
-    }
-}
-</code></pre>
-
-<p>i 是个 Integer 与所有的对象引用域一样，它的初始值为 null。当程序计算表达式 (i == 42) 时，他会将 Integer 与 int 进行比较，混用基本类型和装箱基本类型时，<strong>装箱基本类型会自动拆箱</strong>。如果 null 对象引用被自动拆箱，就会抛出一个 <em>NullPointerException</em> 异常。</p>
-
-<h4 id="toc_2">问题二：性能</h4>
-
-<pre><code class="java">public static void main(String[] args) {
-    long sum = 0L;
-    for (long i = 0; i &lt; Integer.MAX_VALUE; i++)
-        sum += 1;
-    System.out.println(sum);
-}
-</code></pre>
-
-<p>此程序运行起来与预计的要慢一些，因为它将一个局部变量（sum）声明为时装箱类型 Long，而不是基本类型 long。程序编译起来没有错误或警告，变量被反复地拆箱和装箱，导致明显的性能下降。</p>
-
-<h4 id="toc_3">什么时候应该使用装箱基本类型：</h4>
-
-<ol>
-<li>作为集合中得元素、键和值。集合中不能存放基本类型，因此必须使用装箱基本类型。</li>
-<li>在参数化类型和方法中，必须使用装箱基本类型作为类型参数，因为 Java 不允许使用基本类型。例 ThreadLocal&lt;Integer&gt;</li>
-<li>在进行反射得方法调用时，必须使用装箱基本类型。</li>
-</ol>
-
-<p>当可以选择的时候，基本类型要优于装箱基本类型。基本类型更加简单，也更加快速。使用装箱基本类型时，要特别小心，<strong>自动装箱减少了使用装箱基本类型的烦琐性，但是并没有减少它的风险</strong>。当程序用 == 操作符比较两个装箱基本类型时，它做了统一性比较，这也许并不是你想要的。当程序进行设计装箱和拆箱基本类型的混合类型计算时，它会进行拆箱，当程序进行拆箱时，会抛出 <em>NullPointerException</em> 异常。最后，当程序装箱了基本类型值时，会导致较高的资源消耗和不必要的对象创建。</p>
-
-        </div>
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -593,17 +718,13 @@
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
-
-        <div id="java_collections"></div>
-        <span class="hidden" itemprop="alternateName">java_collections</span>
-
         <h2>
             <a itemprop="url" href="#java_collections">
                 <span itemprop="name">Java collections</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_collections.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_collections.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -665,79 +786,7 @@ ValueType setValue(ValueType newValue);
 </code></pre>
 
         </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
 
-        <div id="java_file"></div>
-        <span class="hidden" itemprop="alternateName">java_file</span>
-
-        <h2>
-            <a itemprop="url" href="#java_file">
-                <span itemprop="name">Java try with res</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_file.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">java</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">try-with-resources 优先于 try-finally</h3>
-
-<p>java7 中引入了 try-with-resources语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含了单个返回 void 的 close 方法。java 类库与第三方类库中许多类和接口，现在都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
-
-<p>范例1：</p>
-
-<pre><code class="java">static String firstLineOfFile(String path) throws IOException {
-    try (BufferedReader br = new BufferReader(new FileReader(path))) {
-        return br.readLine();
-    }
-}
-</code></pre>
-
-<p>范例2：</p>
-
-<pre><code class="java">static void copy(String src, String dst) throws IOException {
-    try (
-        InputStream in = new FileInputStream(src);
-        OutputStream out = new FileOutputStream(dst)
-    ) {
-        byte[] buf = new byte[BUFFER_SIZE];
-        int n;
-        while ((n = in.read(buf)) &gt;= 0)
-            out.write(buf, 0, n);
-    }
-}
-</code></pre>
-
-<p>使用 try-with-resources 不仅使代码变得简洁易懂，也更容易诊断。以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 getSuppressed 方法还可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
-
-<p>在 try-with-resources 语句中还可以使用 catch 子句，和 try-finally 语句一样。这样既可以处理异常，又不需要再套用一层代码。</p>
-
-<pre><code class="java">static String firstLineOfFile(String path, String defaultVal) {
-    try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-        return br.readLine();
-    } catch (IOException e) {
-        return dafaultVal
-    }
-}
-</code></pre>
-
-<p>firstLineOfFile 方法没有抛出异常，但是如果它无法打开文件，或者无法从中读取，就会返回一个默认值。在处理必须关闭的资源时，始终要优先考虑用try-with-resources，而不是用 try-finally。这样得到的代码将更加简洁、清晰、产生的异常也更有价值。</p>
-
-        </div>
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -745,17 +794,145 @@ ValueType setValue(ValueType newValue);
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#py_dict">
+                <span itemprop="name">Python Dict</span>
+            </a>
+        </h2>
 
-        <div id="py_set"></div>
-        <span class="hidden" itemprop="alternateName">py_set</span>
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/py_dict.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
 
+        Tags:
+        
+            <span class="tags label label-default">python</span>
+        
+
+        <div itemprop="description">
+            
+
+<p><font color=red>散列表</font>是字典类型性能出众的根本原因</p>
+
+<p>字典提供了多种构造函数 点击<a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">Built-in Types</a> 有例子说明创建字典的不同形式</p>
+
+<pre><code class="python">&gt;&gt;&gt; a = dict(one=1, two=2, three=3)
+&gt;&gt;&gt; b = {'one': 1, 'two': 2, 'three': 3}
+&gt;&gt;&gt; c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
+&gt;&gt;&gt; d = dict([('two', 2), ('one', 1), ('three', 3)])
+&gt;&gt;&gt; e = dict({'three': 3, 'one': 1, 'two': 2})
+&gt;&gt;&gt; a == b == c == d == e
+True
+</code></pre>
+
+<h5 id="toc_0">字典推导</h5>
+
+<p>自python 2.7以来，列表和生成器表达式的概念移植到字典上,从而有个字典推导（后面还会看到集合推到）</p>
+
+<p>字典推导（dictcomp）可以从<font color=red>任何以键值对作为元素的可选迭代对象</font>中构建字典</p>
+
+<p>下例展示利用字典推导可以把一个装满元组的列表变成两个不同的字典。</p>
+
+<pre><code class="python">&gt;&gt;&gt; simple_list = [
+    (1, 'a'),
+    (2, 'b'),
+    (3, 'c'),
+    (4, 'd'),
+    (5, 'e'),
+    (6, 'f'),
+    (7, 'g'),
+]
+
+&gt;&gt;&gt; res = {num: char for char num in simple_list}
+&gt;&gt;&gt; res
+{'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}
+
+&gt;&gt;&gt; {num: char.upper() for char, code in res.items() if num &lt; 4}
+{1: 'a', 2: 'b', 3: 'c'}
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#py_summary">
+                <span itemprop="name">Python Summary</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/py_summary.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">python</span>
+        
+
+        <div itemprop="description">
+            
+
+<h4 id="toc_0">字面量与构造方法</h4>
+
+<h5 id="toc_1">1. 字典</h5>
+
+<p>（1）字面量</p>
+
+<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
+</code></pre>
+
+<p>（2）构造方法
+~~~python
+lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
+      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
+      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
+      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
+~~~</p>
+
+<h5 id="toc_2">2. 集合</h5>
+
+<p>（1）字面量(set)</p>
+
+<pre><code class="python">fav_player = {'kobe', 'lebra'}
+</code></pre>
+
+<p>（2）构造方法</p>
+
+<pre><code class="python">fav_player = set({'kobe', 'lebra'})
+</code></pre>
+
+<p>frozenset没有字面量句法</p>
+
+<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
+</code></pre>
+
+<p>空集合必须写成 set()，{}只会表示为空字典</p>
+
+<pre><code class="python">empty_set = set()
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
         <h2>
             <a itemprop="url" href="#py_set">
                 <span itemprop="name">Python Set</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_set.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/py_set.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -828,144 +1005,7 @@ for n in needles
 <p>​</p>
 
         </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
 
-        <div id="py_summary"></div>
-        <span class="hidden" itemprop="alternateName">py_summary</span>
-
-        <h2>
-            <a itemprop="url" href="#py_summary">
-                <span itemprop="name">Python Summary</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_summary.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">python</span>
-        
-
-        <div itemprop="description">
-            
-
-<h4 id="toc_0">字面量与构造方法</h4>
-
-<h5 id="toc_1">1. 字典</h5>
-
-<p>（1）字面量</p>
-
-<pre><code class="python">lover = {'name': 'zxl', 'age': 18}
-</code></pre>
-
-<p>（2）构造方法
-~~~python
-lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
-      = dict(zip([&lsquo;name&rsquo;, &lsquo;age&rsquo;,], [&lsquo;zxl&rsquo;, 18]))
-      = dict([(&lsquo;name&rsquo;, &lsquo;zxl&rsquo;), (&lsquo;age&rsquo;, 18)])
-      = dict({&lsquo;name&rsquo;: &lsquo;zxl&rsquo;, &lsquo;age&rsquo;: 18})
-~~~</p>
-
-<h5 id="toc_2">2. 集合</h5>
-
-<p>（1）字面量(set)</p>
-
-<pre><code class="python">fav_player = {'kobe', 'lebra'}
-</code></pre>
-
-<p>（2）构造方法</p>
-
-<pre><code class="python">fav_player = set({'kobe', 'lebra'})
-</code></pre>
-
-<p>frozenset没有字面量句法</p>
-
-<pre><code class="python">fav_player = frozenset({'kobe', 'lebra'})
-</code></pre>
-
-<p>空集合必须写成 set()，{}只会表示为空字典</p>
-
-<pre><code class="python">empty_set = set()
-</code></pre>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
-
-        <div id="py_dict"></div>
-        <span class="hidden" itemprop="alternateName">py_dict</span>
-
-        <h2>
-            <a itemprop="url" href="#py_dict">
-                <span itemprop="name">Python Dict</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/py_dict.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">python</span>
-        
-
-        <div itemprop="description">
-            
-
-<p><font color=red>散列表</font>是字典类型性能出众的根本原因</p>
-
-<p>字典提供了多种构造函数 点击<a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">Built-in Types</a> 有例子说明创建字典的不同形式</p>
-
-<pre><code class="python">&gt;&gt;&gt; a = dict(one=1, two=2, three=3)
-&gt;&gt;&gt; b = {'one': 1, 'two': 2, 'three': 3}
-&gt;&gt;&gt; c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
-&gt;&gt;&gt; d = dict([('two', 2), ('one', 1), ('three', 3)])
-&gt;&gt;&gt; e = dict({'three': 3, 'one': 1, 'two': 2})
-&gt;&gt;&gt; a == b == c == d == e
-True
-</code></pre>
-
-<h5 id="toc_0">字典推导</h5>
-
-<p>自python 2.7以来，列表和生成器表达式的概念移植到字典上,从而有个字典推导（后面还会看到集合推到）</p>
-
-<p>字典推导（dictcomp）可以从<font color=red>任何以键值对作为元素的可选迭代对象</font>中构建字典</p>
-
-<p>下例展示利用字典推导可以把一个装满元组的列表变成两个不同的字典。</p>
-
-<pre><code class="python">&gt;&gt;&gt; simple_list = [
-    (1, 'a'),
-    (2, 'b'),
-    (3, 'c'),
-    (4, 'd'),
-    (5, 'e'),
-    (6, 'f'),
-    (7, 'g'),
-]
-
-&gt;&gt;&gt; res = {num: char for char num in simple_list}
-&gt;&gt;&gt; res
-{'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}
-
-&gt;&gt;&gt; {num: char.upper() for char, code in res.items() if num &lt; 4}
-{1: 'a', 2: 'b', 3: 'c'}
-</code></pre>
-
-        </div>
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -973,17 +1013,263 @@ True
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#js_storage">
+                <span itemprop="name">Js Storage</span>
+            </a>
+        </h2>
 
-        <div id="js_module"></div>
-        <span class="hidden" itemprop="alternateName">js_module</span>
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/js_storage.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
 
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            
+
+<p>cookie、浏览器存储API，IndexedDB</p>
+
+<h4 id="toc_0">背景：</h4>
+
+<p>直接在客户端存储用户信息出于用户想要将与自身有关的信息保存在用户的机器上。无聊是登录信息、个人偏好，还是其他数据。Web应用程序提供者需要将它们保存在用户的机器上。对此第一个解决方案就是cookie。cookie是古老的网景公司发明，由一份名为 <em>Persistent Client State: HTTP Cookies</em> 的规范定义。今天 cookie 只是在客户端存储数据的一个选项。</p>
+
+<h4 id="toc_1">1. cookie</h4>
+
+<p>HTTP cookie 通常也叫做 cookie，最初用于在客户端存储会话信息。这个规范要求服务器在响应 HTTP 请求时，通过发送 Set-Cookie HTTP 头部包含会话信息。例下面是包含这个头部的一个 HTTP 响应：</p>
+
+<pre><code>HTTP/1.1 200 OK
+Content-type: text/html
+Set-Cookie: name=value
+Other-header: other-header-value
+</code></pre>
+
+<p>这个 HTTP 响应会设置一个名为&rdquo;name&rdquo;，值为&rdquo;value&rdquo;的 cookie。键和值在发送时都会经过 URL 编码。浏览器会存储这些会话信息，并在之后的每个请求中都会通过 HTTP 头部 cookie 再将它们发回服务器，比如：</p>
+
+<pre><code>GET /index.js HTTP/1.1
+Cookie: name=value
+Other-header: other-header-value
+</code></pre>
+
+<p>这些发送回服务器的额外信息可用于唯一标识发送请求的客户端。</p>
+
+<h4 id="toc_2">2. 限制</h4>
+
+<p>cookie 是与特定域绑定的。设置 cookie 后，它会与请求一起发送到创建它的域。这个限制能保证 cookie 中存储的信息只对认可的接收者开放，不被其他域访问。</p>
+
+<p>因为 cookie 存储在客户端机器上，所以为保证它不会被恶意利用，浏览器会施加限制。同时，cookie 也不会占用太多磁盘空间。通常，只要遵守以下大致的限制，就不会在任何浏览器中碰到问题</p>
+
+<ul>
+<li>不超过 300 个 cookie；</li>
+<li>每个 cookie 不超过 4096 字节；</li>
+<li>每个域不超过 20 个 cookie；</li>
+<li>每个域不超过 81920 字节。</li>
+<li>每个域能设置的 cookie 总数也是受限的，但不同浏览器的限制不同</li>
+</ul>
+
+<p>Safari 和 Chrome 对每个域的 cookie 数没有硬性限制。</p>
+
+<p>如果 cookie 总数超过单个域的上限，浏览器就会删除之前设置的 cookie。</p>
+
+<h3 id="toc_3">Web Storage</h3>
+
+<p>Web Storage 的目的是解决通过客户端存储不需要频繁发送回服务器的数据时使用 cookie 的问题。</p>
+
+<p>Web Storage 规范最新的版本是第2版，这一版规范主要有两个目标：</p>
+
+<ul>
+<li><p>提供在 cookie 之外的存储会话数据的途径；</p></li>
+
+<li><p>提供跨会话持久化存储大量数据的机制。</p></li>
+</ul>
+
+<p>web storage 的第2版定义了两个对象：localStorage 和 sessionStorage。localStorage 是 <strong>永久存储机制</strong>，sessionStorage 是<strong>跨会话</strong>的存储机制。这两种浏览器 API 提供了在浏览器中不受页面刷新影响而存储数据的两种方式。2009年之后所有主要供应商发布的浏览器版本在window 对象上支持 localStorage 和 sessionStorage。（web storage 第一版曾用过 globalStorage，不过现已废弃）。</p>
+
+<h4 id="toc_4">Storage 类型</h4>
+
+<p>Storage 类型用于保存键值对数据，直到存储空间上限（由浏览器决定）。Storage 的实例与其他对象一样，但增加了以下方法</p>
+
+<ul>
+<li><code>clear()</code>：删除所有值，不在 Firefox 中实现。</li>
+<li><code>getItem(*name*)</code>：取得给定 <em>name</em> 的值。</li>
+<li><code>key(*index*)</code>：取得给定数值位置的名称。</li>
+<li><code>removeItem(*name*)</code>：删除给定的 <em>name</em> 的键值对。</li>
+<li><code>setItem(*name*, *value*)</code>：设置给定 <em>name</em> 的值。</li>
+</ul>
+
+<p><code>getItem()</code> 、<code>remove()</code> 和 <code>setItem()</code>方法可以直接或间接通过 Storage 对象调用。因为每个数据项都作为属性存储在该对象上。所以可以使用点或方括号访问这些属性，通过同样操作来设置值，也可以使用 delete 操作符删除属性。即便如此，通常还是建议使用方法而非属性来执行这些操作，以免意外重写某个已存在的对象成员。</p>
+
+<p>通过 length 属性可以确定 Storage 对象中保存了多少键值对。我们无法确定对象中所有数据占用的空间大小，尽管 IE8 提供了 remainingSpace 属性用于确定还有多少存储空间（以字节计）可用。</p>
+
+<p>Storage 类型只能存储<strong>字符串</strong>。非字符串数据在存储之后会自动转换为字符串。注意，这种转换不能在获取数据时撤销。</p>
+
+<h4 id="toc_5">SessionStorage</h4>
+
+<p>SessionStorage 对象只存储<strong>会话信息</strong>，即数据只会存储到浏览器关闭。这跟浏览器关闭时会消失的会话 cookie 类似。存储在 SessionStorage 中的数据不受页面刷新影响，可以在浏览器崩溃并重启后恢复。（取决于浏览器，Firefox 和 WebKit支持，IE不支持）</p>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#js_websocket">
+                <span itemprop="name">Js WebSocket</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/js_websocket.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            
+
+<p>web socket（套接字）的目标是通过一个长时连接实现与服务器全双工、双向的通信。在js中创建web socket时，一个HTTP请求会发送到服务器以初始化连接。服务器响应后，连接使用HTTP的Upgrade头部从HTTP协议切换到Web Socket协议。这意味着Web Socket不能通过标准Http服务器实现，而必须使用支持该协议的专有服务器。</p>
+
+<p>因为Web Socket使用了自定义协议，所以URL方案（scheme）稍有变化：不能再使用http://或https://，而要使用ws://和wss://。前者是不安全的连接，后者是安全连接。在指定 Web Socket  URL时，必须包含URL方案，因为将来有可能支持其他方案。</p>
+
+<p>使用自定义协议而非HTTP协议的好处是，客户端与服务器之间可以发送非常少的数据，不会对HTTP造成任何负担。使用更小的数据包让Web Socket非常适合带宽和延迟问题比较明显的移动应用。缺点是，定义协议的时间比定义Javascript API要长。Web Socket得到了所有浏览器的支持。</p>
+
+<h3 id="toc_0">API</h3>
+
+<p>创建一个新的 Web Socket，就要实例化一个WebSocket 对象并传入提供连接的URL</p>
+
+<pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
+</code></pre>
+
+<p>　　tip: 必须给WebSocket构造函数传入一个绝对URL。同源策略不适用于WebSocket，因此可以打开到任意站点的连接。至于是否与特定源的页面通信，则完全取决于服务器（在握手阶段就可以确定请求来自哪里）</p>
+
+<p>浏览器会在初始化 WebSocket 对象之后立即创建连接。与XHR类似，WebSocket 也有一个readyState 属性表示当前状态。不过，这个值与XHR中的值不一样。</p>
+
+<ul>
+<li>WebSocket.OPENING（0）：连接正在建立。</li>
+<li>WebSocket.OPEN（1）：连接已经建立。</li>
+<li>WebSokket.CLOSING（2）：连接正在关闭。</li>
+<li>WebSocket.CLOSE（3）：连接已经关闭。</li>
+</ul>
+
+<p>WebSocket 对象没有 readystatechange 事件，而是有与上述不同状态对应的其他事件。readyState值从0开始。</p>
+
+<p>任何时候都可以调用 close() 方法关闭Web Socket连接：</p>
+
+<pre><code class="javascript">socket.close()
+</code></pre>
+
+<h3 id="toc_1">发送和接受数据</h3>
+
+<p>打开Web Socket 之后，可通过连接发送和接收数据。要向服务器发送数据，使用send() 方法并传入一个字符串、ArrayBuffer 或 Blob，如下所示：</p>
+
+<pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
+
+let stringData = &quot;Hello World!&quot;
+let arrayBufferData = Uint8Array.from['f', 'o', 'o']
+let blobData = new Blob(['f', 'o', 'o'])
+
+socket.send(stringData)
+socket.send(arrayBufferData.buffer)
+socket.send(blobData)
+</code></pre>
+
+<p>服务器向客户端发送消息时，WebSocket 对象上会触发message事件。这个message事件与其他消息协议类似，可以通过event.data属性访问到有效载荷：</p>
+
+<pre><code class="javascript">socket.onmessage = function(event) {
+    let data = event.data
+    // 对数据执行某些操作
+}
+</code></pre>
+
+<p>与通过send()方法发送的数据类似，event.data返回的数据也可能是ArrayBuffer 或 Blob。这由 WebSocket 对象的 binaryType 属性决定，该属性可能是&rdquo;blob&rdquo;或&rdquo;arraybuffer&rdquo;。</p>
+
+<h5 id="toc_2">其他事件</h5>
+
+<p>websocket 对象在连接周期中可能触发3个其他事件。
+- open：在连接成功建立时触发。
+- error：在发生错误时触发。连接无法续存。
+- close：在连接关闭时触发。</p>
+
+<p>WebSocket 对象不支持 DOM Level 2事件监听器，因此需要使用DOM Level 0风格的事件处理程序来监听这些事件：</p>
+
+<pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
+socket.onopen = function() {
+    alert(&quot;Connection established.&quot;)
+}
+socket.onerror = function() {
+    alert(&quot;Connection error.&quot;)
+}
+socket.oncloes = function() {
+    alert(&quot;Connection closed.&quot;)
+}
+</code></pre>
+
+<p>在这些事件中，只有 close 事件的 event 对象上有额外信息。此对象上有3个额外属性：wasClean、code 和 reason。其中，weaClean 是一个布尔值，表示连接是否干净地关闭；code 是一个来自服务器的数值状态码；reason 是一个字符串，包含服务器发来的消息。可以将这些信息显示给用户或记录到日志:</p>
+
+<pre><code class="javascript">socket.onclose = function(event) {
+    console.log('as clean? $(event.wasClean) code=${event.code) Rason = ${event.reason}')
+}
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#js_event">
+                <span itemprop="name">Js event</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/js_event.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">事件流</h3>
+
+<p>想想在一张纸上画几个同心圆。把手指放在圆心上，则手指不仅是在一个圆圈里，而是在所有的圆圈里。IE 和 NetScape 开发团队以同样的方式看待浏览器事件。当你点击一个按钮式，实际上不光点击了这个按钮，还点击了它的容器以及整个页面。</p>
+
+<p>事件流描述了页面接收事件的顺序</p>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
         <h2>
             <a itemprop="url" href="#js_module">
                 <span itemprop="name">Js Module</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/js_module.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/js_module.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -1265,6 +1551,7 @@ import ... from '/bar.js'
 <p>导入对模块而言是只读的，实际上相当于 const 声明的变量。</p>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -1272,17 +1559,13 @@ import ... from '/bar.js'
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
-
-        <div id="js_storage"></div>
-        <span class="hidden" itemprop="alternateName">js_storage</span>
-
         <h2>
-            <a itemprop="url" href="#js_storage">
-                <span itemprop="name">Js Storage</span>
+            <a itemprop="url" href="#js_promise">
+                <span itemprop="name">Js Promise</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/js_storage.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/js_promise.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -1294,200 +1577,66 @@ import ... from '/bar.js'
         <div itemprop="description">
             
 
-<p>cookie、浏览器存储API，IndexedDB</p>
+<h3 id="toc_0">异步编程</h3>
 
-<h4 id="toc_0">背景：</h4>
+<p>同步行为和异步行为的对立统一是计算机科学的一个基本概念。特别是在 JavaScript 这种<strong>单线程事件循环模型中</strong>，同步操作和异步操作更是代码所要依赖的核心机制。异步行为是为了优化因计算量大而时间长的操作。如果在等待其他操作完成的同时，即使运行其他指令，系统也能保持稳定。</p>
 
-<p>直接在客户端存储用户信息出于用户想要将与自身有关的信息保存在用户的机器上。无聊是登录信息、个人偏好，还是其他数据。Web应用程序提供者需要将它们保存在用户的机器上。对此第一个解决方案就是cookie。cookie是古老的网景公司发明，由一份名为 <em>Persistent Client State: HTTP Cookies</em> 的规范定义。今天 cookie 只是在客户端存储数据的一个选项。</p>
+<p>重要的是，异步操作并不一定计算量大或要等很长时间。只要你不行为等待某个异步操作而阻塞线程执行，那么任何时候都可以使用。</p>
 
-<h4 id="toc_1">1. cookie</h4>
+<h3 id="toc_1">同步与异步</h3>
 
-<p>HTTP cookie 通常也叫做 cookie，最初用于在客户端存储会话信息。这个规范要求服务器在响应 HTTP 请求时，通过发送 Set-Cookie HTTP 头部包含会话信息。例下面是包含这个头部的一个 HTTP 响应：</p>
+<p><strong>同步行为</strong>对应内存中顺序执行的处理器指令。每条指令都会严格按照它们出现的顺序执行，而每条指令执行后也能立即获得存储在系统本地（如寄存器或系统内存）的信息。这样的执行流程容易分析程序在执行任意位置时的状态的（比如变量的值）。</p>
 
-<pre><code>HTTP/1.1 200 OK
-Content-type: text/html
-Set-Cookie: name=value
-Other-header: other-header-value
+<p>同步操作的例子可以是执行一次简单的数学计算：</p>
+
+<pre><code class="javascript">let x = 3;
+x = x + 4;
 </code></pre>
 
-<p>这个 HTTP 响应会设置一个名为&rdquo;name&rdquo;，值为&rdquo;value&rdquo;的 cookie。键和值在发送时都会经过 URL 编码。浏览器会存储这些会话信息，并在之后的每个请求中都会通过 HTTP 头部 cookie 再将它们发回服务器，比如：</p>
+<p>这两行 JavaScript 代码对应的低级指令（从 JavaScript 到 x86）不难想象。首先，操作系统会在栈内存上分配一个存储浮点数值的空间，然后针对这个值做一次数学计算，再把计算结果写回之前分配的内存中。所有这些指令都是在单个线程中按顺序执行的。在低级指令的层面。有充足的工具可以确定系统状态。</p>
 
-<pre><code>GET /index.js HTTP/1.1
-Cookie: name=value
-Other-header: other-header-value
+<p><strong>异步行为</strong>类似于系统中断，即当前进程外部地实体可以触发代码执行，异步操作经常是必须要的，因为强制进程等待一个长时间的操作通常是不可行的（同步操作则必须等）。如果代码要访问一些高延迟的资源，比如向远程服务器发送请求并等待响应，那么就会出现长时间的等待。</p>
+
+<p>异步操作的例子可以是在定时回调中执行一次简单的数学计算：</p>
+
+<pre><code class="javascript">let x = 3;
+setTimeout(() =&gt; x = x + 4, 1000);
 </code></pre>
 
-<p>这些发送回服务器的额外信息可用于唯一标识发送请求的客户端。</p>
+<p>这段程序最终和同步代码执行的任务一样，但这一次执行线程不知道 x 值何时会改变，因为这取决于回调何时从消息队列出列并执行。</p>
 
-<h4 id="toc_2">2. 限制</h4>
+<p>异步操作不同意推断。虽然此例对应的低级代码最终和前面的例子没什么区别，但第二个指令是由系统计时器触发的，这回生成一个入队执行的中断，何时会触发这个中断，这对 JavaScript 运行时是一个黑盒，因此实际上无法预知（尽管可以保证这发生在当前线程的同步代码执行之后，否则回调都没机会出列被执行）。无论如何，在排定回调以后基本没办法知道系统状态何时变化。</p>
 
-<p>cookie 是与特定域绑定的。设置 cookie 后，它会与请求一起发送到创建它的域。这个限制能保证 cookie 中存储的信息只对认可的接收者开放，不被其他域访问。</p>
+<h3 id="toc_2">以往的异步编程模式</h3>
 
-<p>因为 cookie 存储在客户端机器上，所以为保证它不会被恶意利用，浏览器会施加限制。同时，cookie 也不会占用太多磁盘空间。通常，只要遵守以下大致的限制，就不会在任何浏览器中碰到问题</p>
+<h3 id="toc_3">Promise</h3>
 
-<ul>
-<li>不超过 300 个 cookie；</li>
-<li>每个 cookie 不超过 4096 字节；</li>
-<li>每个域不超过 20 个 cookie；</li>
-<li>每个域不超过 81920 字节。</li>
-<li>每个域能设置的 cookie 总数也是受限的，但不同浏览器的限制不同</li>
-</ul>
+<p>ECMAScript6 新增的引用类型 promise，可以通过 new 操作符来实例化。创建新 promise 时需要传入执行器（executor）函数作为参数。</p>
 
-<p>Safari 和 Chrome 对每个域的 cookie 数没有硬性限制。</p>
+<pre><code class="javascript">let p = new promise(() =&gt; ());
+setTimeout(console.log, 0, p);  // Promise &lt;pending&gt;
+</code></pre>
 
-<p>如果 cookie 总数超过单个域的上限，浏览器就会删除之前设置的 cookie。</p>
+<p>如果不提供执行器函数，就会抛出 <i>SyntaxError</i></p>
 
-<h3 id="toc_3">Web Storage</h3>
+<h4 id="toc_4">promise 状态</h4>
 
-<p>Web Storage 的目的是解决通过客户端存储不需要频繁发送回服务器的数据时使用 cookie 的问题。</p>
-
-<p>Web Storage 规范最新的版本是第2版，这一版规范主要有两个目标：</p>
+<p>promise 是一个由状态的对象，可能处于以下 3 中状态之一：</p>
 
 <ul>
-<li><p>提供在 cookie 之外的存储会话数据的途径；</p></li>
-
-<li><p>提供跨会话持久化存储大量数据的机制。</p></li>
+<li>pending（待定）</li>
+<li>fulfilled（兑现，有时也称”解决“，resolved）</li>
+<li>reject（拒绝）</li>
 </ul>
 
-<p>web storage 的第2版定义了两个对象：localStorage 和 sessionStorage。localStorage 是 <strong>永久存储机制</strong>，sessionStorage 是<strong>跨会话</strong>的存储机制。这两种浏览器 API 提供了在浏览器中不受页面刷新影响而存储数据的两种方式。2009年之后所有主要供应商发布的浏览器版本在window 对象上支持 localStorage 和 sessionStorage。（web storage 第一版曾用过 globalStorage，不过现已废弃）。</p>
+<p>pending 是 promise 的最初始状态。在特定状态下，promise 可以<strong>落定</strong>（settled）为代表成功的 fulfilled 状态，或者代表失败的 reject 状态。无论落定为哪种状态都是<strong>不可逆</strong>的。</p>
 
-<h4 id="toc_4">Storage 类型</h4>
+<p>promise 状态是<strong>私有</strong>的，不能直接通过 JavaScript 检测到。这主要是为了避免根据读取到的状态，以同步方式处理 promise 对象。另外，状态也不能被外部代码修改。这与不能读取状态原因一致。promise 故意将异步行为封装起来，从而隔离外部的同步代码。</p>
 
-<p>Storage 类型用于保存键值对数据，直到存储空间上限（由浏览器决定）。Storage 的实例与其他对象一样，但增加了以下方法</p>
-
-<ul>
-<li>clear()：删除所有值，不在 Firefox 中实现。</li>
-<li>getItem(<em>name</em>)：取得给定 <em>name</em> 的值。</li>
-<li>key(<em>index</em>)：取得给定数值位置的名称。</li>
-<li>removeItem(<em>name</em>)：删除给定的 <em>name</em> 的键值对。</li>
-<li>setItem(<em>name</em>, <em>value</em>)：设置给定 <em>name</em> 的值。</li>
-</ul>
-
-<p>getItem() 、remove() 和 setItem() 方法可以直接或间接通过 Storage 对象调用。因为每个数据项都作为属性存储在该对象上。所以可以使用点或方括号访问这些属性，通过同样操作来设置值，也可以使用 delete 操作符删除属性。即便如此，通常还是建议使用方法而非属性来执行这些操作，以免意外重写某个已存在的对象成员。</p>
-
-<p>通过 length 属性可以确定 Storage 对象中保存了多少键值对。我们无法确定对象中所有数据占用的空间大小，尽管 IE8 提供了 remainingSpace 属性用于确定还有多少存储空间（以字节计）可用。</p>
-
-<p>Storage 类型只能存储<strong>字符串</strong>。非字符串数据在存储之后会自动转换为字符串。注意，这种转换不能在获取数据时撤销。</p>
-
-<h4 id="toc_5">SessionStorage</h4>
-
-<p>SessionStorage 对象只存储<strong>会话信息</strong>，即数据只会存储到浏览器关闭。这跟浏览器关闭时会消失的会话 cookie 类似。存储在 SessionStorage 中的数据不受页面刷新影响，可以在浏览器崩溃并重启后恢复。（取决于浏览器，Firefox 和 WebKit支持，IE不支持）</p>
+<h4 id="toc_5">解决值、拒绝理由以及 promise 用例</h4>
 
         </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
 
-        <div id="js_websocket"></div>
-        <span class="hidden" itemprop="alternateName">js_websocket</span>
-
-        <h2>
-            <a itemprop="url" href="#js_websocket">
-                <span itemprop="name">Js WebSocket</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/js_websocket.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">js</span>
-        
-
-        <div itemprop="description">
-            
-
-<p>web socket（套接字）的目标是通过一个长时连接实现与服务器全双工、双向的通信。在js中创建web socket时，一个HTTP请求会发送到服务器以初始化连接。服务器响应后，连接使用HTTP的Upgrade头部从HTTP协议切换到Web Socket协议。这意味着Web Socket不能通过标准Http服务器实现，而必须使用支持该协议的专有服务器。</p>
-
-<p>因为Web Socket使用了自定义协议，所以URL方案（scheme）稍有变化：不能再使用http://或https://，而要使用ws://和wss://。前者是不安全的连接，后者是安全连接。在指定 Web Socket  URL时，必须包含URL方案，因为将来有可能支持其他方案。</p>
-
-<p>使用自定义协议而非HTTP协议的好处是，客户端与服务器之间可以发送非常少的数据，不会对HTTP造成任何负担。使用更小的数据包让Web Socket非常适合带宽和延迟问题比较明显的移动应用。缺点是，定义协议的时间比定义Javascript API要长。Web Socket得到了所有浏览器的支持。</p>
-
-<h3 id="toc_0">API</h3>
-
-<p>创建一个新的 Web Socket，就要实例化一个WebSocket 对象并传入提供连接的URL</p>
-
-<pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
-</code></pre>
-
-<p>　　tip: 必须给WebSocket构造函数传入一个绝对URL。同源策略不适用于WebSocket，因此可以打开到任意站点的连接。至于是否与特定源的页面通信，则完全取决于服务器（在握手阶段就可以确定请求来自哪里）</p>
-
-<p>浏览器会在初始化 WebSocket 对象之后立即创建连接。与XHR类似，WebSocket 也有一个readyState 属性表示当前状态。不过，这个值与XHR中的值不一样。</p>
-
-<ul>
-<li>WebSocket.OPENING（0）：连接正在建立。</li>
-<li>WebSocket.OPEN（1）：连接已经建立。</li>
-<li>WebSokket.CLOSING（2）：连接正在关闭。</li>
-<li>WebSocket.CLOSE（3）：连接已经关闭。</li>
-</ul>
-
-<p>WebSocket 对象没有 readystatechange 事件，而是有与上述不同状态对应的其他事件。readyState值从0开始。</p>
-
-<p>任何时候都可以调用 close() 方法关闭Web Socket连接：</p>
-
-<pre><code class="javascript">socket.close()
-</code></pre>
-
-<h3 id="toc_1">发送和接受数据</h3>
-
-<p>打开Web Socket 之后，可通过连接发送和接收数据。要向服务器发送数据，使用send() 方法并传入一个字符串、ArrayBuffer 或 Blob，如下所示：</p>
-
-<pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
-
-let stringData = &quot;Hello World!&quot;
-let arrayBufferData = Uint8Array.from['f', 'o', 'o']
-let blobData = new Blob(['f', 'o', 'o'])
-
-socket.send(stringData)
-socket.send(arrayBufferData.buffer)
-socket.send(blobData)
-</code></pre>
-
-<p>服务器向客户端发送消息时，WebSocket 对象上会触发message事件。这个message事件与其他消息协议类似，可以通过event.data属性访问到有效载荷：</p>
-
-<pre><code class="javascript">socket.onmessage = function(event) {
-    let data = event.data
-    // 对数据执行某些操作
-}
-</code></pre>
-
-<p>与通过send()方法发送的数据类似，event.data返回的数据也可能是ArrayBuffer 或 Blob。这由 WebSocket 对象的 binaryType 属性决定，该属性可能是&rdquo;blob&rdquo;或&rdquo;arraybuffer&rdquo;。</p>
-
-<h5 id="toc_2">其他事件</h5>
-
-<p>websocket 对象在连接周期中可能触发3个其他事件。
-- open：在连接成功建立时触发。
-- error：在发生错误时触发。连接无法续存。
-- close：在连接关闭时触发。</p>
-
-<p>WebSocket 对象不支持 DOM Level 2事件监听器，因此需要使用DOM Level 0风格的事件处理程序来监听这些事件：</p>
-
-<pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
-socket.onopen = function() {
-    alert(&quot;Connection established.&quot;)
-}
-socket.onerror = function() {
-    alert(&quot;Connection error.&quot;)
-}
-socket.oncloes = function() {
-    alert(&quot;Connection closed.&quot;)
-}
-</code></pre>
-
-<p>在这些事件中，只有 close 事件的 event 对象上有额外信息。此对象上有3个额外属性：wasClean、code 和 reason。其中，weaClean 是一个布尔值，表示连接是否干净地关闭；code 是一个来自服务器的数值状态码；reason 是一个字符串，包含服务器发来的消息。可以将这些信息显示给用户或记录到日志:</p>
-
-<pre><code class="javascript">socket.onclose = function(event) {
-    console.log('as clean? $(event.wasClean) code=${event.code) Rason = ${event.reason}')
-}
-</code></pre>
-
-        </div>
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -1495,60 +1644,13 @@ socket.oncloes = function() {
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
-
-        <div id="spring_transactional"></div>
-        <span class="hidden" itemprop="alternateName">spring_transactional</span>
-
-        <h2>
-            <a itemprop="url" href="#spring_transactional">
-                <span itemprop="name">Spring transactional</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/spring_transactional.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">spring</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">springboot 的事务处理 Transactional</h3>
-
-<h4 id="toc_1">1. springboot事务</h4>
-
-<p>两种处理方式</p>
-
-<ul>
-<li><strong>编程式事务管理</strong>，推荐使用<code>TransactionTemplate</code></li>
-<li><strong>声明式事务管理</strong>，基于AOP原理的注解<code>@Transactional</code></li>
-</ul>
-
-<h4 id="toc_2">2. Transaction 的使用</h4>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
-
-        <div id="spring_swagger"></div>
-        <span class="hidden" itemprop="alternateName">spring_swagger</span>
-
         <h2>
             <a itemprop="url" href="#spring_swagger">
                 <span itemprop="name">Spring Swagger</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/spring_swagger.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_swagger.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -1657,6 +1759,7 @@ public class HelloWorldController {
 </code></pre>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -1664,17 +1767,13 @@ public class HelloWorldController {
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
-
-        <div id="spring_yml"></div>
-        <span class="hidden" itemprop="alternateName">spring_yml</span>
-
         <h2>
             <a itemprop="url" href="#spring_yml">
                 <span itemprop="name">Spring YML</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/spring_yml.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_yml.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -1807,6 +1906,7 @@ public String getMesUrl() {
 </code></pre>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -1814,17 +1914,53 @@ public String getMesUrl() {
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#spring_transactional">
+                <span itemprop="name">Spring transactional</span>
+            </a>
+        </h2>
 
-        <div id="spring_test"></div>
-        <span class="hidden" itemprop="alternateName">spring_test</span>
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_transactional.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
 
+        Tags:
+        
+            <span class="tags label label-default">spring</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">springboot 的事务处理 Transactional</h3>
+
+<h4 id="toc_1">1. springboot事务</h4>
+
+<p>两种处理方式</p>
+
+<ul>
+<li><strong>编程式事务管理</strong>，推荐使用<code>TransactionTemplate</code></li>
+<li><strong>声明式事务管理</strong>，基于AOP原理的注解<code>@Transactional</code></li>
+</ul>
+
+<h4 id="toc_2">2. Transaction 的使用</h4>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
         <h2>
             <a itemprop="url" href="#spring_test">
                 <span itemprop="name">Spring Test</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/spring_test.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_test.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -1976,6 +2112,7 @@ public class test {
 </code></pre>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -1983,17 +2120,13 @@ public class test {
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-linux " style="padding-bottom:1em;">
-
-        <div id="linux 文件与目录权限"></div>
-        <span class="hidden" itemprop="alternateName">linux 文件与目录权限</span>
-
         <h2>
             <a itemprop="url" href="#linux%20%e6%96%87%e4%bb%b6%e4%b8%8e%e7%9b%ae%e5%bd%95%e6%9d%83%e9%99%90">
                 <span itemprop="name">Linux permissions</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/linux%20%e6%96%87%e4%bb%b6%e4%b8%8e%e7%9b%ae%e5%bd%95%e6%9d%83%e9%99%90.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/linux%20%e6%96%87%e4%bb%b6%e4%b8%8e%e7%9b%ae%e5%bd%95%e6%9d%83%e9%99%90.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -2012,6 +2145,7 @@ public class test {
 <p>·</p>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -2019,71 +2153,13 @@ public class test {
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_string"></div>
-        <span class="hidden" itemprop="alternateName">redis_string</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_string">
-                <span itemprop="name">Redis String</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_string.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">字符串</h3>
-
-<h4 id="toc_1">1 常用命令</h4>
-
-<p>(1) 设置值</p>
-
-<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
-</code></pre>
-
-<p>set 命令有几个选项</p>
-
-<ul>
-<li>ex seconds：为键设置秒级过期时间。</li>
-<li>px milliseconds：为键设置毫秒级过期时间</li>
-<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
-<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
-</ul>
-
-<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
-
-<pre><code class="shell">setnx key seconds value
-setnx key value
-</code></pre>
-
-        </div>
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_memory"></div>
-        <span class="hidden" itemprop="alternateName">redis_memory</span>
-
         <h2>
             <a itemprop="url" href="#redis_memory">
                 <span itemprop="name">Redis Memory</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_memory.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_memory.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -2145,6 +2221,7 @@ void *ptr                           // 数据指针
 <h3 id="toc_2">共享对象池</h3>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -2152,17 +2229,64 @@ void *ptr                           // 数据指针
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#redis_string">
+                <span itemprop="name">Redis String</span>
+            </a>
+        </h2>
 
-        <div id="redis_clients"></div>
-        <span class="hidden" itemprop="alternateName">redis_clients</span>
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_string.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
 
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">字符串</h3>
+
+<h4 id="toc_1">1 常用命令</h4>
+
+<p>(1) 设置值</p>
+
+<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+</code></pre>
+
+<p>set 命令有几个选项</p>
+
+<ul>
+<li>ex seconds：为键设置秒级过期时间。</li>
+<li>px milliseconds：为键设置毫秒级过期时间</li>
+<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
+<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
+</ul>
+
+<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+
+<pre><code class="shell">setnx key seconds value
+setnx key value
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
         <h2>
             <a itemprop="url" href="#redis_clients">
                 <span itemprop="name">Redis Client API</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_clients.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_clients.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -2252,6 +2376,7 @@ client.eval(script, 1, 'hello') # world
 </code></pre>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -2259,17 +2384,13 @@ client.eval(script, 1, 'hello') # world
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_cmd"></div>
-        <span class="hidden" itemprop="alternateName">redis_cmd</span>
-
         <h2>
             <a itemprop="url" href="#redis_cmd">
                 <span itemprop="name">Redis Command</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_cmd.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_cmd.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -2322,6 +2443,7 @@ client.eval(script, 1, 'hello') # world
 </code></pre>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -2329,17 +2451,13 @@ client.eval(script, 1, 'hello') # world
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_config"></div>
-        <span class="hidden" itemprop="alternateName">redis_config</span>
-
         <h2>
             <a itemprop="url" href="#redis_config">
                 <span itemprop="name">Redis Config</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_config.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_config.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -2403,6 +2521,7 @@ client.eval(script, 1, 'hello') # world
 </table>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -2410,17 +2529,13 @@ client.eval(script, 1, 'hello') # world
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_list"></div>
-        <span class="hidden" itemprop="alternateName">redis_list</span>
-
         <h2>
             <a itemprop="url" href="#redis_list">
                 <span itemprop="name">Redis List</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/redis_list.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_list.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -2820,6 +2935,7 @@ for article in {articles}
 </ul>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -2827,17 +2943,13 @@ for article in {articles}
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
-
-        <div id="java_sort"></div>
-        <span class="hidden" itemprop="alternateName">java_sort</span>
-
         <h2>
             <a itemprop="url" href="#java_sort">
                 <span itemprop="name">java Sort</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/java_sort.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_sort.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -2912,6 +3024,7 @@ for article in {articles}
 <h3 id="toc_2">算法2.2 插入排序</h3>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -2919,17 +3032,13 @@ for article in {articles}
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-design " style="padding-bottom:1em;">
-
-        <div id="abstract_factory"></div>
-        <span class="hidden" itemprop="alternateName">abstract_factory</span>
-
         <h2>
             <a itemprop="url" href="#abstract_factory">
                 <span itemprop="name">Abstract Factory</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/abstract_factory.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/abstract_factory.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -2941,23 +3050,23 @@ for article in {articles}
         <div itemprop="description">
             
 
-<p>###　（Abstract Factory）抽象工厂模式——对象创建型模式</p>
+<h3 id="toc_0">（Abstract Factory）抽象工厂模式——对象创建型模式</h3>
 
-<h4 id="toc_0">１.　意图：</h4>
+<h4 id="toc_1">１.　意图：</h4>
 
 <p>提供一个接口以创建一系列相关或相互依赖的对象，而无需指定它们具体的类</p>
 
-<h4 id="toc_1">2.  别名</h4>
+<h4 id="toc_2">2.  别名</h4>
 
 <p>Kit</p>
 
-<h4 id="toc_2">3. 动机</h4>
+<h4 id="toc_3">3. 动机</h4>
 
 <p>考虑一个支持多种视感（look-and-feel）标准的用户界面工具包，例如 Motif 和 Presentation Manager。不同的视感风格诸如滚动条、窗口和按钮等用户界面“窗口组件”定义不同的外观和行为。为保证视感风格标准之间的可移植性，一个应用不应该为一个特定的视感外观硬编码它的窗口组件。在整个应用中实例化特定视感风格的窗口组件类将使得以后很难改变视感风格。</p>
 
 <p>为解决这一问题，可以定义一个抽象的 WidgeFactory 类，这个类声明一个用来创建每一类的基本窗口组件的接口。每一个窗口组件都有一个抽象类，而具体子类则实现了窗口组件的特定视感风格。对于每一个抽象窗口组件类，WidgeFactory  接口都有一个返回新窗口组件对象的操作。客户调用这些操作以获得窗口组件实例，但客户并不知道其正在使用的是哪些具体类。这样客户就不依赖于一般的视感风格，如下图所示。</p>
 
-<h4 id="toc_3">4. 适用性</h4>
+<h4 id="toc_4">4. 适用性</h4>
 
 <p>在以下情况下使用 Abstract Factory 模式</p>
 
@@ -2968,9 +3077,9 @@ for article in {articles}
 <li>提供一个产品类库，但只想现实它们的接口而不是实现。</li>
 </ul>
 
-<h4 id="toc_4">5. 结构</h4>
+<h4 id="toc_5">5. 结构</h4>
 
-<h4 id="toc_5">6. 参与者</h4>
+<h4 id="toc_6">6. 参与者</h4>
 
 <ul>
 <li>AbstractFactory （WidgetFactory）</li>
@@ -3004,13 +3113,13 @@ for article in {articles}
 
 <p>— 仅使用由 AbstractFactory 和 AbstractProduct 类声明的接口。</p>
 
-<h4 id="toc_6">7. 协作</h4>
+<h4 id="toc_7">7. 协作</h4>
 
 <p>通常在运行时创建一个 ConcreteFactory 类的实例。这一具体的工厂创建具有特定实现的产品对象。为创建不同的产品对象，客户应使用不同的具体工厂。</p>
 
 <p>AbstractFactory 将产品对象的创建延迟到它的 ConcreteFactory 子类。</p>
 
-<h4 id="toc_7">8. 效果</h4>
+<h4 id="toc_8">8. 效果</h4>
 
 <p>AbstractFactory 模式有以下优点和缺点：</p>
 
@@ -3022,7 +3131,7 @@ for article in {articles}
 
 <p>4）<strong>难以支持新种类的产品</strong>　难以扩产抽象工厂以生产新种类的产品。这是因为 AbstractFactory 接口确定了可以被创建的产品集合。支持新种类的产品就需要扩展该工厂接口，这将涉及 AbstractFactory 和及其所有子类的改变。在实现一节中会讨论这个问题的一个解决办法。</p>
 
-<h4 id="toc_8">9. 实现</h4>
+<h4 id="toc_9">9. 实现</h4>
 
 <p>下面是实现 Abstract Factor 模式的一些有用技术：</p>
 
@@ -3055,7 +3164,7 @@ for article in {articles}
 
 <p>在将类作为第一类对象的语言中，这个基于原型的方法可能有所变化。你可以将这些语言中的类堪称是退化的工厂，它仅创建一种产品。你可以将类存储在一个具体工厂中，这个具体工厂在变量中创建了新的实例。你可以通过使用产品的类还不是子类初始化一个具体工厂实例来定义一个新的具体工厂。这一方法利用了语言的特点，而纯基于原型的方法是与语言无关的。</p>
 
-<h4 id="toc_9">10. 代码示例</h4>
+<h4 id="toc_10">10. 代码示例</h4>
 
 <p>使用 Abstract Factor 模式创建迷宫。</p>
 
@@ -3084,6 +3193,7 @@ public:
 </code></pre>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -3091,17 +3201,13 @@ public:
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-design " style="padding-bottom:1em;">
-
-        <div id="design_pattern"></div>
-        <span class="hidden" itemprop="alternateName">design_pattern</span>
-
         <h2>
             <a itemprop="url" href="#design_pattern">
                 <span itemprop="name">Design Pattern</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/design_pattern.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/design_pattern.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -3143,11 +3249,13 @@ public:
 
 <p><strong>继承和组合的比较</strong></p>
 
-<p>面向对象系统中功能复用的两种最常用技术是类继承和<strong>对象组合</strong>。类继承允许你根据其他类的实现来定义一个类的实现。这种通过生产子类的复用通常被称为<strong>白箱复用</strong>（white-box reuse）。“白箱”是相对可视性而言的：在继承方式中，父类的内部细节对子类可见。</p>
+<p>面向对象系统中功能复用的两种最常用技术是类继承和对象组合。</p>
 
-<p>对象组合是类继承之外的另一种复用选择。新的更复杂的功能可以通过组装或组合对象来获得。对象组合要求被组合的对象具有良好定义的接口。这种复用风格被称为<strong>黑箱复用</strong>（black-box resue），因为对象的内部细节是不可见的。对象只以“黑箱”的形似出现。</p>
+<p><strong>类继承</strong>允许你根据其他类的实现来定义一个类的实现。这种通过生产子类的复用通常被称为<strong>白箱复用</strong>（white-box reuse）。“白箱”是相对可视性而言的：在继承方式中，父类的内部细节对子类可见。</p>
 
-<p>继承和组合各有优缺点。类继承是编译时静态定义的，且可直接使用，因为程序设计语言支持类继承。类继承可以较方便地改变被复用的实现。当一个子类重定义一些而不是全部操作时，它也能影响它所继承地操作，只要在这些操作中调用了被重定义地操作。</p>
+<p><strong>对象组合</strong>是类继承之外的另一种复用选择。新的更复杂的功能可以通过组装或组合对象来获得。对象组合要求被组合的对象具有良好定义的接口。这种复用风格被称为<strong>黑箱复用</strong>（black-box resue），因为对象的内部细节是不可见的。对象只以“黑箱”的形式出现。</p>
+
+<p>继承和组合各有优缺点。<strong>类继承是编译时静态定义的</strong>，且可直接使用，因为程序设计语言支持类继承。类继承可以较方便地改变被复用的实现。当一个子类重定义一些而不是全部操作时，它也能影响它所继承地操作，只要在这些操作中调用了被重定义地操作。</p>
 
 <p>但是类继承也有一些不足之处。首先，因为继承在编译时就定义了，所以无法在运行时改变从父类继承的实现。更糟的是，父类通常至少定义了部分子类的具体表示。因为继承对子类揭示了其父类的实现细节，所以继承常被认为“破坏了封闭性”。子类中的实现与它的父类有如此紧密的依赖关系，以至于父类实现中的任何变化必然会导致子类发生变化。</p>
 
@@ -3171,21 +3279,22 @@ public:
 
 <p>1）<strong>通过显式地指定一个类来创建对象</strong> 在创建对象时指定类名将使你受特定实现的约束而不是特定接口的约束。这会使未来的变化更复杂。要避免这种情况，应该间接地创建对象。</p>
 
-<p>*设计模式*：Abstract Factory，Factory Method，Prototype。</p>
+<p><i>设计模式</i>：Abstract Factory，Factory Method，Prototype。</p>
 
 <p>2）<strong>对特定操作地依赖</strong> 当你为请求指定一个特殊的操作时，完成该请求地方式就固定下来了。为避免将请求代码写死，你将可以在编译时或运行时很方便地改变响应请求地方法。</p>
 
-<p>*设计模式*：Chain of Resposibility，Command。</p>
+<p><i>设计模式</i>：Chain of Resposibility，Command。</p>
 
 <p>3）<strong>对硬件和软件平台的依赖</strong> 外部的操作系统接口和应用编程接口（API）在不同的软硬件平台上是不同的。依赖于特定平台的软件很难移植到其他平台上，甚至很难跟上本地平台的更新。所以设计系统时限制平台相关性就很重要了。</p>
 
-<p>*设计模式*：Abstract Factory，Bridge。</p>
+<p><i>设计模式</i>：Abstract Factory，Bridge。</p>
 
 <p>4) <strong>对对象表示或实现的依赖</strong> 知道对象怎样表示、保存、定位或实现的客户在对象发生变化时可能也需要变化。对客户隐藏这些信息能阻止连锁变化。</p>
 
-<p>*设计模式*：Abstract Factory，Bridge，Memento，Proxy。</p>
+<p><i>设计模式</i>：Abstract Factory，Bridge，Memento，Proxy。</p>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -3193,17 +3302,13 @@ public:
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-css " style="padding-bottom:1em;">
-
-        <div id="css_bg&amp;bd"></div>
-        <span class="hidden" itemprop="alternateName">css_bg&amp;bd</span>
-
         <h2>
             <a itemprop="url" href="#css_bg%26bd">
                 <span itemprop="name">CSS background border</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/css_bg&amp;bd.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/css_bg&amp;bd.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -3284,6 +3389,7 @@ outline: 5px solid deeppink;
 </ul>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -3291,17 +3397,13 @@ outline: 5px solid deeppink;
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-mybatis " style="padding-bottom:1em;">
-
-        <div id="mybatis_cursor"></div>
-        <span class="hidden" itemprop="alternateName">mybatis_cursor</span>
-
         <h2>
             <a itemprop="url" href="#mybatis_cursor">
                 <span itemprop="name">Mybatis Cursor</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/mybatis_cursor.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/mybatis_cursor.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -3429,6 +3531,7 @@ public void scanFoo3(@PathVariable(&quot;limit&quot;) int limit) throws Exceptio
 <p>它仅仅是在原来方法上面加了个 <code>@Transactional</code> 注解。此方案看上去最简洁，但请注意 Spring 框架当中注解使用的坑：<strong>只在外部调用时生效</strong> 。在当前类中调用这个方法，依旧会报错。</p>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -3436,17 +3539,58 @@ public void scanFoo3(@PathVariable(&quot;limit&quot;) int limit) throws Exceptio
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-other " style="padding-bottom:1em;">
+        <h2>
+            <a itemprop="url" href="#git">
+                <span itemprop="name">git</span>
+            </a>
+        </h2>
 
-        <div id="mac"></div>
-        <span class="hidden" itemprop="alternateName">mac</span>
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/git.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
 
+        Tags:
+        
+            <span class="tags label label-default">other</span>
+        
+
+        <div itemprop="description">
+            
+
+<h4 id="toc_0">解决配置代理后，git clone等git操作速度依然很慢的问题</h4>
+
+<p>查看代理端口以及协议（省略 http）</p>
+
+<pre><code class="shell">git config --global https.proxy http://127.0.0.1:10809
+git config --global https.proxy 'socks5://127.0.0.1:10808'
+</code></pre>
+
+<p>查看是否配置成功</p>
+
+<pre><code class="shell">git config --list
+</code></pre>
+
+<p>取消（省略 http）</p>
+
+<pre><code class="shell">git config --global --unset https.proxy
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-other " style="padding-bottom:1em;">
         <h2>
             <a itemprop="url" href="#mac">
                 <span itemprop="name">MAC adr</span>
             </a>
         </h2>
 
-        <a href="https://github.com/checkmyws/yslow-rules/edit/master/content/en/mac.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/mac.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -3526,6 +3670,7 @@ public void scanFoo3(@PathVariable(&quot;limit&quot;) int limit) throws Exceptio
 <p>网卡MAC地址可以通过Windows设备管理员或其他工具修改。对于某些手机、平板电脑设备来说，其MAC地址／产品序号均由厂方连同销售或保修时的客户资料一并记录在案，而有关的MAC地址也不可通过常规手段来修改。</p>
 
         </div>
+
         <br>
         <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
     </div>
@@ -3534,6 +3679,7 @@ public void scanFoo3(@PathVariable(&quot;limit&quot;) int limit) throws Exceptio
   </div>
 </div>
 
+</div>
 
 <hr>
 <div class="container footer">

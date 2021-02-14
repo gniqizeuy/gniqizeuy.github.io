@@ -16,7 +16,12 @@ h1 {
 }
 
 pre {
-  background-color: #fff;
+  background-color: #FFFFE0;
+  border: none!important;
+}
+
+.hljs {
+  background: #FFFFE0;
 }
 
 h3, h4, h5 {
@@ -72,24 +77,6 @@ td, th {
 
 .intro {
   margin-bottom: 30px;
-}
-
-.stars_1 {
-  position: absolute;
-  background-image: url('../img/stars_1.png');
-  width: 125px;
-  height: 211px;
-  top: 50px;
-  left: 20px;
-}
-
-.stars_2 {
-  position: absolute;
-  background-image: url('../img/stars_2.png');
-  width: 125px;
-  height: 211px;
-  top: 40px;
-  right: 20px;
 }
 
 .flag {
