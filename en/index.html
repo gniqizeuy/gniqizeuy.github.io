@@ -110,12 +110,16 @@
       <div class="hidden-xs">
         <ol>
           
-          <li class="rule tag-Java ">
-            <a href="#java_list">Java list</a>
+          <li class="rule tag-java ">
+            <a href="#java_primitive">Java Primitive</a>
           </li>
           
           <li class="rule tag-java ">
-            <a href="#java_tree">Java Tree</a>
+            <a href="#java_file">Java try with res</a>
+          </li>
+          
+          <li class="rule tag-Java ">
+            <a href="#java_list">Java list</a>
           </li>
           
           <li class="rule tag-js ">
@@ -123,11 +127,11 @@
           </li>
           
           <li class="rule tag-java ">
-            <a href="#java_file">Java try with res</a>
+            <a href="#java_tree">Java Tree</a>
           </li>
           
-          <li class="rule tag-java ">
-            <a href="#java_primitive">Java Primitive</a>
+          <li class="rule tag-python ">
+            <a href="#py_set">Python Set</a>
           </li>
           
           <li class="rule tag-python ">
@@ -138,8 +142,8 @@
             <a href="#py_summary">Python Summary</a>
           </li>
           
-          <li class="rule tag-python ">
-            <a href="#py_set">Python Set</a>
+          <li class="rule tag-js ">
+            <a href="#js_promise">Js Promise</a>
           </li>
           
           <li class="rule tag-js ">
@@ -158,16 +162,8 @@
             <a href="#js_module">Js Module</a>
           </li>
           
-          <li class="rule tag-js ">
-            <a href="#js_promise">Js Promise</a>
-          </li>
-          
           <li class="rule tag-spring ">
             <a href="#spring_swagger">Spring Swagger</a>
-          </li>
-          
-          <li class="rule tag-spring ">
-            <a href="#spring_test">Spring Test</a>
           </li>
           
           <li class="rule tag-spring ">
@@ -175,11 +171,15 @@
           </li>
           
           <li class="rule tag-spring ">
+            <a href="#spring_transactional">Spring transactional</a>
+          </li>
+          
+          <li class="rule tag-spring ">
             <a href="#spring_exception">Spring Exception</a>
           </li>
           
           <li class="rule tag-spring ">
-            <a href="#spring_transactional">Spring transactional</a>
+            <a href="#spring_test">Spring Test</a>
           </li>
           
           <li class="rule tag-linux ">
@@ -187,19 +187,11 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_string">Redis String</a>
-          </li>
-          
-          <li class="rule tag-redis ">
-            <a href="#redis_list">Redis List</a>
-          </li>
-          
-          <li class="rule tag-redis ">
             <a href="#redis_memory">Redis Memory</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_config">Redis Config</a>
+            <a href="#redis_string">Redis String</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -207,11 +199,19 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_clients">Redis Client API</a>
+            <a href="#redis_cmd">Redis Command</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_cmd">Redis Command</a>
+            <a href="#redis_config">Redis Config</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_list">Redis List</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_clients">Redis Client API</a>
           </li>
           
           <li class="rule tag-mysql ">
@@ -231,6 +231,10 @@
           </li>
           
           <li class="rule tag-css ">
+            <a href="#css_center">CSS Center</a>
+          </li>
+          
+          <li class="rule tag-css ">
             <a href="#css_bg%26bd">CSS background border</a>
           </li>
           
@@ -239,15 +243,19 @@
           </li>
           
           <li class="rule tag-other ">
-            <a href="#mac">MAC adr</a>
+            <a href="#git">git</a>
           </li>
           
           <li class="rule tag-other ">
-            <a href="#git">git</a>
+            <a href="#mac">MAC adr</a>
           </li>
           
         </ol>
       </div>
+
+
+
+
 
 
 
@@ -397,6 +405,86 @@
   <div class="row">
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+
+        <div id="java_collections"></div>
+        <span class="hidden" itemprop="alternateName">java_collections</span>
+
+        <h2>
+            <a itemprop="url" href="#java_collections">
+                <span itemprop="name">Java collections</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_collections.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">js</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">标准库中的集合与映射</h3>
+
+<h4 id="toc_1">关于 Set 接口</h4>
+
+<p>Set 接口代表不允许重复元的 Collection。由接口 SortedSet 给出的一种特殊类型的 Set 保证其中的各项处于有序的状态。因为一个</p>
+
+<p>Set IS-A Collection，所以用于访问继承 Collection 的 List 的项的方法也对 Set 有效。</p>
+
+<p>由 Set 所要求的一些特殊的操作是一些插入，删除以及（有效地）执行基本查找的能力。对于 Set，add 方法如果执行成功则返回 true，否则返回 false，因为被添加的项已经存在。保持各项以有序状态的 Set 的实现是 TreeSet。TreeSet 类的基本操作花费对数最坏情形时间。</p>
+
+<p>默认情况下，排序假设 TreeSet 中的项实现 Comparable 接口。另一种排序可以通过用 Comparator 实例化 TreeSet 来确定。例如，可以创建一个存储 String 对象的 TreeSet，通过使用 CaseInsensitiveCompare 函数对象忽略大小写。下面代码中，Set s 大小为1。</p>
+
+<pre><code class="java">Class CaseInsensitiveCompare implements Comparator&lt;String&gt; {
+    public int compare(String lhs, String rhs) {
+        return lhs.compareToIgnoreCase(rhs);
+    }
+}
+
+Set&lt;String&gt; s = new TreeSet&lt;&gt;(new CaseInsensitiveCompare());
+s.add(&quot;Hello&quot;);
+s.add(&quot;HeLLo&quot;);
+System.out.print(&quot;The size is: &quot; + s.size());
+</code></pre>
+
+<h4 id="toc_2">关于 Map 接口</h4>
+
+<p>Map 是一个接口，代表由键以及值组成的一些项的集合。键唯一。在 SortedMap 接口中，映射中的关键字保持逻辑上有序状态。SortedMap 接口的一种实现是 TreeMap 类。Map的基本操作包括诸如 isEmpty、clear、size 等方法，而且最重要的是包含以下方法：</p>
+
+<pre><code class="java">boolean containsKey(keyType key);
+ValueType get(keyType key);
+ValueType put(KeyType key, ValueType value);
+</code></pre>
+
+<p>get 返回 Map 中与 key 相关的值，或当 key 不存在时返回 null。如果在 Map 中不存在 null 值，那么由 get 返回的值可以用来确定 key 是否存在 Map 中。然而，如果存在 null，那么必须使用 containsKey。方法 put 把键值对置入 Map 中，或者返回 null，或者返回与key 相联系的值。</p>
+
+<p>通过一个 Map 进行迭代要比 Collection 复杂，因为 Map 不提供迭代器，而是根据 3 种方法，将 Map 对象的视图作为 Collection 对象返回。由于这些视图本身就是 Collection，因此它们可以被迭代。所提供的 3 种方法如下：</p>
+
+<pre><code class="java">Set&lt;KeyType&gt; keySet();
+Collection&lt;ValueType&gt; values();
+Set&lt;Map.Entry&lt;KeyType, ValueType&gt;&gt; entrySet()
+</code></pre>
+
+<p>方法 keySet 和 values 返回简单的集合（键不包含重复元，因此以一个 Set 对象的形式返回）。entrySet 方法是作为一些项而形成的 Set 对象被返回的（由于键唯一，因此不存在重复项）。每一项均由被嵌套的接口 Map.Entry 表示。对于类型 Map.Entry 的对象，其现有的方法包含访问键、键的值、以及改变键对应的值：</p>
+
+<pre><code class="java">KeyType getKey();
+ValueType getValue();
+ValueType setValue(ValueType newValue);
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
 
         <div id="java_file"></div>
@@ -502,10 +590,14 @@
 
 <p>每一棵子树的根叫做根 r 的 child，而 r 是每一棵子树的根的 parent。下图是示用递归定义的典型的树：</p>
 
-<p><img src="..imgjava_tree1.png" alt="" />
+<p><img src="../img/java_tree1.png" alt="" />
 </p>
 
 <p>从递归定义发现，一棵树是 N 个节点和 N-1 条边的集合，其中一个节点叫做根。存在 N-1 条边的结论是下面的事实得出：每条边都将某个节点连接到它的父节点，而出去根节点外每一个节点都有一个父节点。见下图：</p>
+
+<h4 id="toc_1">树的遍历及应用</h4>
+
+<p>树有很多应用。流行的用法之一是包括 UNIX 和 DOS 在内的许多常用操作系统中的目录结构。下图是 UNXI 文件系统中一个典型的目录</p>
 
         </div>
 
@@ -770,77 +862,88 @@
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
 
-        <div id="java_collections"></div>
-        <span class="hidden" itemprop="alternateName">java_collections</span>
+        <div id="py_set"></div>
+        <span class="hidden" itemprop="alternateName">py_set</span>
 
         <h2>
-            <a itemprop="url" href="#java_collections">
-                <span itemprop="name">Java collections</span>
+            <a itemprop="url" href="#py_set">
+                <span itemprop="name">Python Set</span>
             </a>
         </h2>
 
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_collections.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/py_set.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
         Tags:
         
-            <span class="tags label label-default">js</span>
+            <span class="tags label label-default">python</span>
         
 
         <div itemprop="description">
             
 
-<h3 id="toc_0">标准库中的集合与映射</h3>
+<p>&ldquo;集&rdquo; 这个概念在Pyhton中算是比较年轻的，同时使用率也较低。set和它的不可变姊妹类型frozenset直到Pyhton2.3才首次以模块的形式出现，然后在Python2.6中它们升级成为内置类型</p>
 
-<h4 id="toc_1">关于 Set 接口</h4>
+<p>集合的本质是<font color=red>许多唯一对象</font>的集合。因此，集合可以去重：</p>
 
-<p>Set 接口代表不允许重复元的 Collection。由接口 SortedSet 给出的一种特殊类型的 Set 保证其中的各项处于有序的状态。因为一个</p>
-
-<p>Set IS-A Collection，所以用于访问继承 Collection 的 List 的项的方法也对 Set 有效。</p>
-
-<p>由 Set 所要求的一些特殊的操作是一些插入，删除以及（有效地）执行基本查找的能力。对于 Set，add 方法如果执行成功则返回 true，否则返回 false，因为被添加的项已经存在。保持各项以有序状态的 Set 的实现是 TreeSet。TreeSet 类的基本操作花费对数最坏情形时间。</p>
-
-<p>默认情况下，排序假设 TreeSet 中的项实现 Comparable 接口。另一种排序可以通过用 Comparator 实例化 TreeSet 来确定。例如，可以创建一个存储 String 对象的 TreeSet，通过使用 CaseInsensitiveCompare 函数对象忽略大小写。下面代码中，Set s 大小为1。</p>
-
-<pre><code class="java">Class CaseInsensitiveCompare implements Comparator&lt;String&gt; {
-    public int compare(String lhs, String rhs) {
-        return lhs.compareToIgnoreCase(rhs);
-    }
-}
-
-Set&lt;String&gt; s = new TreeSet&lt;&gt;(new CaseInsensitiveCompare());
-s.add(&quot;Hello&quot;);
-s.add(&quot;HeLLo&quot;);
-System.out.print(&quot;The size is: &quot; + s.size());
+<pre><code class="python">&gt;&gt;&gt; l = ['spam', 'spam', 'eggs', 'spam']
+&gt;&gt;&gt; set(l)
+&gt;&gt;&gt; {'eggs', 'spam'}
+&gt;&gt;&gt; list(set(l))
+&gt;&gt;&gt; ['eggs', 'spam']
 </code></pre>
 
-<h4 id="toc_2">关于 Map 接口</h4>
+<p>集合中的元素必须是<font color=red>可散列</font>的，set类型本身是不可散列的，但是frozenset可以。因此可以创建一个包含不同frozenset的set。</p>
 
-<p>Map 是一个接口，代表由键以及值组成的一些项的集合。键唯一。在 SortedMap 接口中，映射中的关键字保持逻辑上有序状态。SortedMap 接口的一种实现是 TreeMap 类。Map的基本操作包括诸如 isEmpty、clear、size 等方法，而且最重要的是包含以下方法：</p>
+<p>除了保证唯一性，集合还实现了很多基础的中缀运算符。给定两个集合a和b, <strong>a|b</strong> 返回的是它们的<strong>合集</strong>，</p>
 
-<pre><code class="java">boolean containsKey(keyType key);
-ValueType get(keyType key);
-ValueType put(KeyType key, ValueType value);
+<p><strong>a &amp; b</strong>得到的是<strong>交集</strong>，而a - b得到的是<strong>差集</strong>。合理地利用这些操作，可使代码行数变少，还能减少Python程序的运行时间。亦可使代码更易读，从而更容易判断程序的正确性，因为利用这些运算符可以省去不必要的循环和逻辑操作。</p>
+
+<p>例1：needles中元素在haystack里出现次数，两个变量都是set类型。</p>
+
+<pre><code class="python">found = len(needles &amp; haystack)
 </code></pre>
 
-<p>get 返回 Map 中与 key 相关的值，或当 key 不存在时返回 null。如果在 Map 中不存在 null 值，那么由 get 返回的值可以用来确定 key 是否存在 Map 中。然而，如果存在 null，那么必须使用 containsKey。方法 put 把键值对置入 Map 中，或者返回 null，或者返回与key 相联系的值。</p>
+<p>例2：for循环实现。</p>
 
-<p>通过一个 Map 进行迭代要比 Collection 复杂，因为 Map 不提供迭代器，而是根据 3 种方法，将 Map 对象的视图作为 Collection 对象返回。由于这些视图本身就是 Collection，因此它们可以被迭代。所提供的 3 种方法如下：</p>
-
-<pre><code class="java">Set&lt;KeyType&gt; keySet();
-Collection&lt;ValueType&gt; values();
-Set&lt;Map.Entry&lt;KeyType, ValueType&gt;&gt; entrySet()
+<pre><code class="python">found =  0
+for n in needles
+    if n in haystack
+        found += 1
 </code></pre>
 
-<p>方法 keySet 和 values 返回简单的集合（键不包含重复元，因此以一个 Set 对象的形式返回）。entrySet 方法是作为一些项而形成的 Set 对象被返回的（由于键唯一，因此不存在重复项）。每一项均由被嵌套的接口 Map.Entry 表示。对于类型 Map.Entry 的对象，其现有的方法包含访问键、键的值、以及改变键对应的值：</p>
+<p>例1比例2速度要快一些，另一方面，例2可以用在任何可迭代对象上，例1则要求两者皆为集合。若没有集合，可随时建立集合，如例3所示。</p>
 
-<pre><code class="java">KeyType getKey();
-ValueType getValue();
-ValueType setValue(ValueType newValue);
+<p>例3：转化为set进行交集操作</p>
+
+<pre><code class="python">found = len(set(needles) &amp; set(haystack))
 </code></pre>
+
+<p>另一种写法</p>
+
+<pre><code class="python">found = len(set(needles).intersection(haystack))
+</code></pre>
+
+<p>例3写法会牵制到把对象转化为集合的成本，不过如果 needles 或 haystack 中任一为集合，那么例3的方案比例2更高效。</p>
+
+<p>以上所有例子的运行时间都能在3毫秒左右，在含有10000000个元素的haystack里搜索1000个值，算下来大概时每个元素3微妙。</p>
+
+<p>除了速度极快的查找功能（这归功于背后的散列表），内置的 set 和 frozenset 提供了丰富的功能和操作，不但让创建集合的方式丰富多彩，且对于 set 来讲，我们还可以对集合里已有的元素进行修改。在讨论操作之前，先看下相关的句法。</p>
+
+<h3 id="toc_0">集合字面量</h3>
+
+<p>除空集之外，集合的字面量——{1}、{1, 2}，等到——看起来与数学形式一摸一样。若是空集，则必须写成set()的形式</p>
+
+<p>tip：创建空集，必须使用不带任何参数的构造方法 set()，如果只写成 {} 的形式，跟以前一样，你创建的其实是个空字典</p>
+
+<p>在python3中，除了空集，集合的字符串表示形式总是以 {&hellip;} 的形式出现。</p>
+
+<p>字面量句法 {1, 2, 3} 相比构造方法 (set([1, 2, 3])) 要更快更易读，后者的速度要慢一些，因为Pyhton 必须先从这个名字来查询构造方法，然后新建一个列表，最后再把这个列表传入到构造方法中，但如果是字面量的形式，Python会利用一个专门的叫做 BUILD_SET 的字节码来创建集合。</p>
+
+<p>​</p>
 
         </div>
 
@@ -990,88 +1093,86 @@ lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
 
-        <div id="py_set"></div>
-        <span class="hidden" itemprop="alternateName">py_set</span>
+        <div id="js_promise"></div>
+        <span class="hidden" itemprop="alternateName">js_promise</span>
 
         <h2>
-            <a itemprop="url" href="#py_set">
-                <span itemprop="name">Python Set</span>
+            <a itemprop="url" href="#js_promise">
+                <span itemprop="name">Js Promise</span>
             </a>
         </h2>
 
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/py_set.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/js_promise.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
         Tags:
         
-            <span class="tags label label-default">python</span>
+            <span class="tags label label-default">js</span>
         
 
         <div itemprop="description">
             
 
-<p>&ldquo;集&rdquo; 这个概念在Pyhton中算是比较年轻的，同时使用率也较低。set和它的不可变姊妹类型frozenset直到Pyhton2.3才首次以模块的形式出现，然后在Python2.6中它们升级成为内置类型</p>
+<h3 id="toc_0">异步编程</h3>
 
-<p>集合的本质是<font color=red>许多唯一对象</font>的集合。因此，集合可以去重：</p>
+<p>同步行为和异步行为的对立统一是计算机科学的一个基本概念。特别是在 JavaScript 这种<strong>单线程事件循环模型中</strong>，同步操作和异步操作更是代码所要依赖的核心机制。异步行为是为了优化因计算量大而时间长的操作。如果在等待其他操作完成的同时，即使运行其他指令，系统也能保持稳定。</p>
 
-<pre><code class="python">&gt;&gt;&gt; l = ['spam', 'spam', 'eggs', 'spam']
-&gt;&gt;&gt; set(l)
-&gt;&gt;&gt; {'eggs', 'spam'}
-&gt;&gt;&gt; list(set(l))
-&gt;&gt;&gt; ['eggs', 'spam']
+<p>重要的是，异步操作并不一定计算量大或要等很长时间。只要你不行为等待某个异步操作而阻塞线程执行，那么任何时候都可以使用。</p>
+
+<h3 id="toc_1">同步与异步</h3>
+
+<p><strong>同步行为</strong>对应内存中顺序执行的处理器指令。每条指令都会严格按照它们出现的顺序执行，而每条指令执行后也能立即获得存储在系统本地（如寄存器或系统内存）的信息。这样的执行流程容易分析程序在执行任意位置时的状态的（比如变量的值）。</p>
+
+<p>同步操作的例子可以是执行一次简单的数学计算：</p>
+
+<pre><code class="javascript">let x = 3;
+x = x + 4;
 </code></pre>
 
-<p>集合中的元素必须是<font color=red>可散列</font>的，set类型本身是不可散列的，但是frozenset可以。因此可以创建一个包含不同frozenset的set。</p>
+<p>这两行 JavaScript 代码对应的低级指令（从 JavaScript 到 x86）不难想象。首先，操作系统会在栈内存上分配一个存储浮点数值的空间，然后针对这个值做一次数学计算，再把计算结果写回之前分配的内存中。所有这些指令都是在单个线程中按顺序执行的。在低级指令的层面。有充足的工具可以确定系统状态。</p>
 
-<p>除了保证唯一性，集合还实现了很多基础的中缀运算符。给定两个集合a和b, <strong>a|b</strong> 返回的是它们的<strong>合集</strong>，</p>
+<p><strong>异步行为</strong>类似于系统中断，即当前进程外部地实体可以触发代码执行，异步操作经常是必须要的，因为强制进程等待一个长时间的操作通常是不可行的（同步操作则必须等）。如果代码要访问一些高延迟的资源，比如向远程服务器发送请求并等待响应，那么就会出现长时间的等待。</p>
 
-<p><strong>a &amp; b</strong>得到的是<strong>交集</strong>，而a - b得到的是<strong>差集</strong>。合理地利用这些操作，可使代码行数变少，还能减少Python程序的运行时间。亦可使代码更易读，从而更容易判断程序的正确性，因为利用这些运算符可以省去不必要的循环和逻辑操作。</p>
+<p>异步操作的例子可以是在定时回调中执行一次简单的数学计算：</p>
 
-<p>例1：needles中元素在haystack里出现次数，两个变量都是set类型。</p>
-
-<pre><code class="python">found = len(needles &amp; haystack)
+<pre><code class="javascript">let x = 3;
+setTimeout(() =&gt; x = x + 4, 1000);
 </code></pre>
 
-<p>例2：for循环实现。</p>
+<p>这段程序最终和同步代码执行的任务一样，但这一次执行线程不知道 x 值何时会改变，因为这取决于回调何时从消息队列出列并执行。</p>
 
-<pre><code class="python">found =  0
-for n in needles
-    if n in haystack
-        found += 1
+<p>异步操作不同意推断。虽然此例对应的低级代码最终和前面的例子没什么区别，但第二个指令是由系统计时器触发的，这回生成一个入队执行的中断，何时会触发这个中断，这对 JavaScript 运行时是一个黑盒，因此实际上无法预知（尽管可以保证这发生在当前线程的同步代码执行之后，否则回调都没机会出列被执行）。无论如何，在排定回调以后基本没办法知道系统状态何时变化。</p>
+
+<h3 id="toc_2">以往的异步编程模式</h3>
+
+<h3 id="toc_3">Promise</h3>
+
+<p>ECMAScript6 新增的引用类型 promise，可以通过 new 操作符来实例化。创建新 promise 时需要传入执行器（executor）函数作为参数。</p>
+
+<pre><code class="javascript">let p = new promise(() =&gt; ());
+setTimeout(console.log, 0, p);  // Promise &lt;pending&gt;
 </code></pre>
 
-<p>例1比例2速度要快一些，另一方面，例2可以用在任何可迭代对象上，例1则要求两者皆为集合。若没有集合，可随时建立集合，如例3所示。</p>
+<p>如果不提供执行器函数，就会抛出 <i>SyntaxError</i></p>
 
-<p>例3：转化为set进行交集操作</p>
+<h4 id="toc_4">promise 状态</h4>
 
-<pre><code class="python">found = len(set(needles) &amp; set(haystack))
-</code></pre>
+<p>promise 是一个由状态的对象，可能处于以下 3 中状态之一：</p>
 
-<p>另一种写法</p>
+<ul>
+<li>pending（待定）</li>
+<li>fulfilled（兑现，有时也称”解决“，resolved）</li>
+<li>reject（拒绝）</li>
+</ul>
 
-<pre><code class="python">found = len(set(needles).intersection(haystack))
-</code></pre>
+<p>pending 是 promise 的最初始状态。在特定状态下，promise 可以<strong>落定</strong>（settled）为代表成功的 fulfilled 状态，或者代表失败的 reject 状态。无论落定为哪种状态都是<strong>不可逆</strong>的。</p>
 
-<p>例3写法会牵制到把对象转化为集合的成本，不过如果 needles 或 haystack 中任一为集合，那么例3的方案比例2更高效。</p>
+<p>promise 状态是<strong>私有</strong>的，不能直接通过 JavaScript 检测到。这主要是为了避免根据读取到的状态，以同步方式处理 promise 对象。另外，状态也不能被外部代码修改。这与不能读取状态原因一致。promise 故意将异步行为封装起来，从而隔离外部的同步代码。</p>
 
-<p>以上所有例子的运行时间都能在3毫秒左右，在含有10000000个元素的haystack里搜索1000个值，算下来大概时每个元素3微妙。</p>
-
-<p>除了速度极快的查找功能（这归功于背后的散列表），内置的 set 和 frozenset 提供了丰富的功能和操作，不但让创建集合的方式丰富多彩，且对于 set 来讲，我们还可以对集合里已有的元素进行修改。在讨论操作之前，先看下相关的句法。</p>
-
-<h3 id="toc_0">集合字面量</h3>
-
-<p>除空集之外，集合的字面量——{1}、{1, 2}，等到——看起来与数学形式一摸一样。若是空集，则必须写成set()的形式</p>
-
-<p>tip：创建空集，必须使用不带任何参数的构造方法 set()，如果只写成 {} 的形式，跟以前一样，你创建的其实是个空字典</p>
-
-<p>在python3中，除了空集，集合的字符串表示形式总是以 {&hellip;} 的形式出现。</p>
-
-<p>字面量句法 {1, 2, 3} 相比构造方法 (set([1, 2, 3])) 要更快更易读，后者的速度要慢一些，因为Pyhton 必须先从这个名字来查询构造方法，然后新建一个列表，最后再把这个列表传入到构造方法中，但如果是字面量的形式，Python会利用一个专门的叫做 BUILD_SET 的字节码来创建集合。</p>
-
-<p>​</p>
+<h4 id="toc_5">解决值、拒绝理由以及 promise 用例</h4>
 
         </div>
 
@@ -1643,95 +1744,6 @@ import ... from '/bar.js'
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
-
-        <div id="js_promise"></div>
-        <span class="hidden" itemprop="alternateName">js_promise</span>
-
-        <h2>
-            <a itemprop="url" href="#js_promise">
-                <span itemprop="name">Js Promise</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/js_promise.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">js</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">异步编程</h3>
-
-<p>同步行为和异步行为的对立统一是计算机科学的一个基本概念。特别是在 JavaScript 这种<strong>单线程事件循环模型中</strong>，同步操作和异步操作更是代码所要依赖的核心机制。异步行为是为了优化因计算量大而时间长的操作。如果在等待其他操作完成的同时，即使运行其他指令，系统也能保持稳定。</p>
-
-<p>重要的是，异步操作并不一定计算量大或要等很长时间。只要你不行为等待某个异步操作而阻塞线程执行，那么任何时候都可以使用。</p>
-
-<h3 id="toc_1">同步与异步</h3>
-
-<p><strong>同步行为</strong>对应内存中顺序执行的处理器指令。每条指令都会严格按照它们出现的顺序执行，而每条指令执行后也能立即获得存储在系统本地（如寄存器或系统内存）的信息。这样的执行流程容易分析程序在执行任意位置时的状态的（比如变量的值）。</p>
-
-<p>同步操作的例子可以是执行一次简单的数学计算：</p>
-
-<pre><code class="javascript">let x = 3;
-x = x + 4;
-</code></pre>
-
-<p>这两行 JavaScript 代码对应的低级指令（从 JavaScript 到 x86）不难想象。首先，操作系统会在栈内存上分配一个存储浮点数值的空间，然后针对这个值做一次数学计算，再把计算结果写回之前分配的内存中。所有这些指令都是在单个线程中按顺序执行的。在低级指令的层面。有充足的工具可以确定系统状态。</p>
-
-<p><strong>异步行为</strong>类似于系统中断，即当前进程外部地实体可以触发代码执行，异步操作经常是必须要的，因为强制进程等待一个长时间的操作通常是不可行的（同步操作则必须等）。如果代码要访问一些高延迟的资源，比如向远程服务器发送请求并等待响应，那么就会出现长时间的等待。</p>
-
-<p>异步操作的例子可以是在定时回调中执行一次简单的数学计算：</p>
-
-<pre><code class="javascript">let x = 3;
-setTimeout(() =&gt; x = x + 4, 1000);
-</code></pre>
-
-<p>这段程序最终和同步代码执行的任务一样，但这一次执行线程不知道 x 值何时会改变，因为这取决于回调何时从消息队列出列并执行。</p>
-
-<p>异步操作不同意推断。虽然此例对应的低级代码最终和前面的例子没什么区别，但第二个指令是由系统计时器触发的，这回生成一个入队执行的中断，何时会触发这个中断，这对 JavaScript 运行时是一个黑盒，因此实际上无法预知（尽管可以保证这发生在当前线程的同步代码执行之后，否则回调都没机会出列被执行）。无论如何，在排定回调以后基本没办法知道系统状态何时变化。</p>
-
-<h3 id="toc_2">以往的异步编程模式</h3>
-
-<h3 id="toc_3">Promise</h3>
-
-<p>ECMAScript6 新增的引用类型 promise，可以通过 new 操作符来实例化。创建新 promise 时需要传入执行器（executor）函数作为参数。</p>
-
-<pre><code class="javascript">let p = new promise(() =&gt; ());
-setTimeout(console.log, 0, p);  // Promise &lt;pending&gt;
-</code></pre>
-
-<p>如果不提供执行器函数，就会抛出 <i>SyntaxError</i></p>
-
-<h4 id="toc_4">promise 状态</h4>
-
-<p>promise 是一个由状态的对象，可能处于以下 3 中状态之一：</p>
-
-<ul>
-<li>pending（待定）</li>
-<li>fulfilled（兑现，有时也称”解决“，resolved）</li>
-<li>reject（拒绝）</li>
-</ul>
-
-<p>pending 是 promise 的最初始状态。在特定状态下，promise 可以<strong>落定</strong>（settled）为代表成功的 fulfilled 状态，或者代表失败的 reject 状态。无论落定为哪种状态都是<strong>不可逆</strong>的。</p>
-
-<p>promise 状态是<strong>私有</strong>的，不能直接通过 JavaScript 检测到。这主要是为了避免根据读取到的状态，以同步方式处理 promise 对象。另外，状态也不能被外部代码修改。这与不能读取状态原因一致。promise 故意将异步行为封装起来，从而隔离外部的同步代码。</p>
-
-<h4 id="toc_5">解决值、拒绝理由以及 promise 用例</h4>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
 
         <div id="spring_exception"></div>
@@ -2044,177 +2056,6 @@ public class TestController {
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
 
-        <div id="spring_transactional"></div>
-        <span class="hidden" itemprop="alternateName">spring_transactional</span>
-
-        <h2>
-            <a itemprop="url" href="#spring_transactional">
-                <span itemprop="name">Spring transactional</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_transactional.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">spring</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">springboot 的事务处理 Transactional</h3>
-
-<h4 id="toc_1">1. springboot事务</h4>
-
-<p>两种处理方式</p>
-
-<ul>
-<li><strong>编程式事务管理</strong>，推荐使用<code>TransactionTemplate</code></li>
-<li><strong>声明式事务管理</strong>，基于AOP原理的注解<code>@Transactional</code></li>
-</ul>
-
-<h4 id="toc_2">2. Transaction 的使用</h4>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
-
-        <div id="spring_swagger"></div>
-        <span class="hidden" itemprop="alternateName">spring_swagger</span>
-
-        <h2>
-            <a itemprop="url" href="#spring_swagger">
-                <span itemprop="name">Spring Swagger</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_swagger.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">spring</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">配置 Swagger</h3>
-
-<h4 id="toc_1">1）添加 Swagger 依赖</h4>
-
-<pre><code class="xml">&lt;!--Swagger 依赖--&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
-    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
-    &lt;version&gt;3.0.0&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;!--Swagger-UI 依赖--&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
-    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
-    &lt;version&gt;3.0.0&lt;/version&gt;
-&lt;/dependency&gt;
-
-</code></pre>
-
-<h4 id="toc_2">2）创建 Swagger 配置类</h4>
-
-<pre><code class="java">/**
- * Swagger 配置文件
- */
-@Configuration
-public class SwaggerConfig {
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage(&quot;com.example.demo.controller&quot;))
-
-                .paths(PathSelectors.any())
-                .build();
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title(&quot; RESTful APIs&quot;)
-                .description(&quot;RESTful APIs&quot;)
-                .termsOfServiceUrl(&quot;http://localhost:8080/&quot;)
-                .contact(&quot;long&quot;)
-                .version(&quot;1.0&quot;)
-                .build();
-    }
-}
-</code></pre>
-
-<p><code>@Configuration</code> ：让 spring 来加载该类配置</p>
-
-<p><code>@EnableSwagger2</code> ：启用 Swagger2.createRestApi 函数创建 Docket 的 Bean</p>
-
-<p><code>apiInfo()</code> ：用来展示该 API 的基本信息</p>
-
-<p><code>select()</code> ：返回一个 ApiSelectorBuilder 实例，用来控制哪些接口暴露给 Swagger 来展示</p>
-
-<p><code>api(RequestHandlerSelectors.basePackage())</code> ：配置包扫描路径。Swagger 会扫描包下面所有 Controller 定义的 API，并产生文档内容。如果不想产生 API，则使用注解 @Apilgnore</p>
-
-<h4 id="toc_3">3）编写接口文档</h4>
-
-<p><code>@Api</code> ：描述类/接口的主要路径</p>
-
-<p><code>@ApiOperation</code> ：描述方法用途，给 API 增加说明</p>
-
-<p><code>@ApiImplicitParam</code> ：描述方法的参数，给参数增加说明</p>
-
-<p><code>@ApiImplicitParams</code> ：描述方法的参数（ Multi-Params ），给参数增加说明</p>
-
-<p><code>@Apilgnore</code> ：忽略某类/方法/参数的文档</p>
-
-<pre><code class="java">@RestController
-public class HelloWorldController {
-    @ApiOperation(value = &quot;hello&quot;, notes = &quot;notes &quot;)
-    @RequestMapping(&quot;/hello&quot;)
-    public String hello() throws Exception {
-        return &quot;HelloWorld ,Spring Boot!&quot;;
-    }
-    //使用该注解忽略这个API
-    @ApiIgnore
-    @RequestMapping(value = &quot;/ignoreApi&quot;)
-    public String  ignoreApi() {
-        return &quot;HelloWorld ,Spring Boot!&quot;;
-    }
-
-
-    @ApiOperation(value = &quot;删除文章&quot;, notes = &quot;根据URL的id来指定删除对象&quot;)
-    @ApiImplicitParam(name = &quot;id&quot;, value = &quot;文章ID&quot;, required = true, dataType = &quot;Long&quot;)
-    @RequestMapping(value = &quot;/{id}&quot;, method = RequestMethod.DELETE)
-    public String del(@PathVariable(&quot;id&quot;) long id) {
-        //articleRepository.deleteById(id);
-        return &quot;success&quot;;
-    }
-}
-</code></pre>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
-
         <div id="spring_test"></div>
         <span class="hidden" itemprop="alternateName">spring_test</span>
 
@@ -2385,6 +2226,133 @@ public class test {
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
 
+        <div id="spring_swagger"></div>
+        <span class="hidden" itemprop="alternateName">spring_swagger</span>
+
+        <h2>
+            <a itemprop="url" href="#spring_swagger">
+                <span itemprop="name">Spring Swagger</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_swagger.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">spring</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">配置 Swagger</h3>
+
+<h4 id="toc_1">1）添加 Swagger 依赖</h4>
+
+<pre><code class="xml">&lt;!--Swagger 依赖--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
+    &lt;version&gt;3.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!--Swagger-UI 依赖--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.springfox&lt;/groupId&gt;
+    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
+    &lt;version&gt;3.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+
+</code></pre>
+
+<h4 id="toc_2">2）创建 Swagger 配置类</h4>
+
+<pre><code class="java">/**
+ * Swagger 配置文件
+ */
+@Configuration
+public class SwaggerConfig {
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage(&quot;com.example.demo.controller&quot;))
+
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title(&quot; RESTful APIs&quot;)
+                .description(&quot;RESTful APIs&quot;)
+                .termsOfServiceUrl(&quot;http://localhost:8080/&quot;)
+                .contact(&quot;long&quot;)
+                .version(&quot;1.0&quot;)
+                .build();
+    }
+}
+</code></pre>
+
+<p><code>@Configuration</code> ：让 spring 来加载该类配置</p>
+
+<p><code>@EnableSwagger2</code> ：启用 Swagger2.createRestApi 函数创建 Docket 的 Bean</p>
+
+<p><code>apiInfo()</code> ：用来展示该 API 的基本信息</p>
+
+<p><code>select()</code> ：返回一个 ApiSelectorBuilder 实例，用来控制哪些接口暴露给 Swagger 来展示</p>
+
+<p><code>api(RequestHandlerSelectors.basePackage())</code> ：配置包扫描路径。Swagger 会扫描包下面所有 Controller 定义的 API，并产生文档内容。如果不想产生 API，则使用注解 @Apilgnore</p>
+
+<h4 id="toc_3">3）编写接口文档</h4>
+
+<p><code>@Api</code> ：描述类/接口的主要路径</p>
+
+<p><code>@ApiOperation</code> ：描述方法用途，给 API 增加说明</p>
+
+<p><code>@ApiImplicitParam</code> ：描述方法的参数，给参数增加说明</p>
+
+<p><code>@ApiImplicitParams</code> ：描述方法的参数（ Multi-Params ），给参数增加说明</p>
+
+<p><code>@Apilgnore</code> ：忽略某类/方法/参数的文档</p>
+
+<pre><code class="java">@RestController
+public class HelloWorldController {
+    @ApiOperation(value = &quot;hello&quot;, notes = &quot;notes &quot;)
+    @RequestMapping(&quot;/hello&quot;)
+    public String hello() throws Exception {
+        return &quot;HelloWorld ,Spring Boot!&quot;;
+    }
+    //使用该注解忽略这个API
+    @ApiIgnore
+    @RequestMapping(value = &quot;/ignoreApi&quot;)
+    public String  ignoreApi() {
+        return &quot;HelloWorld ,Spring Boot!&quot;;
+    }
+
+
+    @ApiOperation(value = &quot;删除文章&quot;, notes = &quot;根据URL的id来指定删除对象&quot;)
+    @ApiImplicitParam(name = &quot;id&quot;, value = &quot;文章ID&quot;, required = true, dataType = &quot;Long&quot;)
+    @RequestMapping(value = &quot;/{id}&quot;, method = RequestMethod.DELETE)
+    public String del(@PathVariable(&quot;id&quot;) long id) {
+        //articleRepository.deleteById(id);
+        return &quot;success&quot;;
+    }
+}
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
+
         <div id="spring_yml"></div>
         <span class="hidden" itemprop="alternateName">spring_yml</span>
 
@@ -2534,6 +2502,50 @@ public String getMesUrl() {
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
+
+        <div id="spring_transactional"></div>
+        <span class="hidden" itemprop="alternateName">spring_transactional</span>
+
+        <h2>
+            <a itemprop="url" href="#spring_transactional">
+                <span itemprop="name">Spring transactional</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_transactional.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">spring</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">springboot 的事务处理 Transactional</h3>
+
+<h4 id="toc_1">1. springboot事务</h4>
+
+<p>两种处理方式</p>
+
+<ul>
+<li><strong>编程式事务管理</strong>，推荐使用<code>TransactionTemplate</code></li>
+<li><strong>声明式事务管理</strong>，基于AOP原理的注解<code>@Transactional</code></li>
+</ul>
+
+<h4 id="toc_2">2. Transaction 的使用</h4>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-linux " style="padding-bottom:1em;">
 
         <div id="linux 文件与目录权限"></div>
@@ -2562,6 +2574,86 @@ public String getMesUrl() {
 <h4 id="toc_0">用户与用户组</h4>
 
 <p>·</p>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_memory"></div>
+        <span class="hidden" itemprop="alternateName">redis_memory</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_memory">
+                <span itemprop="name">Redis Memory</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_memory.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<p>redis所有数据都存在内存中</p>
+
+<h3 id="toc_0">redisObject 对象</h3>
+
+<p>Redis 存储的所有值都在内部定义为 redisObject 结构体。</p>
+
+<pre><code>type: 4                             // 对象类型
+encoding: 4                         // 内部编码类型
+lruREDIS_LRU_BITS                   // LRU计时时钟
+int refcount                        // 引用计数器
+void *ptr                           // 数据指针
+</code></pre>
+
+<p>Redis 存储的数据都使用 redisObject 来封装，包括 string、hash、list、set、zset 在内的所有数据类型。理解 redisObject 对内存优化十分有帮助：</p>
+
+<ul>
+<li><p>type 字段：表示当前对象使用的数据类型</p></li>
+
+<li><p>encoding 字段：表示 Redis 内部编码类型</p></li>
+
+<li><p>lru 字段：记录对象最后一次被访问的时间，当配置了maxmemory 和 maxmemory-policy=volatile-lru 或者 allkeys-lru 时，用于辅助 LRU 算法删除键数据。可以使用 object idletime {key} 命令在不更新 lru 字段情况下查看当前键的空闲时间</p></li>
+</ul>
+
+<p><strong>Tip</strong>：可以使用 scan + object idletime 命令批量查询哪些键长时间未被访问。找出长时间不访问的键进行清理，可降低内存占用</p>
+
+<ul>
+<li><p>refcount 字段：记录当前对象被引用的次数，用于通过引用次数回收内存，当 refcount = 0 时，可以安全回收当前对象空间。使用 object refcount {key} 获取当前对象引用。当对象为整数且范围在[0-9999] 时，Redis 可以使用共享对象的方式来节约内存。具体见共享对象池部分。</p></li>
+
+<li><p>*ptr 字段：与对象的数据内容相关，如果是整数，直接存储数据；否则表示指向数据的指针。Redis 在 3.0 之后对值对象是字符串且长度&lt;=39 字节的数据，内部编码为 embstr 类型，字符串 sds 和 redisObject 一起分配，从而只要一次内存操作即可</p></li>
+</ul>
+
+<p>tip：高并发写入场景中，在条件允许的情况下，建议字符串长度控制在 39 字节以内，减少创建 redisObject 内存分配次数，从而提高性能</p>
+
+<h3 id="toc_1">缩减键值对象</h3>
+
+<p>降低 Redis 内存使用<strong>最直接的方式就是缩减键（key）和值（value）的长度</strong></p>
+
+<ul>
+<li><p>key 长度：如在设计键时，在完整描述业务情况下，键值越短越好。如 user:{uid}:friends:notify:{fid} 可简化为 u:{uid}:fs:nt:{fid}</p></li>
+
+<li><p>value 长度：值对象缩减比较复杂，常见需求是把业务对象序列化成二进制数组放入 Redis。首先应该在业务上精简业务对象，去掉不必要的属性避免存储无效数据。其次在序列化工具选择上，应该选择更高效的序列化工具来降低字节数组大小。以 Java 为例，内置的序列化方式无论从速度还是压缩比都不尽人意。这时可以选择更高效的序列化工具，如：protostuff、kryo 等</p></li>
+</ul>
+
+<p>值对象除了存储二进制数据之外，通常还会使用通用格式存储数据比如：json、xml等作为字符串存储在 Redis 中。这种方式的优点是方便调试和跨语言，但是同样的数据相比字节数组所需的空间更大，在内存紧张的情况下，可以使用通用压缩算法压缩 json、xml 后再存入 redis，从而降低内存占用，例如 GZIP 压缩后的 json 可降低 60% 的空间。</p>
+
+<p><strong>Tip</strong>：当频繁压缩解压 json 等文本数据时，开发人员要考虑压缩速度和计算开销成本，这里推荐使用 Google 的 Snappy 压缩工具，在特定的压缩情况下效率远远高于 GZIP 等传统压缩工具、且支持所有主流语言环境。</p>
+
+<h3 id="toc_2">共享对象池</h3>
 
         </div>
 
@@ -2617,6 +2709,91 @@ public String getMesUrl() {
 <pre><code class="shell">setnx key seconds value
 setnx key value
 </code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_key"></div>
+        <span class="hidden" itemprop="alternateName">redis_key</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_key">
+                <span itemprop="name">Redis key</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_key.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">Redis 键管理</h3>
+
+<p>单个键、遍历键、数据库管理</p>
+
+<h4 id="toc_1">单个键管理</h4>
+
+<h5 id="toc_2">1.  键重命名</h5>
+
+<pre><code class="shell">rename key newkey
+</code></pre>
+
+<p>如果在 rename 之前，键已存在，那么它的值也将被覆盖</p>
+
+<p>防止强行 rename key，Redis 提供了 renamex 命令，确保只有 newkey 不存在时才被覆盖，newkey 存在时返回 0 代表未完成重命名。</p>
+
+<p>在使用重命名命令时，有两点需要注意</p>
+
+<ul>
+<li>由于重命名键期间会执行 del 命令删除旧的键，如果键对应的值比较大，会存在阻塞 Redis 的可能性，这点不要忽略</li>
+<li>如果 rename 和 renamex 中的 key 和 newkey 如果是相同的，在 Redis 3.2 和之前版本返回结果略有不同。</li>
+</ul>
+
+<p>Redis 3.2 中会返回 OK</p>
+
+<p>Redis 3.2 之前版本会提示错误</p>
+
+<pre><code class="shell">127.0.0.1&gt; rename key key
+(error) ERR source and destination objects are the same
+</code></pre>
+
+<h5 id="toc_3">2.  随机返回一个键</h5>
+
+<pre><code class="shell">randomkey
+</code></pre>
+
+<h5 id="toc_4">3. 键过期</h5>
+
+<p>除了 expire、ttl 命令以外，Redis 还提供了 expireat、pexpire、pexpireat、pttl、persist 等一系列命令</p>
+
+<ul>
+<li><code>expire key seconds</code>：键在 seconds 秒后过期</li>
+<li><code>expireat key timestamp</code>：键在秒级时间戳 timestamp 后过期</li>
+</ul>
+
+<p>ttl 命令和 pttl 都可以查询键的剩余过期时间，但是 pttl 精度更高可以达到毫秒级别，有 3 种返回值：</p>
+
+<ul>
+<li>大于等于 0 的整数：键剩余的过期时间（ttl 是秒，pttl 是毫秒）</li>
+<li>-1：键没有设置过期时间</li>
+<li>-2：键不存在</li>
+</ul>
+
+<p>expireat 命令可以设置秒的</p>
 
         </div>
 
@@ -3046,86 +3223,6 @@ for article in {articles}
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
 
-        <div id="redis_memory"></div>
-        <span class="hidden" itemprop="alternateName">redis_memory</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_memory">
-                <span itemprop="name">Redis Memory</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_memory.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<p>redis所有数据都存在内存中</p>
-
-<h3 id="toc_0">redisObject 对象</h3>
-
-<p>Redis 存储的所有值都在内部定义为 redisObject 结构体。</p>
-
-<pre><code>type: 4                             // 对象类型
-encoding: 4                         // 内部编码类型
-lruREDIS_LRU_BITS                   // LRU计时时钟
-int refcount                        // 引用计数器
-void *ptr                           // 数据指针
-</code></pre>
-
-<p>Redis 存储的数据都使用 redisObject 来封装，包括 string、hash、list、set、zset 在内的所有数据类型。理解 redisObject 对内存优化十分有帮助：</p>
-
-<ul>
-<li><p>type 字段：表示当前对象使用的数据类型</p></li>
-
-<li><p>encoding 字段：表示 Redis 内部编码类型</p></li>
-
-<li><p>lru 字段：记录对象最后一次被访问的时间，当配置了maxmemory 和 maxmemory-policy=volatile-lru 或者 allkeys-lru 时，用于辅助 LRU 算法删除键数据。可以使用 object idletime {key} 命令在不更新 lru 字段情况下查看当前键的空闲时间</p></li>
-</ul>
-
-<p><strong>Tip</strong>：可以使用 scan + object idletime 命令批量查询哪些键长时间未被访问。找出长时间不访问的键进行清理，可降低内存占用</p>
-
-<ul>
-<li><p>refcount 字段：记录当前对象被引用的次数，用于通过引用次数回收内存，当 refcount = 0 时，可以安全回收当前对象空间。使用 object refcount {key} 获取当前对象引用。当对象为整数且范围在[0-9999] 时，Redis 可以使用共享对象的方式来节约内存。具体见共享对象池部分。</p></li>
-
-<li><p>*ptr 字段：与对象的数据内容相关，如果是整数，直接存储数据；否则表示指向数据的指针。Redis 在 3.0 之后对值对象是字符串且长度&lt;=39 字节的数据，内部编码为 embstr 类型，字符串 sds 和 redisObject 一起分配，从而只要一次内存操作即可</p></li>
-</ul>
-
-<p>tip：高并发写入场景中，在条件允许的情况下，建议字符串长度控制在 39 字节以内，减少创建 redisObject 内存分配次数，从而提高性能</p>
-
-<h3 id="toc_1">缩减键值对象</h3>
-
-<p>降低 Redis 内存使用<strong>最直接的方式就是缩减键（key）和值（value）的长度</strong></p>
-
-<ul>
-<li><p>key 长度：如在设计键时，在完整描述业务情况下，键值越短越好。如 user:{uid}:friends:notify:{fid} 可简化为 u:{uid}:fs:nt:{fid}</p></li>
-
-<li><p>value 长度：值对象缩减比较复杂，常见需求是把业务对象序列化成二进制数组放入 Redis。首先应该在业务上精简业务对象，去掉不必要的属性避免存储无效数据。其次在序列化工具选择上，应该选择更高效的序列化工具来降低字节数组大小。以 Java 为例，内置的序列化方式无论从速度还是压缩比都不尽人意。这时可以选择更高效的序列化工具，如：protostuff、kryo 等</p></li>
-</ul>
-
-<p>值对象除了存储二进制数据之外，通常还会使用通用格式存储数据比如：json、xml等作为字符串存储在 Redis 中。这种方式的优点是方便调试和跨语言，但是同样的数据相比字节数组所需的空间更大，在内存紧张的情况下，可以使用通用压缩算法压缩 json、xml 后再存入 redis，从而降低内存占用，例如 GZIP 压缩后的 json 可降低 60% 的空间。</p>
-
-<p><strong>Tip</strong>：当频繁压缩解压 json 等文本数据时，开发人员要考虑压缩速度和计算开销成本，这里推荐使用 Google 的 Snappy 压缩工具，在特定的压缩情况下效率远远高于 GZIP 等传统压缩工具、且支持所有主流语言环境。</p>
-
-<h3 id="toc_2">共享对象池</h3>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
         <div id="redis_clients"></div>
         <span class="hidden" itemprop="alternateName">redis_clients</span>
 
@@ -3376,91 +3473,6 @@ client.eval(script, 1, 'hello') # world
 </tr>
 </tbody>
 </table>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_key"></div>
-        <span class="hidden" itemprop="alternateName">redis_key</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_key">
-                <span itemprop="name">Redis key</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_key.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">Redis 键管理</h3>
-
-<p>单个键、遍历键、数据库管理</p>
-
-<h4 id="toc_1">单个键管理</h4>
-
-<h5 id="toc_2">1.  键重命名</h5>
-
-<pre><code class="shell">rename key newkey
-</code></pre>
-
-<p>如果在 rename 之前，键已存在，那么它的值也将被覆盖</p>
-
-<p>防止强行 rename key，Redis 提供了 renamex 命令，确保只有 newkey 不存在时才被覆盖，newkey 存在时返回 0 代表未完成重命名。</p>
-
-<p>在使用重命名命令时，有两点需要注意</p>
-
-<ul>
-<li>由于重命名键期间会执行 del 命令删除旧的键，如果键对应的值比较大，会存在阻塞 Redis 的可能性，这点不要忽略</li>
-<li>如果 rename 和 renamex 中的 key 和 newkey 如果是相同的，在 Redis 3.2 和之前版本返回结果略有不同。</li>
-</ul>
-
-<p>Redis 3.2 中会返回 OK</p>
-
-<p>Redis 3.2 之前版本会提示错误</p>
-
-<pre><code class="shell">127.0.0.1&gt; rename key key
-(error) ERR source and destination objects are the same
-</code></pre>
-
-<h5 id="toc_3">2.  随机返回一个键</h5>
-
-<pre><code class="shell">randomkey
-</code></pre>
-
-<h5 id="toc_4">3. 键过期</h5>
-
-<p>除了 expire、ttl 命令以外，Redis 还提供了 expireat、pexpire、pexpireat、pttl、persist 等一系列命令</p>
-
-<ul>
-<li><code>expire key seconds</code>：键在 seconds 秒后过期</li>
-<li><code>expireat key timestamp</code>：键在秒级时间戳 timestamp 后过期</li>
-</ul>
-
-<p>ttl 命令和 pttl 都可以查询键的剩余过期时间，但是 pttl 精度更高可以达到毫秒级别，有 3 种返回值：</p>
-
-<ul>
-<li>大于等于 0 的整数：键剩余的过期时间（ttl 是秒，pttl 是毫秒）</li>
-<li>-1：键没有设置过期时间</li>
-<li>-2：键不存在</li>
-</ul>
-
-<p>expireat 命令可以设置秒的</p>
 
         </div>
 
@@ -3904,6 +3916,186 @@ public:
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-css " style="padding-bottom:1em;">
 
+        <div id="css_center"></div>
+        <span class="hidden" itemprop="alternateName">css_center</span>
+
+        <h2>
+            <a itemprop="url" href="#css_center">
+                <span itemprop="name">CSS Center</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/css_center.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">css</span>
+        
+
+        <div itemprop="description">
+            
+
+<h4 id="toc_0">垂直居中</h4>
+
+<p>CSS 中对元素进行<strong>水平居中</strong>是非常简单的；如果它是一个行内元素，就对它的父元素应用 <code>text-align: center</code>；如果它是一个块级元素，就对它自身应用 <code>margin: auto</code>。然而如果对一个元素进行<strong>垂直居中</strong>则十分麻烦</p>
+
+<p>有几种技巧十分流行，但这里并不会深入探讨，原因如下</p>
+
+<ul>
+<li><strong>表格布局法</strong>：（利用表格的显示模式）需要用到一些冗余的 HTML 元素，因此不多介绍。</li>
+<li><strong>行内块法</strong>：也不做讨论，hack 味道很浓</li>
+</ul>
+
+<p>以下 html 元素示例
+~~~html
+<main>
+    <h1>Am I centered yet?</h1>
+    <p>Center me, please!</p>
+</main>
+~~~</p>
+
+<div style="background: orange; color: #fff">
+    <main style="height: 50%">
+        <h1 style="background: gray">Am I centered yet?</h1>
+        <p style="background: gray">Center me, please!</p>
+    </main>
+</div>
+
+<h5 id="toc_1">基于绝对定位的解决方法</h5>
+
+<p>我们先看一个早期的垂直居中方法，它要求元素具有固定的高度：</p>
+
+<pre><code class="css">main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -3em; /* 6/2 = 3 */
+    margin-left: -9em; /* 18/2 = 9 */
+    width: 18em;
+    height: 6em
+}
+</code></pre>
+
+<p>这段代码在本质上做了这样几件事情：先把这个元素的左上角放置在视口（或最近的、具有定位属性的祖先元素）的正中心，然后再利用负外边距把它向左、向上移动（移动距离相当于它自身高的一般），从而把元素的正中心放置在视口的正中心。借助强大的 <code>calc()</code> 函数，这段代码可以省掉两行声明：</p>
+
+<pre><code class="css">main {
+    position: absolute;
+    top: calc(50% - 3em);
+    left: calc(50% - 9em);
+    width: 18em;
+    height: 6em
+}
+</code></pre>
+
+<p>显然，这个方法最大的局限在于它要求元素的高宽是固定的。在通常情况下，对哪些需要居中的元素来说，其尺寸往往是其内容来决定的。如果能找到一个属性的百分比值以元素自身的高宽作为解析基准，那我们的难题就迎刃而解了！遗憾的是，对于绝大多数 CSS 属性（包括 margin）来说，百分比都是以其父元素的尺寸为基准进行解析的。</p>
+
+<p>CSS 领域中有一个很常见的现象，真正的解决方案往往来自于我们最意想不到的地方。在这个例子中，答案来自于 CSS 变形属性。当我们在 <code>translate()</code> 变形函数中使用百分比值时，是以这个元素自身的宽度和高度为基准进行换算和移动的，而这正是我们所需要的。接下来，只要换用基于百分比的 CSS 变形来对元素进行偏移，就不需要在偏移量中把元素的尺寸给写死了。这样我们就可以彻底解决对固定尺寸的依赖：</p>
+
+<pre><code class="css">main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    tansform: translate(-50%, -50%);
+}
+</code></pre>
+
+<p>当然没有任何技巧是十全十美的，上面这个方法也有一些需要注意的地方。</p>
+
+<ul>
+<li>有时不能选用绝对定位，因为它对整个布局的影响太过激烈。</li>
+<li>如果需要居中的元素已经在高度上超过了视口，那它的顶部会被视口裁切掉。有一些办法可以绕过这个问题，但 hack 味道过浓。</li>
+<li>在某些浏览器中，这个方法可能会导致元素的显示有一些模糊，因为元素可能被防止在半个像素上。这个问题可以用 <code>transform-style: preserve-3d</code> 来修复，不过这个修复手段也可以认为是一个 hack，而且很难保证它在未来不会出现问题。</li>
+</ul>
+
+<h5 id="toc_2">基于视口单位的解决方法</h5>
+
+<p>假如我们不想使用绝对定位，仍然可以采用 translate() 技巧来把这个元素以其自身宽高的一半为距离进行移动；但是在缺少 left 和 top 的情况下，如何把这个元素的左上角放置在容器的正中心？</p>
+
+<p>使用 margin 属性的百分比值来实现会产生十分离谱的结果，原因在于 <strong>margin 的百分比值是以父元素的宽度作为解析基准的</strong>。没错，即使对于 margin-top 和 margin-bottom 来说也是如此！</p>
+
+<pre><code class="css">main {
+    width: 18em;
+    padding: 1em 1.5em;
+    margin: 50% auto 0;
+    tansform: translate(-50%, -50%);
+}
+</code></pre>
+
+<p>不过幸运的是，如果只是想把元素相对于视口进行居中吗，仍然是有希望的。CSS 值与单位（第三版）定义了一套新的单位，称为视口相关的长度单位。</p>
+
+<ul>
+<li>vw 是与<strong>视口宽度</strong>相关的。与常人的直觉不符的是，1 vw 实际上表示视口宽度的 1%，而不是 100%</li>
+<li>与 vw 类似，1vh 表示<strong>视口高度</strong>的 1%</li>
+<li>当视口宽度小于高度时，1vmin 等于 1vw，否则等于 1vh</li>
+<li>当视口宽度大于高度时，1vmax等于 1vw，否则等于 1vh</li>
+</ul>
+
+<p>在此例中，适用于外边距的是 vh 单位：</p>
+
+<pre><code class="css">main {
+    width: 18em;
+    padding: 1em 1.5em;
+    margin: 50vh auto 0;
+    tansform: translate(-50%, -50%);
+}
+</code></pre>
+
+<p>这个技巧的实用性是相当有限的，因为它只适用于在视口中居中的场景。</p>
+
+<h5 id="toc_3">基于 Flexbox  的解决方案</h5>
+
+<p>这是毋庸置疑的最佳解决方案，因为 <strong>Flexbox （伸缩盒）</strong>是专门针对这类需求所设计的。之所以讨论其他方案，仅仅是因为那些方案在浏览器的支持程度上稍微好一些而已。</p>
+
+<p>只需要写两行声明即可：先给这个待居中元素的父元素设置 <code>display: flex</code>，再给这个元素设置 <code>margin:auto</code>：</p>
+
+<pre><code class="css">body {
+    display:flex;
+    min-height: 100vh;
+    maigin: 0;
+}
+
+main {
+    margin: auto;
+}
+</code></pre>
+
+<p>请注意，在使用 Flexbox 时，margin: auto 不仅在水平方向上将元素居中，垂直方向上也是如此，还有一点，我们甚至不需要指定任何宽度；这个居中元素分配到的宽度等于 max-content。</p>
+
+<p>Flexbox 的另一个好处在于，它可以将匿名容器（即没有被标签包裹的文本节点）垂直居中</p>
+
+<pre><code class="html">&lt;main&gt;Center me, please!&lt;/main&gt;
+</code></pre>
+
+<p>我们先给这个 main 元素指定一个固定的尺寸，然后借助 Flexbox 规范所引入的 aligin-items 和 justify-content 属性，我们可以让它的内部的文本也实现居中</p>
+
+<pre><code class="css">main {
+    display: flex;
+    aligin-item: center;
+    justify-content: center;
+    width: 18em;
+    height: 10em;
+}
+</code></pre>
+
+<p>根据盒对齐模型（第三版）的计划，在未来吗，对于简单的垂直居中需求，我们安全不需要动用特殊的布局模式了。因为只需要下面这行代码就可以搞定：</p>
+
+<pre><code class="css">align-selg: center;
+</code></pre>
+
+<p>不管这个元素上还应用了其他什么属性，这样写就够了。（期待尽快实现）</p>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-css " style="padding-bottom:1em;">
+
         <div id="css_bg&amp;bd"></div>
         <span class="hidden" itemprop="alternateName">css_bg&amp;bd</span>
 
@@ -4149,6 +4341,55 @@ public void scanFoo3(@PathVariable(&quot;limit&quot;) int limit) throws Exceptio
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-other " style="padding-bottom:1em;">
 
+        <div id="git"></div>
+        <span class="hidden" itemprop="alternateName">git</span>
+
+        <h2>
+            <a itemprop="url" href="#git">
+                <span itemprop="name">git</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/git.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">other</span>
+        
+
+        <div itemprop="description">
+            
+
+<h4 id="toc_0">解决配置代理后，git clone等git操作速度依然很慢的问题</h4>
+
+<p>查看代理端口以及协议（省略 http）</p>
+
+<pre><code class="shell">git config --global https.proxy http://127.0.0.1:10809
+git config --global https.proxy 'socks5://127.0.0.1:10808'
+</code></pre>
+
+<p>查看是否配置成功</p>
+
+<pre><code class="shell">git config --list
+</code></pre>
+
+<p>取消（省略 http）</p>
+
+<pre><code class="shell">git config --global --unset https.proxy
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-other " style="padding-bottom:1em;">
+
         <div id="mac"></div>
         <span class="hidden" itemprop="alternateName">mac</span>
 
@@ -4236,55 +4477,6 @@ public void scanFoo3(@PathVariable(&quot;limit&quot;) int limit) throws Exceptio
 <h3 id="toc_5">如何修改MAC地址</h3>
 
 <p>网卡MAC地址可以通过Windows设备管理员或其他工具修改。对于某些手机、平板电脑设备来说，其MAC地址／产品序号均由厂方连同销售或保修时的客户资料一并记录在案，而有关的MAC地址也不可通过常规手段来修改。</p>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-other " style="padding-bottom:1em;">
-
-        <div id="git"></div>
-        <span class="hidden" itemprop="alternateName">git</span>
-
-        <h2>
-            <a itemprop="url" href="#git">
-                <span itemprop="name">git</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/git.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">other</span>
-        
-
-        <div itemprop="description">
-            
-
-<h4 id="toc_0">解决配置代理后，git clone等git操作速度依然很慢的问题</h4>
-
-<p>查看代理端口以及协议（省略 http）</p>
-
-<pre><code class="shell">git config --global https.proxy http://127.0.0.1:10809
-git config --global https.proxy 'socks5://127.0.0.1:10808'
-</code></pre>
-
-<p>查看是否配置成功</p>
-
-<pre><code class="shell">git config --list
-</code></pre>
-
-<p>取消（省略 http）</p>
-
-<pre><code class="shell">git config --global --unset https.proxy
-</code></pre>
 
         </div>
 
