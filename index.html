@@ -37,10 +37,6 @@
         </li>
         
         <li>
-          <a onclick="clickTag('');"></a>
-        </li>
-        
-        <li>
           <a onclick="clickTag('css');">Css</a>
         </li>
         
@@ -104,34 +100,30 @@
 </div>
 
 <div style="display: grid; grid-template-columns: 31.5% 68.5%">
-  <div style="padding-top: 30px; padding-left: 22em">
+  <div style="padding-top: 69px; padding-left: 22em">
   <div class="row">
     <div class="col-xs-12">
       <div class="hidden-xs">
         <ol>
-          
-          <li class="rule tag-java ">
-            <a href="#java_primitive">Java Primitive</a>
-          </li>
           
           <li class="rule tag-Java ">
             <a href="#java_list">Java list</a>
           </li>
           
           <li class="rule tag-java ">
+            <a href="#java_tree">Java Tree</a>
+          </li>
+          
+          <li class="rule tag-java ">
             <a href="#java_file">Java try with res</a>
           </li>
           
-          <li class="rule tag- ">
-            <a href="#java_tree">Java Tree</a>
+          <li class="rule tag-java ">
+            <a href="#java_primitive">Java Primitive</a>
           </li>
           
           <li class="rule tag-js ">
             <a href="#java_collections">Java collections</a>
-          </li>
-          
-          <li class="rule tag-python ">
-            <a href="#py_dict">Python Dict</a>
           </li>
           
           <li class="rule tag-python ">
@@ -140,6 +132,10 @@
           
           <li class="rule tag-python ">
             <a href="#py_summary">Python Summary</a>
+          </li>
+          
+          <li class="rule tag-python ">
+            <a href="#py_dict">Python Dict</a>
           </li>
           
           <li class="rule tag-js ">
@@ -163,7 +159,7 @@
           </li>
           
           <li class="rule tag-spring ">
-            <a href="#spring_test">Spring Test</a>
+            <a href="#spring_transactional">Spring transactional</a>
           </li>
           
           <li class="rule tag-spring ">
@@ -175,7 +171,11 @@
           </li>
           
           <li class="rule tag-spring ">
-            <a href="#spring_transactional">Spring transactional</a>
+            <a href="#spring_exception">Spring Exception</a>
+          </li>
+          
+          <li class="rule tag-spring ">
+            <a href="#spring_test">Spring Test</a>
           </li>
           
           <li class="rule tag-linux ">
@@ -183,15 +183,11 @@
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_memory">Redis Memory</a>
-          </li>
-          
-          <li class="rule tag-redis ">
             <a href="#redis_string">Redis String</a>
           </li>
           
           <li class="rule tag-redis ">
-            <a href="#redis_list">Redis List</a>
+            <a href="#redis_memory">Redis Memory</a>
           </li>
           
           <li class="rule tag-redis ">
@@ -208,6 +204,10 @@
           
           <li class="rule tag-redis ">
             <a href="#redis_key">Redis key</a>
+          </li>
+          
+          <li class="rule tag-redis ">
+            <a href="#redis_list">Redis List</a>
           </li>
           
           <li class="rule tag-java ">
@@ -373,6 +373,10 @@
 
 
 
+
+
+
+
     </div>
   </div>
 </div>
@@ -381,7 +385,109 @@
   <div class="row">
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag- " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
+
+        <div id="java_primitive"></div>
+        <span class="hidden" itemprop="alternateName">java_primitive</span>
+
+        <h2>
+            <a itemprop="url" href="#java_primitive">
+                <span itemprop="name">Java Primitive</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_primitive.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">java</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">基本类型优于装箱基本类型</h3>
+
+<p>Java 中有一个类型系统由两部分组成，基本类型（primitive）以及引用类型（reference type）。每个基本类型都有一个对位的引用类型，称作装箱基本类型（boxed primitive）。</p>
+
+<p>自动装箱（autoboxing）和自动拆箱（auto-unboxing）模糊了但并没有完全抹去基本类型和装箱基本类型之间的区别。</p>
+
+<p>两者有三个主要区别：</p>
+
+<ol>
+<li>基本类型只有值，而装箱基本类型则具有与它们的值不同的同一性。即两个装箱基本类型可以具有相同的值和不同的同一性。</li>
+<li>基本类型<strong>只有函数值</strong>，而每个装箱基本类型则<strong>都有一个非函数值</strong>，除了它对应的基本类型的所有函数值之外，还有个null。</li>
+<li>基本类型通常比装箱基本类型更节省时间和空间。</li>
+</ol>
+
+<h4 id="toc_1">问题一：比较</h4>
+
+<p>以下示例被用来表示 Integer 值的递增数字顺序。</p>
+
+<pre><code class="java">Comparator&lt;Integer&gt; naturalOrder = (i, j) -&gt; (i &lt; j) ? -1: (i == j ? 0 ： 1);
+</code></pre>
+
+<p>上述比较器有严重的缺陷，打印 naturalOrder.Compare(new Integer(42), new Integer(42)) 时，实际输出的是 1 不是 0，表明第一个Integer值大于第二个</p>
+
+<p>原因在于对表达式 i &lt; j 执行计算会导致 i 和 j 引用的 Integer 实例被自动拆箱；从而对值进行比较，但在执行表达式 i == j 时，执行的其实是*同一性比较*（identity comparision）。</p>
+
+<p>对代码修改实现如下：(先拆箱再比较)</p>
+
+<pre><code class="java">Comparator&lt;Integer&gt; naturalOrder = (iBoxed, jBoxedBoxed) -&gt; {
+    int i = iBoxed, j = jBoxed;
+    return i &lt; j ? -1 : (i == j ? 0 : 1);
+}
+</code></pre>
+
+<p>如果需要比较器描述一个类型的自然顺序，使用 Comparator.naturalOrder() 即可，自己编写比较器，则应该使用比较器构造方法，或者在基本类型上使用静态比较方法。</p>
+
+<p>以下小程序会导致 <em>NullPointerException</em> 异常</p>
+
+<pre><code class="java">public Class Unbelievable {
+    static Integer i;
+    
+    public static void main(String[] args) {
+        if (i == 42)
+            System.out.println(&quot;Unbelievable&quot;);
+    }
+}
+</code></pre>
+
+<p>i 是个 Integer 与所有的对象引用域一样，它的初始值为 null。当程序计算表达式 (i == 42) 时，他会将 Integer 与 int 进行比较，混用基本类型和装箱基本类型时，<strong>装箱基本类型会自动拆箱</strong>。如果 null 对象引用被自动拆箱，就会抛出一个 <em>NullPointerException</em> 异常。</p>
+
+<h4 id="toc_2">问题二：性能</h4>
+
+<pre><code class="java">public static void main(String[] args) {
+    long sum = 0L;
+    for (long i = 0; i &lt; Integer.MAX_VALUE; i++)
+        sum += 1;
+    System.out.println(sum);
+}
+</code></pre>
+
+<p>此程序运行起来与预计的要慢一些，因为它将一个局部变量（sum）声明为时装箱类型 Long，而不是基本类型 long。程序编译起来没有错误或警告，变量被反复地拆箱和装箱，导致明显的性能下降。</p>
+
+<h4 id="toc_3">什么时候应该使用装箱基本类型：</h4>
+
+<ol>
+<li>作为集合中得元素、键和值。集合中不能存放基本类型，因此必须使用装箱基本类型。</li>
+<li>在参数化类型和方法中，必须使用装箱基本类型作为类型参数，因为 Java 不允许使用基本类型。例 ThreadLocal&lt;Integer&gt;</li>
+<li>在进行反射得方法调用时，必须使用装箱基本类型。</li>
+</ol>
+
+<p>当可以选择的时候，基本类型要优于装箱基本类型。基本类型更加简单，也更加快速。使用装箱基本类型时，要特别小心，<strong>自动装箱减少了使用装箱基本类型的烦琐性，但是并没有减少它的风险</strong>。当程序用 == 操作符比较两个装箱基本类型时，它做了统一性比较，这也许并不是你想要的。当程序进行设计装箱和拆箱基本类型的混合类型计算时，它会进行拆箱，当程序进行拆箱时，会抛出 <em>NullPointerException</em> 异常。最后，当程序装箱了基本类型值时，会导致较高的资源消耗和不必要的对象创建。</p>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
 
         <div id="java_tree"></div>
         <span class="hidden" itemprop="alternateName">java_tree</span>
@@ -398,7 +504,7 @@
 
         Tags:
         
-            <span class="tags label label-default"></span>
+            <span class="tags label label-default">java</span>
         
 
         <div itemprop="description">
@@ -567,108 +673,6 @@
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
 
-        <div id="java_primitive"></div>
-        <span class="hidden" itemprop="alternateName">java_primitive</span>
-
-        <h2>
-            <a itemprop="url" href="#java_primitive">
-                <span itemprop="name">Java Primitive</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/java_primitive.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">java</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">基本类型优于装箱基本类型</h3>
-
-<p>Java 中有一个类型系统由两部分组成，基本类型（primitive）以及引用类型（reference type）。每个基本类型都有一个对位的引用类型，称作装箱基本类型（boxed primitive）。</p>
-
-<p>自动装箱（autoboxing）和自动拆箱（auto-unboxing）模糊了但并没有完全抹去基本类型和装箱基本类型之间的区别。</p>
-
-<p>两者有三个主要区别：</p>
-
-<ol>
-<li>基本类型只有值，而装箱基本类型则具有与它们的值不同的同一性。即两个装箱基本类型可以具有相同的值和不同的同一性。</li>
-<li>基本类型<strong>只有函数值</strong>，而每个装箱基本类型则<strong>都有一个非函数值</strong>，除了它对应的基本类型的所有函数值之外，还有个null。</li>
-<li>基本类型通常比装箱基本类型更节省时间和空间。</li>
-</ol>
-
-<h4 id="toc_1">问题一：比较</h4>
-
-<p>以下示例被用来表示 Integer 值的递增数字顺序。</p>
-
-<pre><code class="java">Comparator&lt;Integer&gt; naturalOrder = (i, j) -&gt; (i &lt; j) ? -1: (i == j ? 0 ： 1);
-</code></pre>
-
-<p>上述比较器有严重的缺陷，打印 naturalOrder.Compare(new Integer(42), new Integer(42)) 时，实际输出的是 1 不是 0，表明第一个Integer值大于第二个</p>
-
-<p>原因在于对表达式 i &lt; j 执行计算会导致 i 和 j 引用的 Integer 实例被自动拆箱；从而对值进行比较，但在执行表达式 i == j 时，执行的其实是*同一性比较*（identity comparision）。</p>
-
-<p>对代码修改实现如下：(先拆箱再比较)</p>
-
-<pre><code class="java">Comparator&lt;Integer&gt; naturalOrder = (iBoxed, jBoxedBoxed) -&gt; {
-    int i = iBoxed, j = jBoxed;
-    return i &lt; j ? -1 : (i == j ? 0 : 1);
-}
-</code></pre>
-
-<p>如果需要比较器描述一个类型的自然顺序，使用 Comparator.naturalOrder() 即可，自己编写比较器，则应该使用比较器构造方法，或者在基本类型上使用静态比较方法。</p>
-
-<p>以下小程序会导致 <em>NullPointerException</em> 异常</p>
-
-<pre><code class="java">public Class Unbelievable {
-    static Integer i;
-    
-    public static void main(String[] args) {
-        if (i == 42)
-            System.out.println(&quot;Unbelievable&quot;);
-    }
-}
-</code></pre>
-
-<p>i 是个 Integer 与所有的对象引用域一样，它的初始值为 null。当程序计算表达式 (i == 42) 时，他会将 Integer 与 int 进行比较，混用基本类型和装箱基本类型时，<strong>装箱基本类型会自动拆箱</strong>。如果 null 对象引用被自动拆箱，就会抛出一个 <em>NullPointerException</em> 异常。</p>
-
-<h4 id="toc_2">问题二：性能</h4>
-
-<pre><code class="java">public static void main(String[] args) {
-    long sum = 0L;
-    for (long i = 0; i &lt; Integer.MAX_VALUE; i++)
-        sum += 1;
-    System.out.println(sum);
-}
-</code></pre>
-
-<p>此程序运行起来与预计的要慢一些，因为它将一个局部变量（sum）声明为时装箱类型 Long，而不是基本类型 long。程序编译起来没有错误或警告，变量被反复地拆箱和装箱，导致明显的性能下降。</p>
-
-<h4 id="toc_3">什么时候应该使用装箱基本类型：</h4>
-
-<ol>
-<li>作为集合中得元素、键和值。集合中不能存放基本类型，因此必须使用装箱基本类型。</li>
-<li>在参数化类型和方法中，必须使用装箱基本类型作为类型参数，因为 Java 不允许使用基本类型。例 ThreadLocal&lt;Integer&gt;</li>
-<li>在进行反射得方法调用时，必须使用装箱基本类型。</li>
-</ol>
-
-<p>当可以选择的时候，基本类型要优于装箱基本类型。基本类型更加简单，也更加快速。使用装箱基本类型时，要特别小心，<strong>自动装箱减少了使用装箱基本类型的烦琐性，但是并没有减少它的风险</strong>。当程序用 == 操作符比较两个装箱基本类型时，它做了统一性比较，这也许并不是你想要的。当程序进行设计装箱和拆箱基本类型的混合类型计算时，它会进行拆箱，当程序进行拆箱时，会抛出 <em>NullPointerException</em> 异常。最后，当程序装箱了基本类型值时，会导致较高的资源消耗和不必要的对象创建。</p>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
-
         <div id="java_file"></div>
         <span class="hidden" itemprop="alternateName">java_file</span>
 
@@ -811,76 +815,6 @@ Set&lt;Map.Entry&lt;KeyType, ValueType&gt;&gt; entrySet()
 <pre><code class="java">KeyType getKey();
 ValueType getValue();
 ValueType setValue(ValueType newValue);
-</code></pre>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
-
-        <div id="py_dict"></div>
-        <span class="hidden" itemprop="alternateName">py_dict</span>
-
-        <h2>
-            <a itemprop="url" href="#py_dict">
-                <span itemprop="name">Python Dict</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/py_dict.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">python</span>
-        
-
-        <div itemprop="description">
-            
-
-<p><font color=red>散列表</font>是字典类型性能出众的根本原因</p>
-
-<p>字典提供了多种构造函数 点击<a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">Built-in Types</a> 有例子说明创建字典的不同形式</p>
-
-<pre><code class="python">&gt;&gt;&gt; a = dict(one=1, two=2, three=3)
-&gt;&gt;&gt; b = {'one': 1, 'two': 2, 'three': 3}
-&gt;&gt;&gt; c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
-&gt;&gt;&gt; d = dict([('two', 2), ('one', 1), ('three', 3)])
-&gt;&gt;&gt; e = dict({'three': 3, 'one': 1, 'two': 2})
-&gt;&gt;&gt; a == b == c == d == e
-True
-</code></pre>
-
-<h5 id="toc_0">字典推导</h5>
-
-<p>自python 2.7以来，列表和生成器表达式的概念移植到字典上,从而有个字典推导（后面还会看到集合推到）</p>
-
-<p>字典推导（dictcomp）可以从<font color=red>任何以键值对作为元素的可选迭代对象</font>中构建字典</p>
-
-<p>下例展示利用字典推导可以把一个装满元组的列表变成两个不同的字典。</p>
-
-<pre><code class="python">&gt;&gt;&gt; simple_list = [
-    (1, 'a'),
-    (2, 'b'),
-    (3, 'c'),
-    (4, 'd'),
-    (5, 'e'),
-    (6, 'f'),
-    (7, 'g'),
-]
-
-&gt;&gt;&gt; res = {num: char for char num in simple_list}
-&gt;&gt;&gt; res
-{'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}
-
-&gt;&gt;&gt; {num: char.upper() for char, code in res.items() if num &lt; 4}
-{1: 'a', 2: 'b', 3: 'c'}
 </code></pre>
 
         </div>
@@ -1042,6 +976,76 @@ lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
 <p>空集合必须写成 set()，{}只会表示为空字典</p>
 
 <pre><code class="python">empty_set = set()
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-python " style="padding-bottom:1em;">
+
+        <div id="py_dict"></div>
+        <span class="hidden" itemprop="alternateName">py_dict</span>
+
+        <h2>
+            <a itemprop="url" href="#py_dict">
+                <span itemprop="name">Python Dict</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/py_dict.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">python</span>
+        
+
+        <div itemprop="description">
+            
+
+<p><font color=red>散列表</font>是字典类型性能出众的根本原因</p>
+
+<p>字典提供了多种构造函数 点击<a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict">Built-in Types</a> 有例子说明创建字典的不同形式</p>
+
+<pre><code class="python">&gt;&gt;&gt; a = dict(one=1, two=2, three=3)
+&gt;&gt;&gt; b = {'one': 1, 'two': 2, 'three': 3}
+&gt;&gt;&gt; c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
+&gt;&gt;&gt; d = dict([('two', 2), ('one', 1), ('three', 3)])
+&gt;&gt;&gt; e = dict({'three': 3, 'one': 1, 'two': 2})
+&gt;&gt;&gt; a == b == c == d == e
+True
+</code></pre>
+
+<h5 id="toc_0">字典推导</h5>
+
+<p>自python 2.7以来，列表和生成器表达式的概念移植到字典上,从而有个字典推导（后面还会看到集合推到）</p>
+
+<p>字典推导（dictcomp）可以从<font color=red>任何以键值对作为元素的可选迭代对象</font>中构建字典</p>
+
+<p>下例展示利用字典推导可以把一个装满元组的列表变成两个不同的字典。</p>
+
+<pre><code class="python">&gt;&gt;&gt; simple_list = [
+    (1, 'a'),
+    (2, 'b'),
+    (3, 'c'),
+    (4, 'd'),
+    (5, 'e'),
+    (6, 'f'),
+    (7, 'g'),
+]
+
+&gt;&gt;&gt; res = {num: char for char num in simple_list}
+&gt;&gt;&gt; res
+{'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}
+
+&gt;&gt;&gt; {num: char.upper() for char, code in res.items() if num &lt; 4}
+{1: 'a', 2: 'b', 3: 'c'}
 </code></pre>
 
         </div>
@@ -1832,6 +1836,324 @@ public class HelloWorldController {
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
 
+        <div id="spring_exception"></div>
+        <span class="hidden" itemprop="alternateName">spring_exception</span>
+
+        <h2>
+            <a itemprop="url" href="#spring_exception">
+                <span itemprop="name">Spring Exception</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_exception.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">spring</span>
+        
+
+        <div itemprop="description">
+            
+
+<h4 id="toc_0">异常处理的必要性</h4>
+
+<p>异常处理的方式通常有以下几种</p>
+
+<ul>
+<li>将异常通知给开发人员，运维人员或者用户</li>
+<li>使因为异常中断的程序以适当的方式继续运行，或者退出</li>
+<li>保存用户的当前操作，或者进行数据回滚</li>
+<li>释放资源</li>
+</ul>
+
+<h4 id="toc_1">异常的分类</h4>
+
+<ul>
+<li><code>ERROR</code>：代表编译和系统的错误，不允许捕获</li>
+<li><code>Exception</code>：标准 Java 库的方法所激发的异常，包含运行异常 <code>Runtime Exception</code> 和非运行异常 <code>Non Runtime Exception</code> 的子类</li>
+<li><code>Runtime Exception</code>：运行时异常</li>
+<li><code>Non Runtime Exception</code>：非运行时可检测的异常，Java 编译器利用分析方法或者构造方法中可能产生的结果来检测程序中是否包含有检测异常的处理程序，每个可能的可检测异常、方法或构造方法的 throw 子句必须列出该异常对应的类。</li>
+<li><code>Throw</code>：用户自定义异常。</li>
+</ul>
+
+<h4 id="toc_2">如何处理异常</h4>
+
+<h5 id="toc_3">捕获异常</h5>
+
+<p>捕获异常的格式，见以下代码：</p>
+
+<pre><code class="java">try {
+    // ...
+} catch {
+    // ...
+} finally {
+    // ...
+}
+</code></pre>
+
+<p><code>try</code>：在 try 语句中编写可能发生异常的代码，即正常的业务功能代码。如果执行完 try 语句不发生异常，则执行 finally 语句（如果有的话）和 finally 后面的代码；如果发生异常，则尝试去匹配 catch 语句。</p>
+
+<p><code>catch</code>：捕获错误并处理</p>
+
+<p><code>finally</code>：finally 语句是可选的，无论异常是否发生、是否匹配、是否被处理，finally 语句都会被执行。</p>
+
+<p>一个 try 至少有一个 catch 语句，或至少有 1 个 finally 语句。finally 语句不是用来处理异常的，也不会捕获异常，是为了做一些清理工作，如流的关闭、数据库连接的关闭等。</p>
+
+<h5 id="toc_4">抛出异常</h5>
+
+<p>除用 try 语句处理异常外，还可以用 throw、throws 抛出异常。</p>
+
+<p>执行 throw 语句的地方是一个异常抛出点，后面必须是一个异常对象，且必写在函数中。</p>
+
+<p>throw 语法：</p>
+
+<pre><code class="text">throw(异常对象);
+</code></pre>
+
+<p>throws 语法：</p>
+
+<pre><code class="text">语法：[(修饰符)] (返回值类型) (方法名) ([参数列表]) [throws(异常类)] {...}
+</code></pre>
+
+<h5 id="toc_5">自定义异常</h5>
+
+<p>在应用程序开发过程中，经常会自定义异常类，以避免使用 try 产生重复代码。自定义异常类一般通过扩展 Exception 类来实现的。这样的自定义异常类属于检查异常（checked exception）。如果要定义非检查异常，则需要继承 RuntimeException。</p>
+
+<h4 id="toc_6">Spring Boot 默认的异常处理</h4>
+
+<p>Spring Boot 提供了一个默认处理异常的映射。在 Spring Boot 的 Web 项目中，尝试访问一个不存在的 URL（<a href="http://localhost:8080/loginZhiran），会得到">http://localhost:8080/loginZhiran），会得到</a> Spring Boot 中内置的异常处理，如下所示：</p>
+
+<pre><code class="text">This application has no explict mapping for /error, so you are seeing this as a fallback
+Sat May 18 22:49:20 CST 2019
+There was an unexpected error(type=Not Found, status=404)
+No message available
+</code></pre>
+
+<p>同样的地址，如果发送的请求带有 ”Content-type —&gt; application/json;charset=UTF-8“，则返回的是 JSON 格式的错误结果，见以下输出结果：</p>
+
+<pre><code class="json">{
+    &quot;time&quot;:&quot;2019-05-18T14:47:46.722+0000&quot;,
+    &quot;status&quot;:404,
+    &quot;error&quot;:&quot;Not Found&quot;,
+    &quot;message&quot;:&quot;No message available&quot;,
+    &quot;path&quot;:&quot;/loginZhiran&quot;
+}
+</code></pre>
+
+<p>Spring Boot 会消费者发送的 ”Content-type“ 来返回相应的异常内容，“application/json” 返回 JSON 文件； “text/html&rdquo; 返回 HTML 文件。</p>
+
+<h4 id="toc_7">使用控制器通知</h4>
+
+<p>在编写业务代码时，需要对异常进行处理。进行异常处理的普通的代码是 try···catch 结构。但在开发业务时，只想关注业务正常的代码，对于 catch 语句中的捕获异常，希望交给异常捕获来处理，不单独在每个方法中编写，这样不仅可以减少冗余代码，还可以减少因忘记写 catch 而出现错误的概率。</p>
+
+<p>Spring 提供了一个非常方便的异常处理方案——<strong>控制器通知</strong>（<code>@ControllerAdvice</code> 或 <code>@RestControllerAdvice</code>），它将所有控制器作为一个切面，利用切面技术来实现。</p>
+
+<p>通过基于 <code>@ControllerAdvice</code> 或 <code>@RestControllerAdvice</code> 的注解可以对异常进行全局统一处理，默认对所有的 Controller 有效。如果要限定生效范围，则可以使用 ControllerAdvice 支持的限定范围方式：</p>
+
+<ul>
+<li>按注解：<code>@ControllerAdvice(annotaions=RestController.class)</code></li>
+<li>按包名：<code>@ControllerAdvice(&quot;org.example.controller&quot;)</code></li>
+<li>按类型：<code>@ControllerAdvice(assignableTypes={ControllerInterface.class, AbstractController.class})</code></li>
+</ul>
+
+<p>这是 ControllerAdvice 进行统一异常处理的优点，它能够细粒度地控制该异常处理器针对哪些 Controller 、包或类型有效。</p>
+
+<p>可以利用这一特性在一个系统实现多个异常处理器，然后 Controller 可以有选择地决定使用哪个，使得异常处理更加灵活、降低侵入性。</p>
+
+<p>异常处理类会包含以下一个或多个方法：</p>
+
+<ul>
+<li><code>InitBinder</code>：对表单数据进行绑定，用于定义控制器参数绑定规则。如转换规则、格式化等。可以通过这个注解地方式得到 WebDataBinder 对象，它在参数转换之前被执行。</li>
+<li><code>ModelAttribute</code>：在控制器方法被执行前，对所有 Controller 的 Model 添加属性进行操作。</li>
+<li><code>@ExceptionHandler</code>：定义控制器发生异常后的操作，可以拦截所有控制器发生的异常。</li>
+<li><code>ControllerAdice</code>：统一异常处理，通过 <code>@ExceptionHandler(value=Exception.class)</code> 来指定捕获的异常。“@ControllerAdvice + @ExceptionHandle&rdquo; 可以处理 除 ”404“ 以外的运行异常</li>
+</ul>
+
+<h4 id="toc_8">自定义错误处理控制器</h4>
+
+<h5 id="toc_9">自定义一个错误的处理控制器</h5>
+
+<pre><code class="java">package com.example.demo.Controller;
+
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+/*springboot提供了默认的错误映射地址error
+@RequestMapping(&quot;${server.error.path:${error.path:/error}}&quot;)
+@RequestMapping(&quot;/error&quot;)
+上面2种写法都可以
+*/
+@RequestMapping(&quot;/error&quot;)
+//继承springboot提供的ErrorController
+public class TestErrorController implements ErrorController {
+    //一定要重写方法,默认返回null就可以,不然报错,因为getErrorPath为空.
+    @Override
+    public String getErrorPath() {
+        return null;
+    }
+
+    //一定要添加url映射,指向error
+    @RequestMapping
+    public Map&lt;String, Object&gt; handleError() {
+        //用Map容器返回信息
+        Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
+        map.put(&quot;code&quot;, 404);
+        map.put(&quot;msg&quot;, &quot;不存在&quot;);
+        return map;
+    }
+    /*这里加一个能正常访问的页面,作为比较
+    因为写在一个控制器所以它的访问路径是
+    http://localhost:8080/error/ok*/
+    @RequestMapping(&quot;/ok&quot;)
+    @ResponseBody
+    public Map&lt;String, Object&gt; noError() {
+        //用Map容器返回信息
+        Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
+        map.put(&quot;code &quot;, 200);
+        map.put(&quot;msg&quot;, &quot;正常，这是测试页面&quot;);
+
+        return map;
+    }
+
+
+}
+
+</code></pre>
+
+<p>启动项目，访问一个不存在的网址，则返回以下信息：</p>
+
+<pre><code class="json">{&quot;msg&quot;:&quot;不存在&quot;,&quot;code&quot;:404}
+</code></pre>
+
+<p>返回正确定义的映射，则返回以下信息：</p>
+
+<pre><code class="json">{&quot;msg&quot;:&quot;正常，这是测试页面&quot;,&quot;code&quot;:200}
+</code></pre>
+
+<h5 id="toc_10">根据请求返回相应的数据格式</h5>
+
+<pre><code class="java">// 这里不加 consume=&quot;text/html;charset=UTF-8&quot;, 否则不会成功，，有部分浏览器提交的是空值
+@RequestMapping(value=&quot;&quot;,produces=&quot;text/html;charset=UTF-8&quot;)
+@ResponseBody
+public String errorHtml404(HttpServletRequest request, HttpServletResponse response) {
+    // 跳转到 error 目录下的 404 模板
+    return &quot;404错误 不存在&quot;;
+}
+
+@RequestMapping(value=&quot;&quot;, consume=&quot;application/json;charset=UTF-8&quot;, produces=&quot;application/json;charset=UTF-8&quot;)
+@ResponseBody
+public Map&lt;String Object&gt; errorJson() {
+    // 用 Map 容器返回信息
+    Map&lt;String Object&gt; map = new HashMap&lt;&gt;();
+    map.put(&quot;code&quot;,404);
+    map.put(&quot;msg&quot;:&quot;不存在&quot;);
+    return map;
+}
+</code></pre>
+
+<h4 id="toc_11">自定义业务异常类</h4>
+
+<h5 id="toc_12">自定义异常类</h5>
+
+<p>自定义异常类需要继承 Exception 类。这里继承 RuntimeException，代码如下：</p>
+
+<pre><code class="java">package com.example.demo.exception;
+
+//@ResponseStatus(code= HttpStatus.INTERNAL_SERVER_ERROR,reason=&quot;600&quot;)
+public class BusinessException extends RuntimeException{
+    //自定义错误码
+    private Integer code;
+    //自定义构造器，必须输入错误码及内容
+    public BusinessException(int code,String msg) {
+        super(msg);
+        this.code = code;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+}
+</code></pre>
+
+<p>RuntimeException 和 Error 是非检查异常，其他的都是检查异常。所有方法都可以在不声明 &ldquo;throw&rdquo; 方法的情况下抛出 RuntimeException 和及子类，不可以在不声明的情况下抛出 RuntimeException，即非 RuntimeException 要自己写 catch 语句处理，如果 RuntimeException 不使用 &ldquo;try···catch&rdquo; 进行捕获，则会导致程序运行中断。</p>
+
+<h5 id="toc_13">自定义全局捕获异常</h5>
+
+<pre><code class="java">package com.example.demo.exception;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.HashMap;
+import java.util.Map;
+/**
+ * 自定义业务处理业务异常类
+ */
+@ControllerAdvice
+public class CustomerBusinessExceptionHandler {
+    @ResponseBody
+    @ExceptionHandler(BusinessException.class)
+    public Map&lt;String, Object&gt; businessExceptionHandler(BusinessException e) {
+        Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
+        map.put(&quot;code&quot;, e.getCode());
+        map.put(&quot;message&quot;, e.getMessage());
+        //发生异常进行日志记录，此处省略
+        return map;
+    }
+}
+</code></pre>
+
+<h5 id="toc_14">测试自定义异常</h5>
+
+<p>创建控制器，以抛出 BusinessException 的自定义异常</p>
+
+<pre><code class="java">package com.example.demo.controller;
+
+
+import com.example.demo.exception.BusinessException;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class TestController {
+    @RequestMapping(&quot;/BusinessException&quot;)
+    public String testResponseStatusExceptionResolver(@RequestParam(&quot;i&quot;) int i){
+        if (i==0) 
+            throw new BusinessException(600,&quot;自定义业务错误&quot;);
+        return &quot;success&quot;;
+    }
+
+}
+
+</code></pre>
+
+<p>启动项目，测试异常处理情况，则抛出以下错误信息</p>
+
+<pre><code class="json">{&quot;code&quot;:600,&quot;message&quot;:&quot;自定义业务异常&quot;}
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
+
         <div id="spring_transactional"></div>
         <span class="hidden" itemprop="alternateName">spring_transactional</span>
 
@@ -1865,6 +2187,157 @@ public class HelloWorldController {
 </ul>
 
 <h4 id="toc_2">2. Transaction 的使用</h4>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
+
+        <div id="spring_yml"></div>
+        <span class="hidden" itemprop="alternateName">spring_yml</span>
+
+        <h2>
+            <a itemprop="url" href="#spring_yml">
+                <span itemprop="name">Spring YML</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_yml.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">spring</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">数据格式</h3>
+
+<h4 id="toc_1">基本类型</h4>
+
+<pre><code class="yaml">name: taicang
+age: 18
+</code></pre>
+
+<h4 id="toc_2">键值对</h4>
+
+<pre><code class="yaml">person:
+    name: taicang
+    age: 18
+</code></pre>
+
+<h4 id="toc_3">数组</h4>
+
+<pre><code class="yaml">favplayer:
+    - kobe
+    - lebra
+</code></pre>
+
+<h3 id="toc_4">读取方式</h3>
+
+<h4 id="toc_5">@Value</h4>
+
+<pre><code class="yaml">server:
+    port: 8080
+</code></pre>
+
+<pre><code class="java">@Value(&quot;${server.port}&quot;)
+private String port
+</code></pre>
+
+<h4 id="toc_6">使用 EL 表达式解析 list、map、set</h4>
+
+<h5 id="toc_7">List</h5>
+
+<pre><code class="yaml">test:
+  list: aaa,bbb,ccc
+</code></pre>
+
+<p>调用时，借助 EL 表达式的 split() 函数进行切分</p>
+
+<pre><code class="java">@Value(&quot;#{'${test.list:}'.split(',')}&quot;)
+private List&lt;String&gt; testList;
+</code></pre>
+
+<p><code>:</code> 添加默认值，避免不配置这个 key 时程序报错。</p>
+
+<p>此时，若不配置 key 值，默认值为空串，长度 length=1 （不同于数组长度为0）解析出来的 list 元素个数不为空，解决方法如下</p>
+
+<pre><code class="java">@Value(&quot;#{'${test.list:}'.empty ? null : ''${test.list:}'.split(',')}&quot;)
+private List&lt;String&gt; testList;
+</code></pre>
+
+<h5 id="toc_8">Set</h5>
+
+<pre><code class="yaml">test:
+  list: 111,222,333,111
+</code></pre>
+
+<pre><code class="java">@Value(&quot;#{'${test.list:}'.empty ? null : ''${test.list:}'.split(',')}&quot;)
+private List&lt;Integer&gt; testList;
+
+// output: [111, 222, 333]
+</code></pre>
+
+<h5 id="toc_9">map</h5>
+
+<p>value 为 map 的 JSON 格式。</p>
+
+<pre><code class="yaml">test:
+  map: '{&quot;name&quot;: &quot;zhangsan&quot;, &quot;sex&quot;: &quot;male&quot;}'
+</code></pre>
+
+<pre><code class="java">@Value(&quot;#{${test.map}}&quot;)
+private Map&lt;String,String&gt; map;
+</code></pre>
+
+<p>Tip：- 使用此方式，必须在配置文件中配置 key 与 value。</p>
+
+<p>​         - @Value 注解不能和 @AllArgsConstructor 注解同时使用，否则会报错。</p>
+
+<h4 id="toc_10">ConfigurationProperties</h4>
+
+<pre><code class="yaml">student:
+    name: jackma
+    age: 18
+</code></pre>
+
+<p>javabean（需prefix (前缀) 参数）</p>
+
+<pre><code class="java">@Component
+@Lombok
+@ConfigurationProperties(prefix = &quot;student&quot;)
+public class Student {
+    private String name;
+
+    private Integer age;
+}
+</code></pre>
+
+<h4 id="toc_11">Environment</h4>
+
+<pre><code class="yaml">mes:
+    url: xxxxxxx
+</code></pre>
+
+<pre><code class="java">@Resource
+private Environment env;
+
+@GetMapping(&quot;/mes&quot;)
+public String getMesUrl() {
+    String url = env.getProperty(&quot;mes.url&quot;);
+    
+    return url;
+}
+</code></pre>
 
         </div>
 
@@ -2044,157 +2517,6 @@ public class test {
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-spring " style="padding-bottom:1em;">
-
-        <div id="spring_yml"></div>
-        <span class="hidden" itemprop="alternateName">spring_yml</span>
-
-        <h2>
-            <a itemprop="url" href="#spring_yml">
-                <span itemprop="name">Spring YML</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/spring_yml.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">spring</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">数据格式</h3>
-
-<h4 id="toc_1">基本类型</h4>
-
-<pre><code class="yaml">name: taicang
-age: 18
-</code></pre>
-
-<h4 id="toc_2">键值对</h4>
-
-<pre><code class="yaml">person:
-    name: taicang
-    age: 18
-</code></pre>
-
-<h4 id="toc_3">数组</h4>
-
-<pre><code class="yaml">favplayer:
-    - kobe
-    - lebra
-</code></pre>
-
-<h3 id="toc_4">读取方式</h3>
-
-<h4 id="toc_5">@Value</h4>
-
-<pre><code class="yaml">server:
-    port: 8080
-</code></pre>
-
-<pre><code class="java">@Value(&quot;${server.port}&quot;)
-private String port
-</code></pre>
-
-<h4 id="toc_6">使用 EL 表达式解析 list、map、set</h4>
-
-<h5 id="toc_7">List</h5>
-
-<pre><code class="yaml">test:
-  list: aaa,bbb,ccc
-</code></pre>
-
-<p>调用时，借助 EL 表达式的 split() 函数进行切分</p>
-
-<pre><code class="java">@Value(&quot;#{'${test.list:}'.split(',')}&quot;)
-private List&lt;String&gt; testList;
-</code></pre>
-
-<p><code>:</code> 添加默认值，避免不配置这个 key 时程序报错。</p>
-
-<p>此时，若不配置 key 值，默认值为空串，长度 length=1 （不同于数组长度为0）解析出来的 list 元素个数不为空，解决方法如下</p>
-
-<pre><code class="java">@Value(&quot;#{'${test.list:}'.empty ? null : ''${test.list:}'.split(',')}&quot;)
-private List&lt;String&gt; testList;
-</code></pre>
-
-<h5 id="toc_8">Set</h5>
-
-<pre><code class="yaml">test:
-  list: 111,222,333,111
-</code></pre>
-
-<pre><code class="java">@Value(&quot;#{'${test.list:}'.empty ? null : ''${test.list:}'.split(',')}&quot;)
-private List&lt;Integer&gt; testList;
-
-// output: [111, 222, 333]
-</code></pre>
-
-<h5 id="toc_9">map</h5>
-
-<p>value 为 map 的 JSON 格式。</p>
-
-<pre><code class="yaml">test:
-  map: '{&quot;name&quot;: &quot;zhangsan&quot;, &quot;sex&quot;: &quot;male&quot;}'
-</code></pre>
-
-<pre><code class="java">@Value(&quot;#{${test.map}}&quot;)
-private Map&lt;String,String&gt; map;
-</code></pre>
-
-<p>Tip：- 使用此方式，必须在配置文件中配置 key 与 value。</p>
-
-<p>​         - @Value 注解不能和 @AllArgsConstructor 注解同时使用，否则会报错。</p>
-
-<h4 id="toc_10">ConfigurationProperties</h4>
-
-<pre><code class="yaml">student:
-    name: jackma
-    age: 18
-</code></pre>
-
-<p>javabean（需prefix (前缀) 参数）</p>
-
-<pre><code class="java">@Component
-@Lombok
-@ConfigurationProperties(prefix = &quot;student&quot;)
-public class Student {
-    private String name;
-
-    private Integer age;
-}
-</code></pre>
-
-<h4 id="toc_11">Environment</h4>
-
-<pre><code class="yaml">mes:
-    url: xxxxxxx
-</code></pre>
-
-<pre><code class="java">@Resource
-private Environment env;
-
-@GetMapping(&quot;/mes&quot;)
-public String getMesUrl() {
-    String url = env.getProperty(&quot;mes.url&quot;);
-    
-    return url;
-}
-</code></pre>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-linux " style="padding-bottom:1em;">
 
         <div id="linux 文件与目录权限"></div>
@@ -2223,6 +2545,61 @@ public String getMesUrl() {
 <h4 id="toc_0">用户与用户组</h4>
 
 <p>·</p>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_string"></div>
+        <span class="hidden" itemprop="alternateName">redis_string</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_string">
+                <span itemprop="name">Redis String</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_string.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">字符串</h3>
+
+<h4 id="toc_1">1 常用命令</h4>
+
+<p>(1) 设置值</p>
+
+<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+</code></pre>
+
+<p>set 命令有几个选项</p>
+
+<ul>
+<li>ex seconds：为键设置秒级过期时间。</li>
+<li>px milliseconds：为键设置毫秒级过期时间</li>
+<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
+<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
+</ul>
+
+<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+
+<pre><code class="shell">setnx key seconds value
+setnx key value
+</code></pre>
 
         </div>
 
@@ -2314,16 +2691,16 @@ void *ptr                           // 数据指针
 	    <section itemscope itemtype="http://schema.org/Property"> 
     <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
 
-        <div id="redis_string"></div>
-        <span class="hidden" itemprop="alternateName">redis_string</span>
+        <div id="redis_clients"></div>
+        <span class="hidden" itemprop="alternateName">redis_clients</span>
 
         <h2>
-            <a itemprop="url" href="#redis_string">
-                <span itemprop="name">Redis String</span>
+            <a itemprop="url" href="#redis_clients">
+                <span itemprop="name">Redis Client API</span>
             </a>
         </h2>
 
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_string.md" target="_blank">
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_clients.md" target="_blank">
             <span class="pull-right glyphicon glyphicon-edit"></span>
         </a>
 
@@ -2335,29 +2712,320 @@ void *ptr                           // 数据指针
         <div itemprop="description">
             
 
-<h3 id="toc_0">字符串</h3>
+<h4 id="toc_0">Python 客户端 redis-py</h4>
 
-<h4 id="toc_1">1 常用命令</h4>
+<p>redis-py 的基本使用方法、redis-py 的 Pipeline 的使用和 redis-py 的 Lua 脚本使用。</p>
 
-<p>(1) 设置值</p>
+<h4 id="toc_1">获取 redis-py</h4>
 
-<pre><code class="shell">set key value [ex seconds] [px milliseconds] [nx|xx]
+<p>redis-py 需要 Python 2.7 以上版本。获取方式如下：</p>
+
+<pre><code class="shell"># 使用 pip 进行安装
+pip install redis
+
+# 使用 easy_install 安装
+easy_install redis
+
+# 源码安装：以2.10.5为例
+wget https://guthub.com/andymccurdy/redis-py/archive/2.10.5.zip
+uzip redis-2.10.5.zip
+cd redis-2.10.5
+# 安装 redis-py
+python setup.py install
 </code></pre>
 
-<p>set 命令有几个选项</p>
+<h4 id="toc_2">redis-py 的基本使用方法</h4>
+
+<pre><code class="python">import redis
+
+# 生产客户端连接：需 Redis 实例 IP 和端口两个参数
+client = redis.StrictRedis(host='127.0.0.1', port=6379)
+
+# 执行命令，redis-py API 保留了 Redis API 的原始风格
+client.set(key, &quot;python-redis&quot;) # True
+client.get(key) # world
+</code></pre>
+
+<h4 id="toc_3">redis-py 中的 Pipeline 的只使用方法</h4>
+
+<pre><code class="python">pipline = client.pipline(transaction=False) # transaction False 代表不使用事务
+
+# 将命令封装到 Pipline 中，此时命令并没有真正执行
+pipline.set('hello', 'world')
+pipline.incr('counter')
+
+# 执行 Pipline
+result = pipline.execute() # [True, 3]
+</code></pre>
+
+<h4 id="toc_4">redis-py 中的 Lua 脚本使用方法</h4>
+
+<p>redid-py 提供了三个重要的函数实现 Lua 脚本的执行：</p>
+
+<pre><code class="python">eval(String script, int keyCount, String... params)
+script_load(String script)
+evalsha(String sha1, int keyCount, String... params)
+</code></pre>
+
+<p>script：Lua 脚本内容；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
+
+<p>return redis.call(&lsquo;get&rsquo;, KEYS[1])  在 redis-py 中实现如下</p>
+
+<pre><code class="python">script = 'return redis.call('get', KEYS[1]) '
+client.eval(script, 1, 'hello') # world
+</code></pre>
+
+<p>script_load 和 evalsha 函数一起使用，首先使用 script_load 将脚本加载到 Redis 中</p>
+
+<pre><code class="python">scriptSha = client.script_load(script)
+</code></pre>
+
+<p>evalsha 函数用来执行脚本的哈希值，需要三个参数：</p>
+
+<p>scriptSha：脚本的 SHA1；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
+
+<p>执行效果如下</p>
+
+<pre><code class="python">client.evalsha(scriptSha, 1, 'hello')
+</code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_cmd"></div>
+        <span class="hidden" itemprop="alternateName">redis_cmd</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_cmd">
+                <span itemprop="name">Redis Command</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_cmd.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">全局命令</h3>
+
+<h5 id="toc_1">1. 查看所有键：</h5>
+
+<pre><code class="shell">keys *
+</code></pre>
+
+<h5 id="toc_2">2. 键总数：</h5>
+
+<pre><code class="shell">dbsize
+</code></pre>
+
+<h5 id="toc_3">3. 检查键是否存在</h5>
+
+<pre><code class="shell">exists key # 存在返回1，不存在返回0
+</code></pre>
+
+<h5 id="toc_4">4. 删除键</h5>
+
+<pre><code class="shell">del key [key ...] # 通用命令 无论值是什么类型都可删除 返回结果为成功删除键的个数，删除不存在的键，就会返回0
+</code></pre>
+
+<h5 id="toc_5">5. 键过期</h5>
+
+<pre><code class="shell">expire key seconds
+</code></pre>
+
+<p>ttl 命令返回键的剩余过期时间，有三种返回值</p>
 
 <ul>
-<li>ex seconds：为键设置秒级过期时间。</li>
-<li>px milliseconds：为键设置毫秒级过期时间</li>
-<li>nx： 键必须不存在，才可以设置成功，用于添加</li>
-<li>xx：与nx相反，键必须存在，才可以设置成功，用于更新</li>
+<li>大于等于0的整数：键剩余的过期时间</li>
+<li>-1：键没设置过期时间</li>
+<li>-2：键不存在</li>
 </ul>
 
-<p>除了 set 选项，Redis 还提供了 setex 和 setnx 两个命令</p>
+<h5 id="toc_6">6. 键的数据结构类型</h5>
 
-<pre><code class="shell">setnx key seconds value
-setnx key value
+<pre><code class="shell">type key # 键不存在，则返回none
 </code></pre>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_config"></div>
+        <span class="hidden" itemprop="alternateName">redis_config</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_config">
+                <span itemprop="name">Redis Config</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_config.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">启动</h3>
+
+<h4 id="toc_1">默认配置</h4>
+
+<p>redis-service  建议使用配置文件启动</p>
+
+<h4 id="toc_2">运行配置</h4>
+
+<p>redis-service &ndash;configKey &ndash;configValue &ndash;configKey2 &ndash; configValue2</p>
+
+<p>例：redis-server &ndash;port &ndash;6379</p>
+
+<h4 id="toc_3">配置文件启动</h4>
+
+<p>例：配置文件写在/opt/redis/redis.config</p>
+
+<p>redis-server /opt/redis/redis.config</p>
+
+<p>一些重要配置如下</p>
+
+<table>
+<thead>
+<tr>
+<td>配置名</td>
+<td>配置说明</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>port</td>
+<td>端口</td>
+</tr>
+
+<tr>
+<td>logfile</td>
+<td>日志文件</td>
+</tr>
+
+<tr>
+<td>dir</td>
+<td>Redis工作目录（存放持久化文件和日志文件）</td>
+</tr>
+
+<tr>
+<td>dacmonize</td>
+<td>是否以守护进程的方式启动Redis</td>
+</tr>
+</tbody>
+</table>
+
+        </div>
+
+        <br>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+    </div>
+</section>
+	  
+	    <section itemscope itemtype="http://schema.org/Property"> 
+    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
+
+        <div id="redis_key"></div>
+        <span class="hidden" itemprop="alternateName">redis_key</span>
+
+        <h2>
+            <a itemprop="url" href="#redis_key">
+                <span itemprop="name">Redis key</span>
+            </a>
+        </h2>
+
+        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_key.md" target="_blank">
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+        </a>
+
+        Tags:
+        
+            <span class="tags label label-default">redis</span>
+        
+
+        <div itemprop="description">
+            
+
+<h3 id="toc_0">Redis 键管理</h3>
+
+<p>单个键、遍历键、数据库管理</p>
+
+<h4 id="toc_1">单个键管理</h4>
+
+<h5 id="toc_2">1.  键重命名</h5>
+
+<pre><code class="shell">rename key newkey
+</code></pre>
+
+<p>如果在 rename 之前，键已存在，那么它的值也将被覆盖</p>
+
+<p>防止强行 rename key，Redis 提供了 renamex 命令，确保只有 newkey 不存在时才被覆盖，newkey 存在时返回 0 代表未完成重命名。</p>
+
+<p>在使用重命名命令时，有两点需要注意</p>
+
+<ul>
+<li>由于重命名键期间会执行 del 命令删除旧的键，如果键对应的值比较大，会存在阻塞 Redis 的可能性，这点不要忽略</li>
+<li>如果 rename 和 renamex 中的 key 和 newkey 如果是相同的，在 Redis 3.2 和之前版本返回结果略有不同。</li>
+</ul>
+
+<p>Redis 3.2 中会返回 OK</p>
+
+<p>Redis 3.2 之前版本会提示错误</p>
+
+<pre><code class="shell">127.0.0.1&gt; rename key key
+(error) ERR source and destination objects are the same
+</code></pre>
+
+<h5 id="toc_3">2.  随机返回一个键</h5>
+
+<pre><code class="shell">randomkey
+</code></pre>
+
+<h5 id="toc_4">3. 键过期</h5>
+
+<p>除了 expire、ttl 命令以外，Redis 还提供了 expireat、pexpire、pexpireat、pttl、persist 等一系列命令</p>
+
+<ul>
+<li><code>expire key seconds</code>：键在 seconds 秒后过期</li>
+<li><code>expireat key timestamp</code>：键在秒级时间戳 timestamp 后过期</li>
+</ul>
+
+<p>ttl 命令和 pttl 都可以查询键的剩余过期时间，但是 pttl 精度更高可以达到毫秒级别，有 3 种返回值：</p>
+
+<ul>
+<li>大于等于 0 的整数：键剩余的过期时间（ttl 是秒，pttl 是毫秒）</li>
+<li>-1：键没有设置过期时间</li>
+<li>-2：键不存在</li>
+</ul>
+
+<p>expireat 命令可以设置秒的</p>
 
         </div>
 
@@ -2776,352 +3444,6 @@ for article in {articles}
 <li>lpush + ltrim = Capped Collection（有限集合）</li>
 <li>lpush + brpop = Message Queue（消息队列）</li>
 </ul>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_clients"></div>
-        <span class="hidden" itemprop="alternateName">redis_clients</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_clients">
-                <span itemprop="name">Redis Client API</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_clients.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h4 id="toc_0">Python 客户端 redis-py</h4>
-
-<p>redis-py 的基本使用方法、redis-py 的 Pipeline 的使用和 redis-py 的 Lua 脚本使用。</p>
-
-<h4 id="toc_1">获取 redis-py</h4>
-
-<p>redis-py 需要 Python 2.7 以上版本。获取方式如下：</p>
-
-<pre><code class="shell"># 使用 pip 进行安装
-pip install redis
-
-# 使用 easy_install 安装
-easy_install redis
-
-# 源码安装：以2.10.5为例
-wget https://guthub.com/andymccurdy/redis-py/archive/2.10.5.zip
-uzip redis-2.10.5.zip
-cd redis-2.10.5
-# 安装 redis-py
-python setup.py install
-</code></pre>
-
-<h4 id="toc_2">redis-py 的基本使用方法</h4>
-
-<pre><code class="python">import redis
-
-# 生产客户端连接：需 Redis 实例 IP 和端口两个参数
-client = redis.StrictRedis(host='127.0.0.1', port=6379)
-
-# 执行命令，redis-py API 保留了 Redis API 的原始风格
-client.set(key, &quot;python-redis&quot;) # True
-client.get(key) # world
-</code></pre>
-
-<h4 id="toc_3">redis-py 中的 Pipeline 的只使用方法</h4>
-
-<pre><code class="python">pipline = client.pipline(transaction=False) # transaction False 代表不使用事务
-
-# 将命令封装到 Pipline 中，此时命令并没有真正执行
-pipline.set('hello', 'world')
-pipline.incr('counter')
-
-# 执行 Pipline
-result = pipline.execute() # [True, 3]
-</code></pre>
-
-<h4 id="toc_4">redis-py 中的 Lua 脚本使用方法</h4>
-
-<p>redid-py 提供了三个重要的函数实现 Lua 脚本的执行：</p>
-
-<pre><code class="python">eval(String script, int keyCount, String... params)
-script_load(String script)
-evalsha(String sha1, int keyCount, String... params)
-</code></pre>
-
-<p>script：Lua 脚本内容；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
-
-<p>return redis.call(&lsquo;get&rsquo;, KEYS[1])  在 redis-py 中实现如下</p>
-
-<pre><code class="python">script = 'return redis.call('get', KEYS[1]) '
-client.eval(script, 1, 'hello') # world
-</code></pre>
-
-<p>script_load 和 evalsha 函数一起使用，首先使用 script_load 将脚本加载到 Redis 中</p>
-
-<pre><code class="python">scriptSha = client.script_load(script)
-</code></pre>
-
-<p>evalsha 函数用来执行脚本的哈希值，需要三个参数：</p>
-
-<p>scriptSha：脚本的 SHA1；KeyCount：键的个数；params：相关参数 KEYS 和 ARGV。</p>
-
-<p>执行效果如下</p>
-
-<pre><code class="python">client.evalsha(scriptSha, 1, 'hello')
-</code></pre>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_cmd"></div>
-        <span class="hidden" itemprop="alternateName">redis_cmd</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_cmd">
-                <span itemprop="name">Redis Command</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_cmd.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">全局命令</h3>
-
-<h5 id="toc_1">1. 查看所有键：</h5>
-
-<pre><code class="shell">keys *
-</code></pre>
-
-<h5 id="toc_2">2. 键总数：</h5>
-
-<pre><code class="shell">dbsize
-</code></pre>
-
-<h5 id="toc_3">3. 检查键是否存在</h5>
-
-<pre><code class="shell">exists key # 存在返回1，不存在返回0
-</code></pre>
-
-<h5 id="toc_4">4. 删除键</h5>
-
-<pre><code class="shell">del key [key ...] # 通用命令 无论值是什么类型都可删除 返回结果为成功删除键的个数，删除不存在的键，就会返回0
-</code></pre>
-
-<h5 id="toc_5">5. 键过期</h5>
-
-<pre><code class="shell">expire key seconds
-</code></pre>
-
-<p>ttl 命令返回键的剩余过期时间，有三种返回值</p>
-
-<ul>
-<li>大于等于0的整数：键剩余的过期时间</li>
-<li>-1：键没设置过期时间</li>
-<li>-2：键不存在</li>
-</ul>
-
-<h5 id="toc_6">6. 键的数据结构类型</h5>
-
-<pre><code class="shell">type key # 键不存在，则返回none
-</code></pre>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_config"></div>
-        <span class="hidden" itemprop="alternateName">redis_config</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_config">
-                <span itemprop="name">Redis Config</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_config.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">启动</h3>
-
-<h4 id="toc_1">默认配置</h4>
-
-<p>redis-service  建议使用配置文件启动</p>
-
-<h4 id="toc_2">运行配置</h4>
-
-<p>redis-service &ndash;configKey &ndash;configValue &ndash;configKey2 &ndash; configValue2</p>
-
-<p>例：redis-server &ndash;port &ndash;6379</p>
-
-<h4 id="toc_3">配置文件启动</h4>
-
-<p>例：配置文件写在/opt/redis/redis.config</p>
-
-<p>redis-server /opt/redis/redis.config</p>
-
-<p>一些重要配置如下</p>
-
-<table>
-<thead>
-<tr>
-<td>配置名</td>
-<td>配置说明</td>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>port</td>
-<td>端口</td>
-</tr>
-
-<tr>
-<td>logfile</td>
-<td>日志文件</td>
-</tr>
-
-<tr>
-<td>dir</td>
-<td>Redis工作目录（存放持久化文件和日志文件）</td>
-</tr>
-
-<tr>
-<td>dacmonize</td>
-<td>是否以守护进程的方式启动Redis</td>
-</tr>
-</tbody>
-</table>
-
-        </div>
-
-        <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
-    </div>
-</section>
-	  
-	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-redis " style="padding-bottom:1em;">
-
-        <div id="redis_key"></div>
-        <span class="hidden" itemprop="alternateName">redis_key</span>
-
-        <h2>
-            <a itemprop="url" href="#redis_key">
-                <span itemprop="name">Redis key</span>
-            </a>
-        </h2>
-
-        <a href="https://github.com/gniqizeuy/gniqizeuy.github.io/tree/master/content/en/redis_key.md" target="_blank">
-            <span class="pull-right glyphicon glyphicon-edit"></span>
-        </a>
-
-        Tags:
-        
-            <span class="tags label label-default">redis</span>
-        
-
-        <div itemprop="description">
-            
-
-<h3 id="toc_0">Redis 键管理</h3>
-
-<p>单个键、遍历键、数据库管理</p>
-
-<h4 id="toc_1">单个键管理</h4>
-
-<h5 id="toc_2">1.  键重命名</h5>
-
-<pre><code class="shell">rename key newkey
-</code></pre>
-
-<p>如果在 rename 之前，键已存在，那么它的值也将被覆盖</p>
-
-<p>防止强行 rename key，Redis 提供了 renamex 命令，确保只有 newkey 不存在时才被覆盖，newkey 存在时返回 0 代表未完成重命名。</p>
-
-<p>在使用重命名命令时，有两点需要注意</p>
-
-<ul>
-<li>由于重命名键期间会执行 del 命令删除旧的键，如果键对应的值比较大，会存在阻塞 Redis 的可能性，这点不要忽略</li>
-<li>如果 rename 和 renamex 中的 key 和 newkey 如果是相同的，在 Redis 3.2 和之前版本返回结果略有不同。</li>
-</ul>
-
-<p>Redis 3.2 中会返回 OK</p>
-
-<p>Redis 3.2 之前版本会提示错误</p>
-
-<pre><code class="shell">127.0.0.1&gt; rename key key
-(error) ERR source and destination objects are the same
-</code></pre>
-
-<h5 id="toc_3">2.  随机返回一个键</h5>
-
-<pre><code class="shell">randomkey
-</code></pre>
-
-<h5 id="toc_4">3. 键过期</h5>
-
-<p>除了 expire、ttl 命令以外，Redis 还提供了 expireat、pexpire、pexpireat、pttl、persist 等一系列命令</p>
-
-<ul>
-<li><code>expire key seconds</code>：键在 seconds 秒后过期</li>
-<li><code>expireat key timestamp</code>：键在秒级时间戳 timestamp 后过期</li>
-</ul>
-
-<p>ttl 命令和 pttl 都可以查询键的剩余过期时间，但是 pttl 精度更高可以达到毫秒级别，有 3 种返回值：</p>
-
-<ul>
-<li>大于等于 0 的整数：键剩余的过期时间（ttl 是秒，pttl 是毫秒）</li>
-<li>-1：键没有设置过期时间</li>
-<li>-2：键不存在</li>
-</ul>
-
-<p>expireat 命令可以设置秒的</p>
 
         </div>
 
