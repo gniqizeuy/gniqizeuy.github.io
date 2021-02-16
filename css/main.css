@@ -75,14 +75,14 @@ td, th {
   list-style-type: none;
 }
 
-.intro {
-  margin-bottom: 30px;
-}
-
 .flag {
   width: 16px;
   height: 11px;
   background:url(flags.png) no-repeat
+}
+
+ul, li {
+  margin-bottom: 3px;
 }
 
 .flag.flag-de {background-position: -16px 0}

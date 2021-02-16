@@ -1,0 +1,194 @@
+java_thread
+Java Thread
+java 
+
+
+<h3 id="toc_0">JAVA 线程 API 简介</h3>
+
+<p>Java 标准库 java.lang.Thread 就是 Java 平台对线程的实现。Thread 类或其子类的一个实例就是一个线程</p>
+
+<h4 id="toc_1">线程的创建、启动和运行</h4>
+
+<p>创建一个线程就是创建一个 Thread 类（或其子类）的实例。</p>
+
+<p>线程的任务处理逻辑可以在 Thread 类的 <code>run</code> 实例方法中直接实现或者通过该方法进行调用，因此 run 方法相当于线程的任务处理逻辑的入口方法，<strong>它由 Java 虚拟机在运行相应的线程时直接调用，而不是由应用代码进行调用。</strong></p>
+
+<p>运行一个线程实际上就是让 Java 虚拟机执行该线程的 run 方法，为此，首先要启动线程。Thread 类的 <code>start</code> 方法的作用是启动相应的线程。启动一个线程的实质是请求 Java 虚拟机运行相应的线程，而这个<strong>线程具体何时运行是由线程调度器（Scheduler）决定的</strong>。因此，start 方法调用结束并不意味着相应线程已经开始运行，这个线程可能稍后运行，也可能永远不会运行。</p>
+
+<p>Thread 类的两个常用构造器：<code>Thread()</code> 和 <code>Thread(Runnable target)</code> 。相应地，创建线程有两者方式：</p>
+
+<ol>
+<li>定义 Thread 子类，在子类中覆盖 run 方法并在该方法中实现线程任务处理逻辑</li>
+<li>创建一个 java.lang.Runnable 接口的实例，并在该实例的 run 方法中实现线程任务处理，然后以该 Runnable 接口实例作为构造器的参数直接 new 一个 Thread 的实例</li>
+</ol>
+
+<p>在 Java 平台中，每个线程可以有自己的名字，这个名字便于我们区分不同的线程</p>
+
+<h5 id="toc_2">1：以定义 Thread 子类的方式创建线程</h5>
+
+<pre><code class="java">public class WeclomeApp {
+    public static void main(String[] args) {
+        // 创建线程
+        Thread childThread = new ChildThread();
+        
+        // 启动线程
+        childThread.start();
+        
+        // 输出当前线程的名称
+        System.out.printf(&quot;1. I'am %s.%n&quot;, Thread.currentThread().getName());
+    }
+}
+
+// 定义 Thread 的子类
+class ChildThread extends Thread {
+    // 在该方法中实现线程的任务处理逻辑
+    @Override
+    public void run() {
+        System.out.printf(&quot;2. I'am %s.%n&quot;, Thread.currentThread().getName());
+    }
+}
+</code></pre>
+
+<p>运行可能结果如下</p>
+
+<pre><code class="text">2. I'am Thread-0
+1. I'am main
+</code></pre>
+
+<h5 id="toc_3">2：以创建 Runnable 接口实例的方式创建线程</h5>
+
+<pre><code class="java">public class WeclomeApp1 {
+    public static void main(String[] args) {
+        Thread thread = new Thread(new WeclomeTask());
+        
+        thread.start();
+        
+        System.out.printf(&quot;1. I'am %s.%n&quot;, Thread.currentThread().getName());
+    }
+}
+
+class WeclomeTask implements Runnable {
+    @Override
+    public void run() {
+        System.out.printf(&quot;2. I'am %s.%n&quot;, Thread.currentThread().getName());
+    }
+}
+</code></pre>
+
+<p>运行可能结果如下</p>
+
+<pre><code class="text">2. I'am Thread-0
+1. I'am main
+</code></pre>
+
+<p>然而多从运行 上述两个程序，可以发现输出结果也可能是：</p>
+
+<pre><code class="text">1. I'am main
+2. I'am Thread-0
+</code></pre>
+
+<p>这是因为打印 2 开头消息的线程的启动是在打印 1 开头之前，但是这并不意味着 ChildThread 线程会在打印 1 开头消息的语句之前执行</p>
+
+<p>不管是采用哪种方式创建线程，一旦线程的 run 方法执行（由Java虚拟机调用）结束，相应的线程的运行也就结束了。run 方法执行结束包含正常结束（ run 方法返回）及代码中抛出异常而导致的中止。运行结束的线程所占用的资源（如内存空间）会如同其他 java 对象一样被java虚拟机垃圾回收。</p>
+
+<p>线程属于“一次性用品”,不能通过重新调用一个已经运行结束的线程的start 方法来使其重新运行。<strong>start 方法只能被调用一次</strong>，多次调用同一个 Thread 实例的 start 方法会导致其抛出 <i>IllegalThreadStateException</i> 异常</p>
+
+<p><strong>一个线程就是一个对象</strong>，对象的创建离不开内存空间的分配。创建一个线程与创建其他类型的 Java 对象不同的是，Java 虚拟机会为每个线程分配调用栈（ Call Stack ）所需的内存空间。调用栈用于跟踪 Java 代码（方法）间的调用关系以及 Java 代码对本地代码（Native Code , 通常是 C 代码）的调用。另外每个线程可能还有一个内核线程（具体与 Java 虚拟机的实现有关）与之对应。因此相对来说，<strong>创建线程对象比创建其他类型的对象的成本要高一些</strong>。</p>
+
+<p>java 平台中任意一段代码（比如一个方法）总是由确定的线程负责执行，这个线程被称为这段代码的<strong>执行线程</strong>。同一段代码可以被多个线程执行。代码实际运行的时候可能对应着不同的线程（对象）。</p>
+
+<p>线程的 run 方法总是由 Java 虚拟机直接调用的。但 Java 语言并不阻止直接调用 run 方法，这是因为：首先，线程在 Java 平台中也是一个对象，其次毕竟 run 方法 也是一个 public 方法。但是，不建议如此，这样有违创建线程（对象）的初衷。例如，运行如代码 3 （改自代码 1-2），该程序的输出类似如下：</p>
+
+<pre><code class="text">2. I'am main
+1. I'am main
+2. I'am Thread-0
+</code></pre>
+
+<h5 id="toc_4">3：应用代码直接调用线程的 run 方法（避免这样做）</h5>
+
+<pre><code class="java">public class WeclomeApp2 {
+    public static void main(String[] args) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.printf(&quot;2. I'am %s.%n&quot;, Thread.currentThread().getName());
+            }
+        });
+        
+        thread.start();
+        // 直接调用线程的 run 方法
+        thread.run();
+        System.out.printf(&quot;1. I'am %s.%n&quot;, Thread.currentThread().getName());
+    }
+}
+
+</code></pre>
+
+<h4 id="toc_5">Runnable 接口</h4>
+
+<p>Runnable 接口 只定义了一个方法：</p>
+
+<pre><code class="java">public void run();
+</code></pre>
+
+<p>Runnable 接口可以被看作是对任务进行的抽象，任务的处理逻辑体现在 run 方法中。Thread 类实际上是 Runnable 接口的一个实现类，其对 Runnable 接口 的实现如下：</p>
+
+<pre><code class="java">public void run() {
+    if (target != null) {
+        target.run();
+    }
+}
+</code></pre>
+
+<p>Thread 类的 run 方法中实现的逻辑是如果 target 不为 null，那么就调用 target.run()，否则什么都不做。其中，实例变量 target 的类型为 Runnable 。如果相应的线程实例时通过构造器 Thread(Runnable target) 创建的，那么 target 的值作为构造器中的参数值，否则 target 为 null 。Thread 类的 run 方法处理逻辑决定了创建创建线程的两者方式：一种是在 Thread 子类的 run 方法中直接实现任务处理逻辑，另一种是在一个 Runnable 实例中实现任务处理，该任务由 Thread 类的 run 方法负责调用。</p>
+
+<h4 id="toc_6">线程两种创建方式的区别</h4>
+
+<p><strong>从面向对象角度来看</strong>：创建 Thread 子类是一种<strong>基于继承</strong>的技术，以 Runnable 接口实例为构造器参数直接通过 new 创建 Thread 实例是一种<strong>基于组合</strong>的技术。由于组合相对继承来说，类之间的耦合度更低，因此也更加灵活。一般认为组合是优先选用的技术</p>
+
+<p><strong>从对象共享的角度来看</strong>：第 2 种创建方式意味着多个线程实例可以共享同一个Runnable 实例，在某些情况下会设计到竞态和线程安全这两个概念。</p>
+
+<p><strong>从对象创建成本来看</strong>：Java 中的线程实例是一个特殊的 Runnable 实例，因为在创建时 Java 虚拟机会为其分配调用栈空间、内核线程等资源。因此，创建一个线程实例比一个 Runnable 实例成本要高，如果创建 Runnable 实例再将其作为方法参数传递给其他对象使用（JDK 标准库中有不少API 都使用了 Runnable 接口）而不必利用它来创建相应的线程即可满足我们的计算需要，那么就不要创建线程实例。</p>
+
+<h4 id="toc_7">线程属性</h4>
+
+<table>
+<thead>
+<tr>
+<td>属性</td>
+<td>属性类型及用途</td>
+<td>只读属性</td>
+<td>重要注意事项</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>编号（ID）</td>
+<td>long。用于标识不同的线程。不同的线程拥有不同的编号</td>
+<td>是</td>
+<td>某个编号的线程运行结束后，该编号能被后续创建的线程使用。不同的线程拥有的编号虽然不同，但编号的唯一性只在 Java 虚拟机的一次运行有效。也就是说重启一个 Java 虚拟机（如重启 Web 服务器）后，某些线程的编号可能与上次 Java 虚拟机运行的某个线程编号一样，因此<strong>该属性值不适合作某种唯一标识</strong>，特别是作为数据库中的唯一标识（如主键）。</td>
+</tr>
+
+<tr>
+<td>名称（Name）</td>
+<td>String。面向人而非机器的一个属性，用于区分不同的线程，默认值与线程的编号有关，默认的格式为：Thread-线程编号，如 Thread-0</td>
+<td>否</td>
+<td>Java 并不禁止将不同线程的名称属性设置为相同的值，设置线程的名称有助于代码调试和问题定位</td>
+</tr>
+
+<tr>
+<td>线程类别（Dacemon）</td>
+<td>boolean。true 表示相应的线程是守护线程，否则为用户线程。默认值与相应线程的父线程的属性值相同</td>
+<td>否</td>
+<td>该属性必须在相应线程启动之前设置，即对 setDaemon 方法的调用必须在对 start 方法的调用之前，否则 setDaemon 方法会抛出 <i>IllegalThreadStateException</i> 异常。<strong>负责一些关键任务处理的线程不适宜设置为守护线程</strong>。</td>
+</tr>
+
+<tr>
+<td>优先级（Priority）</td>
+<td>int。本质上是给线程调度器的提示，用于表示程序希望哪个线程能够优先执行。Java 定义了 1~10 的 10 个优先级。默认一般为 5（表示普通优先级）。对于具体的一个线程来说，其优先级的默认值与其父线程的优先级值相等</td>
+<td>否</td>
+<td>一般使用默认优先级即可。不恰当地设置可能导致严重问题（<strong>线程饥饿</strong>）</td>
+</tr>
+</tbody>
+</table>
