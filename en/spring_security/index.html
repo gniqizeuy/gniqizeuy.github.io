@@ -3,6 +3,8 @@ Spring Security
 spring 
 
 
+<p>[TOC]</p>
+
 <h3 id="toc_0">认识 Spring Security</h3>
 
 <p>Spring Security 提供了声明式的安全访问控制解决方案（仅支持 Spring 的应用程序），对访问权限进行认证和授权，它基于 Spring Aop 和 Servlet 过滤器，提供了安全性方面的全面解决方案。</p>
@@ -42,9 +44,9 @@ spring
 <li>用户进行一些收到访问控制机制保护的操作，访问控制机制会依据当前安全上下文信息检查这个操作所需的权限。</li>
 </ol>
 
-<p>除利用提供的认证外，还可以编写自己的 Filter ，提供与那些不是基于 Spring Security 的验证系统的操作。</p>
+<p>除利用提供的认证外，还可以编写自己的 Filter ，提供于那些不是基于 Spring Security 的验证系统的操作。</p>
 
-<h5 id="toc_4">2）授权（authorization</h5>
+<h5 id="toc_4">2）授权（authorization）</h5>
 
 <p>在一个系统中，不同用户具有的权限是不同的。一般来说，系统会为不同的用户分配不同的角色，而每个角色则对应一系列的权限。</p>
 
@@ -57,15 +59,15 @@ spring
 <h4 id="toc_5">3. 模块</h4>
 
 <ul>
-<li>核心模块—spring security core.jar：包含核心验证和访问控制类和接口，以及支持远程配置的基本 API</li>
-<li>远程调用—spring security remote.jar：提供与 Spring Remote 集成</li>
-<li>网页—spring security web.jar：包括网站安全的模块，提供网站认证服务和基于 URL 访问控制</li>
-<li>配置—spring security config.jar：包含安全命令空间解析代码</li>
-<li>LDAP—spring security ldap.jar：LDAP 验证和配置</li>
-<li>ACL—spring security acl.jar：对 ACL 访问控制表的实现</li>
-<li>CAS—spring security cas.jar：对 CAS 客户端的安全实现</li>
-<li>OpenID—spring security openid.jar：对 OpenID 网页验证的支持</li>
-<li>Test—spring security test.jar：对 spring security 的测试的支持</li>
+<li>核心模块 — spring-security-core.jar：包含核心验证和访问控制类和接口，以及支持远程配置的基本 API</li>
+<li>远程调用 — spring-security-remote.jar：提供与 Spring Remote 集成</li>
+<li>网页 — spring-security-web.jar：包括网站安全的模块，提供网站认证服务和基于 URL 访问控制</li>
+<li>配置 — spring-security-config.jar：包含安全命令空间解析代码</li>
+<li>LDAP — spring-security-ldap.jar：LDAP 验证和配置</li>
+<li>ACL — spring-security-acl.jar：对 ACL 访问控制表的实现</li>
+<li>CAS — spring-security-cas.jar：对 CAS 客户端的安全实现</li>
+<li>OpenID — spring-security-openid.jar：对 OpenID 网页验证的支持</li>
+<li>Test — spring-security-test.jar：对 spring security 的测试的支持</li>
 </ul>
 
 <h3 id="toc_6">核心类</h3>
@@ -97,7 +99,7 @@ spring
 
 <p>默认使用的 strategy 就是基于 ThreadLocal 的 ThreadLocalSecurityContextHolderStrategy 来实现的</p>
 
-<p>除了上述提到的，Spring Security 还提供了 3 中类型的 strategy 来实现</p>
+<p>除了上述提到的，Spring Security 还提供了 3 种类型的 strategy 来实现</p>
 
 <ul>
 <li><code>ClobalSecurityContextHolderStrategy</code>：表示全局使用一个 SecurityContext，如 C/S 结构的客户端</li>
@@ -107,7 +109,7 @@ spring
 
 <p>一般情况下，使用默认的 Strategy 即可。但是，如果改变默认的 strategy，Spring Security 提供了两者方法来改变 &ldquo;StrategyName&rdquo;</p>
 
-<p>SecurityContextHolder 类中有 3 中不同类型的 strategy，分别为 MODE_THREADLOCAL、MODE_INHERITABLETHREADLOCAL 和 MODE_GLOBAL，关键代码如下：</p>
+<p>SecurityContextHolder 类中有 3 种不同类型的 strategy，分别为 MODE_THREADLOCAL、MODE_INHERITABLETHREADLOCAL 和 MODE_GLOBAL，关键代码如下：</p>
 
 <pre><code class="java">public static final String MODE_THREADLOCAL=&quot;MODE_THREADLOCAL&quot;;
 public static final String MODE_INHERITABLETHREADLOCAL = &quot;MODE_INHERITABLETHREADLOCAL&quot;;
@@ -127,3 +129,194 @@ private static SecurtyContextStrategy strategy;
 </ul>
 
 <h5 id="toc_10">2）获取当前用户的 SecurityContext</h5>
+
+<p>Spring Security 使用一个 Authentication 对象来描述当前用户的相关信息。SecurityContextHolder 中持有的是当前用户的 SecurityContext ，而 SecurityContext 持有的是代表当前用户相关信息的 Authentication 的引用。</p>
+
+<p>这个 Authentication 对象不需要自己创建，Spring Security 会自动创建相应的 Authentication 对象，然后赋值给当前的 SecurityContext 。但是，往往需要在程序中获取用户的相关信息，比如，最常见的是获取当前登录用户的用户名。在程序的任何地方，可以通过如下方式获取到当前用户的用户名。</p>
+
+<pre><code class="java">public String getCurrentUsername () {
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    
+    if (principal instanceof UserDetails)
+        return ((UserDetails) principal).getUserName();
+    
+    if (principal instanceof Principal)
+        return ((Principal) principal).getName();
+    
+    return String.valueOf(principal);
+}
+</code></pre>
+
+<p><code>getAuthentication()</code> 会返回认证信息</p>
+
+<p><code>getPrincipal()</code> 方法返回身份信息，它是 UserDetails 对身份信息的封装</p>
+
+<p>获取当前用户的用户名，最简单的方式如下：</p>
+
+<pre><code class="java">public String getCurrentUsername () {
+    return SecurityContextHolder.getContext().getAuthentication().getName();
+}
+</code></pre>
+
+<p>在调用 SecurityContextHolder.getContext() 获取 SecurityContext 时，如果对应的 SecurityContext 不存在，则会返回空的 SecurityContext</p>
+
+<h5 id="toc_11">3） ProviderManager</h5>
+
+<p>ProviderManager 会维护一个认证的列表，以便处理不同认证方式的认证，因此系统可能会存在多种认证方式，比如手机号、用户名密码、邮箱方式</p>
+
+<p>在认证时，如果 ProviderManager 的认证结果不是 null ，则说明认成功，不再进行其他方式的认证，并且作为认证的结果保存在 SecurityContext 中，如果不存在，则输出错误信息 <i>ProviderNotFoundException</i></p>
+
+<h5 id="toc_12">4） DaoAuthenticationProvider</h5>
+
+<p>它是 AuthenticationProvider 最常见的实现，用来获取用户提交的用户名和密码，并进行正确性比对。如果正确，则返回一个数据库中的用户信息</p>
+
+<p>在用户在前台提交了用户名和密码后，就会封装成 UsernamePasswordAuthenticationToken。然后，DaoAuthenticationProvider 根据 retireveUser 方法，交给 additionalAuthenticationChecks 方法完成 UsernamePasswordAuthenticationToken 和 UserDetails 密码的比对。如果这个方法没有抛出异常，则认为对比成功。</p>
+
+<p>比对密码需要用到 PasswordEncoder 和 SaltSource</p>
+
+<h5 id="toc_13">5） UserDetails</h5>
+
+<p>UserDetails 是 Spring Security 的用户实体类，包含用户名、密码、权限等信息。Spring Security 默认实现了内置的 User 类，供 Spring Security 安全认证使用。当然，也可以自己实现。</p>
+
+<p>UserDetails 和 Authentication 接口很类似，都拥有 username 和 authorities 。一定要区分清楚 Authentication 的 getCredentials() 与 UserDetails 中的 getPassword() 。前者是用户提交的密码凭证，不一定是正确的，或数据库不一定存在；后者是用户正确的密码，认证器要进行比对的就是两者是否相同。</p>
+
+<p>Authentication 的 getAuthorities() 方法是由 UserDetails 的 getAuthorities() 传递而形成的。UserDetails 的用户信息是经过 AuthenticationProvider 认证之后被填充的。</p>
+
+<p>UserDetails 中提供了以下几种方法：</p>
+
+<ul>
+<li><code>Stirng getPassword()</code>：返回验证用户密码，无法返回则显示为 null。</li>
+<li><code>Stirng getUsername()</code>：返回验证用户名，无法返回则显示为 null。</li>
+<li><code>boolean isAccountNonExpired()</code>：账户是否过期，过期无法验证。</li>
+<li><code>boolean isAccountNonLocked()</code>：指定用户是否被锁定或解锁，锁定的用户无法进行身份验证。</li>
+<li><code>boolean isCredentialsNonExpired()</code>：指定是否已过期的用户的凭证（密码），过期的凭证无法认证。</li>
+<li><code>boolean isEabled()</code>：是否被禁用，禁用的用户不能进行身份验证。</li>
+</ul>
+
+<h5 id="toc_14">6） UserDetailsService</h5>
+
+<p>用户信息是通过 UserDetailsService 接口来加载的。该接口的唯一方法是 <code>loadUserByUsername(String username)</code> ，用来根据用户名加载相关信息，这个方法的返回值是 UserDetails 接口，其中包含了用户的信息，包括用户名、密码、权限、是否启用、是否被锁定、是否过期等。</p>
+
+<h5 id="toc_15">7） GrantedAuthority</h5>
+
+<p>GrantedAuthority 只定义了一个 <code>getAuthority()</code> 方法。该方法返回一个字符串，表示对应权限的字符串。如果对应权限不能用字符串表示，则返回 null。</p>
+
+<p>GrantedAuthority 接口通过 UserDetailsService 进行加载，然后赋予 UserDetails</p>
+
+<p>Authentication 的 getAuthorities() 方法可以返回当前 Authentication 对象拥有的权限，其返回值是一个 GrantedAuthority 类型的数组。每一个 GrantedAuthority 对象代表赋予当前用户的一种权限。</p>
+
+<h5 id="toc_16">8） Filter</h5>
+
+<h6 id="toc_17">1 .  SecurityContextPersistenceFilter</h6>
+
+<p>它从 SecurityContextResponsity 中取出用户认证信息。为了提高效率，避免每次请求都要查询认证信息，他会从 Session 中取出已认证的用户信息，然后将其放入 SecurityContextHolder 中，以便其他 Filter 使用</p>
+
+<h6 id="toc_18">2.  WebAsyncManagerIntergrationFilter</h6>
+
+<p>集成了 SecurityContext 和 WebAsyncManager ，把 SecurityContext 设置到异步编程，使其也能获取到用户的上下文认证信息</p>
+
+<h6 id="toc_19">3. HanderWriterFilter</h6>
+
+<p>它对请求的 Header 添加相应的信息</p>
+
+<h6 id="toc_20">4. CsrfFilter</h6>
+
+<p>跨域请求伪造过滤器。通过客户端传过来的 token 与服务器端存储的 token 进行比较，来判断请求的合理性</p>
+
+<h6 id="toc_21">5. LogoutFilter</h6>
+
+<p>匹配登出 URL 。匹配成功后，退出用户，并清除认证信息</p>
+
+<h6 id="toc_22">6. UsernamePasswordAuthenticationFilter</h6>
+
+<p>登录认证过滤器，默认是对 &ldquo;/login&rdquo; 的 POST 请求进行认证。该方法会调用 attemptAuthentication ，尝试获取一个 Authentication 认证对象，以保存认证信息，然后转下下一个 Filter ，最后调用 successfulAuthentication 执行认证后的事件。</p>
+
+<h6 id="toc_23">7.  AnonymousAuthenticationFilter</h6>
+
+<p>如果 SecurityContextHolder 中的认证信息为空，则会创建一个匿名用户到 SecurityContextHolder 中。</p>
+
+<h6 id="toc_24">8. SessionManagementFilter</h6>
+
+<p>持久化登录用户的用户信息。用户信息会被保存到 Session、Cookie、或 Redis 中</p>
+
+<h3 id="toc_25">配置 Spring Security</h3>
+
+<h4 id="toc_26">1. 继承 WebSecurityConfigurerAdapter</h4>
+
+<p>通过重写抽象接口 WebSecurityConfigurerAdapter ，再加上注解 <code>@EnableWebSecurity</code> ，可以实现 Web 的安全配置</p>
+
+<p>WebSecurityConfigurerAdapter Config 模块一共有 3 个 builder（构造程序）</p>
+
+<ul>
+<li><code>AuthenticationManagerBuilder</code>：认证相关 builder ，用来配置全局的认证相关的信息。它包含 AuthenticationProvider 和 UserDetailsService ，前者是认证服务器提供者，后者是用户详情查询服务</li>
+<li><code>HttpSecurity</code>：进行权限控制规则相关配置</li>
+<li><code>WebSecurity</code>：进行全局请求忽略规则配置、HTTPFirewall 配置、debug 配置、全局 SecurityFilterChain 配置</li>
+</ul>
+
+<p>配置安全，通常要重写以下方法：</p>
+
+<pre><code class="java">// 通过 auth 对象的方法添加身份验证
+protected void configure(AuthenticationManagerBuilder auth) throws Exception {}
+
+// 通常用于设置忽略权限的静态资源
+public void configure(WebSecurity web) throws Exception {}
+
+// 通过 HTTP 对象的 authorizeRequests() 方法定义 URL 访问权限。默认为 formLogin() 提供一个简单的登录验证页面
+protected void configure(HttpSecurity httpSecurity) throws Exception {}
+</code></pre>
+
+<h4 id="toc_27">2. 配置自定义策略</h4>
+
+<p>配置安全需要继承 WebSecurityConfigurerAdapter ，然后重写其方法</p>
+
+<pre><code class="java">//指定为配置类
+@Configuration
+//指定为Spring Security配置类，如果是 WebFlux，则需要启用 @EnableWebFluxSecurity
+@EnableWebSecurity
+// 如果要启用方法安全设置，则开启此项
+@EnableGloabelMethodSecurity(prePostEnabled=true)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        // 不拦截静态资源
+        web.ignoring().antMatchers(&quot;/static/**&quot;);
+    }
+    
+    @Bean
+    public PasswordEncoder PasswordEncoder() {
+        // 使用 BCrypt 加密
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.formLogin()
+            .usernameParameter(&quot;uname&quot;)
+            .passwordParameter(&quot;pwd&quot;)
+            .loginPage(&quot;/admin/login&quot;)
+            .peimitAll()
+            .and()
+            .authorizeRequests()
+            .antMatchers(&quot;/admin/**&quot;).hasRole(&quot;ADMIN&quot;)
+            // 除上面外的所有请求全部需要鉴权认证
+            .anyRequest().authemticated();
+        
+        http.logout().permitAll();
+        http.rememberMe().rememberMeParameter(&quot;rememberme&quot;);
+        // 处理异常，拒绝访问就重定向 403 页面
+        http.exceptionHandling().accessDeniedPage(&quot;/403&quot;);
+        http.logout().logoutSuccessUrl(&quot;/&quot;);
+        http.csrf().ignoringAntMatchers(&quot;/admin/upload&quot;);
+}
+
+</code></pre>
+
+<p>代码解释如下：</p>
+
+<ul>
+<li><code>authorizeRequest()</code>：定义哪些 URL 需要被保护，哪些不需要被保护</li>
+<li><code>antMatchers(&quot;/admin/**&quot;).hasRole(&quot;ADMIN&quot;)</code>：定义 /admin/ 下的所有 URL 。只有拥有 admin 角色的用户才有访问权限</li>
+<li><code>formLogin()</code>：自定义用户登录验证的页面</li>
+<li><code>http.csrf()</code>：配置是否开启 CSRF 保护，还可以再开启之后指定忽略的接口</li>
+</ul>
