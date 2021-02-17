@@ -119,7 +119,7 @@
             <a href="#java_tree">Java Tree</a>
           </li>
           
-          <li class="rule tag-Java ">
+          <li class="rule tag-java ">
             <a href="#java_list">Java list</a>
           </li>
           
@@ -131,7 +131,7 @@
             <a href="#java_thread">Java Thread</a>
           </li>
           
-          <li class="rule tag-js ">
+          <li class="rule tag-java ">
             <a href="#java_collections">Java collections</a>
           </li>
           
@@ -445,11 +445,11 @@
         <div itemprop="description">
             
 
-<h3 id="toc_0">try-with-resources 优先于 try-finally</h3>
+<h3 id="toc_0">try-with-resources</h3>
 
-<p>java7 中引入了 try-with-resources语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含了单个返回 void 的 close 方法。java 类库与第三方类库中许多类和接口，现在都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
+<p>java7 中引入了 try-with-resources 语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含单个返回 void 的 close 方法。java 类库与第三方库中许多类和接口都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
 
-<p>范例1：</p>
+<p>例1：</p>
 
 <pre><code class="java">static String firstLineOfFile(String path) throws IOException {
     try (BufferedReader br = new BufferReader(new FileReader(path))) {
@@ -458,7 +458,7 @@
 }
 </code></pre>
 
-<p>范例2：</p>
+<p>例2：</p>
 
 <pre><code class="java">static void copy(String src, String dst) throws IOException {
     try (
@@ -473,9 +473,9 @@
 }
 </code></pre>
 
-<p>使用 try-with-resources 不仅使代码变得简洁易懂，也更容易诊断。以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 getSuppressed 方法还可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
+<p>以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 <code>getSuppressed</code> 方法还可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
 
-<p>在 try-with-resources 语句中还可以使用 catch 子句，和 try-finally 语句一样。这样既可以处理异常，又不需要再套用一层代码。</p>
+<p>在 try-with-resources 语句中还可以使用 catch 子句，和 try-finally 语句一样。</p>
 
 <pre><code class="java">static String firstLineOfFile(String path, String defaultVal) {
     try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -485,8 +485,6 @@
     }
 }
 </code></pre>
-
-<p>firstLineOfFile 方法没有抛出异常，但是如果它无法打开文件，或者无法从中读取，就会返回一个默认值。在处理必须关闭的资源时，始终要优先考虑用try-with-resources，而不是用 try-finally。这样得到的代码将更加简洁、清晰、产生的异常也更有价值。</p>
 
         </div>
 
@@ -577,7 +575,7 @@
 
 <p>线程的任务处理逻辑可以在 Thread 类的 <code>run</code> 实例方法中直接实现或者通过该方法进行调用，因此 run 方法相当于线程的任务处理逻辑的入口方法，<strong>它由 Java 虚拟机在运行相应的线程时直接调用，而不是由应用代码进行调用。</strong></p>
 
-<p>运行一个线程实际上就是让 Java 虚拟机执行该线程的 run 方法，为此，首先要启动线程。Thread 类的 <code>start</code> 方法的作用是启动相应的线程。启动一个线程的实质是请求 Java 虚拟机运行相应的线程，而这个<strong>线程具体何时运行是由线程调度器（Scheduler）决定的</strong>。因此，start 方法调用结束并不意味着相应线程已经开始运行，这个线程可能稍后运行，也可能永远不会运行。</p>
+<p>运行一个线程实际就是让 Java 虚拟机执行该线程的 run 方法，为此，首先要使用 Thread 类的 <code>start</code> 方法启动线程。启动一个线程的实质是请求 Java 虚拟机运行相应的线程，而这个<strong>线程具体何时运行是由线程调度器（Scheduler）决定的</strong>。因此，start 方法调用结束并不意味着线程已经开始运行，这个线程可能稍后运行，也可能永远不会运行。</p>
 
 <p>Thread 类的两个常用构造器：<code>Thread()</code> 和 <code>Thread(Runnable target)</code> 。相应地，创建线程有两者方式：</p>
 
@@ -645,7 +643,7 @@ class WeclomeTask implements Runnable {
 1. I'am main
 </code></pre>
 
-<p>然而多从运行 上述两个程序，可以发现输出结果也可能是：</p>
+<p>然而多次运行上述两个程序，可以发现输出结果也可能是：</p>
 
 <pre><code class="text">1. I'am main
 2. I'am Thread-0
@@ -653,15 +651,15 @@ class WeclomeTask implements Runnable {
 
 <p>这是因为打印 2 开头消息的线程的启动是在打印 1 开头之前，但是这并不意味着 ChildThread 线程会在打印 1 开头消息的语句之前执行</p>
 
-<p>不管是采用哪种方式创建线程，一旦线程的 run 方法执行（由Java虚拟机调用）结束，相应的线程的运行也就结束了。run 方法执行结束包含正常结束（ run 方法返回）及代码中抛出异常而导致的中止。运行结束的线程所占用的资源（如内存空间）会如同其他 java 对象一样被java虚拟机垃圾回收。</p>
+<p>不管采用哪种方式创建线程，一旦线程 run 方法执行（由Java虚拟机调用）结束，线程的运行也就结束了。run 方法执行结束包含正常结束（ run 方法返回）及代码中抛出异常而导致的中止。运行结束的线程所占用的资源（如内存空间）会同其他 java 对象一样被 java 虚拟机垃圾回收。</p>
 
-<p>线程属于“一次性用品”,不能通过重新调用一个已经运行结束的线程的start 方法来使其重新运行。<strong>start 方法只能被调用一次</strong>，多次调用同一个 Thread 实例的 start 方法会导致其抛出 <i>IllegalThreadStateException</i> 异常</p>
+<p>线程属于“一次性用品”，不能通过重新调用一个已经运行结束的线程的 start 方法来使其重新运行。<strong>start 方法只能被调用一次</strong>，多次调用同一个 Thread 实例的 start 方法会导致其抛出 <i>IllegalThreadStateException</i> 异常</p>
 
-<p><strong>一个线程就是一个对象</strong>，对象的创建离不开内存空间的分配。创建一个线程与创建其他类型的 Java 对象不同的是，Java 虚拟机会为每个线程分配调用栈（ Call Stack ）所需的内存空间。调用栈用于跟踪 Java 代码（方法）间的调用关系以及 Java 代码对本地代码（Native Code , 通常是 C 代码）的调用。另外每个线程可能还有一个内核线程（具体与 Java 虚拟机的实现有关）与之对应。因此相对来说，<strong>创建线程对象比创建其他类型的对象的成本要高一些</strong>。</p>
+<p><strong>一个线程就是一个对象</strong>，对象的创建离不开内存空间的分配。创建线程与创建其他类型的 Java 对象不同的是，Java 虚拟机会为每个线程分配调用栈（ Call Stack ）所需的内存空间。调用栈用于跟踪 Java 代码（方法）间的调用关系以及 Java 代码对本地代码（Native Code , 通常是 C 代码）的调用。另外每个线程可能还有一个内核线程（具体与 Java 虚拟机的实现有关）与之对应。因此相对来说，<strong>创建线程对象比创建其他类型的对象的成本要高一些</strong>。</p>
 
-<p>java 平台中任意一段代码（比如一个方法）总是由确定的线程负责执行，这个线程被称为这段代码的<strong>执行线程</strong>。同一段代码可以被多个线程执行。代码实际运行的时候可能对应着不同的线程（对象）。</p>
+<p>java 平台中任意一段代码（比如一个方法）总是由确定的线程负责执行，这个线程被称为这段代码的<strong>执行线程</strong>。同一段代码可以被多个线程执行。代码实际运行时可能对应不同的线程（对象）。</p>
 
-<p>线程的 run 方法总是由 Java 虚拟机直接调用的。但 Java 语言并不阻止直接调用 run 方法，这是因为：首先，线程在 Java 平台中也是一个对象，其次毕竟 run 方法 也是一个 public 方法。但是，不建议如此，这样有违创建线程（对象）的初衷。例如，运行如代码 3 （改自代码 1-2），该程序的输出类似如下：</p>
+<p>线程的 run 方法总是由 Java 虚拟机直接调用的。但 Java 语言并不阻止直接调用 run 方法，这是因为：首先，线程在 Java 平台中也是一个对象，其次毕竟 run 方法 也是一个 public 方法。但是不建议如此，这样有违创建线程（对象）的初衷。例如，运行如代码 3 （改自代码 2），该程序输出类似如下：</p>
 
 <pre><code class="text">2. I'am main
 1. I'am main
@@ -695,7 +693,7 @@ class WeclomeTask implements Runnable {
 <pre><code class="java">public void run();
 </code></pre>
 
-<p>Runnable 接口可以被看作是对任务进行的抽象，任务的处理逻辑体现在 run 方法中。Thread 类实际上是 Runnable 接口的一个实现类，其对 Runnable 接口 的实现如下：</p>
+<p>Runnable 接口可以被看作是对任务进行的抽象，任务处理逻辑体现在 run 方法中。Thread 类实际上是 Runnable 接口的一个实现类，其对 Runnable 接口的实现如下：</p>
 
 <pre><code class="java">public void run() {
     if (target != null) {
@@ -704,15 +702,15 @@ class WeclomeTask implements Runnable {
 }
 </code></pre>
 
-<p>Thread 类的 run 方法中实现的逻辑是如果 target 不为 null，那么就调用 target.run()，否则什么都不做。其中，实例变量 target 的类型为 Runnable 。如果相应的线程实例时通过构造器 Thread(Runnable target) 创建的，那么 target 的值作为构造器中的参数值，否则 target 为 null 。Thread 类的 run 方法处理逻辑决定了创建创建线程的两者方式：一种是在 Thread 子类的 run 方法中直接实现任务处理逻辑，另一种是在一个 Runnable 实例中实现任务处理，该任务由 Thread 类的 run 方法负责调用。</p>
+<p>Thread 类的 run 方法中实现的逻辑是如果 target 不为 null，那么就调用 target.run()，否则什么都不做。其中，实例变量 target 的类型为 Runnable 。如果线程实例是通过构造器 Thread(Runnable target) 创建的，那么 target 的值作为构造器中的参数值，否则 target 为 null 。Thread 类的 run 方法处理逻辑决定了创建线程的两者方式：一种是在 Thread 子类的 run 方法中直接实现任务处理逻辑，另一种是在一个 Runnable 实例中实现任务处理，该任务由 Thread 类的 run 方法负责调用。</p>
 
 <h4 id="toc_6">线程两种创建方式的区别</h4>
 
-<p><strong>从面向对象角度来看</strong>：创建 Thread 子类是一种<strong>基于继承</strong>的技术，以 Runnable 接口实例为构造器参数直接通过 new 创建 Thread 实例是一种<strong>基于组合</strong>的技术。由于组合相对继承来说，类之间的耦合度更低，因此也更加灵活。一般认为组合是优先选用的技术</p>
+<p><strong>从面向对象角度来看</strong>：创建 Thread 子类是一种<strong>基于继承</strong>的技术，以 Runnable 接口实例为构造器参数直接通过 new 创建 Thread 实例是一种<strong>基于组合</strong>的技术。由于组合相对继承来说，类之间的耦合度更低，因此也更加灵活。一般认为组合是优先选用的技术。</p>
 
-<p><strong>从对象共享的角度来看</strong>：第 2 种创建方式意味着多个线程实例可以共享同一个Runnable 实例，在某些情况下会设计到竞态和线程安全这两个概念。</p>
+<p><strong>从对象共享角度来看</strong>：第 2 种创建方式意味着多个线程实例可以共享同一个Runnable 实例，在某些情况下会涉及到<strong>竞态</strong>和<strong>线程安全</strong>这两个概念。</p>
 
-<p><strong>从对象创建成本来看</strong>：Java 中的线程实例是一个特殊的 Runnable 实例，因为在创建时 Java 虚拟机会为其分配调用栈空间、内核线程等资源。因此，创建一个线程实例比一个 Runnable 实例成本要高，如果创建 Runnable 实例再将其作为方法参数传递给其他对象使用（JDK 标准库中有不少API 都使用了 Runnable 接口）而不必利用它来创建相应的线程即可满足我们的计算需要，那么就不要创建线程实例。</p>
+<p><strong>从对象创建成本来看</strong>：Java 中的线程实例是一个特殊的 Runnable 实例，因为在创建时 Java 虚拟机会为其分配调用栈空间、内核线程等资源。因此，创建一个线程实例比一个 Runnable 实例成本要高，如果创建 Runnable 实例再将其作为方法参数传递给其他对象使用（JDK 标准库中有不少API 都使用了 Runnable 接口）而不必利用它来创建相应的线程即可满足计算需要，那么就不要创建线程实例。</p>
 
 <h4 id="toc_7">线程属性</h4>
 
@@ -729,14 +727,14 @@ class WeclomeTask implements Runnable {
 <tbody>
 <tr>
 <td>编号（ID）</td>
-<td>long。用于标识不同的线程。不同的线程拥有不同的编号</td>
+<td>long。用于标识不同线程。不同线程拥有不同编号</td>
 <td>是</td>
 <td>某个编号的线程运行结束后，该编号能被后续创建的线程使用。不同的线程拥有的编号虽然不同，但编号的唯一性只在 Java 虚拟机的一次运行有效。也就是说重启一个 Java 虚拟机（如重启 Web 服务器）后，某些线程的编号可能与上次 Java 虚拟机运行的某个线程编号一样，因此<strong>该属性值不适合作某种唯一标识</strong>，特别是作为数据库中的唯一标识（如主键）。</td>
 </tr>
 
 <tr>
 <td>名称（Name）</td>
-<td>String。面向人而非机器的一个属性，用于区分不同的线程，默认值与线程的编号有关，默认的格式为：Thread-线程编号，如 Thread-0</td>
+<td>String。面向人而非机器的，用于区分不同的线程，默认值与线程的编号有关，默认的格式为：Thread-线程编号，如 Thread-0</td>
 <td>否</td>
 <td>Java 并不禁止将不同线程的名称属性设置为相同的值，设置线程的名称有助于代码调试和问题定位</td>
 </tr>
@@ -867,7 +865,7 @@ class WeclomeTask implements Runnable {
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-Java " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
 
         <div id="java_list"></div>
         <span class="hidden" itemprop="alternateName">java_list</span>
@@ -884,7 +882,7 @@ class WeclomeTask implements Runnable {
 
         Tags:
         
-            <span class="tags label label-default">Java</span>
+            <span class="tags label label-default">java</span>
         
 
         <div itemprop="description">
@@ -1020,7 +1018,7 @@ class WeclomeTask implements Runnable {
 </section>
 	  
 	    <section itemscope itemtype="http://schema.org/Property"> 
-    <div class="col-xs-12 rule tag-js " style="padding-bottom:1em;">
+    <div class="col-xs-12 rule tag-java " style="padding-bottom:1em;">
 
         <div id="java_collections"></div>
         <span class="hidden" itemprop="alternateName">java_collections</span>
@@ -1037,7 +1035,7 @@ class WeclomeTask implements Runnable {
 
         Tags:
         
-            <span class="tags label label-default">js</span>
+            <span class="tags label label-default">java</span>
         
 
         <div itemprop="description">
@@ -1673,7 +1671,7 @@ socket.oncloes = function() {
 
 <h3 id="toc_0">事件流</h3>
 
-<p>想想在一张纸上画几个同心圆。把手指放在圆心上，则手指不仅是在一个圆圈里，而是在所有的圆圈里。IE 和 NetScape 开发团队以同样的方式看待浏览器事件。当你点击一个按钮式，实际上不光点击了这个按钮，还点击了它的容器以及整个页面。</p>
+<p>想想在一张纸上画几个同心圆。把手指放在圆心上，则手指不仅是在一个圆圈里，而是在所有的圆圈里。IE 和 NetScape 开发团队以同样的方式看待浏览器事件。当你点击一个按钮时，实际上不光点击了这个按钮，还点击了它的容器以及整个页面。</p>
 
 <p>事件流描述了页面接收事件的顺序</p>
 
@@ -3936,13 +3934,14 @@ client.eval(script, 1, 'hello') # world
 
 <p>redis-service &ndash;configKey &ndash;configValue &ndash;configKey2 &ndash; configValue2</p>
 
-<p>例：redis-server &ndash;port &ndash;6379</p>
+<p>例：<code>redis-server --port --6379</code></p>
 
 <h4 id="toc_3">配置文件启动</h4>
 
 <p>例：配置文件写在/opt/redis/redis.config</p>
 
-<p>redis-server /opt/redis/redis.config</p>
+<pre><code class="shell">redis-server /opt/redis/redis.config
+</code></pre>
 
 <p>一些重要配置如下</p>
 
