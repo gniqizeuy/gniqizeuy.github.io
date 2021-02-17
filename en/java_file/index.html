@@ -5,9 +5,9 @@ java
 
 <h3 id="toc_0">try-with-resources</h3>
 
-<p>java7 中引入了 try-with-resources 语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含单个返回 void 的 close 方法。java 类库与第三方库中许多类和接口都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
+<p>java 7 引入 <code>try-with-resources</code>  使用该语句必须先实现 <strong>AutoCloseable</strong> 接口，其中包含单个返回 void 的 close 方法。</p>
 
-<p>例1：</p>
+<p>java 类库与第三方库中许多类和接口都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable 。</p>
 
 <pre><code class="java">static String firstLineOfFile(String path) throws IOException {
     try (BufferedReader br = new BufferReader(new FileReader(path))) {
@@ -15,8 +15,6 @@ java
     }
 }
 </code></pre>
-
-<p>例2：</p>
 
 <pre><code class="java">static void copy(String src, String dst) throws IOException {
     try (
@@ -31,7 +29,9 @@ java
 }
 </code></pre>
 
-<p>以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 <code>getSuppressed</code> 方法还可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
+<p>以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常会被禁止，以保留第一个异常。</p>
+
+<p>事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。禁止的异常并不会被抛弃，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过调用 <code>getSuppressed</code> 方法可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
 
 <p>在 try-with-resources 语句中还可以使用 catch 子句，和 try-finally 语句一样。</p>
 

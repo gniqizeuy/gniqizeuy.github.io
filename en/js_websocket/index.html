@@ -3,15 +3,17 @@ Js WebSocket
 js 
 
 
-<p>web socket（套接字）的目标是通过一个长时连接实现与服务器全双工、双向的通信。在js中创建web socket时，一个HTTP请求会发送到服务器以初始化连接。服务器响应后，连接使用HTTP的Upgrade头部从HTTP协议切换到Web Socket协议。这意味着Web Socket不能通过标准Http服务器实现，而必须使用支持该协议的专有服务器。</p>
+<p>web socket（套接字）的目标是通过一个长时连接实现与服务器全双工、双向的通信。</p>
 
-<p>因为Web Socket使用了自定义协议，所以URL方案（scheme）稍有变化：不能再使用http://或https://，而要使用ws://和wss://。前者是不安全的连接，后者是安全连接。在指定 Web Socket  URL时，必须包含URL方案，因为将来有可能支持其他方案。</p>
+<p>在js中创建 web socket 时，一个 HTTP 请求会发送到服务器以初始化连接。服务器响应后，连接使用 HTTP 的 Upgrade 头部从 HTTP 协议切换到 Web Socket 协议。这意味着 Web Socket不能通过标准 Http 服务器实现，而必须使用支持该协议的专有服务器。</p>
 
-<p>使用自定义协议而非HTTP协议的好处是，客户端与服务器之间可以发送非常少的数据，不会对HTTP造成任何负担。使用更小的数据包让Web Socket非常适合带宽和延迟问题比较明显的移动应用。缺点是，定义协议的时间比定义Javascript API要长。Web Socket得到了所有浏览器的支持。</p>
+<p>因为 Web Socket 使用了自定义协议，所以 URL 方案（scheme）稍有变化：不能再使用 http:// 或 https://，而要使用 <strong>ws://</strong> 和 <strong>wss://</strong>。前者是不安全的连接，后者是安全连接。在指定 Web Socket  URL 时，必须包含URL方案，因为将来有可能支持其他方案。</p>
+
+<p>使用自定义协议而非 HTTP 协议的好处是，客户端与服务器之间可以发送非常少的数据，不会对 HTTP 造成任何负担。使用更小的数据包让 Web Socket非常适合带宽和延迟问题比较明显的移动应用。缺点是，定义协议的时间比定义 Javascript API 要长。Web Socket 得到了所有浏览器的支持。</p>
 
 <h3 id="toc_0">API</h3>
 
-<p>创建一个新的 Web Socket，就要实例化一个WebSocket 对象并传入提供连接的URL</p>
+<p>创建一个新的 Web Socket，就要实例化一个WebSocket 对象并传入提供连接的 URL</p>
 
 <pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
 </code></pre>
@@ -62,11 +64,11 @@ socket.send(blobData)
 <h5 id="toc_2">其他事件</h5>
 
 <p>websocket 对象在连接周期中可能触发3个其他事件。
-- open：在连接成功建立时触发。
-- error：在发生错误时触发。连接无法续存。
-- close：在连接关闭时触发。</p>
+- <code>open</code>：在连接成功建立时触发。
+- <code>error</code>：在发生错误时触发。连接无法续存。
+- <code>close</code>：在连接关闭时触发。</p>
 
-<p>WebSocket 对象不支持 DOM Level 2事件监听器，因此需要使用DOM Level 0风格的事件处理程序来监听这些事件：</p>
+<p>WebSocket 对象不支持 DOM Level 2 事件监听器，因此需要使用 DOM Level 0 风格的事件处理程序来监听这些事件：</p>
 
 <pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
 socket.onopen = function() {
@@ -80,7 +82,13 @@ socket.oncloes = function() {
 }
 </code></pre>
 
-<p>在这些事件中，只有 close 事件的 event 对象上有额外信息。此对象上有3个额外属性：wasClean、code 和 reason。其中，weaClean 是一个布尔值，表示连接是否干净地关闭；code 是一个来自服务器的数值状态码；reason 是一个字符串，包含服务器发来的消息。可以将这些信息显示给用户或记录到日志:</p>
+<p>在这些事件中，只有 close 事件的 event 对象上有额外信息。此对象上有3个额外属性：wasClean、code 和 reason。</p>
+
+<ul>
+<li><code>weaClean</code>： 布尔值，表示连接是否干净地关闭；</li>
+<li><code>code</code>：一个来自服务器的数值状态码；</li>
+<li><code>reason</code> ：字符串，包含服务器发来的消息。可以将这些信息显示给用户或记录到日志</li>
+</ul>
 
 <pre><code class="javascript">socket.onclose = function(event) {
     console.log('as clean? $(event.wasClean) code=${event.code) Rason = ${event.reason}')

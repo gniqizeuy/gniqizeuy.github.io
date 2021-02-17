@@ -29,86 +29,13 @@
 
 <div class="header">
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
+    <div class="container" style="color: black">
       <a class="navbar-brand" href="#">1228</a>
-      <ul class="nav navbar-nav">
-        <li>
-          <a onclick="clickTag('all');">All</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('css');">Css</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('design');">Design</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('java');">Java</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('js');">Js</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('linux');">Linux</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('mybatis');">Mybatis</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('mysql');">Mysql</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('other');">Other</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('python');">Python</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('redis');">Redis</a>
-        </li>
-        
-        <li>
-          <a onclick="clickTag('spring');">Spring</a>
-        </li>
-        
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a href="https://gniqizeuy.github.io/es">
-            Resume
-          </a>
-        </li>
-      </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      <a href="https://gniqizeuy.github.io/es">
+        Resume
+      </a>
     </div>
-    </nav>
+  </nav>
 </div>
 
 
@@ -455,9 +382,9 @@
 
 <h3 id="toc_0">try-with-resources</h3>
 
-<p>java7 中引入了 try-with-resources 语句。要使用这个构造的资源，必须先实现 <strong>AutoCloseable</strong> 接口，其中包含单个返回 void 的 close 方法。java 类库与第三方库中许多类和接口都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable。</p>
+<p>java 7 引入 <code>try-with-resources</code>  使用该语句必须先实现 <strong>AutoCloseable</strong> 接口，其中包含单个返回 void 的 close 方法。</p>
 
-<p>例1：</p>
+<p>java 类库与第三方库中许多类和接口都实现或扩展了 AutoCloseable 接口。如果编写了一个类，它代表的是必须被关闭的资源，那么这个类也应该实现 AutoCloseable 。</p>
 
 <pre><code class="java">static String firstLineOfFile(String path) throws IOException {
     try (BufferedReader br = new BufferReader(new FileReader(path))) {
@@ -465,8 +392,6 @@
     }
 }
 </code></pre>
-
-<p>例2：</p>
 
 <pre><code class="java">static void copy(String src, String dst) throws IOException {
     try (
@@ -481,7 +406,9 @@
 }
 </code></pre>
 
-<p>以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 <code>getSuppressed</code> 方法还可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
+<p>以 firstLineOfFile 方法为例，如果调用 readline 和（不可见）close 方法都抛出异常，后一个异常会被禁止，以保留第一个异常。</p>
+
+<p>事实上，为了保留你想看到的那个异常，即便多个异常都可以被禁止。禁止的异常并不会被抛弃，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过调用 <code>getSuppressed</code> 方法可以访问到它们，getSuppressed 方法也添加在 java 7  的 Throwable 中</p>
 
 <p>在 try-with-resources 语句中还可以使用 catch 子句，和 try-finally 语句一样。</p>
 
@@ -497,7 +424,8 @@
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -545,7 +473,8 @@
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -766,7 +695,8 @@ class WeclomeTask implements Runnable {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="https://github.com/gniqizeuy/Thread">Code</a>
+
     </div>
 </section>
 	  
@@ -868,7 +798,8 @@ class WeclomeTask implements Runnable {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -1021,7 +952,8 @@ class WeclomeTask implements Runnable {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -1175,7 +1107,8 @@ while (entries.hasNext()) {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -1245,7 +1178,8 @@ True
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -1315,7 +1249,8 @@ lover = dict(&lsquo;name&rsquo;=&lsquo;zxl&rsquo;, &lsquo;age&rsquo;=18)
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -1406,7 +1341,8 @@ for n in needles
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -1495,7 +1431,8 @@ setTimeout(console.log, 0, p);  // Promise &lt;pending&gt;
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -1604,7 +1541,8 @@ Other-header: other-header-value
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -1632,15 +1570,17 @@ Other-header: other-header-value
         <div itemprop="description">
             
 
-<p>web socket（套接字）的目标是通过一个长时连接实现与服务器全双工、双向的通信。在js中创建web socket时，一个HTTP请求会发送到服务器以初始化连接。服务器响应后，连接使用HTTP的Upgrade头部从HTTP协议切换到Web Socket协议。这意味着Web Socket不能通过标准Http服务器实现，而必须使用支持该协议的专有服务器。</p>
+<p>web socket（套接字）的目标是通过一个长时连接实现与服务器全双工、双向的通信。</p>
 
-<p>因为Web Socket使用了自定义协议，所以URL方案（scheme）稍有变化：不能再使用http://或https://，而要使用ws://和wss://。前者是不安全的连接，后者是安全连接。在指定 Web Socket  URL时，必须包含URL方案，因为将来有可能支持其他方案。</p>
+<p>在js中创建 web socket 时，一个 HTTP 请求会发送到服务器以初始化连接。服务器响应后，连接使用 HTTP 的 Upgrade 头部从 HTTP 协议切换到 Web Socket 协议。这意味着 Web Socket不能通过标准 Http 服务器实现，而必须使用支持该协议的专有服务器。</p>
 
-<p>使用自定义协议而非HTTP协议的好处是，客户端与服务器之间可以发送非常少的数据，不会对HTTP造成任何负担。使用更小的数据包让Web Socket非常适合带宽和延迟问题比较明显的移动应用。缺点是，定义协议的时间比定义Javascript API要长。Web Socket得到了所有浏览器的支持。</p>
+<p>因为 Web Socket 使用了自定义协议，所以 URL 方案（scheme）稍有变化：不能再使用 http:// 或 https://，而要使用 <strong>ws://</strong> 和 <strong>wss://</strong>。前者是不安全的连接，后者是安全连接。在指定 Web Socket  URL 时，必须包含URL方案，因为将来有可能支持其他方案。</p>
+
+<p>使用自定义协议而非 HTTP 协议的好处是，客户端与服务器之间可以发送非常少的数据，不会对 HTTP 造成任何负担。使用更小的数据包让 Web Socket非常适合带宽和延迟问题比较明显的移动应用。缺点是，定义协议的时间比定义 Javascript API 要长。Web Socket 得到了所有浏览器的支持。</p>
 
 <h3 id="toc_0">API</h3>
 
-<p>创建一个新的 Web Socket，就要实例化一个WebSocket 对象并传入提供连接的URL</p>
+<p>创建一个新的 Web Socket，就要实例化一个WebSocket 对象并传入提供连接的 URL</p>
 
 <pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
 </code></pre>
@@ -1691,11 +1631,11 @@ socket.send(blobData)
 <h5 id="toc_2">其他事件</h5>
 
 <p>websocket 对象在连接周期中可能触发3个其他事件。
-- open：在连接成功建立时触发。
-- error：在发生错误时触发。连接无法续存。
-- close：在连接关闭时触发。</p>
+- <code>open</code>：在连接成功建立时触发。
+- <code>error</code>：在发生错误时触发。连接无法续存。
+- <code>close</code>：在连接关闭时触发。</p>
 
-<p>WebSocket 对象不支持 DOM Level 2事件监听器，因此需要使用DOM Level 0风格的事件处理程序来监听这些事件：</p>
+<p>WebSocket 对象不支持 DOM Level 2 事件监听器，因此需要使用 DOM Level 0 风格的事件处理程序来监听这些事件：</p>
 
 <pre><code class="javascript">let socket = new WebSocket(&quot;ws://www.example.con/server.php&quot;)
 socket.onopen = function() {
@@ -1709,7 +1649,13 @@ socket.oncloes = function() {
 }
 </code></pre>
 
-<p>在这些事件中，只有 close 事件的 event 对象上有额外信息。此对象上有3个额外属性：wasClean、code 和 reason。其中，weaClean 是一个布尔值，表示连接是否干净地关闭；code 是一个来自服务器的数值状态码；reason 是一个字符串，包含服务器发来的消息。可以将这些信息显示给用户或记录到日志:</p>
+<p>在这些事件中，只有 close 事件的 event 对象上有额外信息。此对象上有3个额外属性：wasClean、code 和 reason。</p>
+
+<ul>
+<li><code>weaClean</code>： 布尔值，表示连接是否干净地关闭；</li>
+<li><code>code</code>：一个来自服务器的数值状态码；</li>
+<li><code>reason</code> ：字符串，包含服务器发来的消息。可以将这些信息显示给用户或记录到日志</li>
+</ul>
 
 <pre><code class="javascript">socket.onclose = function(event) {
     console.log('as clean? $(event.wasClean) code=${event.code) Rason = ${event.reason}')
@@ -1719,7 +1665,8 @@ socket.oncloes = function() {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -1756,7 +1703,8 @@ socket.oncloes = function() {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -2056,7 +2004,8 @@ import ... from '/bar.js'
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -2226,7 +2175,8 @@ public class test {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -2536,7 +2486,8 @@ public class TestController {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -2580,7 +2531,8 @@ public class TestController {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -2731,7 +2683,8 @@ public String getMesUrl() {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -3078,7 +3031,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -3205,7 +3159,8 @@ public class HelloWorldController {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -3242,7 +3197,8 @@ public class HelloWorldController {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -3297,7 +3253,8 @@ setnx key value
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -3715,7 +3672,8 @@ for article in {articles}
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -3795,7 +3753,8 @@ void *ptr                           // 数据指针
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -3903,7 +3862,8 @@ client.eval(script, 1, 'hello') # world
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -3974,7 +3934,8 @@ client.eval(script, 1, 'hello') # world
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -4057,7 +4018,8 @@ client.eval(script, 1, 'hello') # world
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -4142,7 +4104,8 @@ client.eval(script, 1, 'hello') # world
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -4203,7 +4166,8 @@ client.eval(script, 1, 'hello') # world
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -4296,7 +4260,8 @@ client.eval(script, 1, 'hello') # world
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -4469,7 +4434,8 @@ public:
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -4574,7 +4540,8 @@ public:
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -4754,7 +4721,8 @@ main {
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -4853,7 +4821,8 @@ outline: 5px solid deeppink;
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -4999,7 +4968,8 @@ public void scanFoo3(@PathVariable(&quot;limit&quot;) int limit) throws Exceptio
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -5029,7 +4999,7 @@ public void scanFoo3(@PathVariable(&quot;limit&quot;) int limit) throws Exceptio
 
 <h4 id="toc_0">解决配置代理后，git clone等git操作速度依然很慢的问题</h4>
 
-<p>查看代理端口以及协议（省略 http）</p>
+<p>配置代理端口以及协议（省略 http）</p>
 
 <pre><code class="shell">git config --global https.proxy http://127.0.0.1:10809
 git config --global https.proxy 'socks5://127.0.0.1:10808'
@@ -5048,7 +5018,8 @@ git config --global https.proxy 'socks5://127.0.0.1:10808'
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
@@ -5146,7 +5117,8 @@ git config --global https.proxy 'socks5://127.0.0.1:10808'
         </div>
 
         <br>
-        <a href="#top">Top</a> | <a itemprop="sameAs" href="http://developer.yahoo.com/performance/rules.html#cdn">Reference</a>
+        <a href="#top">Top</a> | <a itemprop="sameAs" href="">Code</a>
+
     </div>
 </section>
 	  
