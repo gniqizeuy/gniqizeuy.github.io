@@ -10,6 +10,11 @@ body {
   margin-top: 65px;
 }
 
+.navbar-brand:focus {
+  color:#000000!important;
+  background-color:transparent
+}
+
 .header {
   padding-top: 60px;
   color: #fff;
