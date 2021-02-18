@@ -205,41 +205,41 @@ private static SecurtyContextStrategy strategy;
 
 <h5 id="toc_16">8） Filter</h5>
 
-<h6 id="toc_17">1 .  SecurityContextPersistenceFilter</h6>
+<p><strong>1 .  SecurityContextPersistenceFilter</strong></p>
 
 <p>它从 SecurityContextResponsity 中取出用户认证信息。为了提高效率，避免每次请求都要查询认证信息，他会从 Session 中取出已认证的用户信息，然后将其放入 SecurityContextHolder 中，以便其他 Filter 使用</p>
 
-<h6 id="toc_18">2.  WebAsyncManagerIntergrationFilter</h6>
+<p><strong>2.  WebAsyncManagerIntergrationFilter</strong></p>
 
 <p>集成了 SecurityContext 和 WebAsyncManager ，把 SecurityContext 设置到异步编程，使其也能获取到用户的上下文认证信息</p>
 
-<h6 id="toc_19">3. HanderWriterFilter</h6>
+<p><strong>3. HanderWriterFilter</strong></p>
 
 <p>它对请求的 Header 添加相应的信息</p>
 
-<h6 id="toc_20">4. CsrfFilter</h6>
+<p><strong>4. CsrfFilter</strong></p>
 
 <p>跨域请求伪造过滤器。通过客户端传过来的 token 与服务器端存储的 token 进行比较，来判断请求的合理性</p>
 
-<h6 id="toc_21">5. LogoutFilter</h6>
+<p><strong>5. LogoutFilter</strong></p>
 
 <p>匹配登出 URL 。匹配成功后，退出用户，并清除认证信息</p>
 
-<h6 id="toc_22">6. UsernamePasswordAuthenticationFilter</h6>
+<p><strong>6. UsernamePasswordAuthenticationFilter</strong></p>
 
 <p>登录认证过滤器，默认是对 &ldquo;/login&rdquo; 的 POST 请求进行认证。该方法会调用 attemptAuthentication ，尝试获取一个 Authentication 认证对象，以保存认证信息，然后转下下一个 Filter ，最后调用 successfulAuthentication 执行认证后的事件。</p>
 
-<h6 id="toc_23">7.  AnonymousAuthenticationFilter</h6>
+<p><strong>7.  AnonymousAuthenticationFilter</strong></p>
 
 <p>如果 SecurityContextHolder 中的认证信息为空，则会创建一个匿名用户到 SecurityContextHolder 中。</p>
 
-<h6 id="toc_24">8. SessionManagementFilter</h6>
+<p><strong>8. SessionManagementFilter</strong></p>
 
 <p>持久化登录用户的用户信息。用户信息会被保存到 Session、Cookie、或 Redis 中</p>
 
-<h3 id="toc_25">配置 Spring Security</h3>
+<h3 id="toc_17">配置 Spring Security</h3>
 
-<h4 id="toc_26">1. 继承 WebSecurityConfigurerAdapter</h4>
+<h4 id="toc_18">1. 继承 WebSecurityConfigurerAdapter</h4>
 
 <p>通过重写抽象接口 WebSecurityConfigurerAdapter ，再加上注解 <code>@EnableWebSecurity</code> ，可以实现 Web 的安全配置</p>
 
@@ -263,7 +263,7 @@ public void configure(WebSecurity web) throws Exception {}
 protected void configure(HttpSecurity httpSecurity) throws Exception {}
 </code></pre>
 
-<h4 id="toc_27">2. 配置自定义策略</h4>
+<h4 id="toc_19">2. 配置自定义策略</h4>
 
 <p>配置安全需要继承 WebSecurityConfigurerAdapter ，然后重写其方法</p>
 
@@ -318,3 +318,574 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 <li><code>formLogin()</code>：自定义用户登录验证的页面</li>
 <li><code>http.csrf()</code>：配置是否开启 CSRF 保护，还可以再开启之后指定忽略的接口</li>
 </ul>
+
+<p>如果开启了 CSRF ，则一定在验证页面加入下面代码以传递 token 值。</p>
+
+<pre><code class="html">&lt;head&gt;
+    &lt;meta name=&quot;_csrf&quot; th:content=&quot;${_csrf.token}&quot;/&gt;
+    &lt;!-- default header name is X-CSRF-TOKEN --&gt;
+    &lt;mate name=&quot;_csrf_header&quot; th:content=&quot;${_csrf.headerName}&quot;/&gt;
+&lt;/head&gt;
+</code></pre>
+
+<p>如果要提交表单，则需要在表单中添加以下代码以提交 token 值</p>
+
+<pre><code class="html">&lt;input type=&quot;hidden&quot; th:name=&quot;${_csrf.parameterName}&quot; th:value=&quot;${_csrf.token}&quot;&gt;
+</code></pre>
+
+<p>http.reemberMe()：记住我功能，可以指定参数。</p>
+
+<p>使用时，添加如下代码</p>
+
+<pre><code class="html">&lt;input class=&quot;i-checks&quot; type=&quot;checkbox&quot; name=&quot;rememberme&quot;&gt; 记住我
+</code></pre>
+
+<h4 id="toc_20">配置加密方式</h4>
+
+<p>默认的加密方式是 BCrypt 。只要在安全配置类配置即可使用</p>
+
+<pre><code class="java">@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder(); // 使用 BCrypt 加密
+}
+</code></pre>
+
+<p>在业务代码中，可以用以下方式对密码进行加密：</p>
+
+<pre><code class="java">BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+String encodePassword = encoder.encode(password);
+</code></pre>
+
+<h4 id="toc_21">自定义加密规则</h4>
+
+<p>除默认的加密规则，也可以自定义加密规则</p>
+
+<pre><code class="java">@Override
+protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(UserService()).passwordEncoder(new PasswordEncoder() {
+        @Override
+        public String encode(CharSequence charSequence) {
+            return MD5Util.encode((String)charSequence);
+        }
+        
+        @Override
+        public boolean matches(CharSequence charSequence, String s) {
+            return s.equals(MD5Util.encode((String)charSequence));
+        }
+    });
+}
+</code></pre>
+
+<h4 id="toc_22">配置多用户系统</h4>
+
+<p>一个完整的系统一般包含多种用户系统，比如后台管理系统+前端用户系统。Spring Security 默认只提供一个用户系统，所以，需要通过配置实现多用户系统</p>
+
+<p>比如，要创建一个前台会员系统，则可以通过以下步骤实现</p>
+
+<h5 id="toc_23">构建 UserDetailsService 用户信息服务接口</h5>
+
+<p>构建前端用户 UserDetailsService 类，并继承 UserDetailsService 。</p>
+
+<pre><code class="java">public class UserSecurityService implements UserDetailsService {
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Override
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        User user = userRepository.findByName(name);
+        
+        if (user == null) {
+            User mobileUser = userRepository.findByMobile(name);
+            
+            if (mobileUser == null) {
+                User emailUser = userRepository.findByEmail(name);
+                
+                if (emailUser == null) {
+                    throw new UsernameNotFoundException(&quot;用户名，邮箱，或者手机号不存在&quot;)
+                } else {
+                    user = userRepository.findByEmail(name);
+                }
+            } else {
+                user = userRepository.findByMobile(name);
+            }
+        } else if (&quot;locked&quot;.equals(user.getStatus())) {
+            // 被锁定，无法登录
+            throw newLockedException(&quot;用户被锁定&quot;);
+        }
+        
+        return user;
+    }
+}
+</code></pre>
+
+<p>##### 进行安全配置</p>
+
+<p>在继承 WebSecurityConfigurerAdapter 的 Spring Security 的配置类中，配置 UserSecurtyService 类。</p>
+
+<pre><code class="java">@Bean
+UserDetailsService UserService() {
+    return new UserSecurityService();
+}
+</code></pre>
+
+<p>如果加入后台管理系统，只需要重复上面步骤即可</p>
+
+<h4 id="toc_24">获取当前登录用户信息的几种方式</h4>
+
+<h5 id="toc_25">在 Thymeleaf 视图中获取</h5>
+
+<p>要在 Thymeleaf 视图中获取用户信息，可以使用 Spring Securty 的标签特性。</p>
+
+<p>在 Thymeleaf 页面中引入 Thymeleaf 的 Spring Securty 依赖</p>
+
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;
+      xmlns:sec=&quot;http://www.thymeleaf.org/thymeleaf-extras-springsecurity5&quot;&gt;
+    &lt;!- 省略 -&gt;
+    
+    &lt;body&gt;
+        &lt;!- 匿名 -&gt;
+        &lt;div sec:authorize=&quot;isAnonymous()&quot;&gt;
+            未登录，单击&lt;a th:href=&quot;@{/home/login}&quot;&gt;登录&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;!- 已登录 -&gt;
+        &lt;div sec:authorize=&quot;isAuthenticated()&quot;&gt;
+            &lt;p&gt;已登录&lt;/p&gt;
+            &lt;p&gt;登录名：&lt;span sec:authentication=&quot;name&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+            &lt;p&gt;角色：&lt;span sec:authentication=&quot;principal.authorities&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+            &lt;p&gt;id：&lt;span sec:authentication=&quot;principal.id&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+            &lt;p&gt;Username：&lt;span sec:authentication=&quot;principal.username&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>这里要注意版本的对应。如果引入 thymeleaf-extras-springsecurity 依赖依然获取不到信息，那么可能是 Thymeleaf 版本和 thymeleaf-extras-springsecurity 的版本不对，请检查在 pom.xml 文件的两个依赖</p>
+
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.extras&lt;/groupId&gt;
+    &lt;artifactId&gt;thymeleaf-extras-springsecurity5&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<h5 id="toc_26">在 Controller 中获取</h5>
+
+<p>在控制器中获取用户信息有 3 种方式，见代码注释。</p>
+
+<pre><code class="java">@GetMapping(&quot;userinfo&quot;)
+public String getProduct(Principal principal, Authentication authentication, HttpServletRequest httpServletRequest) {
+    /**
+    *@Decription:1，通过 Principal 参数获取
+    */
+    String username = principal.getName();
+    
+    /**
+    *@Decription:2，通过 Authentication 参数获取
+    */
+    String username2 = authentication.getName();
+    
+    /**
+    *@Decription:3，通过 HttpServletRequest 参数获取
+    */
+    Principal httpServletRequestUserPrincipal = httpServletRequest.getUserPrincipal();
+    String username3 = httpServletRequestUserPrincipal.getName();
+    
+    return username;
+}
+</code></pre>
+
+<h5 id="toc_27">在 Bean 种获取</h5>
+
+<pre><code class="java">Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+if(!authentication instanceof AnonymousAuthenticationToken) {
+    String username = authentication.getName();
+    return username;
+}
+</code></pre>
+
+<p>在其他 Authentication 类也可以这样获取，比如在 UsernamePasswordAuthenticationToken 类中。</p>
+
+<p>使用以上代码获取不到，可能是以下问题：</p>
+
+<ul>
+<li>要使上面的获取生效，必须在继承 WebSecurityConfigurerAdapter 的类中的 <code>http.antMacther(&quot;/*&quot;)</code> 的鉴权 URL 范围内。</li>
+<li>没有添加 Thymeleaf 的 thymeleaf-extras-springsecurity 依赖</li>
+<li>添加了 Spring Security 的依赖，但是版本不对，比如 Spring Security 和 Thymeleaf 的版本不对</li>
+</ul>
+
+<h4 id="toc_28">实例，用 Spring Security 实现后台登录及权限认证功能</h4>
+
+<h5 id="toc_29">引入依赖</h5>
+
+<pre><code class="xml">    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.thymeleaf.extras&lt;/groupId&gt;
+            &lt;artifactId&gt;thymeleaf-extras-springsecurity5&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-security-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+</code></pre>
+
+<h5 id="toc_30">创建权限开放的页面</h5>
+
+<p>这个页面不需要鉴权即可访问，以区别演示需要鉴权的页面</p>
+
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;
+      xmlns:sec=&quot;http://www.thymeleaf.org/thymeleaf-extras-springsecurity5&quot;&gt;
+    &lt;head&gt;
+        &lt;title&gt;Spring Security 案例&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Welcome!&lt;/h1&gt;
+        &lt;p&gt;&lt;a th:href=&quot;@{/home}&quot;&gt;会员中心&lt;/a&gt;&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h5 id="toc_31">创建需要权限验证的页面</h5>
+
+<p>其实可以和不需要鉴权的页面一样，鉴权可以不在 HTML 页面中进行</p>
+
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;
+      xmlns:sec=&quot;http://www.thymeleaf.org/thymeleaf-extras-springsecurity5&quot;&gt;
+    &lt;head&gt;&lt;title&gt;home&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;会员中心&lt;/p&gt;
+        &lt;p th:inline=&quot;text&quot;&gt;Hello &lt;span sec:authentication=&quot;name&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+        &lt;form th:action=&quot;@{/logout}&quot; method=&quot;post&quot;&gt;
+            &lt;input type=&quot;submit&quot; value=&quot;登出&quot;/&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>使用 Spring Securty5 后，可以在模板中用 <code>&lt;span sec:authentication=&quot;name&quot;&gt;&lt;/span&gt;</code> 或 <code>[[${#httpServletRequest.remoteUser}]]</code> 来获取用户名，登出请求将被发送到 &ldquo;/logout&rdquo; 。成功注销后，会将用户重定向到 &ldquo;/login?logout&rdquo; 。</p>
+
+<h5 id="toc_32">配置 Spring Security</h5>
+
+<p>1）配置 Spring MVC</p>
+
+<p>可以继承 WebMvcConfigurer</p>
+
+<pre><code class="java">import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        //设置登录处理操作
+        registry.addViewController(&quot;/home&quot;).setViewName(&quot;springsecurity/home&quot;);
+        registry.addViewController(&quot;/&quot;).setViewName(&quot;springsecurity/welcome&quot;);
+        registry.addViewController(&quot;/login&quot;).setViewName(&quot;springsecurity/login&quot;);
+    }
+}
+
+</code></pre>
+
+<p>2）配置 Spring Security</p>
+
+<p>Spring Security 的安全配置需要继承 WebSecurityConfigurerAdapter，然后重写其方法</p>
+
+<pre><code class="java">import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@Configuration
+@EnableWebSecurity//指定为Spring Security配置类
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers(&quot;/&quot;, &quot;/welcome&quot;, &quot;/login&quot;).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage(&quot;/login&quot;).defaultSuccessUrl(&quot;/home&quot;)
+                .and()
+                .logout().permitAll();
+    }
+    
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder()) // 指定编码方式
+            .withUser(&quot;admin&quot;).password(&quot;e10adc3949ba59abbe56e057f20f883e&quot;)
+            .roles(&quot;USER&quot;);
+    }
+}
+</code></pre>
+
+<p>代码解释如下</p>
+
+<ul>
+<li><code>@EnableWebSecurity</code>：集成了 Spring Security 的 Web 安全支持</li>
+<li><code>WebSecurityConfig</code>：在配置类的同时集成了 WebSecurityConfigurerAdapter ，重写了其中特定方法，用于自定义 Spring Security 配置，Spring Security 的工作量都集中在该配置中</li>
+<li><code>configure(HttpSecurity)</code>：定义了哪些 URL 路径应该被拦截</li>
+<li><code>configureClobal(AuthenticationManagerBuilder)</code>：在内存中配置一个用户，admin/123456，这个用户拥有 User 角色</li>
+</ul>
+
+<h5 id="toc_33">创建登录页面</h5>
+
+<p>登录页面要特别注意是否开启了 CSRF 功能。如果开启了，则需要提供 token 信息。</p>
+
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;
+      xmlns:sec=&quot;http://www.thymeleaf.org/thymeleaf-extras-springsecurity5&quot;&gt;
+    &lt;head&gt;&lt;title&gt;Spring Security Example &lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;
+        &lt;div th:if=&quot;${param.error}&quot;&gt;
+            无效的用户名或者密码
+        &lt;/div&gt;
+        &lt;div th:if=&quot;${param.logout}&quot;&gt;
+            你已经登出
+        &lt;/div&gt;
+        &lt;form th:action=&quot;@{/login}&quot; method=&quot;post&quot;&gt;
+            &lt;div&gt;&lt;label&gt; 用户名 : &lt;input type=&quot;text&quot; name=&quot;username&quot;/&gt; &lt;/label&gt;&lt;/div&gt;
+            &lt;div&gt;&lt;label&gt; 密码: &lt;input type=&quot;password&quot; name=&quot;password&quot;/&gt; &lt;/label&gt;&lt;/div&gt;
+            &lt;div&gt;&lt;input type=&quot;submit&quot; value=&quot;登录&quot;/&gt;&lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h4 id="toc_34">权限控制方式</h4>
+
+<h5 id="toc_35">Spring EL 表达式</h5>
+
+<p>Spring Security 支持在定义 URL 访问或方法访问权限时使用 Spring EL 表达式。根据表达式返回的值（true 或 false）来授权或拒绝对应的权限。Spring Security 可用表达式对象的基类是 SecurityExpressionRoot，它提供了通用的内置表达式，见下表</p>
+
+<table>
+<thead>
+<tr>
+<td align="left">表达式</td>
+<td align="left">描述</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">hasRole([role])</td>
+<td align="left">当前用户是否拥有指定角色</td>
+</tr>
+
+<tr>
+<td align="left">hasAnyRole([role1, role2])</td>
+<td align="left">多个角色以逗号进行分隔的字符串，如果当前用户拥有指定角色中的任意一个，则返回 true</td>
+</tr>
+
+<tr>
+<td align="left">hasAuthority([auth])</td>
+<td align="left">等同于 hasRole</td>
+</tr>
+
+<tr>
+<td align="left">hasAnyAuthority([auth1, auth2])</td>
+<td align="left">等同于 hasAnyRole</td>
+</tr>
+
+<tr>
+<td align="left">Principle</td>
+<td align="left">代表当前用户的 principle 对象</td>
+</tr>
+
+<tr>
+<td align="left">authentication</td>
+<td align="left">直接从 SecurityContext 获取当前 Authentication 对象</td>
+</tr>
+
+<tr>
+<td align="left">permitAll</td>
+<td align="left">总是返回 true，表示允许所有的</td>
+</tr>
+
+<tr>
+<td align="left">denyAll</td>
+<td align="left">总是返回 false，表示拒绝所有的</td>
+</tr>
+
+<tr>
+<td align="left">isAnonymous()</td>
+<td align="left">当前用户是否是一个匿名用户</td>
+</tr>
+
+<tr>
+<td align="left">isRememberMe()</td>
+<td align="left">表示当前用户是否是通过 Remember-Me 自动登录的</td>
+</tr>
+
+<tr>
+<td align="left">isAuthenticated()</td>
+<td align="left">表示当前用户是否已经登录认证成功了</td>
+</tr>
+
+<tr>
+<td align="left">isFullAuthenticated()</td>
+<td align="left">如果当前用户既不是匿名用户，又不是通过 Remember-Me 自动登录的，则返回 true</td>
+</tr>
+</tbody>
+</table>
+
+<p>在视图模板文件中，可以通过表达式控制显示权限</p>
+
+<pre><code class="html">&lt;p sec:authorize=&quot;hasRole('ROLE_ADMIN')&quot;&gt;管理员&lt;/p&gt;
+&lt;p sec:authorize=&quot;hasRole('ROLE_USER')&quot;&gt;普通用户&lt;/p&gt;
+</code></pre>
+
+<p>在 WebSecurityConfig 中添加两个内存用户用于测试，角色分别是 ADMIN、USER</p>
+
+<pre><code class="java">    .withUser(&quot;admin&quot;).password(&quot;123456&quot;).roles(&quot;ADMIN&quot;)
+    .and().withUser(&quot;user&quot;).password(&quot;123456&quot;).roles(&quot;USER&quot;);
+</code></pre>
+
+<p>用户 admin 登录，则显示 管理员</p>
+
+<p>用户 user 登录，则显示 普通用户</p>
+
+<p>然后，在 WebSecurityConfig 中加入如下的 URL 权限配置</p>
+
+<pre><code class="java">    .andMatchers(&quot;/home&quot;).hasRole(&quot;ADMIN&quot;)
+</code></pre>
+
+<p>这时，当用户访问 &ldquo;home&rdquo; 页面时能正常访问，而用 &ldquo;user&rdquo; 用户访问时则会提示 &ldquo;403 禁止访问&rdquo; 。因为，这段代码配置使这个页面访问必须具备ADMIN（管理员）角色，这是通过 URL 控制权限的方法</p>
+
+<h5 id="toc_36">通过表达式控制 URL 权限</h5>
+
+<p>如果要限定某类用户访问某个 URL ，则可以通过 Spring Security 提供的基于 URL 的权限控制来实现</p>
+
+<p>Spring Security 提供的保护 URL 的方法是重写 <code>configure(HttpSecurity http)</code> 的方法，HttpSecurity 提供的方法见下表</p>
+
+<table>
+<thead>
+<tr>
+<td>方法名</td>
+<td>用途</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>access(String attribute)</td>
+<td>SpringEL 表达式结果为 true 时可访问</td>
+</tr>
+
+<tr>
+<td>anonymous()</td>
+<td>匿名可访问</td>
+</tr>
+
+<tr>
+<td>denyAll()</td>
+<td>用户不可访问</td>
+</tr>
+
+<tr>
+<td>fullAuthenticated()</td>
+<td>用户完全认证通过（非 remember me 下的自动登录）</td>
+</tr>
+
+<tr>
+<td>hasAnyAuthority(String &hellip;)</td>
+<td>参数中任意权限可访问</td>
+</tr>
+
+<tr>
+<td>hasAnyRole(String &hellip;)</td>
+<td>参数中任意角色可访问</td>
+</tr>
+
+<tr>
+<td>hasAuthority(String)</td>
+<td>某一权限的用户可访问</td>
+</tr>
+
+<tr>
+<td>hasRole(String role)</td>
+<td>某一角色的用户可访问</td>
+</tr>
+
+<tr>
+<td>permitAll()</td>
+<td>所有用户可访问</td>
+</tr>
+
+<tr>
+<td>rememberMe()</td>
+<td>允许通过 remember me 登录的用户访问</td>
+</tr>
+
+<tr>
+<td>authenticated()</td>
+<td>用户登录后可访问</td>
+</tr>
+
+<tr>
+<td>hasIpAddress(String ipaddressException)</td>
+<td>用户来自参数中的 IP 可访问</td>
+</tr>
+</tbody>
+</table>
+
+<p>还需要额外注意几下几点</p>
+
+<ul>
+<li><code>authenticated()</code>：保护 URL ，需要用户登录。如：<code>anyRequest().authenticated()</code> 代表其他未配置的页面都已经授权</li>
+<li><code>permitAll()</code>：指定某些 URL 不进行保护。一般针对静态资源文件和注册等未授权情况下需要访问的页面</li>
+<li><code>hasRole(String role)</code>：限制单个角色访问。在 Spring Security 中，角色是被默认增加 &ldquo;ROLE_&rdquo; 前缀的，所以角色 ADMIN 代表 ROLE_ADMIN</li>
+<li><code>hasAnyRole(String... roles)</code>：允许多个角色访问。这和 Spring Boot1.x 版本有所不同</li>
+<li><code>access(String attribute)</code>：该方法可以创建复杂的限制，比如可以增加 RBAC 的权限表达式</li>
+<li><code>hasIpAddress(String ipaddressException)</code>：用于限制 IP 地址或子网</li>
+</ul>
+
+<p>具体用法见下代码</p>
+
+<pre><code class="java">@Override
+protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+        .antMatchers(&quot;/static&quot;, &quot;/register&quot;).permitAll()
+        .antMatchers(&quot;/user/**&quot;).hasAnyRole(&quot;USER&quot;, &quot;ADMIN&quot;)
+        // 代表 &quot;/admin&quot; 下的所有 URL 只允许 IP 为 &quot;100.100.100.100&quot; 且用户角色是 &quot;ADMIN&quot; 的用户访问
+        .antMatchers(&quot;/admin/**&quot;).access(&quot;hasRole('ADMIN') and hasIpAddress('100.100.100.100')&quot;)
+        // 其他未配置的页面都已经授权
+        .anyRequest().authenticated()
+}
+</code></pre>
+
+<h5 id="toc_37">通过表达式控制方法权限</h5>
