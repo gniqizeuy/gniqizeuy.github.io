@@ -3171,6 +3171,300 @@ protected void configure(HttpSecurity http) throws Exception {
 
 <h5 id="toc_37">通过表达式控制方法权限</h5>
 
+<p>要想在方法上使用权限控制，则需要使用启用方法安全设置的注解 <code>@EnableGlobalMethodSecurity()</code> 。它是默认是禁用的，需要在继承 <code>WebSecurityConfigureAdapter</code> 的类上加注解来启用，还需要配置启用的类型，它支持开启如下三种类型</p>
+
+<ul>
+<li><code>@EnableGlobalMethodSecurity(jsr250Enabled = true)</code>：开启 JSR-250</li>
+<li><code>@EnableGlobalMethodSecurity(prePostEnabled = true)</code>：开启 prePostEnabled</li>
+<li><code>@EnableGlobalMethodSecurity(securedEnabled = true)</code>：开启 secured</li>
+</ul>
+
+<h5 id="toc_38">JSR-250</h5>
+
+<p>JSR 是 Java Specification Requests 的缩写，是 Java 规提案，任何人都可以提交 JSR ，以向 Java 平台增添新的 API 和服务，JSR 是 Java 的一个重要标准</p>
+
+<p>Java 提供了很多 JSR ，比如 JSR-250、JSR-303、JSR-308。只需要记住不同的 JSR 功能定义不一样。JSR-303 主要是为数据的验证提供了一些规范的 API。这里 JSR-250 是用于提供方法安全设置的，它注意提供了注解 <code>@RolesAllowed</code> 。</p>
+
+<p>它提供的方法主要有如下几种</p>
+
+<ul>
+<li><code>@DenyAll</code>：拒绝所有访问</li>
+<li><code>@RolesAllowed({&quot;USER&quot;, &quot;ADMIN&quot;})</code>：该方法只要有 USER、ADMIN 任一权限即可访问</li>
+<li><code>@PermitAll</code>：允许所有访问</li>
+</ul>
+
+<h5 id="toc_39">prePostEnabled</h5>
+
+<p><code>@preAuthorize</code></p>
+
+<p>它在方法执行之前执行，使用方法如下</p>
+
+<p>1）限制 userId 的值是否等于 principal 中保存的当前用户的 userId ，或当前用户是否具有 ROLE_ADMIN 的权限</p>
+
+<pre><code class="java">@preAuthorize(&quot;#userId == authentication.principal.userId or hasAuthority(&quot;ADMIN&quot;)&quot;)
+</code></pre>
+
+<p>2）限制用于 ADMIN 角色才能执行</p>
+
+<pre><code class="java">@preAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+</code></pre>
+
+<p>3）限制用于 ADMIN 角色或 USER 角色才能执行</p>
+
+<pre><code class="java">@preAuthorize(&quot;hasRole('ROLE_USER')&quot; or &quot;hasRole('ROLE_ADMIN')&quot;)
+</code></pre>
+
+<p>4）限制只能查询 id 小于 3 的用户才能执行</p>
+
+<pre><code class="java">@preAuthorize(&quot;#id&lt;3&quot;)
+</code></pre>
+
+<p>5）限制只能查询自己的信息，这里一定要在当前页面经过权限验证，否则会报错</p>
+
+<pre><code class="java">@preAuthorize(&quot;principal.username.equals(#username)&quot;)
+</code></pre>
+
+<p>6) 限制用户名只能为 long 的用户</p>
+
+<pre><code class="java">@preAuthorize(&quot;#user.name.equals('long')&quot;)
+</code></pre>
+
+<p>对于低版本的 Spring Security ，添加注解后还需要将 AuthenticationMananger 定义为 Bean</p>
+
+<pre><code class="java">@Bean
+@Override
+public AuthenticationMananger authenticationManangerBean() throws Exception {
+    return super.authenticationManangerBean();
+}
+
+@Autowired
+AuthenticationMananger authenticationMananger;
+</code></pre>
+
+<p><code>@PostAuthorize</code></p>
+
+<p>表示在方法执行之后执行，有时需要在方法调用完后才进行权限检查。可以通过注解 @PostAuthorize 达到这一效果</p>
+
+<p>注解 @PostAuthorize 是方法调用完成后进行权限检查的，它不能控制方法是否被调用，只能在方法调用完后检查权限，来决定是否抛出 <i>AccessDeniedException</i></p>
+
+<p>这里也可以调用方法的返回值。如果 EL 为 false ，那么该方法已经执行完了，可能会回滚。EL 变量 returnObject 表示返回的对象，如：</p>
+
+<pre><code class="java">@PostAuthorize(&quot;returnObject.userId == authentication.principal.userId or hasPermission(returnObject, 'ADMIN')&quot;);
+</code></pre>
+
+<p><code>@PreFilter</code></p>
+
+<p>表示在方法执行之前执行。它可以调用方法的参数，然后对参数值进行过滤、处理或修改。EL 变量 filterObject 表示参数。如有多个参数，则使用 filterTarget 注释参数。方法参数必须是集合或数组</p>
+
+<p><code>@postFilter</code></p>
+
+<p>表示方法执行之后执行。而且可以调用方法的返回值，然后对返回值进行过滤、处理、或修改，并返回。EL 变量 returnObject 表示返回的对象，方法需要返回集合或数组</p>
+
+<p>如使用 @PreFilter 和 @PostFilter 时，Spring Security 将移除使对应表达式的结果为 false 的元素。</p>
+
+<p>当 Filter 标注的方法拥有多个几个类型的参数时，需要通过 filterTarget 属性指定当前是针对哪个参数进行过滤的</p>
+
+<h5 id="toc_40">securedEnabled</h5>
+
+<p>开启 securedEnabled 支持后，可以使用注解 <code>@Secured</code> 来认证用户是否有权限访问</p>
+
+<pre><code class="java">@Secured(&quot;IS_AUTHENTICATED_ANONYMOUSLY&quot;)
+public Account readAccount(Long id);
+@Secured(ROLE_TELLER)
+</code></pre>
+
+<h5 id="toc_41">使用 JSR-280注解</h5>
+
+<p>1）开启支持</p>
+
+<p>在安全配置类中，启用注解 <code>EnableGlobalMethodSecurity(jsr250Enabled=true)</code></p>
+
+<p>2）创建 user 服务接口 UserService</p>
+
+<pre><code class="java">public interface UserService {
+    public String addUser();
+    public String updateUser() ;
+    public String deleteUser() ;
+}
+</code></pre>
+
+<p>3）实现 user 服务接口</p>
+
+<pre><code class="java">@Service
+public class UserServiceImpl implements UserService {
+    @Override
+    public String addUser() {
+        System.out.println(&quot;addUser&quot;);
+        return null;
+    }
+
+    @Override
+    @RolesAllowed({&quot;ROLE_USER&quot;,&quot;ROLE_ADMIN&quot;})
+    public String updateUser() {
+        System.out.println(&quot;updateUser&quot;);
+        return null;
+    }
+
+    @Override
+    @RolesAllowed(&quot;ROLE_ADMIN&quot;)
+    public String deleteUser() {
+        System.out.println(&quot;delete&quot;);
+        return null;
+    }
+}
+</code></pre>
+
+<p>4）编写控制器</p>
+
+<pre><code class="java">@RestController
+@RequestMapping(&quot;user&quot;)
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    @GetMapping(&quot;/addUser&quot;)
+    public void addUser() {
+        userService.addUser();
+    }
+
+    @GetMapping(&quot;/updateUser&quot;)
+    public void updateUser() {
+        userService.updateUser();
+    }
+
+    @GetMapping(&quot;/delete&quot;)
+    public void delete() {
+        userService.deleteUser();
+    }
+}
+</code></pre>
+
+<p>5）测试</p>
+
+<p>启动项目，访问 &ldquo;/user/addUser&rdquo;，则控制台输出</p>
+
+<pre><code class="text">addUser
+</code></pre>
+
+<p>访问 &ldquo;/user/delete&rdquo; 和 &ldquo;/user/updateUser&rdquo;，则会提示没有权限：</p>
+
+<pre><code class="text">There was an unexpectd error(type=Forbidden, status=403)
+Access Denied
+</code></pre>
+
+<h4 id="toc_42">实现 RBAC 权限模型</h4>
+
+<p>RBAC 模型简化了用户和权限的关系。通过角色对用户进行分组，分组后可以很方便地进行权限分配和管理。RBAC 模型易扩展和维护，下面是具体步骤</p>
+
+<p>1）创建 RBAC 验证服务接口（用于权限检查）</p>
+
+<pre><code class="java">public interface RbacService {
+    boolean hasPermission(HttpServletRequest request, Authentication authentication);
+}
+</code></pre>
+
+<p>2）编写 RBAC 服务实现，判断 URL 是否在权限表中</p>
+
+<p>实现 RBAC 服务，步骤如下：</p>
+
+<p>1 通过诸如用户和该用户权限（权限在登录成功时已经缓存起来，当需要访问权限时，直接从缓存取出）验证该请求是否有权限，有就返回 true ，没有就返回 false，不允许访问该 URL</p>
+
+<p>2 传入 request ，可以使用 request 获取该次请求的类型</p>
+
+<p>3 根据 Restful 风格使用它来控制的权限。如请求是 POST ，则证明该请求时向服务器发送一个新建资源请求，可以使用 <code>request.getMethod()</code> 来获取该请求的方式</p>
+
+<p>4 配合角色所允许的权限路径进行判断和授权操作</p>
+
+<p>5 如果获取到的 Principal 对象不为空，则代表授权已经通过</p>
+
+<p>本实例不针对 HTTP 请求进行判断，只根据 URL 进行鉴权</p>
+
+<pre><code class="java">@Component(&quot;rbacService&quot;)
+public class RbacServiceImpl implements RbacService {
+    private org.springframework.util.AntPathMatcher AntPathMatcher = new AntPathMatcher();
+    @Autowired
+    private SysPermissionRepository permissionRepository;
+    @Autowired
+    private SysUserRepository sysUserRepository;
+     @Override
+    public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        boolean hasPermission = false;
+
+        /**
+         *这里应该注入用户和该用户所拥有的权限（权限在登录成功的时候已经缓存起来，当需要访问该用户的权限是，直接从缓存取出！）
+         *然后验证该请求是否有权限，有就返回true，否则则返回false不允许访问该Url。
+         *还传入了request,可以使用request获取该次请求的类型。
+         *根据restful风格使用它来控制我们的权限
+         *例如当这个请求是post请求，证明该请求是向服务器发送一个新建资源请求，
+         *我们可以使用request.getMethod()来获取该请求的方式，然后在配合角色所允许的权限路径进行判断和授权操作！
+         *如果能获取到Principal对象不为空证明，授权已经通过*/
+        if (principal != null &amp;&amp; principal instanceof UserDetails) {
+            // 登录的用户名
+            String userName = ((UserDetails) principal).getUsername();
+            //获取请求登录的url
+            Set&lt;String&gt; urls = new HashSet&lt;&gt;();//用户具备的系统资源集合，从数据库读取
+            Set&lt;String&gt; curds = new HashSet&lt;&gt;();//用户具备的系统资源集合，从数据库读取
+            SysUser sysUser = sysUserRepository.findByName(userName);
+            try {
+                for (SysRole role : sysUser.getRoles()) {
+                   for (SysPermission permission : role.getPermissions()) {
+                       urls.add(permission.getUrl());
+                       //curds.add(permission.getPermission());
+                       curds.add(permission.getPermission()+permission.getUrl());
+                   }
+
+               }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //urls.add(&quot;/sys/user/add&quot;);
+
+            for (String url : urls) {
+                if (AntPathMatcher.match(url, request.getRequestURI())) {
+
+                    hasPermission = true;
+                    break;
+                }
+            }
+        }
+
+        return hasPermission;
+    }
+}
+</code></pre>
+
+<p>3）配置 HttpSecurity</p>
+
+<p>在继承 WebSecurityConfigurerAdapter 的类中重写 <code>void configure(HttpSecurity http)</code> 方法，添加如下代码</p>
+
+<pre><code class="java">.antMatchers(&quot;/admin/**&quot;).access(&quot;@rbacService.check(request.authentication)&quot;)
+</code></pre>
+
+<p>这里注意，@rbacService 接口的名字是服务实现上定义的名字，即注解 @Component(&ldquo;rbacService&rdquo;) 定义的参数。具体代码如下：</p>
+
+<pre><code class="java">@EnableGlobalMethodSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    http.formLogin()
+        .authorizeRequests()
+        .antMatchers(&quot;/admin&quot;).permitAll()
+        // 自定义授权策略
+        .antMatchers(&quot;/admin/rbac&quot;).access(&quot;@rbacService.hasPermission(request,authentication)&quot;)
+</code></pre>
+
+<p>4）创建实体，添加测试数据</p>
+
+<p>3 个实体，分别是用户、权限和角色实体，创建完成后需要添加数据，点击左下角 code 查看代码</p>
+
+<p>5）测试</p>
+
+<p>访问 &ldquo;/admin/rbac&rdquo; ，会提示无权访问，跳转到登录页面</p>
+
+<p>在登录页面输入用户名，密码登录，会提示登录成功</p>
+
+<p>访问 &ldquo;/admin/rbac&rdquo; ，提示访问成功</p>
+
         </div>
 
         <br>
@@ -3688,9 +3982,35 @@ public class TestValidator {
 
 <p>3）字符串相关匹配符</p>
 
+<ul>
+<li><code>assertThat(testString, is(&quot;kobe&quot;));</code> ：testString 等于 给出 String，测试通过</li>
+<li><code>assertThat(testString, not(&quot;kobe&quot;));</code> ：testString 不等 给出 String，测试通过</li>
+<li><code>assertThat(testString, containsString(&quot;kobe&quot;));</code> ：testString 包含 子字符串String，测试通过</li>
+<li><code>assertThat(testString, endsWith(&quot;kobe&quot;));</code> ：testString 以子字符串 String 结尾，测试通过</li>
+<li><code>assertThat(testString, startsWith(&quot;long&quot;));</code> ：testString 以子字符串 String 开始，测试通过</li>
+<li><code>assertThat(testString, equalTo(Value));</code> ：testString 等于 Value，测试通过。equalTo 可以用来测试数值，字符串和对象</li>
+<li><code>assertThat(testString, equalToIgnoringCase(&quot;Kobe&quot;));</code> ：testString 在忽略大小写情况下 等于 给出字符串，测试通过</li>
+<li><code>assertThat(testString, equalToIgnoringWithSpace(&quot;kobe&quot;));</code> ：testString 在忽略头尾的任意空格情况下 等于 给出字符串，测试通过</li>
+</ul>
+
 <p>4）数值相关匹配符</p>
 
+<ul>
+<li><code>assertThat(testDouble, closeTo(1.0, 8.8));</code> ：测试的浮点数 testDouble 在 1.0 ~ 8.8 之间，测试通过</li>
+<li><code>assertThat(testNumber, greaterThan(2.0));</code> ：测试的数值 testNumber 大于 2.0，测试通过</li>
+<li><code>assertThat(testNumber, lessThan(35.0));</code> ：测试的数值 testNumber 小于 35.0，测试通过</li>
+<li><code>assertThat(testNumber, greaterThanOrEqualTo(2.0));</code> ：测试的数值 testNumber 大于或等于 2.0，测试通过</li>
+<li><code>assertThat(testDouble, lessThanOrEqualTo(35.0));</code> ：试的数值 testNumber 小于或等于 35.0，测试通过</li>
+</ul>
+
 <p>5）collection 相关匹配符</p>
+
+<ul>
+<li><code>assertThat(mObject, hasEntry(&quot;key&quot;, &quot;value&quot;))</code>：测试的 Map 对象 mObject 含有一个键为 key ，值为 value 的项，测试通过</li>
+<li><code>assertThat(mObject, hasKey(&quot;key&quot;))</code>：测试的 Map 对象 mObject 含有键值 key，测试通过</li>
+<li><code>assertThat(mObject, hasValue(&quot;key&quot;))</code>：测试的 Map 对象 mObject 含有元素值 value，测试通过</li>
+<li><code>assertThat(iterableObject, hasItem(&quot;zhi&quot;))</code>：测试的迭代对象 iterableObject 含有元素 &ldquo;zhi&rdquo; 项，测试通过</li>
+</ul>
 
 <h4 id="toc_3">3. 了解 Mockito</h4>
 
@@ -3739,7 +4059,11 @@ public class CardRepositoryTest {
 
 <h4 id="toc_7">添加依赖</h4>
 
-<pre><code class="xml">
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupld&gt;org.springframework.boot&lt;/groupld&gt;
+    &lt;artifactld&gt;spring-boot-starter-test&lt;/artifactld&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
 </code></pre>
 
 <p>在 “src/test/java” 目录下新建一个测试类</p>
@@ -3752,6 +4076,186 @@ public class test {
     }
 }
 </code></pre>
+
+<p>代码解释如下：</p>
+
+<ul>
+<li><code>@springBootTest</code>：是 Spring Boot 用于测试的注解，可以指定入口类或测试环境等</li>
+<li><code>@RunWith(SpringRunner.class)</code>：让测试运行于 Spring 的测试环境</li>
+<li><code>@Test</code>：表示一个测试单元</li>
+</ul>
+
+<p>除用这种方式创建测试单元外，还可以通过 IDEA 快捷键快速完成创建</p>
+
+<p>在 IDEA 中，快速创建测试单元主要有以下 3 种方式</p>
+
+<ul>
+<li>通过快捷键 Ctrl+Shift+T （windows）来创建测试</li>
+<li>单击菜单栏中的 Navigator-&gt;Test 命令</li>
+<li>在方法处单击鼠标右键，在弹出的菜单中选择 Go To-&gt;Test 命令</li>
+</ul>
+
+<h5 id="toc_8">Controller 层的单元测试</h5>
+
+<p>创建一个用于测试的控制器</p>
+
+<pre><code class="java">package com.example.demo.controller;
+
+@RestController
+public class HelloController {
+    @RequestMapping(&quot;/hello&quot;)
+    public String hello(String name){
+        return &quot;hello &quot;+name;
+    }
+}
+</code></pre>
+
+<p>编写测试</p>
+
+<pre><code class="java">package com.example.demo.controller;
+
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class HelloControllerTest {
+    //启用web上下文
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+    private MockMvc mockMvc;
+
+    @Before
+    public void setUp() throws Exception{
+        //使用上下文构建mockMvc
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
+    @Test
+    public void hello() throws Exception {
+       // 得到MvcResult自定义验证
+      // 执行请求
+        MvcResult mvcResult= mockMvc.perform(MockMvcRequestBuilders.get(&quot;/hello&quot;)
+        //.post(&quot;/hello&quot;) 发送post请求
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                //传入参数
+                .param(&quot;name&quot;,&quot;faye&quot;)
+               // .accept(MediaType.TEXT_HTML_VALUE))
+                //接收的类型
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                //等同于Assert.assertEquals(200,status);
+                //判断接收到的状态是否是200
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                 //等同于 Assert.assertEquals(&quot;hello faye&quot;,content);
+                .andExpect(MockMvcResultMatchers.content().string(&quot;hello faye&quot;))
+                .andDo(MockMvcResultHandlers.print())
+        //返回MvcResult
+        .andReturn();
+        //得到返回代码
+        int status=mvcResult.getResponse().getStatus();
+        //得到返回结果
+        String content=mvcResult.getResponse().getContentAsString();
+        //断言，判断返回代码是否正确
+        Assert.assertEquals(200,status);
+        //断言，判断返回的值是否正确
+        Assert.assertEquals(&quot;hello faye&quot;,content);
+    }
+}
+
+</code></pre>
+
+<p>代码解释如下</p>
+
+<ul>
+<li><code>WebApplicationContext</code>：启动 Web 上下文，用于获取 Bean 中的内容</li>
+<li><code>@Before</code>：表示在单元执行前执行。这里使用上下文构建 MockMvc</li>
+<li><code>MockMvcRequestBuilders.get</code>：指定请求方式是 GET</li>
+</ul>
+
+<h5 id="toc_9">Service 层的单元测试</h5>
+
+<p>实体类</p>
+
+<pre><code class="java">@Data
+public class User {
+    private String name;
+    private  int age;
+}
+</code></pre>
+
+<p>创建服务类</p>
+
+<pre><code class="java">@Service
+public class UserService {
+
+    public User getUserInfo(){
+        User user = new User();
+        user.setName(&quot;faye&quot;);
+        user.setAge(18);
+        return user;
+    }
+}
+</code></pre>
+
+<p>编写测试</p>
+
+<p>比较实例化的实体 User 和预期值是否一致</p>
+
+<pre><code class="java">//表明要在 Spring 测试环境运行
+@RunWith(SpringRunner.class)
+//启动整个spring的工程
+@SpringBootTest
+public class UserServiceTest {
+@Autowired
+private UserService userService;
+    @Test
+    public void getUserInfo() {
+        User user = userService.getUserInfo();
+        //比较实际的值和用户预期的值是否一样
+        Assert.assertEquals(18,user.getAge());
+        Assert.assertThat(user.getName(),is(&quot;kobe&quot;));
+
+    }
+}
+</code></pre>
+
+<p>运行测试，结果显示出错，表示期望的值和实际值不一样</p>
+
+<pre><code class="text">java.lang.AssertionError
+Excepted:is &quot;kobe&quot;
+    but:was&quot;faye&quot;
+Excepted:is kobe
+Actual  :faye
+</code></pre>
+
+<h5 id="toc_10">Repository 层的单元测试</h5>
+
+<pre><code class="java">@RunWith(SpringRunner.class)
+@SpringBootTest
+@Transactional
+public class CardRepositoryTest {
+    @AutoWired
+    private CardRepository cardRepository;
+    
+    @Test
+    public void testQuery() {
+        List&lt;Card&gt; list = cardRepository.findAll();
+        for(Card card : list) {
+            System.out.println(card);
+        }
+    }
+    
+     @Test
+    public void testRollBank() {
+        Card card = new Card();
+        card.setNum(3);
+        cardRepository.save(card)
+    }
+}
+</code></pre>
+
+<p>代码解释如下：</p>
+
+<ul>
+<li><code>@Transactional</code>：回滚，所有方法执行完后，回滚成原来的样子</li>
+<li><code>testRollBank</code>：执行添加一条记录，如果开始 @Transactional ，则会在添加之后进行回滚，删除添加的数据，不加则不回滚， @Transactional 可放在类上，也可以加载方法上以作用于方法上。</li>
+</ul>
 
         </div>
 
@@ -3893,10 +4397,10 @@ No message available
 <p>异常处理类会包含以下一个或多个方法：</p>
 
 <ul>
-<li><code>InitBinder</code>：对表单数据进行绑定，用于定义控制器参数绑定规则。如转换规则、格式化等。可以通过这个注解地方式得到 WebDataBinder 对象，它在参数转换之前被执行。</li>
-<li><code>ModelAttribute</code>：在控制器方法被执行前，对所有 Controller 的 Model 添加属性进行操作。</li>
+<li><code>@InitBinder</code>：对表单数据进行绑定，用于定义控制器参数绑定规则。如转换规则、格式化等。可以通过这个注解地方式得到 WebDataBinder 对象，它在参数转换之前被执行。</li>
+<li><code>@ModelAttribute</code>：在控制器方法被执行前，对所有 Controller 的 Model 添加属性进行操作。</li>
 <li><code>@ExceptionHandler</code>：定义控制器发生异常后的操作，可以拦截所有控制器发生的异常。</li>
-<li><code>ControllerAdice</code>：统一异常处理，通过 <code>@ExceptionHandler(value=Exception.class)</code> 来指定捕获的异常。“@ControllerAdvice + @ExceptionHandle&rdquo; 可以处理 除 ”404“ 以外的运行异常</li>
+<li><code>@ControllerAdice</code>：统一异常处理，通过 <code>@ExceptionHandler(value=Exception.class)</code> 来指定捕获的异常。“@ControllerAdvice + @ExceptionHandle&rdquo; 可以处理 除 ”404“ 以外的运行异常</li>
 </ul>
 
 <h4 id="toc_8">自定义错误处理控制器</h4>

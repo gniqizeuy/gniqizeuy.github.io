@@ -111,10 +111,10 @@ No message available
 <p>异常处理类会包含以下一个或多个方法：</p>
 
 <ul>
-<li><code>InitBinder</code>：对表单数据进行绑定，用于定义控制器参数绑定规则。如转换规则、格式化等。可以通过这个注解地方式得到 WebDataBinder 对象，它在参数转换之前被执行。</li>
-<li><code>ModelAttribute</code>：在控制器方法被执行前，对所有 Controller 的 Model 添加属性进行操作。</li>
+<li><code>@InitBinder</code>：对表单数据进行绑定，用于定义控制器参数绑定规则。如转换规则、格式化等。可以通过这个注解地方式得到 WebDataBinder 对象，它在参数转换之前被执行。</li>
+<li><code>@ModelAttribute</code>：在控制器方法被执行前，对所有 Controller 的 Model 添加属性进行操作。</li>
 <li><code>@ExceptionHandler</code>：定义控制器发生异常后的操作，可以拦截所有控制器发生的异常。</li>
-<li><code>ControllerAdice</code>：统一异常处理，通过 <code>@ExceptionHandler(value=Exception.class)</code> 来指定捕获的异常。“@ControllerAdvice + @ExceptionHandle&rdquo; 可以处理 除 ”404“ 以外的运行异常</li>
+<li><code>@ControllerAdice</code>：统一异常处理，通过 <code>@ExceptionHandler(value=Exception.class)</code> 来指定捕获的异常。“@ControllerAdvice + @ExceptionHandle&rdquo; 可以处理 除 ”404“ 以外的运行异常</li>
 </ul>
 
 <h4 id="toc_8">自定义错误处理控制器</h4>

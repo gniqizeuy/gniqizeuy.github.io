@@ -77,9 +77,35 @@ spring
 
 <p>3）字符串相关匹配符</p>
 
+<ul>
+<li><code>assertThat(testString, is(&quot;kobe&quot;));</code> ：testString 等于 给出 String，测试通过</li>
+<li><code>assertThat(testString, not(&quot;kobe&quot;));</code> ：testString 不等 给出 String，测试通过</li>
+<li><code>assertThat(testString, containsString(&quot;kobe&quot;));</code> ：testString 包含 子字符串String，测试通过</li>
+<li><code>assertThat(testString, endsWith(&quot;kobe&quot;));</code> ：testString 以子字符串 String 结尾，测试通过</li>
+<li><code>assertThat(testString, startsWith(&quot;long&quot;));</code> ：testString 以子字符串 String 开始，测试通过</li>
+<li><code>assertThat(testString, equalTo(Value));</code> ：testString 等于 Value，测试通过。equalTo 可以用来测试数值，字符串和对象</li>
+<li><code>assertThat(testString, equalToIgnoringCase(&quot;Kobe&quot;));</code> ：testString 在忽略大小写情况下 等于 给出字符串，测试通过</li>
+<li><code>assertThat(testString, equalToIgnoringWithSpace(&quot;kobe&quot;));</code> ：testString 在忽略头尾的任意空格情况下 等于 给出字符串，测试通过</li>
+</ul>
+
 <p>4）数值相关匹配符</p>
 
+<ul>
+<li><code>assertThat(testDouble, closeTo(1.0, 8.8));</code> ：测试的浮点数 testDouble 在 1.0 ~ 8.8 之间，测试通过</li>
+<li><code>assertThat(testNumber, greaterThan(2.0));</code> ：测试的数值 testNumber 大于 2.0，测试通过</li>
+<li><code>assertThat(testNumber, lessThan(35.0));</code> ：测试的数值 testNumber 小于 35.0，测试通过</li>
+<li><code>assertThat(testNumber, greaterThanOrEqualTo(2.0));</code> ：测试的数值 testNumber 大于或等于 2.0，测试通过</li>
+<li><code>assertThat(testDouble, lessThanOrEqualTo(35.0));</code> ：试的数值 testNumber 小于或等于 35.0，测试通过</li>
+</ul>
+
 <p>5）collection 相关匹配符</p>
+
+<ul>
+<li><code>assertThat(mObject, hasEntry(&quot;key&quot;, &quot;value&quot;))</code>：测试的 Map 对象 mObject 含有一个键为 key ，值为 value 的项，测试通过</li>
+<li><code>assertThat(mObject, hasKey(&quot;key&quot;))</code>：测试的 Map 对象 mObject 含有键值 key，测试通过</li>
+<li><code>assertThat(mObject, hasValue(&quot;key&quot;))</code>：测试的 Map 对象 mObject 含有元素值 value，测试通过</li>
+<li><code>assertThat(iterableObject, hasItem(&quot;zhi&quot;))</code>：测试的迭代对象 iterableObject 含有元素 &ldquo;zhi&rdquo; 项，测试通过</li>
+</ul>
 
 <h4 id="toc_3">3. 了解 Mockito</h4>
 
@@ -128,7 +154,11 @@ public class CardRepositoryTest {
 
 <h4 id="toc_7">添加依赖</h4>
 
-<pre><code class="xml">
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupld&gt;org.springframework.boot&lt;/groupld&gt;
+    &lt;artifactld&gt;spring-boot-starter-test&lt;/artifactld&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
 </code></pre>
 
 <p>在 “src/test/java” 目录下新建一个测试类</p>
@@ -141,3 +171,183 @@ public class test {
     }
 }
 </code></pre>
+
+<p>代码解释如下：</p>
+
+<ul>
+<li><code>@springBootTest</code>：是 Spring Boot 用于测试的注解，可以指定入口类或测试环境等</li>
+<li><code>@RunWith(SpringRunner.class)</code>：让测试运行于 Spring 的测试环境</li>
+<li><code>@Test</code>：表示一个测试单元</li>
+</ul>
+
+<p>除用这种方式创建测试单元外，还可以通过 IDEA 快捷键快速完成创建</p>
+
+<p>在 IDEA 中，快速创建测试单元主要有以下 3 种方式</p>
+
+<ul>
+<li>通过快捷键 Ctrl+Shift+T （windows）来创建测试</li>
+<li>单击菜单栏中的 Navigator-&gt;Test 命令</li>
+<li>在方法处单击鼠标右键，在弹出的菜单中选择 Go To-&gt;Test 命令</li>
+</ul>
+
+<h5 id="toc_8">Controller 层的单元测试</h5>
+
+<p>创建一个用于测试的控制器</p>
+
+<pre><code class="java">package com.example.demo.controller;
+
+@RestController
+public class HelloController {
+    @RequestMapping(&quot;/hello&quot;)
+    public String hello(String name){
+        return &quot;hello &quot;+name;
+    }
+}
+</code></pre>
+
+<p>编写测试</p>
+
+<pre><code class="java">package com.example.demo.controller;
+
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class HelloControllerTest {
+    //启用web上下文
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+    private MockMvc mockMvc;
+
+    @Before
+    public void setUp() throws Exception{
+        //使用上下文构建mockMvc
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
+    @Test
+    public void hello() throws Exception {
+       // 得到MvcResult自定义验证
+      // 执行请求
+        MvcResult mvcResult= mockMvc.perform(MockMvcRequestBuilders.get(&quot;/hello&quot;)
+        //.post(&quot;/hello&quot;) 发送post请求
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                //传入参数
+                .param(&quot;name&quot;,&quot;faye&quot;)
+               // .accept(MediaType.TEXT_HTML_VALUE))
+                //接收的类型
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                //等同于Assert.assertEquals(200,status);
+                //判断接收到的状态是否是200
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                 //等同于 Assert.assertEquals(&quot;hello faye&quot;,content);
+                .andExpect(MockMvcResultMatchers.content().string(&quot;hello faye&quot;))
+                .andDo(MockMvcResultHandlers.print())
+        //返回MvcResult
+        .andReturn();
+        //得到返回代码
+        int status=mvcResult.getResponse().getStatus();
+        //得到返回结果
+        String content=mvcResult.getResponse().getContentAsString();
+        //断言，判断返回代码是否正确
+        Assert.assertEquals(200,status);
+        //断言，判断返回的值是否正确
+        Assert.assertEquals(&quot;hello faye&quot;,content);
+    }
+}
+
+</code></pre>
+
+<p>代码解释如下</p>
+
+<ul>
+<li><code>WebApplicationContext</code>：启动 Web 上下文，用于获取 Bean 中的内容</li>
+<li><code>@Before</code>：表示在单元执行前执行。这里使用上下文构建 MockMvc</li>
+<li><code>MockMvcRequestBuilders.get</code>：指定请求方式是 GET</li>
+</ul>
+
+<h5 id="toc_9">Service 层的单元测试</h5>
+
+<p>实体类</p>
+
+<pre><code class="java">@Data
+public class User {
+    private String name;
+    private  int age;
+}
+</code></pre>
+
+<p>创建服务类</p>
+
+<pre><code class="java">@Service
+public class UserService {
+
+    public User getUserInfo(){
+        User user = new User();
+        user.setName(&quot;faye&quot;);
+        user.setAge(18);
+        return user;
+    }
+}
+</code></pre>
+
+<p>编写测试</p>
+
+<p>比较实例化的实体 User 和预期值是否一致</p>
+
+<pre><code class="java">//表明要在 Spring 测试环境运行
+@RunWith(SpringRunner.class)
+//启动整个spring的工程
+@SpringBootTest
+public class UserServiceTest {
+@Autowired
+private UserService userService;
+    @Test
+    public void getUserInfo() {
+        User user = userService.getUserInfo();
+        //比较实际的值和用户预期的值是否一样
+        Assert.assertEquals(18,user.getAge());
+        Assert.assertThat(user.getName(),is(&quot;kobe&quot;));
+
+    }
+}
+</code></pre>
+
+<p>运行测试，结果显示出错，表示期望的值和实际值不一样</p>
+
+<pre><code class="text">java.lang.AssertionError
+Excepted:is &quot;kobe&quot;
+    but:was&quot;faye&quot;
+Excepted:is kobe
+Actual  :faye
+</code></pre>
+
+<h5 id="toc_10">Repository 层的单元测试</h5>
+
+<pre><code class="java">@RunWith(SpringRunner.class)
+@SpringBootTest
+@Transactional
+public class CardRepositoryTest {
+    @AutoWired
+    private CardRepository cardRepository;
+    
+    @Test
+    public void testQuery() {
+        List&lt;Card&gt; list = cardRepository.findAll();
+        for(Card card : list) {
+            System.out.println(card);
+        }
+    }
+    
+     @Test
+    public void testRollBank() {
+        Card card = new Card();
+        card.setNum(3);
+        cardRepository.save(card)
+    }
+}
+</code></pre>
+
+<p>代码解释如下：</p>
+
+<ul>
+<li><code>@Transactional</code>：回滚，所有方法执行完后，回滚成原来的样子</li>
+<li><code>testRollBank</code>：执行添加一条记录，如果开始 @Transactional ，则会在添加之后进行回滚，删除添加的数据，不加则不回滚， @Transactional 可放在类上，也可以加载方法上以作用于方法上。</li>
+</ul>
