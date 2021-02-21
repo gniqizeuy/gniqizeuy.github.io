@@ -1,0 +1,334 @@
+spring_websocket
+Spring Websocket
+spring 
+
+
+<h4 id="toc_0">添加依赖</h4>
+
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-websocket&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>加入 Spring Security 依赖，因为有时候对于 WebSocket 而言，需要的是点对点的通信，这一点需要用户进行登录</p>
+
+<h4 id="toc_1">简易 WebSocket 服务</h4>
+
+<p>对于 Websocket 的使用，可以先通过 Spring 创建 Java 配置文件。在文件中，先新建 <code>ServerEndpointExporter</code> 对象，通过它定义 WebSocket 服务器的端点，这样客户端就能请求服务器的端点</p>
+
+<h5 id="toc_2">自定义 WebSocket 服务</h5>
+
+<pre><code class="java">import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+
+/**** imports ***/
+@Configuration
+@EnableWebSocketMessageBroker
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    // 如果你使用的不是Spring Boot依赖的服务器，才需要自己创建
+    @Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
+    }
+    
+    // 注册服务器端点
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        // 增加一个聊天服务端点
+        registry.addEndpoint(&quot;/socket&quot;).withSockJS();
+        // 增加一个用户服务端点
+        registry.addEndpoint(&quot;/wsuser&quot;).withSockJS();
+    }
+
+    // 定义服务器端点请求和订阅前缀
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        // 客户端订阅路径前缀
+        registry.enableSimpleBroker(&quot;/sub&quot;, &quot;/queue&quot;);
+        // 服务端点请求前缀
+        registry.setApplicationDestinationPrefixes(&quot;/request&quot;);
+    }
+}
+</code></pre>
+
+<p>有了这个 Bean，就可以使用 <code>@ServerEndpoint</code> 定义一个端点服务类。在这个服务类中，可以定义 WebSocket 的打开、关闭、错误和发送消息的方法</p>
+
+<pre><code class="java">import java.io.IOException;
+import java.util.concurrent.CopyOnWriteArraySet;
+
+import javax.websocket.OnClose;
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
+
+import org.springframework.stereotype.Service;
+
+/**** imports ****/
+@ServerEndpoint(&quot;/ws&quot;)
+@Service
+public class WebSocketServiceImpl {
+    // 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
+    private static int onlineCount = 0;
+    // concurrent包的线程安全Set，用来存放每个客户端对应的WebSocketServiceImpl对象。
+    private static CopyOnWriteArraySet&lt;WebSocketServiceImpl&gt; 
+            webSocketSet = new CopyOnWriteArraySet&lt;&gt;();
+    // 与某个客户端的连接会话，需要通过它来给客户端发送数据
+    private Session session;
+    /**
+     * 连接建立成功调用的方法*/
+    @OnOpen
+    public void onOpen(Session session) {
+        this.session = session;
+        webSocketSet.add(this);     // 加入set中
+        addOnlineCount();           // 在线数加1
+        System.out.println(&quot;有新连接加入！当前在线人数为&quot; + getOnlineCount());
+        try {
+            sendMessage(&quot;有新的连接加入了！！&quot;);
+        } catch (IOException e) {
+            System.out.println(&quot;IO异常&quot;);
+        }
+    }
+
+    /**
+     * 连接关闭调用的方法
+     */
+    @OnClose
+    public void onClose() {
+        webSocketSet.remove(this);  // 从set中删除
+        subOnlineCount();           // 在线数减1
+        System.out.println(&quot;有一连接关闭！当前在线人数为&quot; + getOnlineCount());
+    }
+
+    /**
+     * 收到客户端消息后调用的方法
+     * @param message 客户端发送过来的消息
+     */
+    @OnMessage
+    public void onMessage(String message, Session session) {
+        System.out.println(&quot;来自客户端的消息:&quot; + message);
+
+        // 群发消息
+        for (WebSocketServiceImpl item : webSocketSet) {
+            try {
+                /*
+                // 获取当前用户名称
+                String userName = item.getSession()
+                        .getUserPrincipal().getName();
+                System.out.println(userName);
+                */
+                item.sendMessage(message); 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 发生错误时调用
+     */
+    @OnError
+    public void onError(Session session, Throwable error) {
+        System.out.println(&quot;发生错误&quot;);
+        error.printStackTrace();
+    }
+
+
+    /**
+     * 发送消息
+     * @param message 客户端消息
+     * @throws IOException
+     */
+    private void sendMessage(String message) throws IOException {
+        this.session.getBasicRemote().sendText(message);
+}
+    
+    // 返回在线数
+    private static synchronized int getOnlineCount() {
+        return onlineCount;
+    }
+
+    // 当连接人数增加时
+    private static synchronized void addOnlineCount() {
+        WebSocketServiceImpl.onlineCount++;
+    }
+
+    // 当连接人数减少时
+    private static synchronized void subOnlineCount() {
+        WebSocketServiceImpl.onlineCount--;
+    }
+}
+</code></pre>
+
+<p>代码解释如下：</p>
+
+<ul>
+<li><code>@ServerEndpoint(&quot;/ws&quot;)</code>：表示让 Spring 创建 WebSocket 的服务端点，其中请求地址是 &ldquo;/ws&rdquo;</li>
+<li><code>@OnOpen</code>：标注客户端打开 WebSocket 服务端点调用方法</li>
+<li><code>@OnClose</code>：标注客户端关闭 WebSocket 服务端点调用方法</li>
+<li><code>@OnMessage</code>：标注客户端发送消息，WebSocket 服务端点调用方法</li>
+<li><code>@OnError</code>：标注客户端请求 WebSocket 服务端点发生异常点调用方法</li>
+</ul>
+
+<p>因为每一个客户端打开时，都会创建一个 WebSocketServiceImpl 对象，所以这里的打开方法中会去计数并且将这个对象保存到 <code>CopyOnWriteArraySet</code> 中，这样就可以知道拥有多少连接。对于关闭方法则是清除这个对象，并且技术减一。对于消息发送方法，则是通过轮询对所有客户端连接都给予发送消息，所以所有的连接都可以收到这个消息。但是有时候可能只是需要发送给特定的用户，则需要得到用户的信息，然后再发送给特定的用户</p>
+
+<h5 id="toc_3">开发客户端页面</h5>
+
+<pre><code class="html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;title&gt;My WebSocket&lt;/title&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://code.jquery.com/jquery-3.2.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./../js/websocket.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    测试一下WebSocket站点吧
+    &lt;br /&gt;
+    &lt;input id=&quot;message&quot; type=&quot;text&quot; /&gt;
+    &lt;button onclick=&quot;sendMessage()&quot;&gt;发送消息&lt;/button&gt;
+    &lt;button onclick=&quot;closeWebSocket()&quot;&gt;关闭WebSocket连接&lt;/button&gt;
+    &lt;div id=&quot;context&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>WebSocket 客户端脚本</p>
+
+<pre><code class="javascript">var websocket = null;
+// 判断当前浏览器是否支持WebSocket
+if ('WebSocket' in window) {
+    // 创建WebSocket对象,连接服务器端点
+    websocket = new WebSocket(&quot;ws://localhost:8080/ws&quot;);
+} else {
+    alert('Not support websocket')
+}
+
+// 连接发生错误的回调方法
+websocket.onerror = function() {
+    appendMessage(&quot;error&quot;);
+};
+
+// 连接成功建立的回调方法
+websocket.onopen = function(event) {
+    appendMessage(&quot;open&quot;);
+}
+
+// 接收到消息的回调方法
+websocket.onmessage = function(event) {
+    appendMessage(event.data);
+}
+
+// 连接关闭的回调方法
+websocket.onclose = function() {
+    appendMessage(&quot;close&quot;);
+}
+
+// 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，
+// 防止连接还没断开就关闭窗口，server端会抛异常。
+window.onbeforeunload = function() {
+    websocket.close();
+}
+
+// 将消息显示在网页上
+function appendMessage(message) {
+    var context = $(&quot;#context&quot;).html() +&quot;&lt;br/&gt;&quot; + message;
+    $(&quot;#context&quot;).html(context);
+}
+
+// 关闭连接
+function closeWebSocket() {
+    websocket.close();
+}
+
+// 发送消息
+function sendMessage() {
+    var message = $(&quot;#message&quot;).val();
+    websocket.send(message);
+}
+</code></pre>
+
+<h5 id="toc_4">通过控制器打开 WebSocket 页面</h5>
+
+<pre><code class="java">import java.security.Principal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**** imports ****/
+@Controller
+@RequestMapping(&quot;/websocket&quot;)
+public class WebSocketController {
+    // 跳转websocket页面
+    @GetMapping(&quot;/index&quot;)
+    public String websocket() {
+        return &quot;websocket&quot;;
+    }
+    
+    @Autowired // 注入Spring Boot自动配置消息模板对象
+    private SimpMessagingTemplate simpMessagingTemplate;
+    
+    // 发送页面
+    @GetMapping(&quot;/send&quot;)
+    public String send() {
+        return &quot;send&quot;;
+    }
+    
+    // 接收页面
+    @GetMapping(&quot;/receive&quot;)
+    public String receive() {
+        return &quot;receive&quot;;
+    }
+    
+    // 对特定用户发送页面
+    @GetMapping(&quot;/sendUser&quot;)
+    public String sendUser() {
+        return &quot;send-user&quot;;
+    }
+    
+    // 接收用户消息页面
+    @GetMapping(&quot;/receiveUser&quot;)
+    public String receiveUser() {
+        return &quot;receive-user&quot;;
+    }
+    
+    // 定义消息请求路径
+    @MessageMapping(&quot;/send&quot;)
+    // 定义结果发送到特定路径
+    @SendTo(&quot;/sub/chat&quot;)
+    public String sendMsg(String value) {
+         return value;
+    }
+    
+    // 将消息发送给特定用户
+    @MessageMapping(&quot;/sendUser&quot;)
+    public void sendToUser(Principal principal, String body) {
+        String srcUser = principal.getName();
+        // 解析用户和消息
+        String []args = body.split(&quot;,&quot;);
+        String desUser = args[0];
+        String message = &quot;【&quot; + srcUser + &quot;】给你发来消息：&quot; + args[1];
+        // 发送到用户和监听地址
+        simpMessagingTemplate.convertAndSendToUser(desUser, 
+            &quot;/queue/customer&quot;, message);    
+    }
+}
+</code></pre>
