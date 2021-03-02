@@ -1,0 +1,48 @@
+spring_cache
+Spring Cache
+spring 
+
+
+<p>Spring Cache 是 Spring 提供的一整套缓存解决方案。它本身并不提供缓存实现，而是根据统一的接口和代码规范、配置、注解等，以便整合各种 Cache 方案，使用户不用关心 Cache 的细节</p>
+
+<p>Spring 支持透明地向应用程序添加缓存，将缓存应用于方法，在方法执行前检查缓存中是否有可用的数据。这样可以减少方法执行的次数，同时提高响应的速度。缓存的应用方式透明不会对调用者造成任何干扰。只要通过注解 <code>@EnableCaching</code> 启用了缓存支持，Spring Boot 就会自动处理好缓存的基础配置</p>
+
+<p>Spring Cache 作用在方法上。当调用一个缓存方法时，会把方法参数和返回结果作为一个<strong>键值对</strong>存放在缓存中，下次用同样的参数来调用该方法时将不再执行该方法，而是直接从缓存中获取结果进行返回，所以在使用 Spring Cache 时，要保证在缓存的方法和方法参数相同时返回相同的结果。</p>
+
+<h4 id="toc_0">声明式缓存注解</h4>
+
+<table>
+<thead>
+<tr>
+<td>注解</td>
+<td>说明</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>@EnableCaching</td>
+<td>开启缓存</td>
+</tr>
+
+<tr>
+<td>@Cacheable</td>
+<td>作用于方法和类上，以键值对方式缓存类或方法的返回值</td>
+</tr>
+
+<tr>
+<td>@CachePut</td>
+<td>方法被调用，然后结果被缓存</td>
+</tr>
+
+<tr>
+<td>@CacheEvict</td>
+<td>清空缓存</td>
+</tr>
+
+<tr>
+<td>@Caching</td>
+<td>用来组合多个注解标签</td>
+</tr>
+</tbody>
+</table>
