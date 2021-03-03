@@ -5636,6 +5636,104 @@ public String getMesUrl() {
 </tbody>
 </table>
 
+<h5 id="toc_1">@EnableCaching</h5>
+
+<p>标注在入口类上，用于开启缓存</p>
+
+<h5 id="toc_2">@Cacheable</h5>
+
+<p>键可以有默认策略和自定义策略</p>
+
+<p>@Cacheable 注解会先查询是否已经有缓存，如果已有则会使用缓存，如果没有则会执行方法并进行缓存</p>
+
+<p>@Cacheable 可以指定 3 个属性——value、key、和 condition</p>
+
+<ul>
+<li>value：缓存的名称，在 Spring 配置文件中定义，必须指定至少一个。如 <code>@Cacheable(value=&quot;cache1&quot;)</code> 、<code>@Cacheable(value={&quot;cache1&quot;, &quot;cache2&quot;})</code></li>
+<li>key：缓存的 key 可以为空，如果自定义 key ，则需要按照 SpEL 表达式编写。可以自定按照方法的参数组合。如，<code>@Cacheable(value=&quot;cache1&quot;, key=&quot;#id&quot;)</code></li>
+<li>condition：缓存的条件可以为空，如果自定义 condition，则使用 SpEL 表达式编写，以返回 true 或 false 值，只有返回 true 才进行缓存。如，<code>@Cacheable(value=&quot;cache1&quot;, condition=&quot;#id.length()&gt;2&quot;)</code></li>
+</ul>
+
+<p>使用方式如下</p>
+
+<pre><code class="java">@Cacheable(value=&quot;emp&quot;, key=&quot;targetClass + methodName + #p0&quot;)
+public User findUserById(long id) {
+    return userRepository.findById(id);
+}
+</code></pre>
+
+<p>代码解释如下：</p>
+
+<ol>
+<li>value 是必需的，它指定了缓存存放的位置</li>
+<li>key 使用的是 SpEL 表达式</li>
+<li>User 实体类一定要实现<strong>序列化</strong>，否则会报 <i>java.io.NotSerializableException</i> 异常。序列化可以继承 <code>Serializable</code></li>
+</ol>
+
+<h5 id="toc_3">@CachePut</h5>
+
+<p>@CachePut 标注的方法在执行前不检查缓存是否存在之前执行过的结果，而是每次都会执行该方法，并将执行结果以键值对的形式存入指定的缓存中。和 @Cacheable 不同的是，@CachePut 每次都会触发真实方法的调用，比如用户更新缓存数据</p>
+
+<p>注意该注解的 value 和 key 必须与要更新的缓存相同，即与 @Cacheable 相同</p>
+
+<pre><code class="java">@CachePut(value=&quot;usr&quot;, key=&quot;targetClass + #p0&quot;)
+public User update(User user) {
+    // ....
+}
+
+@Cacheable(value=&quot;usr&quot;, key=&quot;targetClass + #p0&quot;)
+public User save(User user) {
+    // ...
+}
+</code></pre>
+
+<h5 id="toc_4">@CacheEvict</h5>
+
+<p>@CacheEvict 用来标注需要清除缓存元素的方法或类。该注解用于触发缓存的清除操作。其中属性有 <code>value</code>、<code>key</code>、<code>condition</code>、<code>allEntries</code> 和 <code>beforeInvocation</code>。可以用这些属性来指定清除的条件</p>
+
+<pre><code class="java">@Cacheable(value=&quot;usr&quot;, key=&quot;#p0.id&quot;)
+public User save(User user) {
+    // ...
+}
+
+// 清除一条缓存
+@CacheEvict(value=&quot;usr&quot;, key=&quot;#id&quot;) 
+public void deleteBykey(int id) {
+    // ...
+}
+
+// 在方法调用后清空所有缓存
+@CacheEvict(value=&quot;accountCache&quot;, allEntries=true)
+public void deleteAll() {
+    // ...
+}
+
+// 在方法调用前清空所有缓存
+@CacheEvict(value=&quot;accountCache&quot;, beforeInvocation=true)
+public void deleteAll() {
+    // ...
+}
+</code></pre>
+
+<h5 id="toc_5">@Caching</h5>
+
+<p>@Caching 用来组合多个注解标签，有 3 个属性：<code>cacheable</code>、<code>put</code> 和 <code>evict</code>，用于指定 @Cacheable、@CachePut 和 @CacheEvict</p>
+
+<pre><code class="java">@Caching(cacheable={
+    @Cacheable(value=&quot;usr&quot;, key=&quot;#p0&quot;),
+    // ...
+}, put={
+    @CachePut(value=&quot;usr&quot;, key=&quot;#p0&quot;),
+    // ...
+}, evict={
+    @CacheEvict(value=&quot;usr&quot;, key=&quot;#p0&quot;),
+    // ...
+})
+public User save(User user) {
+    // ...
+}
+</code></pre>
+
         </div>
 
         <br>
