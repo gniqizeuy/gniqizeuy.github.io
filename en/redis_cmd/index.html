@@ -12,6 +12,10 @@ redis
 
 <h5 id="toc_2">2. 键总数：</h5>
 
+<p>dbsize 命令在计算键总数时不会遍历所有键，而是直接获取 Redis 内置的键总数变量，所以 debsie 命令的时间复杂度是 <i>O(1)</i> 。</p>
+
+<p>key 命令会遍历所有键，所以它的复杂度为 <i>O(n)</i> ，当 Redis 保存了大量键时，线上环境禁止使用。</p>
+
 <pre><code class="shell">dbsize
 </code></pre>
 

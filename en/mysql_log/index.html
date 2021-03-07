@@ -1,0 +1,112 @@
+mysql_log
+MySQL Log
+mysql 
+
+
+<h4 id="toc_0">mysql 查看数据库操作记录</h4>
+
+<h5 id="toc_1">window</h5>
+
+<ul>
+<li>在 my.ini 中添加 log=存放日志的路径/my.log</li>
+<li>保存文件，重启 mysql 服务</li>
+</ul>
+
+<h5 id="toc_2">linux</h5>
+
+<pre><code class="sql">mysql&gt; show variables like '%general_log%';
++------------------+------------------------------+
+| Variable_name    | Value                        |
++------------------+------------------------------+
+| general_log      | OFF                          |
+| general_log_file | /var/lib/mysql/DB-Server.log |
++------------------+------------------------------+
+2 rows in set (0.00 sec)
+mysql&gt; 
+</code></pre>
+
+<p>参数 general_log 用来控制开启，关闭 mysql 查询日志，参数general_log_file用来控制查询日志的位置</p>
+
+<p>另外，MySQL的查询日志支持写入文件或写入数据表两种形式，这个由参数log_output控制，如下所示：</p>
+
+<pre><code class="sql">mysql&gt; show variables like 'log_output';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| log_output    | FILE  |
++---------------+-------+
+1 row in set (0.00 sec)
+ 
+mysql&gt; 
+</code></pre>
+
+<h5 id="toc_3">开启 mysql 查询日志</h5>
+
+<pre><code class="sql">mysql&gt; set global general_log = on;
+Query OK, 0 rows affected (0.11 sec)
+ 
+mysql&gt; show variables like 'general_log';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| general_log   | ON    |
++---------------+-------+
+1 row in set (0.02 sec)
+ 
+mysql&gt;
+</code></pre>
+
+<h5 id="toc_4">关闭 mysql 查询日志</h5>
+
+<pre><code class="sql">mysql&gt; show variables like 'general_log';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| general_log   | ON    |
++---------------+-------+
+1 row in set (0.01 sec)
+ 
+mysql&gt; set global general_log=off;
+Query OK, 0 rows affected (0.01 sec)
+ 
+mysql&gt; show variables like 'general_log';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| general_log   | OFF   |
++---------------+-------+
+1 row in set (0.00 sec)
+ 
+mysql&gt; 
+</code></pre>
+
+<h5 id="toc_5">设置日志输出方式为表</h5>
+
+<p>如果设置log_output=table的话，则日志结果会记录到名为gengera_log的表中，这表的默认引擎是CSV</p>
+
+<pre><code class="sql">mysql&gt; show variables like 'log_output';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| log_output    | FILE  |
++---------------+-------+
+1 row in set (0.00 sec)
+ 
+mysql&gt; set global log_output='table';
+Query OK, 0 rows affected (0.00 sec)
+ 
+mysql&gt; show variables like 'log_output';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| log_output    | TABLE |
++---------------+-------+
+1 row in set (0.01 sec)
+ 
+mysql&gt;
+</code></pre>
+
+<h5 id="toc_6">查看查询日志信息</h5>
+
+<pre><code class="sql">select * from mysql.general_log;
+</code></pre>

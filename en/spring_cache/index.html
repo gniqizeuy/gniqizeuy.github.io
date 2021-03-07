@@ -144,3 +144,161 @@ public User save(User user) {
     // ...
 }
 </code></pre>
+
+<h4 id="toc_6">实例</h4>
+
+<p>使用简单缓存（SIMPLE 方式）进行缓存管理</p>
+
+<h5 id="toc_7">1. 添加依赖</h5>
+
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<h5 id="toc_8">2. 配置缓存管理器</h5>
+
+<p>application.properties 中配置目标缓存管理器，支持 Ehcache、Generic、Redis、Jcache 等。这里使用 SIMPLE 方式 &ldquo;spring.cache.type=SIMPLE&rdquo;</p>
+
+<h5 id="toc_9">3. 开启缓存功能</h5>
+
+<p>在入口类添加注解 <code>@EnableCaching</code> ，开启缓存功能</p>
+
+<h5 id="toc_10">4. 在服务里实现编写缓存业务逻辑</h5>
+
+<pre><code class="java">@CacheConfig(cacheNames = &quot;user&quot;)
+@Service
+public class UserServiceImpl implements UserService {
+    @Autowired
+    private UserRepository userRepository;
+
+    // 查找用户
+    @Override
+    // @Cacheable(key = &quot;#id&quot;)
+    // @Cacheable(key=&quot;#id&quot;,condition =&quot;#id==41&quot; )
+    @Cacheable(key=&quot;#id&quot;,unless=&quot;#id.contains(41)&quot; )
+    public User findUserById(long id) {
+        User user = userRepository.findUserById(id);
+        return user;
+    }
+
+    // 新增用户
+    @Override
+    @CachePut(key = &quot;#user.id&quot;)
+    public User insertUser(User user) {
+        user = this.userRepository.save(user);
+        return user;
+    }
+
+    // 修改用户
+    @Override
+    @CachePut(key = &quot;#user.id&quot;)
+    public User updateUserById(User user) {
+        return userRepository.save(user);
+    }
+
+    // 删除用户
+    @Override
+    @CacheEvict(key = &quot;#id&quot;)
+    public void deleteUserById(long id) {
+        userRepository.deleteById(id);
+    }
+}
+</code></pre>
+
+<p>查找用户使用注解 @Cacheable 开启缓存。修改添加方法使用了注解 @CachePut 。它是先处理方法，再把结果进行缓存。删除数据，则需要使用注解 @CacheEvict 来清空缓存。</p>
+
+<h5 id="toc_11">5. 控制器里调用缓存服务</h5>
+
+<pre><code class="java">@RestController
+@RequestMapping(&quot;user&quot;)
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    // 添加用户
+    @PostMapping(&quot;/&quot;)
+    public void insertUser() throws Exception {
+        User user = new User();
+        user.setUsername(&quot;zhonghua&quot;);
+        userService.insertUser(user);
+    }
+
+    // 查找用户
+    @GetMapping(&quot;/{id}&quot;)
+    public void findUserById(@PathVariable long id) throws Exception {
+        User user = userService.findUserById(id);
+        System.out.println(user.getId() + user.getUsername());
+    }
+
+
+    // 修改用户
+    @PutMapping(&quot;/{id}&quot;)
+    public User updateUserById(User user) {
+        return userService.updateUserById(user);
+    }
+    
+    // 删除用户
+    @DeleteMapping(&quot;/{id}&quot;)
+    public void deleteUserById(@PathVariable long id) {
+        userService.deleteUserById(id);
+    }
+}
+</code></pre>
+
+<h4 id="toc_12">整合 Ehcache</h4>
+
+<p>Spring Boot 支持多种不同的缓存产品，在默认情况下使用的是简单缓存。不建议在正式环境中使用。可以配置一些更强大的缓存，比如 Ehcache</p>
+
+<p>Ehcache 是一种广泛使用的开源 Java 分布式缓存，它具有内存和磁盘存储、缓存加载器、缓存扩展、缓存异常处理、GZIP 缓存、Servlet 过滤器，以及支持 REST 和 SOAP API 等特点</p>
+
+<p>使用 Ehcache ，要先添加如下依赖</p>
+
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;net.sf.ehcache&lt;/groupId&gt;
+    &lt;artifactId&gt;ehcache&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>具体使用如下</p>
+
+<pre><code class="java">@CacheConfig(cacheNames={&quot;userCache&quot;})
+public class UserServiceImpl implements UserService {
+    @Cacheable(key=&quot;targetClass + methodName + #p0&quot;)
+    public List&lt;User&gt; findAllLimit(int num) {
+        return userRepository.findAllLimit(num);
+    }
+}
+</code></pre>
+
+<h4 id="toc_13">整合 Caffeine</h4>
+
+<p>Caffeine 是使用 Java 8 对 Guava 缓存的重写版本。它基于 LRU 算法实现，支持多种缓存过期策略。增加 Caffeine 依赖，Spring Boot 就会自动用 Caffeine 替换默认的简单缓存</p>
+
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.github.ben-manes.caffeine&lt;/groupId&gt;
+    &lt;artifactId&gt;caffeine&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>配置参数</p>
+
+<pre><code class="properties">spring.cache.type=caffeine
+spring.cache.cache-names=myCaffeine
+spring.cache.caffeine.spec=maximumSize=1,expireAfterAccess=5s
+</code></pre>
+
+<p>代码解释如下</p>
+
+<ul>
+<li>spring.cache.type：指定使用哪个缓存供应商</li>
+<li>spring.cache.cache-names：在启动时创建缓存名称（即前面的 cacheNames）。如果有多个名称，则用逗号进行分隔</li>
+<li>spring.cache.caffeine.spec：这是 Caffeine 缓存的专用配置</li>
+<li>maximumSize=1：最大缓存数量。如果超出最大缓存数量，则保留后进（最新）的，最开始的缓存会被清除</li>
+<li>expireAfterAccess=5s：缓存 5s ，即缓存在 5s 之内没有被使用，就会被清除。在默认情况下，缓存的数据会一直保存在内存中，有些数据可能用一次后很长时间都不会再用，这样会有大量无用的数据长时间占用内存，我们可以通过配置及时清除不需要的缓存</li>
+</ul>
