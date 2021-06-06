@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>gniqizeuy blog</title>
-    <link>http://example.org/docs/soft/</link>
+    <link>https://gniqizeuy.github.io/docs/soft/</link>
     <description>Recent content on gniqizeuy blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="http://example.org/docs/soft/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://gniqizeuy.github.io/docs/soft/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>centos update git</title>
-      <link>http://example.org/docs/soft/centos-git/</link>
+      <link>https://gniqizeuy.github.io/docs/soft/centos-git/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/docs/soft/centos-git/</guid>
+      <guid>https://gniqizeuy.github.io/docs/soft/centos-git/</guid>
       <description>系统自带 git 版本较低
 卸载旧版本的Git
 yum remove git -y 要升级Git，首先要安装一些依赖包； 安装基本的依赖包
@@ -25,10 +25,10 @@ git version git version 2.9.5  注意：但是如果缺少了nss包的话，在
     
     <item>
       <title>docker timezone</title>
-      <link>http://example.org/docs/soft/docker-time/</link>
+      <link>https://gniqizeuy.github.io/docs/soft/docker-time/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/docs/soft/docker-time/</guid>
+      <guid>https://gniqizeuy.github.io/docs/soft/docker-time/</guid>
       <description>查看容器时间
 docker exec -it xxx date 查看本地时区文件
 ls -l /etc/localtime 拷贝本地时区文件
@@ -37,10 +37,10 @@ docker cp xxx xxx:/etc/localtime </description>
     
     <item>
       <title>hugo install</title>
-      <link>http://example.org/docs/soft/hugo-install/</link>
+      <link>https://gniqizeuy.github.io/docs/soft/hugo-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/docs/soft/hugo-install/</guid>
+      <guid>https://gniqizeuy.github.io/docs/soft/hugo-install/</guid>
       <description>使用 yum 安装 hugo
 新建 hugo.repo 文件, 访问 https://copr.fedorainfracloud.org/coprs/daftaupe/hugo/ 选择合适版本
 vim /etc/yum.repos.d/hugo.repo 更新 yum
@@ -50,10 +50,10 @@ yum install hugo </description>
     
     <item>
       <title>mutagen</title>
-      <link>http://example.org/docs/soft/mutagen/</link>
+      <link>https://gniqizeuy.github.io/docs/soft/mutagen/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/docs/soft/mutagen/</guid>
+      <guid>https://gniqizeuy.github.io/docs/soft/mutagen/</guid>
       <description>mutagen.io
 Installation#Linuxwget https://github.com/mutagen-io/mutagen/releases/download/v0.11.8/mutagen_linux_amd64_v0.11.8.tar.gz
 tar zxvf mutagen_linux_*.tar.gz -C /usr/local/bin
@@ -70,10 +70,10 @@ monitor session#mutagen sync monitor</description>
     
     <item>
       <title>protobuf install</title>
-      <link>http://example.org/docs/soft/protobuf-install/</link>
+      <link>https://gniqizeuy.github.io/docs/soft/protobuf-install/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/docs/soft/protobuf-install/</guid>
+      <guid>https://gniqizeuy.github.io/docs/soft/protobuf-install/</guid>
       <description>新版本
 google protobuf-3.6.1是现在最新版本，添加了新的特性，看说明
 下载地址 https://github.com/protocolbuffers/protobuf/releases
@@ -87,10 +87,10 @@ wget https://github.com/google/protobuf/releases/download/v3.6.1/protobuf-all-3
     
     <item>
       <title>ssh</title>
-      <link>http://example.org/docs/soft/ssh/</link>
+      <link>https://gniqizeuy.github.io/docs/soft/ssh/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/docs/soft/ssh/</guid>
+      <guid>https://gniqizeuy.github.io/docs/soft/ssh/</guid>
       <description>ssh 服务异常#ssh failed to start OpenSSH Server daemon
 sshd -t 提示服务无法加载ssh_host_rsa_key,ssh_host_ecdsa_key 推测估计是权限问题
 尝试以下方法
@@ -99,10 +99,10 @@ chmod 600 /etc/ssh/ssh_host_rsa_key chmod 600 /etc/ssh/ssh_host_ecdsa_ke service
     
     <item>
       <title>vscode remote</title>
-      <link>http://example.org/docs/soft/vs-code-remote/</link>
+      <link>https://gniqizeuy.github.io/docs/soft/vs-code-remote/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/docs/soft/vs-code-remote/</guid>
+      <guid>https://gniqizeuy.github.io/docs/soft/vs-code-remote/</guid>
       <description>安装 remote-ssh 插件
 配置免密登录
 打开git bash 执行 ssh-keygen 命令
