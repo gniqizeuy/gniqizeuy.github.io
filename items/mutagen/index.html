@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <p><a href="https://mutagen.io/">mutagen.io</a></p>
+<h4 id="installation">Installation</h4>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-uniqueid" id="tabs-uniqueid-0" checked="checked" />
+  <label for="tabs-uniqueid-0">Linux</label>
+  <div class="book-tabs-content markdown-inner"><p><code>wget https://github.com/mutagen-io/mutagen/releases/download/v0.11.8/mutagen_linux_amd64_v0.11.8.tar.gz</code></p>
+<p><code>tar zxvf mutagen_linux_*.tar.gz -C /usr/local/bin</code></p>
+<p><code>mutagen daemon start</code> #启动</p>
+</div><input type="radio" class="toggle" name="tabs-uniqueid" id="tabs-uniqueid-1"  />
+  <label for="tabs-uniqueid-1">Windows</label>
+  <div class="book-tabs-content markdown-inner"><p>github issue: <a href="https://github.com/NixOS/nixpkgs/issues/81219">issue</a></p>
+<p>download tar.gz: <a href="https://github.com/mutagen-io/mutagen/releases/download/v0.11.8/mutagen_windows_amd64_v0.11.8.tar.gz">amd64.v0.11.8.tar.gz</a> ; add to path</p>
+<p>设置 <code>MUTAGEN_SSH_PATH</code> 变量指向 SSH 可执行文件的目录，暂不支持 Windows 的 SSH 客户端</p>
+<p>采用 git for windows 注意 git 安装地址为 C: 默认地址</p>
+<p>将 <code>MUTAGEN_SSH_PATH</code> 指向 <code>GIT_INSTALL_ROOT\usr\bin</code></p>
+</div></div>
+
+<h4 id="create-session">create session</h4>
+<p><code>mutagen sync create</code></p>
+<h4 id="list-session">list session</h4>
+<p><code>mutagen sync session</code></p>
+<h4 id="monitor-session">monitor session</h4>
+<p><code>mutagen sync monitor</code></p>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

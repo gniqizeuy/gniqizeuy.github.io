@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <h3 id="方法声明">方法声明</h3>
+<p>与声明普通函数类似，只是在函数名字前面多一个参数，参数把这个方法绑定到这个参数对应的类型上</p>
+<p>附加的参数称为方法的<em>接收者</em></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">package</span> geometry
+
+<span style="color:#000;font-weight:bold">import</span> <span style="color:#d14">&#34;math&#34;</span>
+
+<span style="color:#000;font-weight:bold">type</span> Point <span style="color:#000;font-weight:bold">struct</span>{ X, Y <span style="color:#458;font-weight:bold">float64</span> }
+
+<span style="color:#998;font-style:italic">// 普通函数
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">Distance</span>(p, q Point) <span style="color:#458;font-weight:bold">float64</span> {
+    <span style="color:#000;font-weight:bold">return</span> math.<span style="color:#900;font-weight:bold">Hypot</span>(q.X<span style="color:#000;font-weight:bold">-</span>p.X, q.Y<span style="color:#000;font-weight:bold">-</span>p,Y)
+}
+
+<span style="color:#998;font-style:italic">// Point 类型方法
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (p Point) <span style="color:#900;font-weight:bold">Distance</span>(q point) <span style="color:#458;font-weight:bold">float64</span> {
+    <span style="color:#000;font-weight:bold">return</span> math.<span style="color:#900;font-weight:bold">Hypot</span>(q.X<span style="color:#000;font-weight:bold">-</span>p.X, q.Y<span style="color:#000;font-weight:bold">-</span>p,Y)
+}
+</code></pre></div><p>go 中接收者不使用特殊名（this 或 self）；而是我们自己选择接收者名字。通常取类型名称的首字符</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">p <span style="color:#000;font-weight:bold">:=</span> Point{<span style="color:#099">1</span>, <span style="color:#099">2</span>}    
+q <span style="color:#000;font-weight:bold">:=</span> Point{<span style="color:#099">4</span>, <span style="color:#099">6</span>}
+fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#900;font-weight:bold">Distance</span>(p, q))
+fmt.<span style="color:#900;font-weight:bold">Println</span>(p.<span style="color:#900;font-weight:bold">Distance</span>(q))
+</code></pre></div><p>上述两个 Distance 函数声明没有冲突，第一个是包级别的函数（称为 geometry.Distance）。第二个声明一个类型 Point 的方法（Point.Distance）</p>
+<p>表达式 p.Distance 称作选择子（selector）因为它为接收者 p 选择合适的 Distance 方法。选择子也作用于选择结构类型中的字段值，由于方法与字段来自同一个命名空间，同名的字段与方法，编译器会报错。</p>
+<p>go 中的方法可以绑定到任何类型上，同一个包下的任何类型都可以声明方法，只要它的类型既不是指针类型也不是接口类型</p>
+<p>类型拥有的方法名必须是唯一的，但不同类型可以使用相同的方法名</p>
+<p>方法可以比函数更简单，在包的外部进行调用的时候，方法能狗使用更加简短的名字且省略包的名字</p>
+<h3 id="指针接收者的方法">指针接收者的方法</h3>
+<p>主调函数会复制每一个实参变量，如果函数需要更新一个变量，或者实参太大，为了避免复制整个实参，可以使用指针来传递变量的地址。这同样适用于更新接收者</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">func</span> (p <span style="color:#000;font-weight:bold">*</span>Point) <span style="color:#900;font-weight:bold">ScaleBy</span>(factor <span style="color:#458;font-weight:bold">float64</span>) {
+    p.X <span style="color:#000;font-weight:bold">*=</span> factor
+    p.Y <span style="color:#000;font-weight:bold">*=</span> factor
+}
+</code></pre></div><p>方法的名字为 (*Point).ScaleBy。</p>
+<p>如果 Point 的任何一个方法都使用指针接收者，那么所有的 Point 方法都应该使用指针接收者</p>
+<p>命名类型（Point）与指向它的指针（*Point）是唯一可以出现在接收者处声明的类型。而且。为了防止混淆，不允许本身是指针的类型进行方法声明</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">type</span> P <span style="color:#000;font-weight:bold">*</span><span style="color:#458;font-weight:bold">int</span>
+
+<span style="color:#000;font-weight:bold">func</span> (P) <span style="color:#900;font-weight:bold">f</span>() { <span style="color:#998;font-style:italic">/*...*/</span> }    <span style="color:#998;font-style:italic">// 编译错误，非法的接收者类型
+</span></code></pre></div><p>通过提供 *Point 能够调用 (*Point).ScaleBy 方法。以下均输出 &ldquo;{2, 4}&rdquo;</p>
+<div class="book-columns flex flex-wrap">
+  
+  <div class="flex-even markdown-inner">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">r <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">&amp;</span>Point{<span style="color:#099">1</span>, <span style="color:#099">2</span>}
+r.<span style="color:#900;font-weight:bold">ScaleBy</span>(<span style="color:#099">2</span>)
+fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#000;font-weight:bold">*</span>r)
+</code></pre></div>
+  </div>
+  
+  <div class="flex-even markdown-inner">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">p <span style="color:#000;font-weight:bold">:=</span> Point{<span style="color:#099">1</span>, <span style="color:#099">2</span>}
+pptr <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">&amp;</span>p
+pptr.<span style="color:#900;font-weight:bold">ScaleBy</span>(<span style="color:#099">2</span>)
+fmt.<span style="color:#900;font-weight:bold">Println</span>(p)
+</code></pre></div>
+  </div>
+  
+  <div class="flex-even markdown-inner">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">p <span style="color:#000;font-weight:bold">:=</span> Point{<span style="color:#099">1</span>, <span style="color:#099">2</span>}
+(<span style="color:#000;font-weight:bold">&amp;</span>p).<span style="color:#900;font-weight:bold">ScaleBy</span>(<span style="color:#099">2</span>)
+fmt.<span style="color:#900;font-weight:bold">Println</span>(p)
+</code></pre></div>
+  </div>
+  
+</div>
+
+<p>如果接收者 p 是 Point 类型的变量，但方法要求一个 *Point 接收者，可以使用简写 <code>p.ScaleBy(2)</code></p>
+<p>实际上编译器会对变量进行 &amp;p 的隐式转换。只有变量才允许这么做，包括结构体字段。不能对一个不能取地址的 Point 接收者参数调用 *Point 方法，因为无法获取临时变量的地址。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">Point{<span style="color:#099">1</span>, <span style="color:#099">2</span>}.<span style="color:#900;font-weight:bold">ScaleBy</span>(<span style="color:#099">2</span>)  <span style="color:#998;font-style:italic">// 编译错误，不能获取 Point 类型字面量的地址
+</span></code></pre></div><p>但是如果实参接收者是 *Point 类型，以 Point.Distance 的方式调用 Point 类型的方法是合法的，因为有办法从地址中获取 Point 的值；只要解析引用指向接收值的指针值即可。编译器会自动插入一个隐式的 * 操作符。下面两个函数的调用效果是一样的</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">pptr.<span style="color:#900;font-weight:bold">Distance</span>(q)
+(<span style="color:#000;font-weight:bold">*</span>pptr).<span style="color:#900;font-weight:bold">Distance</span>(q)
+</code></pre></div>
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

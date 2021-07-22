@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <h3 id="docker-子命令分类">Docker 子命令分类</h3>
+<table>
+<thead>
+<tr>
+<th>子命令分类</th>
+<th>子命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker 环境信息</td>
+<td>info、version</td>
+</tr>
+<tr>
+<td>容器生命周期管理</td>
+<td>Create、exec、kill、pause、restart、rm、run、start、stop、unpause</td>
+</tr>
+<tr>
+<td>镜像仓库命令</td>
+<td>login、logout、pull、push、search</td>
+</tr>
+<tr>
+<td>镜像管理</td>
+<td>build、images、import、load、rmi、save、tag、commit</td>
+</tr>
+<tr>
+<td>容器运维操作</td>
+<td>attach、export、inspect、port、ps、rename、stats、top、wait、cp、diff、update</td>
+</tr>
+<tr>
+<td>容器资源管理</td>
+<td>volume、network</td>
+</tr>
+<tr>
+<td>系统日志信息</td>
+<td>events、history、logs</td>
+</tr>
+</tbody>
+</table>
+<p><strong>docker ps 命令</strong></p>
+<p>docker ps 命令可以查看容器的相关信息，默认只显示只在运行的容器的信息，<br>
+可以查看到的信息包括</p>
+<ul>
+<li>CONTAINER ID</li>
+<li>NAMES</li>
+<li>IMAGE</li>
+<li>STATUS</li>
+<li>容器启动后执行的 COMMAND</li>
+<li>创建时间 CREATED</li>
+<li>绑定的端口 PORTS</li>
+</ul>
+<p>docker ps 命令最常用的功能就是查看容器的 CONTAINER ID，以便对特定容器进行操作</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">docker ps <span style="color:#000;font-weight:bold">[</span>OPTIONS<span style="color:#000;font-weight:bold">]</span>
+</code></pre></div><p>常用的选项有 -a 和 -l。</p>
+<ul>
+<li>
+<p>-a 参数查看所有容器，包括停止的容器；</p>
+</li>
+<li>
+<p>-l 选项只查看最新创建的容器，包括不在运行中的容器</p>
+</li>
+</ul>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

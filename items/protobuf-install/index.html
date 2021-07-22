@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <p>新版本</p>
+<p>google protobuf-3.6.1是现在最新版本，添加了新的特性，看说明</p>
+<p>下载地址 <a href="https://github.com/protocolbuffers/protobuf/releases">https://github.com/protocolbuffers/protobuf/releases</a></p>
+<p>我下载的是protobuf-all-3.6.1.tar.gz 包</p>
+<p>新版本不需要执行autogen.sh脚本，直接./configure就行</p>
+<pre><code>tar zvxf protobuf-all-3.6.1.tar.gz
+cd protobuf-3.6.1
+
+./configure –prefix=/usr/local/
+
+sudo make  # 要编译很久
+sudo make check
+sudo make install
+</code></pre>
+<p>编译安装protobuf的编译器protoc</p>
+<pre><code>wget https://github.com/google/protobuf/releases/download/v3.6.1/protobuf-all-3.6.1.tar.gz
+tar zxvf protobuf-all-3.6.1.tar.gz
+./autogen.sh
+./configure
+make
+make install
+</code></pre>
+<p>错误处理</p>
+<p>1、./autogen.sh执行报错./autogen.sh: line 38: autoreconf: command not found</p>
+<pre><code>安装autoconf和automake
+yum -y install gcc automake autoconf libtool make
+
+安装g++:
+yum install gcc gcc-c++
+</code></pre>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>
