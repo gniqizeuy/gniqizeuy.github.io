@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <h4 id="进程间通信">进程间通信</h4>
+<p>尽管今天的大多数RPC技术已经不再追求这个目标了，但不可否认，RPC出现的最初目
+的，就是为了让计算机能够与调用本地方法一样去调用远程方法。所以，我们先来看一下调
+用本地方法时，计算机是如何处理的。笔者通过以下这段Java风格的伪代码来定义几个稍后
+要用到的概念：</p>
+<blockquote>
+<p>// Caller : 调用者，代码里的main()<br>
+// Callee ： 被调用者，代码里的println()<br>
+// Call Site ： 调用点，即发生方法调用的指令流位置<br>
+// Parameter ： 参数，由Caller传递给Callee的数据，即“hello world”<br>
+// Retval ： 返回值，由Callee传递给Caller的数据，如果方法能够正常结束，它是void，<br>
+如果方法异常完成，它是对应的异常<br>
+public static void main(String[] args) {<br>
+System.out.println(&ldquo;hello world&rdquo;);<br>
+}</p>
+</blockquote>
+<p>在完全不考虑编译器优化的前提下，程序运行至调用println()方法输出hello world这行
+时，计算机（物理机或者虚拟机）要完成以下几项工作。</p>
+<p>1）传递方法参数：将字符串hello world的引用地址压栈。
+2）确定方法版本：根据println()方法的签名，确定其执行版本。这其实并不是一个简单
+的过程，无论是编译时静态解析，还是运行时动态分派，都必须根据某些语言规范中明确定
+义的原则，找到明确的Callee，“明确”是指唯一的一个Callee，或者有严格优先级的多个
+Callee，譬如不同的重载版本。笔者曾在《深入理解Java虚拟机》的第8章介绍该过程，有兴
+趣的读者可以参考，这里不再赘述。</p>
+<p>3）执行被调方法：从栈中弹出Parameter的值或引用，并以此为输入，执行Callee内部的
+逻辑。这里我们只关心方法是如何调用的，而不关心方法内部具体是如何执行的。
+4）返回执行结果：将Callee的执行结果压栈，并将程序的指令流恢复到Call Site的下一
+条指令，继续向下执行。</p>
+<p>我们再来考虑如果println()方法不在当前进程的内存地址空间中会发生什么问题。不难
+想到，这样会至少面临两个直接的障碍。首先，第一步和第四步所做的传递参数、传回结果
+都依赖于栈内存，如果Caller与Callee分属不同的进程，就不会拥有相同的栈内存，此时将参
+数在Caller进程的内存中压栈，对于Callee进程的执行毫无意义。其次，第二步的方法版本选
+择依赖于语言规则，如果Caller与Callee不是同一种语言实现的程序，方法版本选择就将是一
+项模糊的不可知行为。</p>
+<p>为了简化讨论，我们暂时忽略第二个障碍，假设Caller与Callee是使用同一种语言实现
+的，先来解决两个进程之间如何交换数据的问题，这件事情在计算机科学中被称为“进程间
+通信”（Inter-Process Communication，IPC）。可以考虑的解决办法有以下几种。</p>
+<p>·<strong>管道</strong>（Pipe）或者<strong>具名管道</strong>（Named Pipe）：管道类似于两个进程间的桥梁，可通过管
+道在进程间传递少量的字符流或字节流。普通管道只用于有亲缘关系的进程（由一个进程启
+动的另外一个进程）间的通信，具名管道摆脱了普通管道没有名字的限制，除具有管道的所
+有功能外，它还允许无亲缘关系的进程间的通信。管道典型的应用就是命令行中的“|”操作
+符，譬如：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ps -ef | grep java
+</code></pre></div><p>ps与grep都有独立的进程，以上命令就是通过管道操作符“|”将ps命令的标准输出连接到
+grep命令的标准输入上。
+·<strong>信号</strong>（Signal）：信号用于通知目标进程有某种事件发生。除了进程间通信外，进程还
+可以给进程自身发送信号。信号的典型应用是kill命令，譬如：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">kill</span> -9 pid
+</code></pre></div><p>以上命令即表示由Shell进程向指定PID的进程发送SIGKILL信号。</p>
+<p>·<strong>信号量</strong>（Semaphore）：信号量用于在两个进程之间同步协作手段，它相当于操作系统
+提供的一个特殊变量，程序可以在上面进行wait()和notify()操作。</p>
+<p>·<strong>消息队列</strong>（Message Queue）：以上三种方式只适合传递少量消息，POSIX标准中定义
+了可用于进程间数据量较多的通信的消息队列。进程可以向队列添加消息，被赋予读权限的
+进程还可以从队列消费消息。消息队列克服了信号承载信息量少、管道只能用于无格式字节
+流以及缓冲区大小受限等缺点，但实时性相对受限。</p>
+<p>·<strong>共享内存</strong>（Shared Memory）：允许多个进程访问同一块公共内存空间，这是效率最高
+的进程间通信形式。原本每个进程的内存地址空间都是相互隔离的，但操作系统提供了让进
+程主动创建、映射、分离、控制某一块内存的程序接口。当一块内存被多进程共享时，各个
+进程往往会与其他通信机制，譬如与信号量结合使用，来达到进程间同步及互斥的协调操
+作。</p>
+<p>·<strong>本地套接字接口</strong>（IPC Socket）：消息队列与共享内存只适合单机多进程间的通信，套
+接字接口则是更普适的进程间通信机制，可用于不同机器之间的进程通信。套接字
+（Socket）起初是由UNIX系统的BSD分支开发出来的，现在已经移植到所有主流的操作系
+统上。出于效率考虑，当仅限于本机进程间通信时，套接字接口是被优化过的，不会经过网
+络协议栈，不需要打包拆包、计算校验和、维护序号和应答等操作，只是简单地将应用层数
+据从一个进程复制到另一个进程，这种进程间通信方式即本地套接字接口（UNIX Domain
+Socket），又叫作IPC Socket。</p>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

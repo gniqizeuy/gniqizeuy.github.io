@@ -6,14 +6,38 @@
     <description>Recent content on gniqizeuy blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://gniqizeuy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://gniqizeuy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>interprocess communication</title>
+      <link>https://gniqizeuy.github.io/items/interprocess-communication/</link>
+      <pubDate>Sun, 18 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/interprocess-communication/</guid>
+      <description>进程间通信 尽管今天的大多数RPC技术已经不再追求这个目标了，但不可否认，RPC出现的最初目 的，就是为了让计算机能够与调用本地方法一样去调用远程方法。所以，我们先来看一下调 用本地方法时，计算机是如何处理的。笔者通过以下这段Java风格的伪代码来定义几个稍后 要用到的概念：
+ // Caller : 调用者，代码里的main()
+// Callee ： 被调用者，代码里的println()
+// Call Site ： 调用点，即发生方法调用的指令流位置
+// Parameter ： 参数，由Caller传递给Callee的数据，即“hello world”
+// Retval ： 返回值，由Callee传递给Caller的数据，如果方法能够正常结束，它是void，
+如果方法异常完成，它是对应的异常
+public static void main(String[] args) {
+System.out.println(&amp;ldquo;hello world&amp;rdquo;);
+}
+ 在完全不考虑编译器优化的前提下，程序运行至调用println()方法输出hello world这行 时，计算机（物理机或者虚拟机）要完成以下几项工作。
+1）传递方法参数：将字符串hello world的引用地址压栈。 2）确定方法版本：根据println()方法的签名，确定其执行版本。这其实并不是一个简单 的过程，无论是编译时静态解析，还是运行时动态分派，都必须根据某些语言规范中明确定 义的原则，找到明确的Callee，“明确”是指唯一的一个Callee，或者有严格优先级的多个 Callee，譬如不同的重载版本。笔者曾在《深入理解Java虚拟机》的第8章介绍该过程，有兴 趣的读者可以参考，这里不再赘述。
+3）执行被调方法：从栈中弹出Parameter的值或引用，并以此为输入，执行Callee内部的 逻辑。这里我们只关心方法是如何调用的，而不关心方法内部具体是如何执行的。 4）返回执行结果：将Callee的执行结果压栈，并将程序的指令流恢复到Call Site的下一 条指令，继续向下执行。
+我们再来考虑如果println()方法不在当前进程的内存地址空间中会发生什么问题。不难 想到，这样会至少面临两个直接的障碍。首先，第一步和第四步所做的传递参数、传回结果 都依赖于栈内存，如果Caller与Callee分属不同的进程，就不会拥有相同的栈内存，此时将参 数在Caller进程的内存中压栈，对于Callee进程的执行毫无意义。其次，第二步的方法版本选 择依赖于语言规则，如果Caller与Callee不是同一种语言实现的程序，方法版本选择就将是一 项模糊的不可知行为。
+为了简化讨论，我们暂时忽略第二个障碍，假设Caller与Callee是使用同一种语言实现 的，先来解决两个进程之间如何交换数据的问题，这件事情在计算机科学中被称为“进程间 通信”（Inter-Process Communication，IPC）。可以考虑的解决办法有以下几种。
+·管道（Pipe）或者具名管道（Named Pipe）：管道类似于两个进程间的桥梁，可通过管 道在进程间传递少量的字符流或字节流。普通管道只用于有亲缘关系的进程（由一个进程启 动的另外一个进程）间的通信，具名管道摆脱了普通管道没有名字的限制，除具有管道的所 有功能外，它还允许无亲缘关系的进程间的通信。管道典型的应用就是命令行中的“|”操作 符，譬如：</description>
+    </item>
+    
     <item>
       <title>grpc 的通信模式</title>
       <link>https://gniqizeuy.github.io/items/communication/</link>
       <pubDate>Sun, 04 Jul 2021 00:00:00 +0000</pubDate>
       
       <guid>https://gniqizeuy.github.io/items/communication/</guid>
-      <description></description>
+      <description>gRPC 应用程序有 4 种基础通信模式：一元 RPC、服务器端流 RPC、客户端流 RPC 以及双向流 RPC。</description>
     </item>
     
     <item>
@@ -22,20 +46,54 @@
       <pubDate>Sun, 04 Jul 2021 00:00:00 +0000</pubDate>
       
       <guid>https://gniqizeuy.github.io/items/protoc/</guid>
-      <description></description>
+      <description>protoc 编译 编译命令
+# Syntax: protoc [OPTION] PROTO_FILES $ protoc --proto_path=IMPORT_PATH --go_out=OUT_DIR --go_opt=paths=source_relative path/to/file.proto  –proto_path或者-I ：指定 import 路径，可以指定多个参数，编译时按顺序查找，不指定时默认查找当前目录。 .proto 文件中也可以引入其他 .proto 文件，这里主要用于指定被引入文件的位置。 –go_out：golang编译支持，指定输出文件路径
+其他语言则替换即可，比如 &amp;ndash;java_out 等等 –go_opt：指定参数，比如&amp;ndash;go_opt=paths=source_relative就是表明生成文件输出使用相对路径。 path/to/file.proto ：被编译的 .proto 文件放在最后面  </description>
+    </item>
+    
+    <item>
+      <title>npm</title>
+      <link>https://gniqizeuy.github.io/items/npm/</link>
+      <pubDate>Thu, 01 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/npm/</guid>
+      <description>npm install 命令 npm 安装指定版本 -S 相当于 --save
+npm install express@3.21.2 -S # 安装模块到项目目录下 npm install moduleName # -g 的意思是将模块安装到全局，具体安装到磁盘哪个位置，要看 npm config prefix 的位置。 npm install -g moduleName # -save 的意思是将模块安装到项目目录下，并在package文件的dependencies节点写入依赖。 # 运行npm install --production或者注明NODE_ENV变量值为production时，会自动下载模块到node_modules目录中。 npm install -save moduleName # -save-dev 的意思是将模块安装到项目目录下，并在package文件的devDependencies节点写入依赖。 # 运行npm install --production或者注明NODE_ENV变量值为production时，不会自动下载模块到node_modules目录中。 npm install -save-dev moduleName devDependencies 节点下的模块是开发时需要用的，比如项目中使用的 gulp ，压缩css、js的模块。 这些模块在我们的项目部署后是不需要的，所以我们可以使用 -save-dev 的形式安装。
+像 express 这些模块是项目运行必备的，应该安装在 dependencies 节点下，所以我们应该使用 -save 的形式安装。</description>
     </item>
     
     <item>
       <title>git proxy</title>
-      <link>https://gniqizeuy.github.io/items/proxy/</link>
+      <link>https://gniqizeuy.github.io/items/git-proxy/</link>
       <pubDate>Wed, 30 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://gniqizeuy.github.io/items/proxy/</guid>
-      <description>Git配置代理 http 方式 git clone 的方法分为 https | ssh 两种,而这两种的代理配置方式也是不同用的.
-对于 https | http 方式的链接
-全局配置
-# sock 方式 git config --global http.proxy socks5://127.0.0.1:7890 git config --global https.proxy socks5://127.0.0.1:7890 # http 方式 git config --global https.proxy http://127.0.0.1:7890 git config --global https.proxy https://127.0.0.1:7890 取消配置 git config --global --unset http.proxy git config --global --unset https.proxy 项目配置 # 首先需要进入一个 git 的本地仓库 git config https.proxy http://127.0.0.1:7890 git config https.proxy https://127.0.0.1:7890 ssh方式 windows 平台配置
-修改 ~/.</description>
+      <guid>https://gniqizeuy.github.io/items/git-proxy/</guid>
+      <description>HTTP 代理 HTTP 代理相对简单
+HTTP 代理 git config --global http.proxy http://127.0.0.1:7890git config --global https.proxy http://127.0.0.1:7890 Socks5 代理 git config --global http.proxy socks5://127.0.0.1:7890git config --global https.proxy socks5://127.0.0.1:7890 注意这里的 socks5 仅仅是代理使用的协议，它依然是针对 http 设置的，所以仅对 http 协议的仓库有效。使用 git@xxx 这种 ssh 连接的不会使用代理。
+也可以分域名设置代理：
+git config --global http.https://github.com.proxy http://127.0.0.1:7890git config --global https.https://github.com.proxy https://127.0.0.1:7890 SSH 代理 SSH 代理需要在密钥目录 (~/.ssh) (Windows 下是 C:\Users{UserName}.ssh) 新建一个 config 文件，没有后缀名。
+Linux 系统写入以下配置（未验证）：
+# 需要 netcatProxyCommand nc -v -x 127.</description>
+    </item>
+    
+    <item>
+      <title>golang mail</title>
+      <link>https://gniqizeuy.github.io/items/go-mail/</link>
+      <pubDate>Mon, 28 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/go-mail/</guid>
+      <description>package: net/mail
+验证邮箱格式
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;net/mail&amp;#34; ) func main() { for _, email := range []string{ &amp;#34;good@exmaple.com&amp;#34;, &amp;#34;bad-example&amp;#34;, } { fmt.Printf(&amp;#34;%18s valid: %t\n&amp;#34;, email, valid(email)) } } func valid(email string) bool { _, err := mail.ParseAddress(email) return err == nil } </description>
+    </item>
+    
+    <item>
+      <title>centos8 install erpnext</title>
+      <link>https://gniqizeuy.github.io/items/erpnext/</link>
+      <pubDate>Sun, 27 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/erpnext/</guid>
+      <description>系统源配置 dnf update -y yum install https://mirrors.aliyun.com/epel/epel-release-latest-8.noarch.rpm -y mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup mv /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel.repo.backup mv /etc/yum.repos.d/epel-testing.repo /etc/yum.repos.d/epel-testing.repo.backup wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo sed -i &amp;#39;s|^#baseurl=https://download.fedoraproject.org/pub|baseurl=https://mirrors.aliyun.com|&amp;#39; /etc/yum.repos.d/epel* sed -i &amp;#39;s|^metalink|#metalink|&amp;#39; /etc/yum.repos.d/epel* sed -i &amp;#39;$a\fastestmirror=True&amp;#39; /etc/dnf/dnf.conf touch /etc/yum.repos.d/MariaDB.repo echo [mariadb] &amp;gt; /etc/yum.repos.d/MariaDB.repo echo name = MariaDB &amp;gt;&amp;gt; /etc/yum.repos.d/MariaDB.repo echo baseurl = https://mirrors.aliyun.com/mariadb/yum/10.5/centos8-amd64 &amp;gt;&amp;gt; /etc/yum.repos.d/MariaDB.repo echo module_hotfixes=1 &amp;gt;&amp;gt; /etc/yum.repos.d/MariaDB.repo echo gpgkey= https://mirrors.aliyun.com/mariadb/yum/RPM-GPG-KEY-MariaDB &amp;gt;&amp;gt; /etc/yum.repos.d/MariaDB.repo echo gpgcheck=1 &amp;gt;&amp;gt; /etc/yum.repos.d/MariaDB.repo dnf clean all dnf makecache 系统配置 dnf group install &amp;#34;Development Tools&amp;#34; -y sed -i &amp;#39;/SELINUX/s/enforcing/disabled/&amp;#39; /etc/selinux/config &amp;amp;&amp;amp; setenforce 0 firewall-cmd --zone=public --add-port=80/tcp firewall-cmd --zone=public --add-port=443/tcp firewall-cmd --zone=public --add-port=8000/tcp firewall-cmd --runtime-to-permanent useradd -m erp -G wheel sed -i &amp;#39;s/^#\s*\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)/\1/&amp;#39; /etc/sudoers echo &amp;#34;vm.</description>
     </item>
     
     <item>
@@ -66,12 +124,61 @@ kill -9 6832</description>
     </item>
     
     <item>
+      <title>mutagen</title>
+      <link>https://gniqizeuy.github.io/items/mutagen/</link>
+      <pubDate>Sun, 27 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/mutagen/</guid>
+      <description>mutagen.io
+Installation Linux wget https://github.com/mutagen-io/mutagen/releases/download/v0.11.8/mutagen_linux_amd64_v0.11.8.tar.gz tar zxvf mutagen_linux_*.tar.gz -C /usr/local/bin mutagen daemon start Windows github issue: issue
+download tar.gz: amd64.v0.11.8.tar.gz ; add to path
+设置 MUTAGEN_SSH_PATH 变量指向 SSH 可执行文件的目录，暂不支持 Windows 的 SSH 客户端
+采用 git for windows 注意 git 安装地址为 C: 默认地址
+将 MUTAGEN_SSH_PATH 指向 GIT_INSTALL_ROOT\usr\bin
+create session mutagen sync create
+list session mutagen sync session
+在同步的情况下，此输出将包括在端点之间传播更改时出现的任何冲突或问题。
+mutagen forward list
+如果没有为列表命令指定会话或标签选择器，它们将简单地打印所有会话。更详细的清单输出可以通过 -l/——long 标志获得。
+monitor session mutagen sync monitor web-app
+mutagen forward monitor web-app</description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://gniqizeuy.github.io/items/hugo/</link>
+      <pubDate>Thu, 20 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/hugo/</guid>
+      <description>使用 yum 安装 hugo
+新建 hugo.repo 文件, 访问 https://copr.fedorainfracloud.org/coprs/daftaupe/hugo/ 选择合适版本
+vim /etc/yum.repos.d/hugo.repo 更新 yum
+yum upgrade 安装 hugo
+yum install hugo </description>
+    </item>
+    
+    <item>
       <title>other</title>
       <link>https://gniqizeuy.github.io/items/other/</link>
       <pubDate>Thu, 20 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://gniqizeuy.github.io/items/other/</guid>
       <description>vue-cli3 控制台network存在 info 服务端：sockjs-node
+客户端：sockjs-clien
+如果你的项目没有用到 sockjs，vuecli3 运行 npm run serve 之后 network 里面一直一个接口：http://localhost:8080/sockjs-node/info?t=1462183700002
+关闭info 1.找到/node_modules/sockjs-client/dist/sockjs.js
+2.注释下面代码
+try { // self.xhr.send(payload);  } catch (e) { self.emit(&amp;#39;finish&amp;#39;, 0, &amp;#39;&amp;#39;); self._cleanup(false); } </description>
+    </item>
+    
+    <item>
+      <title>vue.js</title>
+      <link>https://gniqizeuy.github.io/vue/</link>
+      <pubDate>Thu, 20 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/vue/</guid>
+      <description>proxy vue 查看代理请求的真实地址 在文件 vue.config.js 文件里面找到 proxyTable 添加配置。
+&amp;#39;/api&amp;#39;: { traget: url, changeOrigin: true loglevel: &amp;#39;debug&amp;#39; } vue-cli3 控制台network存在 info 服务端：sockjs-node
 客户端：sockjs-clien
 如果你的项目没有用到 sockjs，vuecli3 运行 npm run serve 之后 network 里面一直一个接口：http://localhost:8080/sockjs-node/info?t=1462183700002
 关闭info 1.找到/node_modules/sockjs-client/dist/sockjs.js
@@ -126,10 +233,10 @@ var w io.Writer w := os.</description>
     
     <item>
       <title>docker command</title>
-      <link>https://gniqizeuy.github.io/items/docker-cmd/</link>
+      <link>https://gniqizeuy.github.io/items/docker/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://gniqizeuy.github.io/items/docker-cmd/</guid>
+      <guid>https://gniqizeuy.github.io/items/docker/</guid>
       <description>Docker 子命令分类    子命令分类 子命令     Docker 环境信息 info、version   容器生命周期管理 Create、exec、kill、pause、restart、rm、run、start、stop、unpause   镜像仓库命令 login、logout、pull、push、search   镜像管理 build、images、import、load、rmi、save、tag、commit   容器运维操作 attach、export、inspect、port、ps、rename、stats、top、wait、cp、diff、update   容器资源管理 volume、network   系统日志信息 events、history、logs    docker ps 命令
 docker ps 命令可以查看容器的相关信息，默认只显示只在运行的容器的信息，
 可以查看到的信息包括
@@ -236,51 +343,6 @@ wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.5.tar.xz tar x
 export PATH=$PATH:/usr/local/git/bin source /etc/profile 查看版本
 git version git version 2.9.5  注意：但是如果缺少了nss包的话，在拉取以https开头的URL地址时就会有以下的几个异常信息；
  fatal: Unable to find remote helper for ‘https’fatal: unable to access ‘https://github.com/fatih/vim-go.git/‘: SSL connect error 可以执行安装:</description>
-    </item>
-    
-    <item>
-      <title>docker timezone</title>
-      <link>https://gniqizeuy.github.io/items/docker-time/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://gniqizeuy.github.io/items/docker-time/</guid>
-      <description>查看容器时间
-docker exec -it xxx date 查看本地时区文件
-ls -l /etc/localtime 拷贝本地时区文件
-docker cp xxx xxx:/etc/localtime </description>
-    </item>
-    
-    <item>
-      <title>hugo install</title>
-      <link>https://gniqizeuy.github.io/items/hugo-install/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://gniqizeuy.github.io/items/hugo-install/</guid>
-      <description>使用 yum 安装 hugo
-新建 hugo.repo 文件, 访问 https://copr.fedorainfracloud.org/coprs/daftaupe/hugo/ 选择合适版本
-vim /etc/yum.repos.d/hugo.repo 更新 yum
-yum upgrade 安装 hugo
-yum install hugo </description>
-    </item>
-    
-    <item>
-      <title>mutagen</title>
-      <link>https://gniqizeuy.github.io/items/mutagen/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://gniqizeuy.github.io/items/mutagen/</guid>
-      <description>mutagen.io
-Installation Linuxwget https://github.com/mutagen-io/mutagen/releases/download/v0.11.8/mutagen_linux_amd64_v0.11.8.tar.gz
-tar zxvf mutagen_linux_*.tar.gz -C /usr/local/bin
-mutagen daemon start #启动
-Windowsgithub issue: issue
-download tar.gz: amd64.v0.11.8.tar.gz ; add to path
-设置 MUTAGEN_SSH_PATH 变量指向 SSH 可执行文件的目录，暂不支持 Windows 的 SSH 客户端
-采用 git for windows 注意 git 安装地址为 C: 默认地址
-将 MUTAGEN_SSH_PATH 指向 GIT_INSTALL_ROOT\usr\bin
-create session mutagen sync create
-list session mutagen sync session
-monitor session mutagen sync monitor</description>
     </item>
     
     <item>

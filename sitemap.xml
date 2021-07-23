@@ -2,31 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://gniqizeuy.github.io/</loc>
+    <lastmod>2021-07-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/items/interprocess-communication/</loc>
+    <lastmod>2021-07-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/items/</loc>
+    <lastmod>2021-07-18T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://gniqizeuy.github.io/items/communication/</loc>
     <lastmod>2021-07-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/protoc/</loc>
     <lastmod>2021-07-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://gniqizeuy.github.io/</loc>
-    <lastmod>2021-07-04T00:00:00+00:00</lastmod>
+    <loc>https://gniqizeuy.github.io/items/npm/</loc>
+    <lastmod>2021-07-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://gniqizeuy.github.io/items/</loc>
-    <lastmod>2021-07-04T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://gniqizeuy.github.io/items/proxy/</loc>
+    <loc>https://gniqizeuy.github.io/items/git-proxy/</loc>
     <lastmod>2021-06-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/items/go-mail/</loc>
+    <lastmod>2021-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/items/erpnext/</loc>
+    <lastmod>2021-06-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/port/</loc>
     <lastmod>2021-06-27T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://gniqizeuy.github.io/items/mutagen/</loc>
+    <lastmod>2021-06-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://gniqizeuy.github.io/categories/</loc>
+    <lastmod>2021-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/items/hugo/</loc>
     <lastmod>2021-05-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/other/</loc>
     <lastmod>2021-05-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/categories/vue/</loc>
+    <lastmod>2021-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/vue/</loc>
     <lastmod>2021-05-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/categories/go/</loc>
@@ -44,7 +65,7 @@
     <loc>https://gniqizeuy.github.io/categories/docker/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://gniqizeuy.github.io/items/docker-cmd/</loc>
+    <loc>https://gniqizeuy.github.io/items/docker/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/go-goroutine-channel/</loc>
@@ -84,12 +105,6 @@
     <lastmod>2019-10-09T12:13:32+02:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/centos-git/</loc>
-  </url><url>
-    <loc>https://gniqizeuy.github.io/items/docker-time/</loc>
-  </url><url>
-    <loc>https://gniqizeuy.github.io/items/hugo-install/</loc>
-  </url><url>
-    <loc>https://gniqizeuy.github.io/items/mutagen/</loc>
   </url><url>
     <loc>https://gniqizeuy.github.io/sites/</loc>
   </url><url>
