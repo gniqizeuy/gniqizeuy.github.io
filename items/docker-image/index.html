@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <p>镜像是 docker 容器的基石，容器是镜像的运行实例。</p>
+<h4 id="构建镜像">构建镜像</h4>
+<p>docker 提供两种创建镜像的方法：docker commit 命令和 Dockerfile 构建文件</p>
+<h5 id="docker-commit">docker commit</h5>
+<p>docker commit 命令是创建镜像最直观的方法，其过程包括三个步骤：</p>
+<ul>
+<li>运行容器</li>
+<li>修改容器</li>
+<li>将容器保存为新的镜像</li>
+</ul>
+<p>例: 在 ubuntu base 镜像中安装 vi 并保存为新镜像</p>
+<pre><code># -it 以交互模式进入容器内部
+[root@ubuntu ~]# docker run -it ubuntu
+root@a42d1b27e5c2:/# apt-get install -y vim
+
+# 将随机分配的名字ecstatic_galileo 构建成 ubuntu-with-vi
+[root@ubuntu ~]# docker commit ecstatic_galileo ubuntu-with-vi
+</code></pre><p>Docker 并不建议用户通过这种方式构建镜像：</p>
+<ol>
+<li>这是一种手工构建方式，容易出错，效率低且可靠性弱</li>
+<li>用户并不知道镜像是如何构建出来的，里面是否有恶意程序，无法对镜像进行审核，存在安全隐患</li>
+</ol>
+<p>使用 Dockerfile 构建镜像底层也是以 docker commit 一层层构建新镜像的</p>
+<h5 id="dockerfile">Dockerfile</h5>
+<p>Dockerfile 是一个文本文件，记录了镜像构建的所有步骤</p>
+<p>使用 Dockerfile 创建 ubuntu-with-vi</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#000;font-weight:bold">FROM</span><span style="color:#d14"> ubuntu</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000;font-weight:bold">RUN</span> apt-get update <span style="color:#000;font-weight:bold">&amp;&amp;</span> apt-get install -y vim<span style="color:#a61717;background-color:#e3d2d2">
+</span></code></pre></div>
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

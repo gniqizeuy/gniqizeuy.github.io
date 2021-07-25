@@ -9,11 +9,22 @@
     <lastBuildDate>Fri, 02 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://gniqizeuy.github.io/tags/spring/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Spring Security</title>
-      <link>https://gniqizeuy.github.io/posts/spring-security/</link>
+      <link>https://gniqizeuy.github.io/items/spring-security/</link>
       <pubDate>Fri, 02 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://gniqizeuy.github.io/posts/spring-security/</guid>
-      <description>&lt;p&gt;dfadsfa&lt;/p&gt;</description>
+      <guid>https://gniqizeuy.github.io/items/spring-security/</guid>
+      <description>任何 Spring Web 应用本质上只是一个 servlet
+Security Filter 在 HTTP 请求到达 controller 之前过滤每一个传入的 HTTP 请求
+过滤链
+认识 Spring Security Spring Security 提供了声明式的安全访问控制解决方案（仅支持 Spring 的应用程序），对访问权限进行认证和授权，它基于 Spring Aop 和 Servlet 过滤器，提供了安全性方面的全面解决方案。
+除常规的认证和授权外，它还提供了 ACls、LDAP、JAAS、CAS 等高级特性以满足复杂环境下的安全需求。
+1. 核心概念  Principle：代表用户的对象 Principle（User），不仅指用户，还包括一切可以用于验证的设备。 Authority：代表用户的角色 Authority（Role），每个用户都应该有一种角色，如管理员或是会员。 Permission：代表授权，复杂的应用环境需要对角色的权限进行表述。  在 Spring Security 中，Authority 和 Permission 是两个完全独立的概念，两者并没有必然的联系，它们之间需要通过配置进行关联，可以是自己定义的各种关系。
+2. 认证和授权 安全主要分为验证（authentication）和授权（authorization）两个部分
+1）验证（authentication） 验证指的是，建立系统使用者信息（principal）的过程。使用者可以是一个用户、设备、和可以在应该程序种执行某些操作的其他系统。
+用过户认证一般要求用户提供用户名和密码，系统通过校验用户名和密码的正确性来完成认证的通过或拒绝过程。
+Spring Security 支持主流的认证方式，包括 HTTP 基本认证、HTTP 表单验证、HTTP 摘要验证、OPenID 和 LDAP 等。
+Spring Security 进行验证的步骤如下：
+ 用户使用用户名和密码登录 过滤器（UsernamePasswordAuthenticationFilter）获取到用户名、密码、然后封装成 Authentication。 AuthenticationManager 认证 token（Authentication的实现类传递）。 AuthenticationManager 认证成功，返回一个封装了用户权限信息的 Authentication 对象，用户的上下文信息（角色列表等）。 Authentication 对象赋值给当前的 SecurityContext，建立这个用户的安全上下文（通过调用 SecurityContextHolder.</description>
     </item>
     
   </channel>

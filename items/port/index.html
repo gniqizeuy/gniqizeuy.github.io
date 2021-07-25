@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <h4 id="centos8停用启用查看当前启用的端口">Centos8停用、启用、查看当前启用的端口</h4>
+<p><code>firewall-cmd --zone=public --add-port=5672/tcp --permanent</code>  # 开放5672端口</p>
+<p><code>firewall-cmd --zone=public --remove-port=5672/tcp --permanent</code> #关闭5672端口</p>
+<p><code>firewall-cmd --reload</code>  # 配置立即生效</p>
+<p>2、查看防火墙所有开放的端口</p>
+<p><code>firewall-cmd --zone=public --list-ports</code></p>
+<p>3.、关闭防火墙</p>
+<p>如果要开放的端口太多，嫌麻烦，可以关闭防火墙，安全性自行评估</p>
+<p><code>systemctl stop firewalld.service</code></p>
+<p>4、查看防火墙状态</p>
+<p><code>firewall-cmd --state</code></p>
+<p>5、查看监听的端口</p>
+<p><code>netstat -lnpt</code></p>
+<p>PS:centos7默认没有 netstat 命令，需要安装 net-tools 工具，yum install -y net-tools</p>
+<p>6、检查端口被哪个进程占用</p>
+<p>netstat -lnpt |grep 5672</p>
+<p>7、查看进程的详细信息</p>
+<p>ps 6832</p>
+<p>8、中止进程</p>
+<p>kill -9 6832</p>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

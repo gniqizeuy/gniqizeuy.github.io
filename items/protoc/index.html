@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <p>protoc 编译
+编译命令</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a61717;background-color:#e3d2d2">#</span> Syntax: protoc [OPTION] PROTO_FILES
+<span style="color:#a61717;background-color:#e3d2d2">$</span> protoc <span style="color:#000;font-weight:bold">--</span>proto_path=IMPORT_PATH  <span style="color:#000;font-weight:bold">--</span>go_out=OUT_DIR  <span style="color:#000;font-weight:bold">--</span>go_opt=paths=source_relative path<span style="color:#000;font-weight:bold">/</span>to<span style="color:#000;font-weight:bold">/</span>file.proto
+</code></pre></div><ul>
+<li>–proto_path或者-I ：指定 import 路径，可以指定多个参数，编译时按顺序查找，不指定时默认查找当前目录。</li>
+<li>.proto 文件中也可以引入其他 .proto 文件，这里主要用于指定被引入文件的位置。</li>
+<li>–go_out：golang编译支持，指定输出文件路径<br>
+其他语言则替换即可，比如 &ndash;java_out 等等</li>
+<li>–go_opt：指定参数，比如&ndash;go_opt=paths=source_relative就是表明生成文件输出使用相对路径。</li>
+<li>path/to/file.proto ：被编译的 .proto 文件放在最后面</li>
+</ul>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <h2 id="proxy">proxy</h2>
+<h3 id="vue-查看代理请求的真实地址">vue 查看代理请求的真实地址</h3>
+<p>在文件 vue.config.js 文件里面找到 proxyTable 添加配置。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#d14">&#39;/api&#39;</span><span style="color:#000;font-weight:bold">:</span> {
+    traget<span style="color:#000;font-weight:bold">:</span> url,
+    changeOrigin<span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">true</span>
+    loglevel<span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#39;debug&#39;</span>
+}
+</code></pre></div><h3 id="vue-cli3-控制台network存在-info">vue-cli3 控制台network存在 info</h3>
+<p>服务端：<a href="https://github.com/sockjs/sockjs-node">sockjs-node</a><br>
+客户端：<a href="https://github.com/sockjs/sockjs-client">sockjs-clien</a></p>
+<p>如果你的项目没有用到 sockjs，vuecli3 运行 npm run serve 之后 network 里面一直一个接口：http://localhost:8080/sockjs-node/info?t=1462183700002</p>
+<h4 id="关闭info">关闭info</h4>
+<p>1.找到/node_modules/sockjs-client/dist/sockjs.js</p>
+<p>2.注释下面代码</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">    <span style="color:#000;font-weight:bold">try</span> {
+    <span style="color:#998;font-style:italic">//  self.xhr.send(payload);
+</span><span style="color:#998;font-style:italic"></span>    } <span style="color:#000;font-weight:bold">catch</span> (e) {
+    self.emit(<span style="color:#d14">&#39;finish&#39;</span>, <span style="color:#099">0</span>, <span style="color:#d14">&#39;&#39;</span>);
+    self.<span style="color:#099">_</span>cleanup(<span style="color:#000;font-weight:bold">false</span>);
+    }
+</code></pre></div>
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>
