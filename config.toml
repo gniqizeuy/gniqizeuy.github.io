@@ -1,0 +1,23 @@
+baseURL = "https://gniqizeuy.github.io/"
+languageCode = "en-us"
+title = "gniqizeuy blog"
+theme = "hugonews"
+paginate = 20
+
+[taxonomies]
+tag = "tags"
+category = "categories"
+site = "sites"
+
+[markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ""
+    lineAnchors = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "github"
+    tabWidth = 4
