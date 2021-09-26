@@ -1,15 +1,9 @@
-+++
-title = "go function"
-description = "go 方法"
-
-date = "2021-05-02"
-categories = [
-"Go"
-]
-
-menu = "main"
-
-+++
+---
+title: "go function"
+date: 2021-05-02
+draft: false
+tags: ["go"]
+---
 
 ### 方法声明
 

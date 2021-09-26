@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <h3 id="ssh-服务异常">ssh 服务异常</h3>
+<p>ssh failed to start OpenSSH Server daemon</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sshd -t
+</code></pre></div><p>提示服务无法加载ssh_host_rsa_key,ssh_host_ecdsa_key 推测估计是权限问题</p>
+<p>尝试以下方法</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">chmod <span style="color:#099">600</span> /etc/ssh/ssh_host_rsa_key
+chmod <span style="color:#099">600</span> /etc/ssh/ssh_host_ecdsa_ke
+service sshd star
+
+<span style="color:#998;font-style:italic"># 方法2：或者尝试操作如下</span>
+chown -R root.root /var/empty/sshd
+chmod <span style="color:#099">744</span> /var/empty/sshd
+service sshd restart
+</code></pre></div>
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

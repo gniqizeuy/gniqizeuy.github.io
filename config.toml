@@ -21,3 +21,7 @@ site = "sites"
     noClasses = true
     style = "github"
     tabWidth = 4
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

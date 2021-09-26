@@ -1,15 +1,9 @@
-+++
-title = "go composite data"
-description = "go 复合数据类型"
-
-date = "2021-04-12"
-categories = [
-"Go"
-]
-
-menu = "main"
-
-+++
+---
+title: "go composite data"
+date: 2021-04-12
+draft: false
+tags: ["go"]
+---
 
 ## 复合数据类型
 

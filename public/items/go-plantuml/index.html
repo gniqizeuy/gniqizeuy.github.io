@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <p>generate uml</p>
+<h4 id="install-plantumlhttpsgithubcomjfeliu007goplantuml">install <a href="https://github.com/jfeliu007/goplantuml">plantuml</a></h4>
+<pre><code>go get github.com/jfeliu007/goplantuml/parser
+go get github.com/jfeliu007/goplantuml/cmd/goplantuml
+cd $GOPATH/src/github.com/jfeliu007/goplantuml
+go install ./...
+</code></pre>
+<h4 id="usage">Usage</h4>
+<pre><code>goplantuml [-recursive] path/to/gofiles path/to/gofiles2 &gt; diagram_file_name.puml
+</code></pre>
+<h4 id="view-in-chrome">view in chrome</h4>
+<p>install <a href="https://chrome.google.com/webstore/detail/plantuml-visualizer/ffaloebcmkogfdkemcekamlmfkkmgkcf/related">PlantUML Visualizer</a></p>
+<p>should open Allow access to file address</p>
+<h4 id="view-in-vs-code">view in vs code</h4>
+<p>install Plantuml in Extensions</p>
+<p>open puml file in code</p>
+<p>use ALT + D to preview</p>
+<p>use CTRL + SHIFT + P choose Export Current Diagram to export</p>
+<p>add plantuml config like this</p>
+<pre><code>  &quot;plantuml.jarArgs&quot;: [
+        &quot;-DPLANTUML_LIMIT_SIZE=8129&quot;
+  ]
+</code></pre>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

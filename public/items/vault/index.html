@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <h4 id="安装-vault-与-jq">安装 vault 与 jq</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+sudo yum -y install vault
+
+sudo yum install epel-release
+sudo yum install jq -y
+</code></pre></div><h4 id="初始化-vault">初始化 Vault</h4>
+<p>下面的API请求可以对Vault进行初始化，两个参数的意思将master key分成几份以及还原，这里采用 1。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X PUT -d <span style="color:#d14">&#34;{\&#34;secret_shares\&#34;:1, \&#34;secret_threshold\&#34;:1}&#34;</span>  http://127.0.0.1:8200/v1/sys/init | jq
+</code></pre></div><p>返回结果如下：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;keys&#34;</span>: [
+    <span style="color:#d14">&#34;5370c6eb7678cbf3e90d0f540ae38642126f5f568fe411287294164f567fb546&#34;</span>
+  ],
+  <span style="color:#000080">&#34;keys_base64&#34;</span>: [
+    <span style="color:#d14">&#34;U3DG63Z4y/PpDQ9UCuOGQhJvX1aP5BEocpQWT1Z/tUY=&#34;</span>
+  ],
+  <span style="color:#000080">&#34;root_token&#34;</span>: <span style="color:#d14">&#34;s.qGjCQRpveLtOodP20xcqq4X3&#34;</span>
+}
+</code></pre></div><p>第一个是master key的public key，第二个是unseal key,最后一个是root token。unseal vault之后才能验证进行具体的操作。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X PUT -d <span style="color:#d14">&#39;{&#34;key&#34;: &#34;U3DG63Z4y/PpDQ9UCuOGQhJvX1aP5BEocpQWT1Z/tUY=&#34;}&#39;</span>  http://127.0.0.1:8200/v1/sys/unseal | jq
+</code></pre></div><p>结果如下：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;shamir&#34;</span>,
+  <span style="color:#000080">&#34;initialized&#34;</span>: <span style="color:#000;font-weight:bold">true</span>,
+  <span style="color:#000080">&#34;sealed&#34;</span>: <span style="color:#000;font-weight:bold">false</span>,
+  <span style="color:#000080">&#34;t&#34;</span>: <span style="color:#099">1</span>,
+  <span style="color:#000080">&#34;n&#34;</span>: <span style="color:#099">1</span>,
+  <span style="color:#000080">&#34;progress&#34;</span>: <span style="color:#099">0</span>,
+  <span style="color:#000080">&#34;nonce&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
+  <span style="color:#000080">&#34;version&#34;</span>: <span style="color:#d14">&#34;1.8.1&#34;</span>,
+  <span style="color:#000080">&#34;migration&#34;</span>: <span style="color:#000;font-weight:bold">false</span>,
+  <span style="color:#000080">&#34;cluster_name&#34;</span>: <span style="color:#d14">&#34;vault-cluster-65251bdd&#34;</span>,
+  <span style="color:#000080">&#34;cluster_id&#34;</span>: <span style="color:#d14">&#34;0435131e-3c3a-0a14-564a-3cd6a71fbfa6&#34;</span>,
+  <span style="color:#000080">&#34;recovery_seal&#34;</span>: <span style="color:#000;font-weight:bold">false</span>,
+  <span style="color:#000080">&#34;storage_type&#34;</span>: <span style="color:#d14">&#34;file&#34;</span>
+}
+</code></pre></div><p>导出环境变量</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#0086b3">export</span> <span style="color:#008080">VAULT_ADDR</span><span style="color:#000;font-weight:bold">=</span>http://127.0.0.1:8200
+
+<span style="color:#0086b3">export</span> <span style="color:#008080">VAULT_TOKEN</span><span style="color:#000;font-weight:bold">=</span>s.qGjCQRpveLtOodP20xcqq4X3
+</code></pre></div><p>在 pki 路径上启用 pki secrets 引擎。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vault secrets <span style="color:#0086b3">enable</span> pki
+
+<span style="color:#998;font-style:italic"># Success! Enabled the pki secrets engine at: pki/</span>
+</code></pre></div><h4 id="http-api">HTTP API</h4>
+<h5 id="generate-certificate">Generate Certificate</h5>
+<p>POST /pki/issue/:name</p>
+<p>根据指定的角色生成一组新的凭据(私钥和证书)。同时也返回发出的 CA 证书，因此只有根 CA 需要在客户端的信任存储区中。</p>
+<h6 id="parameters">Parameters</h6>
+<ul>
+<li><code>name</code> <code>(string: &lt;required&gt;)</code>：指定要创建证书的角色的名称。这是请求 URL 的一部分</li>
+<li><code>common_name</code> <code>(string: &lt;required&gt;)</code>：指定证书所请求的 CN。如果 CN 是角色政策允许的，它将被发布。</li>
+</ul>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

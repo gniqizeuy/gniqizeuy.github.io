@@ -20,3 +20,14 @@ draft: false
 
     yum install hugo
 
+### hugo config
+use inline HTML
+
+add config like this
+
+```toml
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+```

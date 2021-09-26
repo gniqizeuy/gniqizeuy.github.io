@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <h4 id="处理和创建-json-数据">处理和创建 JSON 数据</h4>
+<p><strong><code>json</code>和<code>jsonb</code> 操作符</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>右操作数类型</th>
+<th>返回类型</th>
+<th>描述</th>
+<th>例子</th>
+<th>例子结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-&gt;</code></td>
+<td><code>int</code></td>
+<td><code>json</code> or <code>jsonb</code></td>
+<td>获得 JSON 数组元素（索引从 0 开始，负整数从末尾开始计）</td>
+<td><code>'[{&quot;a&quot;:&quot;foo&quot;},{&quot;b&quot;:&quot;bar&quot;},{&quot;c&quot;:&quot;baz&quot;}]'::json-&gt;2</code></td>
+<td><code>{&quot;c&quot;:&quot;baz&quot;}</code></td>
+</tr>
+<tr>
+<td><code>-&gt;</code></td>
+<td><code>text</code></td>
+<td><code>json</code> or <code>jsonb</code></td>
+<td>通过键获得 JSON 对象域</td>
+<td><code>'{&quot;a&quot;: {&quot;b&quot;:&quot;foo&quot;}}'::json-&gt;'a'</code></td>
+<td><code>{&quot;b&quot;:&quot;foo&quot;}</code></td>
+</tr>
+<tr>
+<td><code>-&gt;&gt;</code></td>
+<td><code>int</code></td>
+<td><code>text</code></td>
+<td>以<code>text</code>形式获得 JSON 数组元素</td>
+<td><code>'[1,2,3]'::json-&gt;&gt;2</code></td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>-&gt;&gt;</code></td>
+<td><code>text</code></td>
+<td><code>text</code></td>
+<td>以<code>text</code>形式获得 JSON 对象域</td>
+<td><code>'{&quot;a&quot;:1,&quot;b&quot;:2}'::json-&gt;&gt;'b'</code></td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td><code>#&gt;</code></td>
+<td><code>text[]</code></td>
+<td><code>json</code> or <code>jsonb</code></td>
+<td>获取在指定路径的 JSON 对象</td>
+<td><code>'{&quot;a&quot;: {&quot;b&quot;:{&quot;c&quot;: &quot;foo&quot;}}}'::json#&gt;'{a,b}'</code></td>
+<td><code>{&quot;c&quot;: &quot;foo&quot;}</code></td>
+</tr>
+<tr>
+<td><code>#&gt;&gt;</code></td>
+<td><code>text[]</code></td>
+<td><code>text</code></td>
+<td>以<code>text</code>形式获取在指定路径的 JSON 对象</td>
+<td><code>'{&quot;a&quot;:[1,2,3],&quot;b&quot;:[4,5,6]}'::json#&gt;&gt;'{a,2}'</code></td>
+<td><code>3</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<h3 id="注意">注意</h3>
+<p>对<code>json</code>和<code>jsonb</code>类型，这些操作符都有其并行变体。<br>
+域/元素/路径抽取操作符返回与其左手输入（<code>json</code>或<code>jsonb</code>） 相同的类型，不过那些被指定为返回<code>text</code>的除外，它们的返回值会被强制 为文本。如果该 JSON 输入没有匹配请求的正确结构（例如那样的元素不存在），这些 域/元素/路径抽取操作符会返回 NULL 而不是失败。 接受整数 JSON 数组下标的 域/元素/路径抽取操作符都支持表示从数组末尾开始的负值下标形式。</p>
+</blockquote>
+<h4 id="清空表和自增序列">清空表和自增序列</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">TRUNCATE</span><span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">TABLE</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">ONLY</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>name<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">*</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>[,<span style="color:#bbb"> </span>...<span style="color:#bbb"> </span>]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>[<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">RESTART</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">IDENTITY</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">|</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">CONTINUE</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">IDENTITY</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">CASCADE</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">|</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">RESTRICT</span><span style="color:#bbb"> </span>]<span style="color:#bbb">
+</span></code></pre></div><h5 id="参数">参数</h5>
+<ul>
+<li>
+<p><em><code>name</code></em></p>
+<p>要截断的表的名字（可以是模式限定的）。如果在表名前指定了 <code>ONLY</code>，则只会截断该表。如果没有指定<code>ONLY</code>， 该表及其所有后代表（如果有）都会被截断。可选地，可以在表名后指定 <code>*</code>来显式地包括后代表。</p>
+</li>
+<li>
+<p><code>RESTART IDENTITY</code></p>
+<p>自动重新开始被截断表的列所拥有的序列。</p>
+</li>
+<li>
+<p><code>CONTINUE IDENTITY</code></p>
+<p>不更改序列值。这是默认值。</p>
+</li>
+<li>
+<p><code>CASCADE</code></p>
+<p>自动截断所有对任一所提及表有外键引用的表以及任何由于 <code>CASCADE</code>被加入到组中的表。</p>
+</li>
+<li>
+<p><code>RESTRICT</code></p>
+<p>如果任一表上具有来自命令中没有列出的表的外键引用，则拒绝截断。这是默认值。</p>
+</li>
+</ul>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

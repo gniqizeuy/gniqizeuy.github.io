@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <p>+++</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">import</span> (
+	<span style="color:#d14">&#34;database/sql/driver&#34;</span>
+	<span style="color:#d14">&#34;fmt&#34;</span>
+	<span style="color:#d14">&#34;time&#34;</span>
+)
+
+<span style="color:#998;font-style:italic">// Time 继承 time.Time 的所有方法，并重写 MarshalJSON 方法，
+</span><span style="color:#998;font-style:italic">// Time 进行 json 序列化时，会转为字符串 &#34;2006-01-02 15:04:05&#34; 的格式。
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">type</span> Time <span style="color:#000;font-weight:bold">struct</span> {
+	time.Time
+}
+
+<span style="color:#998;font-style:italic">// MarshalJSON 将 Time 类型转为 &#34;2006-01-02&#34; 格式。
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (t Time) <span style="color:#900;font-weight:bold">MarshalJSON</span>() (data []<span style="color:#458;font-weight:bold">byte</span>, err <span style="color:#458;font-weight:bold">error</span>) {
+	layout <span style="color:#000;font-weight:bold">:=</span> <span style="color:#d14">&#34;2006-01-02&#34;</span>
+	data = <span style="color:#0086b3">make</span>([]<span style="color:#458;font-weight:bold">byte</span>, <span style="color:#099">0</span>, <span style="color:#0086b3">len</span>(layout)<span style="color:#000;font-weight:bold">+</span><span style="color:#099">2</span>)
+	data = <span style="color:#0086b3">append</span>(data, <span style="color:#d14">&#39;&#34;&#39;</span>)
+	data = t.<span style="color:#900;font-weight:bold">AppendFormat</span>(data, layout)
+	data = <span style="color:#0086b3">append</span>(data, <span style="color:#d14">&#39;&#34;&#39;</span>)
+	<span style="color:#000;font-weight:bold">return</span>
+}
+
+<span style="color:#000;font-weight:bold">func</span> (t <span style="color:#000;font-weight:bold">*</span>Time) <span style="color:#900;font-weight:bold">UnmarshalJSON</span>(data []<span style="color:#458;font-weight:bold">byte</span>) <span style="color:#458;font-weight:bold">error</span> {
+	<span style="color:#998;font-style:italic">// Ignore null, like in the main JSON package.
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">string</span>(data) <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#34;null&#34;</span> {
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+	}
+	<span style="color:#998;font-style:italic">// Fractional seconds are handled implicitly by Parse.
+</span><span style="color:#998;font-style:italic"></span>	tm, err <span style="color:#000;font-weight:bold">:=</span> time.<span style="color:#900;font-weight:bold">Parse</span>(<span style="color:#d14">&#34;\&#34;2006-01-02\&#34;&#34;</span>, <span style="color:#0086b3">string</span>(data))
+
+	<span style="color:#998;font-style:italic">//if err != nil {
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#998;font-style:italic">//	return err
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#998;font-style:italic">//}
+</span><span style="color:#998;font-style:italic"></span>
+	<span style="color:#000;font-weight:bold">*</span>t = Time{tm}
+	<span style="color:#000;font-weight:bold">return</span> err
+}
+
+<span style="color:#998;font-style:italic">// Scan 在 gorm 进行读操作将数据库时间值转换为 Time 结构体字段时用到，
+</span><span style="color:#998;font-style:italic">// 如果 Time 没有此方法，则会报错：无法将 time.Time 类型赋值到 Time 类型。
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (t <span style="color:#000;font-weight:bold">*</span>Time) <span style="color:#900;font-weight:bold">Scan</span>(v <span style="color:#000;font-weight:bold">interface</span>{}) <span style="color:#458;font-weight:bold">error</span> {
+	<span style="color:#000;font-weight:bold">if</span> v <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">nil</span> {
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+	}
+
+	<span style="color:#000;font-weight:bold">if</span> tt, ok <span style="color:#000;font-weight:bold">:=</span> v.(time.Time); ok {
+		<span style="color:#000;font-weight:bold">*</span>t = Time{tt}
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+	}
+	<span style="color:#000;font-weight:bold">return</span> fmt.<span style="color:#900;font-weight:bold">Errorf</span>(<span style="color:#d14">&#34;can not convert %v to Time&#34;</span>, v)
+}
+
+<span style="color:#998;font-style:italic">// Value 在 gorm 进行写操作将 Time 结构体字段转为数据库时间值时用到，
+</span><span style="color:#998;font-style:italic">// 如果 Time 没有此方法，则会报错：不支持 Time 类型。
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (t Time) <span style="color:#900;font-weight:bold">Value</span>() (driver.Value, <span style="color:#458;font-weight:bold">error</span>) {
+	<span style="color:#000;font-weight:bold">var</span> zTime time.Time
+	<span style="color:#000;font-weight:bold">if</span> t.<span style="color:#900;font-weight:bold">UnixNano</span>() <span style="color:#000;font-weight:bold">==</span> zTime.<span style="color:#900;font-weight:bold">UnixNano</span>() {
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>, <span style="color:#000;font-weight:bold">nil</span>
+	}
+	<span style="color:#000;font-weight:bold">return</span> t.Time, <span style="color:#000;font-weight:bold">nil</span>
+}
+</code></pre></div>
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

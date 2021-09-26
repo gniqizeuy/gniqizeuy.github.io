@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>go on gniqizeuy blog</title>
+    <link>https://gniqizeuy.github.io/tags/go/</link>
+    <description>Recent content in go on gniqizeuy blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 25 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://gniqizeuy.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go error</title>
+      <link>https://gniqizeuy.github.io/items/go-errror/</link>
+      <pubDate>Sun, 25 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/go-errror/</guid>
+      <description>error 接口 go中 error 只是一个接口类型，不包含返回错误消息的方法
+type error interface { Error() string } errors package errors 包中 errors.go 源码如下
+package errors // New returns an error that formats as the given text. // Each call to New returns a distinct error value even if the text is identical. func New(text string) error { return &amp;amp;errorString{text} } // errorString is a trivial implementation of error. type errorString struct { s string } func (e *errorString) Error() string { return e.</description>
+    </item>
+    
+    <item>
+      <title>go function</title>
+      <link>https://gniqizeuy.github.io/items/go-function/</link>
+      <pubDate>Sun, 02 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/go-function/</guid>
+      <description>方法声明 与声明普通函数类似，只是在函数名字前面多一个参数，参数把这个方法绑定到这个参数对应的类型上
+附加的参数称为方法的接收者
+package geometry import &amp;#34;math&amp;#34; type Point struct{ X, Y float64 } // 普通函数 func Distance(p, q Point) float64 { return math.Hypot(q.X-p.X, q.Y-p,Y) } // Point 类型方法 func (p Point) Distance(q point) float64 { return math.Hypot(q.X-p.X, q.Y-p,Y) } go 中接收者不使用特殊名（this 或 self）；而是我们自己选择接收者名字。通常取类型名称的首字符
+p := Point{1, 2} q := Point{4, 6} fmt.Println(Distance(p, q)) fmt.Println(p.Distance(q)) 上述两个 Distance 函数声明没有冲突，第一个是包级别的函数（称为 geometry.Distance）。第二个声明一个类型 Point 的方法（Point.Distance）
+表达式 p.Distance 称作选择子（selector）因为它为接收者 p 选择合适的 Distance 方法。选择子也作用于选择结构类型中的字段值，由于方法与字段来自同一个命名空间，同名的字段与方法，编译器会报错。
+go 中的方法可以绑定到任何类型上，同一个包下的任何类型都可以声明方法，只要它的类型既不是指针类型也不是接口类型</description>
+    </item>
+    
+    <item>
+      <title>go composite data</title>
+      <link>https://gniqizeuy.github.io/items/go-composite-data/</link>
+      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/go-composite-data/</guid>
+      <description>&lt;h2 id=&#34;复合数据类型&#34;&gt;复合数据类型&lt;/h2&gt;
+&lt;p&gt;复合数据类型是由基本数据类型以各种方式组合而构成的&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

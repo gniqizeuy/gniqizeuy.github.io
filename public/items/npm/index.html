@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <h3 id="配置淘宝镜像">配置淘宝镜像</h3>
+<h4 id="临时">临时</h4>
+<pre><code>npm --registry https://registry.npm.taobao.org install express
+</code></pre>
+<h4 id="永久">永久</h4>
+<pre><code>npm config set registry https://registry.npm.taobao.org
+</code></pre>
+<h4 id="npm-install-命令">npm install 命令</h4>
+<p>npm 安装指定版本 <code>-S</code> 相当于 <code>--save</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm install express@3.21.2 -S
+</code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#998;font-style:italic"># 安装模块到项目目录下</span>
+npm install moduleName 
+
+<span style="color:#998;font-style:italic"># -g 的意思是将模块安装到全局，具体安装到磁盘哪个位置，要看 npm config prefix 的位置。</span>
+npm install -g moduleName 
+
+<span style="color:#998;font-style:italic"># -save 的意思是将模块安装到项目目录下，并在package文件的dependencies节点写入依赖。</span>
+<span style="color:#998;font-style:italic"># 运行npm install --production或者注明NODE_ENV变量值为production时，会自动下载模块到node_modules目录中。</span>
+npm install -save moduleName 
+
+<span style="color:#998;font-style:italic"># -save-dev 的意思是将模块安装到项目目录下，并在package文件的devDependencies节点写入依赖。</span>
+<span style="color:#998;font-style:italic"># 运行npm install --production或者注明NODE_ENV变量值为production时，不会自动下载模块到node_modules目录中。</span>
+npm install -save-dev moduleName
+</code></pre></div><p>devDependencies 节点下的模块是开发时需要用的，比如项目中使用的 gulp ，压缩css、js的模块。
+这些模块在我们的项目部署后是不需要的，所以我们可以使用 -save-dev 的形式安装。</p>
+<p>像 express 这些模块是项目运行必备的，应该安装在 dependencies 节点下，所以我们应该使用 -save 的形式安装。</p>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

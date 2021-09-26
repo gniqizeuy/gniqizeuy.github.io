@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <p>+++</p>
+<p>有关 go 的一些自我总结</p>
+<h3 id="1-函数">1 函数</h3>
+<h4 id="11-内置函数-make">1.1 内置函数 make</h4>
+<div class="book-columns flex flex-wrap">
+  
+  <div class="flex-even markdown-inner">
+    <p>创建 map</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">// 创建一个从 string 到 int 的 map
+</span><span style="color:#998;font-style:italic"></span>ages <span style="color:#000;font-weight:bold">:=</span> <span style="color:#0086b3">make</span>(<span style="color:#000;font-weight:bold">map</span>[<span style="color:#458;font-weight:bold">string</span>]<span style="color:#458;font-weight:bold">int</span>)	
+</code></pre></div>
+  </div>
+  
+  <div class="flex-even markdown-inner">
+    <p>创建通道</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">// ch 的类型是 &#39;chan int&#39;
+</span><span style="color:#998;font-style:italic"></span>ch <span style="color:#000;font-weight:bold">:=</span> <span style="color:#0086b3">make</span>(<span style="color:#000;font-weight:bold">chan</span> <span style="color:#458;font-weight:bold">int</span>)
+</code></pre></div>
+  </div>
+  
+</div>
+
+<p>创建 slice（指定元素类型，长度和容量）</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#0086b3">make</span>([]T, len)	<span style="color:#998;font-style:italic">// 省略容量参数，slice 的长度和容量相等
+</span><span style="color:#998;font-style:italic"></span><span style="color:#0086b3">make</span>([]T, len, cap)	<span style="color:#998;font-style:italic">// 等同于 make([]T, cap)[:len]
+</span></code></pre></div><details >
+  <summary>代码解释</summary>
+  <div class="markdown-inner">
+    其实，make 创建了一个无名数组并返回了它的一个 slice；这个数组仅可以通过这个 slice 来访问。<br>
+第一行代码返回的 slice 引用了整个数组。<br>
+第二行中，slice 只引用了数组的前 len 个元素，但是它的容量是数组的长度，这为未来的 slice 元素留出空间。
+  </div>
+</details>
+
+<h3 id="2-比较">2. 比较</h3>
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>

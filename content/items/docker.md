@@ -1,15 +1,8 @@
-+++
-title = "docker command"
-description = "docker 命令"
-
-date = "2021-04-19"
-categories = [
-"Docker"
-]
-
-menu = "main"
-
-+++
+---
+title: "docker command"
+date: 2021-04-19
+draft: false
+---
 
 ### Docker 子命令分类
 
