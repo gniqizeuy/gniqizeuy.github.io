@@ -33,7 +33,14 @@
 <p>安装 hugo</p>
 <pre><code>yum install hugo
 </code></pre>
-
+<h3 id="hugo-config">hugo config</h3>
+<p>use inline HTML</p>
+<p>add config like this</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = <span style="color:#000;font-weight:bold">true</span>
+</code></pre></div>
         
     </article>
 </main>

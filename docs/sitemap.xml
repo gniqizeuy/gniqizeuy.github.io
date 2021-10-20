@@ -3,12 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://gniqizeuy.github.io/</loc>
-    <lastmod>2021-09-23T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://gniqizeuy.github.io/items/go-plantuml/</loc>
-    <lastmod>2021-09-23T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/</loc>
+    <lastmod>2021-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/items/soft/</loc>
+    <lastmod>2021-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/items/linux-cmd/</loc>
+    <lastmod>2021-09-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/items/windows-cmd/</loc>
+    <lastmod>2021-09-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://gniqizeuy.github.io/items/go-plantuml/</loc>
     <lastmod>2021-09-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/mqtt/</loc>
@@ -53,7 +62,7 @@
     <loc>https://gniqizeuy.github.io/items/npm/</loc>
     <lastmod>2021-07-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://gniqizeuy.github.io/items/git-proxy/</loc>
+    <loc>https://gniqizeuy.github.io/items/git-config/</loc>
     <lastmod>2021-06-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/go-mail/</loc>
@@ -86,19 +95,16 @@
     <loc>https://gniqizeuy.github.io/items/go-time/</loc>
     <lastmod>2021-05-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://gniqizeuy.github.io/categories/go/</loc>
-    <lastmod>2021-05-02T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://gniqizeuy.github.io/items/go-function/</loc>
     <lastmod>2021-05-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/go-interface/</loc>
     <lastmod>2021-04-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://gniqizeuy.github.io/categories/docker/</loc>
+    <loc>https://gniqizeuy.github.io/items/docker/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://gniqizeuy.github.io/items/docker/</loc>
+    <loc>https://gniqizeuy.github.io/categories/go/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://gniqizeuy.github.io/items/go-goroutine-channel/</loc>

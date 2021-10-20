@@ -6,7 +6,40 @@
     <description>Recent content in Items on gniqizeuy blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://gniqizeuy.github.io/items/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://gniqizeuy.github.io/items/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>software</title>
+      <link>https://gniqizeuy.github.io/items/soft/</link>
+      <pubDate>Tue, 19 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/soft/</guid>
+      <description>emq 安装emq时找不到MSVCR120.dll 安装vcredist
+windows 开机自启 创建程序快捷方式粘贴到 C:\Users\Admin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup 此文件夹中</description>
+    </item>
+    
+    <item>
+      <title>linux command</title>
+      <link>https://gniqizeuy.github.io/items/linux-cmd/</link>
+      <pubDate>Fri, 24 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/linux-cmd/</guid>
+      <description>grep -e pattern_list  Specify one or more patterns to be used during thesearch for input. The application shall ensure thatpatterns in pattern_list are separated by a &amp;lt;newline&amp;gt;.A null pattern can be specified by two adjacent&amp;lt;newline&amp;gt; characters in pattern_list. Unless the -E or-F option is also specified, each pattern shall betreated as a BRE, as described in the Base Definitionsvolume of POSIX.1‐2017, Section 9.</description>
+    </item>
+    
+    <item>
+      <title>windows command</title>
+      <link>https://gniqizeuy.github.io/items/windows-cmd/</link>
+      <pubDate>Fri, 24 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://gniqizeuy.github.io/items/windows-cmd/</guid>
+      <description>Explorer open explorer
+explorer .start . where where is a direct equivalent
+Note that in PowerShell where itself is an alias for Where-Object, thus you need to usewhere.exe in PowerShell.
+In PowerShell you have Get-Command and its alias gcm which does the same if you pass an argument (but also works for aliases, cmdlets and functions in PowerShell):
+start start /b XXX  后台启动xxx
+ </description>
+    </item>
+    
     <item>
       <title>go plantuml</title>
       <link>https://gniqizeuy.github.io/items/go-plantuml/</link>
@@ -186,11 +219,11 @@ npm install express@3.21.2 -S # 安装模块到项目目录下 npm install modul
     </item>
     
     <item>
-      <title>git proxy</title>
-      <link>https://gniqizeuy.github.io/items/git-proxy/</link>
+      <title>git config</title>
+      <link>https://gniqizeuy.github.io/items/git-config/</link>
       <pubDate>Wed, 30 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://gniqizeuy.github.io/items/git-proxy/</guid>
+      <guid>https://gniqizeuy.github.io/items/git-config/</guid>
       <description>HTTP 代理 HTTP 代理相对简单
 HTTP 代理 git config --global http.proxy http://127.0.0.1:7890git config --global https.proxy http://127.0.0.1:7890 Socks5 代理 git config --global http.proxy socks5://127.0.0.1:7890git config --global https.proxy socks5://127.0.0.1:7890 注意这里的 socks5 仅仅是代理使用的协议，它依然是针对 http 设置的，所以仅对 http 协议的仓库有效。使用 git@xxx 这种 ssh 连接的不会使用代理。
 也可以分域名设置代理：
@@ -277,7 +310,9 @@ mutagen forward monitor web-app</description>
 新建 hugo.repo 文件, 访问 https://copr.fedorainfracloud.org/coprs/daftaupe/hugo/ 选择合适版本
 vim /etc/yum.repos.d/hugo.repo 更新 yum
 yum upgrade 安装 hugo
-yum install hugo </description>
+yum install hugo hugo config use inline HTML
+add config like this
+[markup] [markup.goldmark] [markup.goldmark.renderer] unsafe = true </description>
     </item>
     
     <item>

@@ -1,5 +1,5 @@
 ---
-title: "git proxy"
+title: "git config"
 date: 2021-06-30
 draft: false
 ---
@@ -44,3 +44,9 @@ Windows:
 
     git config --global --unset http.proxy
     git config --global --unset https.proxy
+
+### autocrlf
+
+    git config --global core.autocrlf input
+
+> 检出时不转换，若包含回车加换行作为结束符的文件，提交时会把回车和换行转换成换行

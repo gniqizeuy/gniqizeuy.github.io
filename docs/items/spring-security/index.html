@@ -129,7 +129,7 @@
 </code></pre></div><p>在调用 SecurityContextHolder.getContext() 获取 SecurityContext 时，如果对应的 SecurityContext 不存在，则会返回空的 SecurityContext</p>
 <h5 id="3-providermanager">3） ProviderManager</h5>
 <p>ProviderManager 会维护一个认证的列表，以便处理不同认证方式的认证，因此系统可能会存在多种认证方式，比如手机号、用户名密码、邮箱方式</p>
-<p>在认证时，如果 ProviderManager 的认证结果不是 null ，则说明认成功，不再进行其他方式的认证，并且作为认证的结果保存在 SecurityContext 中，如果不存在，则输出错误信息 <!-- raw HTML omitted -->ProviderNotFoundException<!-- raw HTML omitted --></p>
+<p>在认证时，如果 ProviderManager 的认证结果不是 null ，则说明认成功，不再进行其他方式的认证，并且作为认证的结果保存在 SecurityContext 中，如果不存在，则输出错误信息 <i>ProviderNotFoundException</i></p>
 <h5 id="4-daoauthenticationprovider">4） DaoAuthenticationProvider</h5>
 <p>它是 AuthenticationProvider 最常见的实现，用来获取用户提交的用户名和密码，并进行正确性比对。如果正确，则返回一个数据库中的用户信息</p>
 <p>在用户在前台提交了用户名和密码后，就会封装成 UsernamePasswordAuthenticationToken。然后，DaoAuthenticationProvider 根据 retireveUser 方法，交给 additionalAuthenticationChecks 方法完成 UsernamePasswordAuthenticationToken 和 UserDetails 密码的比对。如果这个方法没有抛出异常，则认为对比成功。</p>
@@ -722,7 +722,7 @@ UserDetailsService <span style="color:#900;font-weight:bold">UserService</span><
 AuthenticationMananger authenticationMananger<span style="color:#000;font-weight:bold">;</span>
 </code></pre></div><p><code>@PostAuthorize</code></p>
 <p>表示在方法执行之后执行，有时需要在方法调用完后才进行权限检查。可以通过注解 @PostAuthorize 达到这一效果</p>
-<p>注解 @PostAuthorize 是方法调用完成后进行权限检查的，它不能控制方法是否被调用，只能在方法调用完后检查权限，来决定是否抛出 <!-- raw HTML omitted -->AccessDeniedException<!-- raw HTML omitted --></p>
+<p>注解 @PostAuthorize 是方法调用完成后进行权限检查的，它不能控制方法是否被调用，只能在方法调用完后检查权限，来决定是否抛出 <i>AccessDeniedException</i></p>
 <p>这里也可以调用方法的返回值。如果 EL 为 false ，那么该方法已经执行完了，可能会回滚。EL 变量 returnObject 表示返回的对象，如：</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#3c5d5d;font-weight:bold">@PostAuthorize</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;returnObject.userId == authentication.principal.userId or hasPermission(returnObject, &#39;ADMIN&#39;)&#34;</span><span style="color:#000;font-weight:bold">);</span>
 </code></pre></div><p><code>@PreFilter</code></p>

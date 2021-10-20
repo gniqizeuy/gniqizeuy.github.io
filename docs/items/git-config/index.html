@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <title>gniqizeuy blog</title>
+</head>
+<body>
+<header id="header">
+    <h1><a href="/">gniqizeuy blog</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/tags">tags</a></li>
+            <li><a href="/sites">sites</a></li>
+            <li><a href="https://github.com/spaghettiwews/hugonews">github</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main">
+    <article class="single">
+        
+        <p>HTTP 代理
+HTTP 代理相对简单</p>
+<h1 id="http-代理">HTTP 代理</h1>
+<pre><code>git config --global http.proxy http://127.0.0.1:7890
+git config --global https.proxy http://127.0.0.1:7890
+</code></pre>
+<h1 id="socks5-代理">Socks5 代理</h1>
+<pre><code>git config --global http.proxy socks5://127.0.0.1:7890
+git config --global https.proxy socks5://127.0.0.1:7890
+</code></pre>
+<p>注意这里的 socks5 仅仅是代理使用的协议，它依然是针对 http 设置的，所以仅对 http 协议的仓库有效。使用 git@xxx 这种 ssh 连接的不会使用代理。</p>
+<p>也可以分域名设置代理：</p>
+<pre><code>git config --global http.https://github.com.proxy http://127.0.0.1:7890
+git config --global https.https://github.com.proxy https://127.0.0.1:7890
+</code></pre>
+<p>SSH 代理
+SSH 代理需要在密钥目录 (~/.ssh) (Windows 下是 C:\Users{UserName}.ssh) 新建一个 config 文件，没有后缀名。</p>
+<p>Linux 系统写入以下配置（未验证）：</p>
+<pre><code># 需要 netcat
+ProxyCommand nc -v -x 127.0.0.1:7890 %h %p
+</code></pre>
+<p>Windows:</p>
+<pre><code># -S 为 socks, -H 为 HTTP
+ProxyCommand connect -S 127.0.0.1:7890 %h %p
+</code></pre>
+<p>如果找不到 connect 命令那么指定其绝对路径，一般在 git 安装目录下 \mingw64\bin\connect.exe.<br>
+赠送一个 connect 的官方文档。</p>
+<p>也可以分域名代理：</p>
+<pre><code>Host github.com
+    ProxyCommand connect -S 127.0.0.1:7890 %h %p
+</code></pre>
+<h2 id="取消代理">取消代理</h2>
+<pre><code>git config --global --unset http.proxy
+git config --global --unset https.proxy
+</code></pre>
+<h3 id="autocrlf">autocrlf</h3>
+<pre><code>git config --global core.autocrlf input
+</code></pre>
+<blockquote>
+<p>检出时不转换，若包含回车加换行作为结束符的文件，提交时会把回车和换行转换成换行</p>
+</blockquote>
+
+        
+    </article>
+</main>
+<footer id="footer">look ma, a footer</footer>
+</body>
+</html>
