@@ -26,3 +26,8 @@ In PowerShell you have Get-Command and its alias gcm which does the same if you 
     start /b XXX
 
 > 后台启动xxx
+
+`netstat -aon|findstr "8080"`
+
+`tasklist|findstr "2668`
+
