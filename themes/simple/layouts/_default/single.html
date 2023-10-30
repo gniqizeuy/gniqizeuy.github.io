@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>research!rsc: Introduction</title>
+    <link rel="alternate" type="application/atom+xml" title="research!rsc - Atom" href="http://research.swtch.com/feed.atom" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="fonts/minion3/fonts.css" rel="stylesheet">
+    <link href="fonts/source-code-pro/source-code-pro.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ "css/common.css" | relURL }}">
+
+  </head>
+  <body>
+    
+<div class="header">
+  <h3><a href="/">Home</a></h3>
+  <h4>一些关于编程的想法,
+    by <a href="https://swtch.com/~rsc/" rel="author">saul</a> </h4>
+  <a class="rss" href="/feed.atom">RSS</a>
+</div>
+
+    <div class="main">
+      <div class="article">
+        <h1>{{ .Title }}
+        
+        <div class="normal">
+        <div class="when">
+          
+            <!-- Posted on Tuesday, January 1, 2008. -->
+            Posted on {{ .Date.Format "Mon, January 2, 2006" }}.
+          
+        </div>
+        </div>
+        </h1>
+        
+        <p>
+          {{ .Content }}
+        </p> 
+
+      </div>
+    </div>
+  </body>
+</html>
