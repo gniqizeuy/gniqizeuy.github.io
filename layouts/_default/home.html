@@ -283,67 +283,94 @@
         top: 0;
         z-index: 1000;
         background: white;
-        border-bottom: 2px solid #333;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       }
 
       .tabs-container { background: #fff; }
-      .tabs { display: flex; width: 100%; border-bottom: 1px solid #ddd; }
+      .tabs { display: flex; width: 100%; }
       .tabs input[type="radio"] { display: none; }
-      .tab-label { padding: 15px 5px; cursor: pointer; background: #f8f8f8; border: none; font-weight: bold; color: #666; flex: 1; text-align: center; font-size: 13px; }
+      .tab-label { 
+        padding: 15px 5px; 
+        cursor: pointer; 
+        background: #f8f8f8; 
+        border-right: 1px solid #eee;
+        font-weight: bold; 
+        color: #666; 
+        flex: 1; 
+        text-align: center; 
+        font-size: 13px; 
+      }
       .tabs input[type="radio"]:checked + .tab-label { background: #333; color: #fff; }
 
       #admin-bar {
-        background: #f0f0f0;
-        padding: 8px;
+        background: #fef9c3;
+        padding: 10px;
         display: none;
         align-items: center;
-        gap: 10px;
-        border-top: 1px solid #ccc;
+        gap: 15px;
+        border-top: 1px solid #eab308;
       }
       .admin-active #admin-bar { display: flex !important; }
 
-      /* Table Header Sticky (Offset by sticky header height) */
+      /* Table Styles */
+      .csv-table { 
+        overflow-x: auto; 
+        -webkit-overflow-scrolling: touch;
+        /* Ensure the container doesn't clip the sticky header */
+        overflow-y: visible; 
+      }
+      
+      table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        font-family: var(--font-family-mono); 
+        font-size: 13px; 
+        table-layout: auto;
+      }
+      
       th {
         background-color: #f7f7f7;
-        position: sticky;
-        top: 48px; /* Height of tabs approx */
-        z-index: 50;
+        color: #333;
+        text-align: left;
+        padding: 12px 8px;
         border-bottom: 2px solid #ddd;
+        position: sticky;
+        top: 47px; /* Matches height of normal tabs */
+        z-index: 50;
       }
-      .admin-active th { top: 90px; } /* Adjust if admin bar is visible */
+      /* When admin is active, we push headers down further */
+      .admin-active th { 
+        top: 98px; /* Offset for tabs + admin bar */
+      }
 
-      /* Buttons */
-      .btn-primary { background: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 3px; cursor: pointer; }
-      .btn-save { background: #27ae60; color: white; border: none; padding: 6px 15px; border-radius: 3px; font-weight: bold; cursor: pointer; }
-      .btn-exit { background: transparent; border: 1px solid #999; padding: 4px 8px; font-size: 11px; cursor: pointer; margin-left: auto; }
-      .btn-del { color: #e74c3c; background: none; border: 1px solid #e74c3c; cursor: pointer; padding: 1px 4px; border-radius: 2px; }
+      td { padding: 12px 8px; border-bottom: 1px solid #eee; white-space: nowrap; background: #fff; }
+      tr:nth-child(even) td { background-color: #fafafa; }
+      tr:hover td { background-color: #f0f7ff; }
 
-      /* Visual Editor Hint */
-      .admin-active .editable-val { background: #fff9db !important; }
+      /* Buttons & Admin tools */
+      .btn-primary { background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+      .btn-save { background: #16a34a; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; }
+      .btn-exit { background: white; border: 1px solid #999; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; margin-left: auto; }
+      .btn-del { color: #dc2626; border: 1px solid #fee2e2; background: #fef2f2; cursor: pointer; padding: 2px 6px; border-radius: 4px; }
 
-      .csv-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      table { width: 100%; border-collapse: collapse; font-family: var(--font-family-mono); font-size: 13px; }
-      td { padding: 12px 8px; border-bottom: 1px solid #eee; white-space: nowrap; }
-      tr:nth-child(even) { background-color: #fafafa; }
-      tr:hover { background-color: #f5faff; }
+      /* Editor Styles */
+      .admin-active .editable-val { 
+        background-color: #f0f9ff !important; 
+        border: 1px dashed #3bb2f6; 
+        color: #0369a1;
+      }
 
       .admin-col { display: none; }
       .admin-active .admin-col { display: table-cell !important; }
-
-      /* Modals */
-      .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
-      .modal-content { background: white; margin: 20% auto; padding: 25px; border-radius: 8px; width: 300px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-      .modal-content input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-      .modal-btns { display: flex; justify-content: space-between; gap: 10px; }
-      .modal-btns button { flex: 1; padding: 10px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; }
-      .modal-btns button.primary { background: #333; color: white; border: none; }
+      div.admin-col { display: none; }
+      .admin-active div.admin-col { display: block !important; }
 
       @media (max-width: 600px) {
         .tab-label { font-size: 11px; padding: 12px 2px; }
         table { font-size: 11px; }
         th, td { padding: 8px 4px; }
         th { top: 41px; }
-        .admin-active th { top: 83px; }
+        .admin-active th { top: 92px; }
       }
     </style>
   </body>
