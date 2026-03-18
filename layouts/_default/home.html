@@ -1,0 +1,184 @@
+<html>
+  <head>
+    <title>gniqizeuy</title>
+    <link rel="alternate" type="application/atom+xml" title="research!rsc - Atom" href="http://research.swtch.com/feed.atom" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="fonts/minion3/fonts.css" rel="stylesheet">
+    <link href="fonts/source-code-pro/source-code-pro.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ "css/common.css" | relURL }}">
+
+  </head>
+  <body>
+    <div class="main">
+    <div class="tabs-container">
+      <div class="tabs">
+        <input type="radio" id="tab-gf" name="csv-tabs" checked>
+        <label for="tab-gf" class="tab-label">1. GF Loss</label>
+        
+        <input type="radio" id="tab-yh" name="csv-tabs">
+        <label for="tab-yh" class="tab-label">2. YH Loss</label>
+        
+        <input type="radio" id="tab-summary" name="csv-tabs">
+        <label for="tab-summary" class="tab-label">3. Total Loss</label>
+        
+        <!-- Tab Content panels must be siblings of the radios to work with ~ selector -->
+        <div class="tab-panel" id="content-gf">
+          <div class="csv-table">
+            {{ $csvData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
+            <table>
+              <thead>
+                <tr>{{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}</tr>
+              </thead>
+              <tbody>
+                {{ range after 1 $csvData }}
+                <tr>{{ range . }}<td>{{ . }}</td>{{ end }}</tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="content-yh">
+          <div class="csv-table">
+            {{ $csvData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
+            <table>
+              <thead>
+                <tr>{{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}</tr>
+              </thead>
+              <tbody>
+                {{ range after 1 $csvData }}
+                <tr>{{ range . }}<td>{{ . }}</td>{{ end }}</tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="content-summary">
+          <div class="csv-table">
+            {{ $csvData := resources.Get "data/summary_losses.csv" | transform.Unmarshal }}
+            <table>
+              <thead>
+                <tr>{{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}</tr>
+              </thead>
+              <tbody>
+                {{ range after 1 $csvData }}
+                <tr>{{ range . }}<td>{{ . }}</td>{{ end }}</tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <style>
+      .main {
+        width: 100% !important;
+        max-width: 1000px !important;
+        margin: 0 auto !important;
+        padding: 5px !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Tab System Styling */
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        background: #fff;
+      }
+      .tabs input[type="radio"] {
+        display: none;
+      }
+      .tab-label {
+        padding: 12px 20px;
+        cursor: pointer;
+        background: #f8f8f8;
+        border: 1px solid #ddd;
+        border-bottom: none;
+        margin-right: 2px;
+        font-weight: bold;
+        color: #666;
+        transition: all 0.2s ease;
+        flex: 1;
+        text-align: center;
+        min-width: 100px;
+      }
+      .tab-label:hover {
+        background: #eee;
+        color: #000;
+      }
+      .tabs input[type="radio"]:checked + .tab-label {
+        background: #333;
+        color: #fff;
+        border-color: #333;
+        z-index: 2;
+      }
+      .tab-panel {
+        display: none;
+        width: 100%;
+        border: 1px solid #333;
+        padding: 10px;
+        background: #fff;
+        z-index: 1;
+        margin-top: -1px;
+        box-sizing: border-box;
+      }
+      
+      /* Pure CSS Tab Switching */
+      #tab-gf:checked ~ #content-gf,
+      #tab-yh:checked ~ #content-yh,
+      #tab-summary:checked ~ #content-summary {
+        display: block;
+      }
+
+      /* CSV Table Styling */
+      .csv-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: var(--font-family-mono);
+        font-size: 13px;
+        background: white;
+      }
+      th {
+        background-color: #f7f7f7;
+        color: #333;
+        text-align: left;
+        padding: 12px 8px;
+        border-bottom: 2px solid #ddd;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+      }
+      td {
+        padding: 10px 8px;
+        border-bottom: 1px solid #eee;
+        white-space: nowrap;
+      }
+      tr:nth-child(even) {
+        background-color: #fafafa;
+      }
+      tr:hover {
+        background-color: #f0f7ff;
+      }
+
+      /* Mobile Adjustments */
+      @media (max-width: 600px) {
+        .tab-label {
+          padding: 10px 5px;
+          font-size: 12px;
+          min-width: 80px;
+        }
+        table { font-size: 11px; }
+        th, td { padding: 8px 4px; }
+      }
+    </style>
+  </body>
+</html>
