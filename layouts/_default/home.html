@@ -57,14 +57,64 @@
 
         <div class="tab-panel" id="content-summary">
           <div class="csv-table">
-            {{ $csvData := resources.Get "data/summary_losses.csv" | transform.Unmarshal }}
+            {{ $gfData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
+            {{ $yhData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
+            
+            {{ $s := newScratch }}
+            
+            {{/* Process GF Data */}}
+            {{ range after 1 $gfData }}
+              {{ $name := strings.TrimPrefix "\ufeff" (index . 0) }}
+              {{ $loss := index . 1 | float }}
+              {{ $s.Add $name $loss }}
+              {{ $s.SetInMap "sources" $name "广发" }}
+            {{ end }}
+
+            {{/* Process YH Data */}}
+            {{ range after 1 $yhData }}
+              {{ $name := strings.TrimPrefix "\ufeff" (index . 0) }}
+              {{ $loss := index . 1 | float }}
+              {{ $s.Add $name $loss }}
+              
+              {{ $existing := "" }}
+              {{ if $s.Get "sources" }}
+                {{ $existing = index ($s.Get "sources") $name }}
+              {{ end }}
+
+              {{ if $existing }}
+                {{ if ne $existing "银河" }}
+                  {{ $s.SetInMap "sources" $name "广发+银河" }}
+                {{ end }}
+              {{ else }}
+                {{ $s.SetInMap "sources" $name "银河" }}
+              {{ end }}
+            {{ end }}
+
+            {{/* Reconstruct into a list for sorting */}}
+            {{ $list := slice }}
+            {{ $sources := $s.Get "sources" }}
+            {{ range $name, $val := $s.Values }}
+              {{ if and (ne $name "sources") (ne $name "totals") }}
+                {{ $sourceString := index $sources $name }}
+                {{ $list = $list | append (dict "name" $name "val" $val "src" $sourceString) }}
+              {{ end }}
+            {{ end }}
+
             <table>
               <thead>
-                <tr>{{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}</tr>
+                <tr>
+                  <th>股票名称</th>
+                  <th>合计亏损</th>
+                  <th>账户来源</th>
+                </tr>
               </thead>
               <tbody>
-                {{ range after 1 $csvData }}
-                <tr>{{ range . }}<td>{{ . }}</td>{{ end }}</tr>
+                {{ range sort $list "val" "asc" }}
+                <tr>
+                  <td>{{ .name }}</td>
+                  <td>{{ printf "%.2f" .val }}</td>
+                  <td>{{ .src }}</td>
+                </tr>
                 {{ end }}
               </tbody>
             </table>
