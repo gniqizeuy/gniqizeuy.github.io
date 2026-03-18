@@ -11,6 +11,27 @@
   </head>
   <body>
     <div class="main">
+    <div class="admin-top">
+      <button id="btn-admin" onclick="toggleAdmin()">⚙️ 管理模式</button>
+      <div id="admin-tools" style="display: none;">
+        <input type="password" id="admin-pass" placeholder="输入密码">
+        <button onclick="unlockAdmin()">解锁编辑</button>
+      </div>
+    </div>
+
+    <!-- GitHub Token Modal (Only shown for saving) -->
+    <div id="save-modal" class="modal">
+      <div class="modal-content">
+        <h3>确认同步到 GitHub?</h3>
+        <p>保存将自动提交 Git Commit 到仓库资产目录。</p>
+        <input type="password" id="gh-token" placeholder="输入您的 GitHub Token (PAT)">
+        <div class="modal-btns">
+          <button onclick="closeSaveModal()">取消</button>
+          <button class="primary" onclick="confirmSaveToGitHub()">正式保存并部署</button>
+        </div>
+      </div>
+    </div>
+
     <div class="tabs-container">
       <div class="tabs">
         <input type="radio" id="tab-gf" name="csv-tabs" checked>
@@ -22,107 +43,213 @@
         <input type="radio" id="tab-summary" name="csv-tabs">
         <label for="tab-summary" class="tab-label">3. Total Loss</label>
         
-        <!-- Tab Content panels must be siblings of the radios to work with ~ selector -->
         <div class="tab-panel" id="content-gf">
           <div class="csv-table">
             {{ $csvData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
-            <table>
+            <table data-file="assets/data/gf_losses.csv">
               <thead>
-                <tr>{{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}</tr>
+                <tr>
+                  {{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}
+                  <th class="admin-col">操作</th>
+                </tr>
               </thead>
-              <tbody>
+              <tbody id="tbody-gf">
                 {{ range after 1 $csvData }}
-                <tr>{{ range . }}<td>{{ . }}</td>{{ end }}</tr>
+                <tr>
+                  <td contenteditable="false">{{ index . 0 }}</td>
+                  <td contenteditable="false" class="editable-val">{{ index . 1 }}</td>
+                  <td contenteditable="false">{{ index . 2 }}</td>
+                  <td class="admin-col"><button class="btn-del" onclick="delRow(this)">删除</button></td>
+                </tr>
                 {{ end }}
               </tbody>
             </table>
+            <div class="admin-col add-row-tool">
+               <button onclick="addRow('tbody-gf', 3)">➕ 新增记录</button>
+            </div>
           </div>
         </div>
 
         <div class="tab-panel" id="content-yh">
           <div class="csv-table">
             {{ $csvData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
-            <table>
+            <table data-file="assets/data/yh_losses.csv">
               <thead>
-                <tr>{{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}</tr>
+                <tr>
+                  {{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}
+                  <th class="admin-col">操作</th>
+                </tr>
               </thead>
-              <tbody>
+              <tbody id="tbody-yh">
                 {{ range after 1 $csvData }}
-                <tr>{{ range . }}<td>{{ . }}</td>{{ end }}</tr>
+                <tr>
+                  <td contenteditable="false">{{ index . 0 }}</td>
+                  <td contenteditable="false" class="editable-val">{{ index . 1 }}</td>
+                  <td contenteditable="false">{{ index . 2 }}</td>
+                  <td contenteditable="false">{{ index . 3 }}</td>
+                  <td class="admin-col"><button class="btn-del" onclick="delRow(this)">删除</button></td>
+                </tr>
                 {{ end }}
               </tbody>
             </table>
+            <div class="admin-col add-row-tool">
+               <button onclick="addRow('tbody-yh', 4)">➕ 新增记录</button>
+            </div>
           </div>
         </div>
 
         <div class="tab-panel" id="content-summary">
-          <div class="csv-table">
-            {{ $gfData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
-            {{ $yhData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
-            
-            {{ $s := newScratch }}
-            
-            {{/* Process GF Data */}}
-            {{ range after 1 $gfData }}
-              {{ $name := strings.TrimPrefix "\ufeff" (index . 0) }}
-              {{ $loss := index . 1 | float }}
-              {{ $s.Add $name $loss }}
-              {{ $s.SetInMap "sources" $name "广发" }}
-            {{ end }}
-
-            {{/* Process YH Data */}}
-            {{ range after 1 $yhData }}
-              {{ $name := strings.TrimPrefix "\ufeff" (index . 0) }}
-              {{ $loss := index . 1 | float }}
-              {{ $s.Add $name $loss }}
-              
-              {{ $existing := "" }}
-              {{ if $s.Get "sources" }}
-                {{ $existing = index ($s.Get "sources") $name }}
-              {{ end }}
-
-              {{ if $existing }}
-                {{ if ne $existing "银河" }}
-                  {{ $s.SetInMap "sources" $name "广发+银河" }}
-                {{ end }}
-              {{ else }}
-                {{ $s.SetInMap "sources" $name "银河" }}
-              {{ end }}
-            {{ end }}
-
-            {{/* Reconstruct into a list for sorting */}}
-            {{ $list := slice }}
-            {{ $sources := $s.Get "sources" }}
-            {{ range $name, $val := $s.Values }}
-              {{ if and (ne $name "sources") (ne $name "totals") }}
-                {{ $sourceString := index $sources $name }}
-                {{ $list = $list | append (dict "name" $name "val" $val "src" $sourceString) }}
-              {{ end }}
-            {{ end }}
-
-            <table>
-              <thead>
-                <tr>
-                  <th>股票名称</th>
-                  <th>合计亏损</th>
-                  <th>账户来源</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{ range sort $list "val" "asc" }}
-                <tr>
-                  <td>{{ .name }}</td>
-                  <td>{{ printf "%.2f" .val }}</td>
-                  <td>{{ .src }}</td>
-                </tr>
-                {{ end }}
-              </tbody>
-            </table>
+          <p style="padding: 10px; color: #666; font-size: 12px;">注：此处为实时汇总，修改前两个 Tab 的明细后保存即可同步更新。</p>
+          <div id="summary-preview">
+            <!-- Hugo template calculation logic remains same but simplified for preview -->
+            <div class="csv-table">
+               {{/* ( Hugo code for summary table remains similar to previous version ) */}}
+               {{ $gfData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
+               {{ $yhData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
+               {{ $s := newScratch }}
+               {{ range after 1 $gfData }}{{ $name := strings.TrimPrefix "\ufeff" (index . 0) }}{{ $s.Add $name (index . 1 | float) }}{{ $s.SetInMap "sources" $name "广发" }}{{ end }}
+               {{ range after 1 $yhData }}
+                 {{ $name := strings.TrimPrefix "\ufeff" (index . 0) }}{{ $s.Add $name (index . 1 | float) }}
+                 {{ $existing := "" }}{{ if $s.Get "sources" }}{{ $existing = index ($s.Get "sources") $name }}{{ end }}
+                 {{ if $existing }}{{ if ne $existing "银河" }}{{ $s.SetInMap "sources" $name "广发+银河" }}{{ end }}{{ else }}{{ $s.SetInMap "sources" $name "银河" }}{{ end }}
+               {{ end }}
+               {{ $list := slice }}{{ $sources := $s.Get "sources" }}{{ range $name, $val := $s.Values }}{{ if and (ne $name "sources") (ne $name "totals") }}{{ $list = $list | append (dict "name" $name "val" $val "src" (index $sources $name)) }}{{ end }}{{ end }}
+               <table><thead><tr><th>股票名称</th><th>合计亏损</th><th>账户来源</th></tr></thead>
+               <tbody>{{ range sort $list "val" "asc" }}<tr><td>{{ .name }}</td><td>{{ printf "%.2f" .val }}</td><td>{{ .src }}</td></tr>{{ end }}</tbody></table>
+            </div>
           </div>
         </div>
       </div>
+      
+      <div id="save-tools" class="admin-col" style="margin-top: 20px; text-align: right;">
+        <span id="save-status"></span>
+        <button class="btn-save" onclick="openSaveModal()">💾 提交并保存更改</button>
+      </div>
     </div>
     </div>
+
+    <!-- Logic for Administration and GitHub Sync -->
+    <script>
+      let isAdmin = false;
+
+      function toggleAdmin() {
+        const tools = document.getElementById('admin-tools');
+        tools.style.display = tools.style.display === 'none' ? 'inline-block' : 'none';
+      }
+
+      function unlockAdmin() {
+        const pass = document.getElementById('admin-pass').value;
+        if (pass === 'xxxniu') {
+          isAdmin = true;
+          alert('解锁成功！您可以点击金额进行编辑，或删除/新增行。');
+          document.body.classList.add('admin-active');
+          document.querySelectorAll('[contenteditable]').forEach(el => el.contentEditable = true);
+          document.getElementById('admin-tools').style.display = 'none';
+          document.getElementById('btn-admin').textContent = '✅ 管理模式 (已解锁)';
+        } else {
+          alert('密码错误');
+        }
+      }
+
+      function delRow(btn) {
+        if (confirm('确定删除此行吗？')) {
+          btn.parentElement.parentElement.remove();
+        }
+      }
+
+      function addRow(tbodyId, cols) {
+        const tbody = document.getElementById(tbodyId);
+        const tr = document.createElement('tr');
+        for (let i = 0; i < cols; i++) {
+          const td = document.createElement('td');
+          td.contentEditable = true;
+          td.textContent = (i === 1) ? '0.00' : '新记录';
+          tr.appendChild(td);
+        }
+        const delTd = document.createElement('td');
+        delTd.className = 'admin-col';
+        delTd.innerHTML = '<button class="btn-del" onclick="delRow(this)">删除</button>';
+        tr.appendChild(delTd);
+        tbody.appendChild(tr);
+      }
+
+      // --- GitHub API Sync Logic ---
+      const OWNER = 'gniqizeuy';
+      const REPO = 'gniqizeuy.github.io';
+
+      function openSaveModal() {
+        document.getElementById('save-modal').style.display = 'block';
+        // Auto-fill token if exists in local storage
+        if (localStorage.getItem('gh_token')) {
+          document.getElementById('gh-token').value = localStorage.getItem('gh_token');
+        }
+      }
+
+      function closeSaveModal() {
+        document.getElementById('save-modal').style.display = 'none';
+      }
+
+      async function confirmSaveToGitHub() {
+        const token = document.getElementById('gh-token').value;
+        if (!token) return alert('请提供 GitHub Token');
+        localStorage.setItem('gh_token', token);
+        
+        const status = document.getElementById('save-status');
+        status.textContent = '正在发起提交...';
+        closeSaveModal();
+
+        try {
+          // We need to save two files if they were changed
+          await syncFile('assets/data/gf_losses.csv', 'tbody-gf', token);
+          await syncFile('assets/data/yh_losses.csv', 'tbody-yh', token);
+          
+          status.textContent = '✅ 保存成功！正在重新部署，请几分钟后刷新查看。';
+        } catch (e) {
+          console.error(e);
+          status.textContent = '❌ 保存失败: ' + e.message;
+        }
+      }
+
+      async function syncFile(path, tbodyId, token) {
+        const tbody = document.getElementById(tbodyId);
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        // Get headers from the table manually or just assume fixed ones
+        let headers = [];
+        if (path.includes('gf')) headers = ['股票名称','盈亏金额','收益率'];
+        else headers = ['股票名称','盈亏金额','收益率','区间涨幅'];
+
+        let csvContent = headers.join(',') + '\n';
+        rows.forEach(tr => {
+          const cells = Array.from(tr.querySelectorAll('td:not(.admin-col)'));
+          csvContent += cells.map(td => td.textContent.trim()).join(',') + '\n';
+        });
+
+        // 1. Get current file SHA
+        const getUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
+        const getRes = await fetch(getUrl, {
+          headers: { 'Authorization': `token ${token}` }
+        });
+        const getJson = await getRes.json();
+        const sha = getJson.sha;
+
+        // 2. Push update
+        const putRes = await fetch(getUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: `Update ${path} via Online Editor`,
+            content: btoa(unescape(encodeURIComponent(csvContent))),
+            sha: sha
+          })
+        });
+
+        if (!putRes.ok) throw new Error('API Error: ' + putRes.statusText);
+      }
+    </script>
 
     <style>
       .main {
@@ -229,6 +356,29 @@
         table { font-size: 11px; }
         th, td { padding: 8px 4px; }
       }
+
+      /* Admin Specific Styles */
+      .admin-top { padding: 10px; background: #eee; text-align: right; border-bottom: 1px solid #ccc; }
+      .admin-col { display: none; }
+      .admin-active .admin-col { display: table-cell !important; }
+      div.admin-col { display: none; }
+      .admin-active div.admin-col { display: block !important; }
+      
+      .btn-del { color: red; cursor: pointer; border: 1px solid red; background: white; padding: 2px 5px; font-size: 11px; }
+      .btn-save { background: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+      .add-row-tool { padding: 10px; background: #f0f0f0; border: 1px dashed #ccc; text-align: center; margin-top: 5px; }
+
+      .editable-val { color: #2980b9; font-weight: bold; }
+      .admin-active .editable-val { background: #e8f4fc; border: 1px dashed #3498db; }
+
+      /* Modal Style */
+      .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+      .modal-content { background: white; margin: 15% auto; padding: 20px; border-radius: 8px; width: 300px; text-align: center; }
+      .modal-content h3 { margin-top: 0; }
+      .modal-content input { width: 100%; padding: 10px; margin: 15px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+      .modal-btns { display: flex; justify-content: space-between; }
+      .modal-btns button { padding: 8px 20px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; }
+      .modal-btns button.primary { background: #3498db; color: white; border: none; }
     </style>
   </body>
 </html>
