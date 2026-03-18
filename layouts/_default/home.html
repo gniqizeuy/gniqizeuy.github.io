@@ -214,7 +214,6 @@
         const tbody = document.getElementById(tbodyId);
         const rows = Array.from(tbody.querySelectorAll('tr'));
         
-        // Get headers from the table manually or just assume fixed ones
         let headers = [];
         if (path.includes('gf')) headers = ['股票名称','盈亏金额','收益率'];
         else headers = ['股票名称','盈亏金额','收益率','区间涨幅'];
@@ -225,11 +224,19 @@
           csvContent += cells.map(td => td.textContent.trim()).join(',') + '\n';
         });
 
+        const syncHeaders = {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28'
+        };
+
         // 1. Get current file SHA
         const getUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
-        const getRes = await fetch(getUrl, {
-          headers: { 'Authorization': `token ${token}` }
-        });
+        const getRes = await fetch(getUrl, { headers: syncHeaders });
+        if (!getRes.ok) {
+            const err = await getRes.json();
+            throw new Error(`获取文件 SHA 失败 (${getRes.status}): ${err.message}`);
+        }
         const getJson = await getRes.json();
         const sha = getJson.sha;
 
@@ -237,7 +244,7 @@
         const putRes = await fetch(getUrl, {
           method: 'PUT',
           headers: {
-            'Authorization': `token ${token}`,
+            ...syncHeaders,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -247,7 +254,10 @@
           })
         });
 
-        if (!putRes.ok) throw new Error('API Error: ' + putRes.statusText);
+        if (!putRes.ok) {
+            const err = await putRes.json();
+            throw new Error(`API 提交失败 (${putRes.status}): ${err.message}`);
+        }
       }
     </script>
 
