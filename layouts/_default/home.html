@@ -1,377 +1,263 @@
 <html>
-  <head>
-    <title>gniqizeuy</title>
-    <link rel="alternate" type="application/atom+xml" title="research!rsc - Atom" href="http://research.swtch.com/feed.atom" />
+<head>
+  <title>gniqizeuy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ "css/common.css" | relURL }}">
+  <style>
+    /* 页面基础 */
+    .main { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0; box-sizing: border-box; }
     
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="fonts/minion3/fonts.css" rel="stylesheet">
-    <link href="fonts/source-code-pro/source-code-pro.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ "css/common.css" | relURL }}">
+    /* 隐藏 Radio */
+    input[name="csv-tabs"] { display: none; }
 
-  </head>
-  <body>
-    <div class="main">
-    <div id="sticky-header">
-      <div class="tabs-container">
-        <div class="tabs">
-          <input type="radio" id="tab-gf" name="csv-tabs" checked>
-          <label for="tab-gf" class="tab-label">1. GF Loss</label>
-          
-          <input type="radio" id="tab-yh" name="csv-tabs">
-          <label for="tab-yh" class="tab-label">2. YH Loss</label>
-          
-          <input type="radio" id="tab-summary" name="csv-tabs">
-          <label for="tab-summary" id="trigger-label" class="tab-label">3. Total Loss</label>
-        </div>
+    /* 第1层贴合：Tab 导航 */
+    #tab-nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: white;
+      border-bottom: 1px solid #333;
+    }
+    .tabs { display: flex; width: 100%; height: 48px; box-sizing: border-box; }
+    .tab-label { 
+      line-height: 48px; /* 强制对齐高度 */
+      cursor: pointer; 
+      background: #fafafa; 
+      font-weight: bold; 
+      color: #777; 
+      flex: 1; 
+      text-align: center; 
+      font-size: 13px; 
+      border-right: 1px solid #eee;
+    }
+
+    /* 管理栏 */
+    #admin-bar {
+      background: #fef9c3;
+      padding: 8px 15px;
+      display: none;
+      align-items: center;
+      gap: 15px;
+      border-top: 1px solid #eab308;
+      height: 44px;
+      box-sizing: border-box;
+    }
+    .admin-active #admin-bar { display: flex !important; }
+
+    /* 第2层贴合：表头 (关键修复) */
+    th {
+      background-color: #f7f7f7 !important; /* 实色背景 */
+      position: sticky;
+      top: 48px; /* 紧贴 Tab 栏底部 */
+      z-index: 500;
+      border-bottom: 2px solid #ddd;
+      padding: 12px 8px;
+      text-align: left;
+    }
+    /* 管理栏激活时，表头吸附位置顺延 */
+    .admin-active th { top: 92px; }
+
+    /* 表格样式 */
+    .csv-table { 
+      /* 移除可能引起 sticky 失效的 overflow 限制 */
+      width: 100%;
+    }
+    table { width: 100%; border-collapse: collapse; font-family: var(--font-family-mono); font-size: 13px; }
+    td { padding: 12px 8px; border-bottom: 1px solid #eee; white-space: nowrap; background: #fff; }
+    tr:nth-child(even) td { background-color: #fafafa; }
+    tr:hover td { background-color: #f0f7ff; }
+
+    /* Tab 激活样式 */
+    #tab-gf:checked ~ #tab-nav-wrapper label[for="tab-gf"],
+    #tab-yh:checked ~ #tab-nav-wrapper label[for="tab-yh"],
+    #tab-summary:checked ~ #tab-nav-wrapper label[for="tab-summary"] {
+      background: #333 !important; color: #fff !important;
+    }
+    
+    .tab-panel { display: none; }
+    #tab-gf:checked ~ .content-area #content-gf { display: block; }
+    #tab-yh:checked ~ .content-area #content-yh { display: block; }
+    #tab-summary:checked ~ .content-area #content-summary { display: block; }
+
+    /* 通用 UI */
+    .admin-col { display: none; }
+    .admin-active .admin-col { display: table-cell !important; }
+    div.admin-active .admin-col { display: block !important; }
+    .admin-active .editable-val { background-color: #f0f9ff !important; color: #0284c7; font-weight: bold; border: 1px dashed #3bb2f6; }
+
+    .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); }
+    .modal-content { background: white; margin: 15% auto; padding: 25px; border-radius: 12px; width: 320px; text-align: center; }
+    .btn-primary { background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+    .btn-save { background: #10b981; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    .btn-exit { background: transparent; border: 1px solid #999; padding: 4px 10px; font-size: 11px; cursor: pointer; margin-left: auto; border-radius: 3px; }
+
+    @media (max-width: 600px) {
+      .tab-label { font-size: 11px; height: 40px; line-height: 40px; }
+      th { top: 40px; padding: 8px 4px; font-size: 11px; }
+      .admin-active th { top: 84px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <input type="radio" id="tab-gf" name="csv-tabs" checked>
+    <input type="radio" id="tab-yh" name="csv-tabs">
+    <input type="radio" id="tab-summary" name="csv-tabs">
+
+    <div id="tab-nav-wrapper">
+      <div class="tabs">
+        <label for="tab-gf" class="tab-label">1. GF Loss</label>
+        <label for="tab-yh" class="tab-label">2. YH Loss</label>
+        <label for="tab-summary" id="trigger-label" class="tab-label">3. Total Loss</label>
       </div>
-
-      <div id="admin-bar" class="admin-col">
-          <button class="btn-primary" onclick="addRowToActive()">➕ 新行</button>
-          <button class="btn-save" onclick="openSaveModal()">💾 保存同步</button>
-          <span id="save-status"></span>
-          <button class="btn-exit" onclick="location.reload()">退出管理</button>
+      <div id="admin-bar">
+        <button class="btn-primary" onclick="addRowToActive()">➕ 加入新项</button>
+        <button class="btn-save" onclick="openSaveModal()">💾 导出同步</button>
+        <span id="save-status" style="font-size: 12px; color: #059669; margin-left:10px;"></span>
+        <button class="btn-exit" onclick="location.reload()">退出管理</button>
       </div>
     </div>
 
+    <!-- 弹窗部分... (略, 保持之前逻辑) -->
     <div id="admin-login-modal" class="modal">
       <div class="modal-content">
         <h3>管理登录</h3>
-        <input type="password" id="admin-pass" placeholder="输入控制台密码">
-        <div class="modal-btns">
-          <button onclick="closeAdminLogin()">返回</button>
-          <button class="primary" onclick="unlockAdmin()">进入管理</button>
+        <input type="password" id="admin-pass" placeholder="管理密码">
+        <div style="display:flex; gap:10px; margin-top:15px;">
+          <button style="flex:1" onclick="closeModal('admin-login-modal')">返回</button>
+          <button style="flex:1; background:#333; color:white; border:none; border-radius:4px;" onclick="handleUnlock()">进入</button>
         </div>
       </div>
     </div>
-
     <div id="save-modal" class="modal">
       <div class="modal-content">
-        <h3>确认提交?</h3>
-        <p>数据将回写仓库并上线。</p>
-        <input type="password" id="gh-token" placeholder="GitHub Token (PAT)">
-        <div class="modal-btns">
-          <button onclick="closeSaveModal()">取消</button>
-          <button class="primary" onclick="confirmSaveToGitHub()">确认提交</button>
+        <h3>准备同步到云端</h3>
+        <input type="password" id="gh-token" placeholder="GitHub Token">
+        <div style="display:flex; gap:10px; margin-top:15px;">
+          <button style="flex:1" onclick="closeModal('save-modal')">取消</button>
+          <button style="flex:1; background:#333; color:white; border:none; border-radius:4px;" onclick="handleSync()">确认同步</button>
         </div>
       </div>
     </div>
 
     <div class="content-area">
-        <div class="tab-panel" id="content-gf">
-          <div class="csv-table">
-            {{ $csvData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
-            <table>
-              <thead>
-                <tr>
-                  {{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}
-                  <th class="admin-col">操作</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-gf">
-                {{ range after 1 $csvData }}
-                <tr>
-                  <td contenteditable="false">{{ index . 0 }}</td>
-                  <td contenteditable="false" class="editable-val">{{ index . 1 }}</td>
-                  <td contenteditable="false">{{ index . 2 }}</td>
-                  <td class="admin-col"><button class="btn-del" onclick="delRow(this)">删</button></td>
-                </tr>
-                {{ end }}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="content-yh">
-          <div class="csv-table">
-            {{ $csvData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
-            <table>
-              <thead>
-                <tr>
-                  {{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}
-                  <th class="admin-col">操作</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-yh">
-                {{ range after 1 $csvData }}
-                <tr>
-                  <td contenteditable="false">{{ index . 0 }}</td>
-                  <td contenteditable="false" class="editable-val">{{ index . 1 }}</td>
-                  <td contenteditable="false">{{ index . 2 }}</td>
-                  <td contenteditable="false">{{ index . 3 }}</td>
-                  <td class="admin-col"><button class="btn-del" onclick="delRow(this)">删</button></td>
-                </tr>
-                {{ end }}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="content-summary">
-          <p style="padding: 10px; color: #666; font-size: 12px;">注：此处为实时汇总，修改前两个 Tab 的明细后保存即可同步更新。</p>
-          <div id="summary-preview">
-            <!-- Hugo template calculation logic remains same but simplified for preview -->
-            <div class="csv-table">
-               {{/* ( Hugo code for summary table remains similar to previous version ) */}}
-               {{ $gfData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
-               {{ $yhData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
-               {{ $s := newScratch }}
-               {{ range after 1 $gfData }}{{ $name := strings.TrimPrefix "\ufeff" (index . 0) }}{{ $s.Add $name (index . 1 | float) }}{{ $s.SetInMap "sources" $name "广发" }}{{ end }}
-               {{ range after 1 $yhData }}
-                 {{ $name := strings.TrimPrefix "\ufeff" (index . 0) }}{{ $s.Add $name (index . 1 | float) }}
-                 {{ $existing := "" }}{{ if $s.Get "sources" }}{{ $existing = index ($s.Get "sources") $name }}{{ end }}
-                 {{ if $existing }}{{ if ne $existing "银河" }}{{ $s.SetInMap "sources" $name "广发+银河" }}{{ end }}{{ else }}{{ $s.SetInMap "sources" $name "银河" }}{{ end }}
-               {{ end }}
-               {{ $list := slice }}{{ $sources := $s.Get "sources" }}{{ range $name, $val := $s.Values }}{{ if and (ne $name "sources") (ne $name "totals") }}{{ $list = $list | append (dict "name" $name "val" $val "src" (index $sources $name)) }}{{ end }}{{ end }}
-               <table><thead><tr><th>股票名称</th><th>合计亏损</th><th>账户来源</th></tr></thead>
-               <tbody>{{ range sort $list "val" "asc" }}<tr><td>{{ .name }}</td><td>{{ printf "%.2f" .val }}</td><td>{{ .src }}</td></tr>{{ end }}</tbody></table>
-            </div>
-          </div>
+      <!-- GF Panel -->
+      <div class="tab-panel" id="content-gf">
+        <div class="csv-table">
+          {{ $csvData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
+          <table>
+            <thead>
+              <tr>
+                {{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}
+                <th class="admin-col">操作</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-gf">
+              {{ range after 1 $csvData }}
+              <tr>
+                <td contenteditable="false">{{ index . 0 }}</td>
+                <td contenteditable="false" class="editable-val">{{ index . 1 }}</td>
+                <td contenteditable="false">{{ index . 2 }}</td>
+                <td class="admin-col"><button onclick="delRow(this)">删</button></td>
+              </tr>
+              {{ end }}
+            </tbody>
+          </table>
         </div>
       </div>
-      
-      <div id="save-tools" class="admin-col" style="margin-top: 20px; text-align: right;">
-        <span id="save-status"></span>
-        <button class="btn-save" onclick="openSaveModal()">💾 提交并保存更改</button>
+
+      <!-- YH Panel -->
+      <div class="tab-panel" id="content-yh">
+        <div class="csv-table">
+          {{ $csvData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
+          <table>
+            <thead>
+              <tr>
+                {{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}
+                <th class="admin-col">操作</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-yh">
+              {{ range after 1 $csvData }}
+              <tr>
+                <td contenteditable="false">{{ index . 0 }}</td>
+                <td contenteditable="false" class="editable-val">{{ index . 1 }}</td>
+                <td contenteditable="false">{{ index . 2 }}</td>
+                <td contenteditable="false">{{ index . 3 }}</td>
+                <td class="admin-col"><button onclick="delRow(this)">删</button></td>
+              </tr>
+              {{ end }}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Summary Panel -->
+      <div class="tab-panel" id="content-summary">
+        <div class="csv-table">
+            {{ $gfData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
+            {{ $yhData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
+            {{ $s := newScratch }}
+            {{ range after 1 $gfData }}{{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}{{ $s.Add $n (index . 1 | float) }}{{ $s.SetInMap "src" $n "广发" }}{{ end }}
+            {{ range after 1 $yhData }}
+                {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}{{ $s.Add $n (index . 1 | float) }}
+                {{ $e := "" }}{{ if $s.Get "src" }}{{ $e = index ($s.Get "src") $n }}{{ end }}
+                {{ if $e }}{{ if ne $e "银河" }}{{ $s.SetInMap "src" $n "广发+银河" }}{{ end }}{{ else }}{{ $s.SetInMap "src" $n "银河" }}{{ end }}
+            {{ end }}
+            {{ $list := slice }}{{ $srcs := $s.Get "src" }}{{ range $k, $v := $s.Values }}{{ if and (ne $k "src") (ne $k "totals") }}{{ $list = $list | append (dict "n" $k "v" $v "s" (index $srcs $k)) }}{{ end }}{{ end }}
+            <table>
+              <thead><tr><th>股票名称</th><th>合计盈亏</th><th>账户来源</th></tr></thead>
+              <tbody>{{ range sort $list "v" "asc" }}<tr><td>{{ .n }}</td><td style="font-weight:bold;">{{ printf "%.2f" .v }}</td><td>{{ .s }}</td></tr>{{ end }}</tbody>
+            </table>
+        </div>
       </div>
     </div>
-    </div>
+  </div>
 
-    <!-- Logic for Administration and GitHub Sync -->
-    <script>
-      let isAdmin = false;
-
-      // Easter Egg: Click "Total Loss" label 5 times to show login
-      let clickCount = 0;
-      const trigger = document.getElementById('trigger-label');
-      trigger.addEventListener('click', () => {
-        clickCount++;
-        if (clickCount >= 5) {
-          document.getElementById('admin-login-modal').style.display = 'block';
-          clickCount = 0; // reset
-        }
-        setTimeout(() => { clickCount = 0; }, 3000); // Reset if not finished in 3s
+  <script>
+    let cc = 0;
+    document.getElementById('trigger-label').addEventListener('click', () => { if (++cc >= 5) { document.getElementById('admin-login-modal').style.display = 'block'; cc = 0; } setTimeout(() => { cc = 0; }, 3000); });
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function openSaveModal() { document.getElementById('save-modal').style.display = 'block'; if (localStorage.getItem('gh_token')) document.getElementById('gh-token').value = localStorage.getItem('gh_token'); }
+    function handleUnlock() {
+      const p = document.getElementById('admin-pass').value;
+      if (p === 'xxxniu') { document.body.classList.add('admin-active'); document.querySelectorAll('td[contenteditable]').forEach(el => el.contentEditable = true); closeModal('admin-login-modal'); } else alert('密码错误');
+    }
+    function delRow(btn) { if(confirm('确认删除？')) btn.closest('tr').remove(); }
+    function addRowToActive() {
+      if (document.getElementById('tab-gf').checked) addRow('tbody-gf', 3);
+      else if (document.getElementById('tab-yh').checked) addRow('tbody-yh', 4);
+    }
+    function addRow(tid, cols) {
+      const tb = document.getElementById(tid); const tr = document.createElement('tr');
+      for (let i = 0; i < cols; i++) {
+        const td = document.createElement('td'); td.contentEditable = true;
+        td.textContent = (i === 1) ? '0.00' : '新项'; tr.appendChild(td);
+      }
+      const dt = document.createElement('td'); dt.className = 'admin-col'; dt.innerHTML = '<button onclick="delRow(this)">删</button>';
+      tr.appendChild(dt); tb.prepend(tr);
+    }
+    const O = 'gniqizeuy'; const R = 'gniqizeuy.github.io';
+    async function handleSync() {
+      const t = document.getElementById('gh-token').value; if (!t) return;
+      localStorage.setItem('gh_token', t); const s = document.getElementById('save-status'); s.textContent = '☕ 同步中...';
+      closeModal('save-modal');
+      try { await sf('assets/data/gf_losses.csv', 'tbody-gf', t); await sf('assets/data/yh_losses.csv', 'tbody-yh', t); s.textContent = '✅ 已提交'; } catch (e) { s.textContent = '❌ 失败'; }
+    }
+    async function sf(p, tid, t) {
+      const r = Array.from(document.getElementById(tid).querySelectorAll('tr'));
+      let h = p.includes('gf') ? ['股票名称', '盈亏金额', '收益率'] : ['股票名称', '盈亏金额', '收益率', '区间涨幅'];
+      let csv = h.join(',') + '\n';
+      r.forEach(tr => { const x = Array.from(tr.querySelectorAll('td:not(.admin-col)')); csv += x.map(td => td.textContent.trim()).join(',') + '\n'; });
+      const api_h = { 'Authorization': `Bearer ${t}`, 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+      const get = await fetch(`https://api.github.com/repos/${O}/${R}/contents/${p}`, { headers: api_h });
+      const { sha } = await get.json();
+      await fetch(`https://api.github.com/repos/${O}/${R}/contents/${p}`, {
+        method: 'PUT', headers: { ...api_h, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: `Update: ${p}`, content: btoa(unescape(encodeURIComponent(csv))), sha })
       });
-
-      function closeAdminLogin() {
-        document.getElementById('admin-login-modal').style.display = 'none';
-      }
-
-      function unlockAdmin() {
-        const pass = document.getElementById('admin-pass').value;
-        if (pass === 'xxxniu') {
-          isAdmin = true;
-          document.body.classList.add('admin-active');
-          document.querySelectorAll('[contenteditable]').forEach(el => el.contentEditable = true);
-          closeAdminLogin();
-        } else {
-          alert('密钥错误');
-        }
-      }
-
-      function delRow(btn) {
-        if (confirm('确定删除此行？')) {
-          btn.parentElement.parentElement.remove();
-        }
-      }
-
-      function addRowToActive() {
-        if (document.getElementById('tab-gf').checked) {
-          addRow('tbody-gf', 3);
-        } else if (document.getElementById('tab-yh').checked) {
-          addRow('tbody-yh', 4);
-        } else {
-          alert('请先切换到明细 Tab 再新增');
-        }
-      }
-
-      function addRow(tbodyId, cols) {
-        const tbody = document.getElementById(tbodyId);
-        const tr = document.createElement('tr');
-        for (let i = 0; i < cols; i++) {
-          const td = document.createElement('td');
-          td.contentEditable = true;
-          td.textContent = (i === 1) ? '0.00' : '新项';
-          tr.appendChild(td);
-        }
-        const delTd = document.createElement('td');
-        delTd.className = 'admin-col';
-        delTd.innerHTML = '<button class="btn-del" onclick="delRow(this)">删</button>';
-        tr.appendChild(delTd);
-        tbody.prepend(tr); // Add to top for convenience
-      }
-
-      // --- GitHub API Sync Logic ---
-      const OWNER = 'gniqizeuy';
-      const REPO = 'gniqizeuy.github.io';
-
-      function openSaveModal() {
-        document.getElementById('save-modal').style.display = 'block';
-        if (localStorage.getItem('gh_token')) {
-          document.getElementById('gh-token').value = localStorage.getItem('gh_token');
-        }
-      }
-
-      function closeSaveModal() {
-        document.getElementById('save-modal').style.display = 'none';
-      }
-
-      async function confirmSaveToGitHub() {
-        const token = document.getElementById('gh-token').value;
-        if (!token) return alert('Token Required');
-        localStorage.setItem('gh_token', token);
-        
-        const status = document.getElementById('save-status');
-        status.textContent = '📦 正在提交...';
-        closeSaveModal();
-
-        try {
-          await syncFile('assets/data/gf_losses.csv', 'tbody-gf', token);
-          await syncFile('assets/data/yh_losses.csv', 'tbody-yh', token);
-          status.textContent = '🚀 保存成功 (部署中)';
-        } catch (e) {
-          console.error(e);
-          status.textContent = '❌ 错误: ' + e.message;
-        }
-      }
-
-      async function syncFile(path, tbodyId, token) {
-        const tbody = document.getElementById(tbodyId);
-        const rows = Array.from(tbody.querySelectorAll('tr'));
-        
-        let headers = [];
-        if (path.includes('gf')) headers = ['股票名称','盈亏金额','收益率'];
-        else headers = ['股票名称','盈亏金额','收益率','区间涨幅'];
-
-        let csvContent = headers.join(',') + '\n';
-        rows.forEach(tr => {
-          const cells = Array.from(tr.querySelectorAll('td:not(.admin-col)'));
-          csvContent += cells.map(td => td.textContent.trim()).join(',') + '\n';
-        });
-
-        const syncHeaders = {
-          'Authorization': `Bearer ${token}`,
-          'Accept': 'application/vnd.github+json',
-          'X-GitHub-Api-Version': '2022-11-28'
-        };
-
-        const getUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
-        const getRes = await fetch(getUrl, { headers: syncHeaders });
-        if (!getRes.ok) throw new Error(`SHA Fetch ERR ${getRes.status}`);
-        const getJson = await getRes.json();
-        const sha = getJson.sha;
-
-        const putRes = await fetch(getUrl, {
-          method: 'PUT',
-          headers: { ...syncHeaders, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message: `Web Update: ${path}`,
-            content: btoa(unescape(encodeURIComponent(csvContent))),
-            sha: sha
-          })
-        });
-
-        if (!putRes.ok) throw new Error(`Push ERR ${putRes.status}`);
-      }
-    </script>
-
-    <style>
-      /* Layout & Sticky */
-      .main { width: 100% !important; max-width: 1000px !important; margin: 0 auto !important; padding: 0 !important; box-sizing: border-box !important; }
-      
-      #sticky-header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background: white;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      }
-
-      .tabs-container { background: #fff; }
-      .tabs { display: flex; width: 100%; }
-      .tabs input[type="radio"] { display: none; }
-      .tab-label { 
-        padding: 15px 5px; 
-        cursor: pointer; 
-        background: #f8f8f8; 
-        border-right: 1px solid #eee;
-        font-weight: bold; 
-        color: #666; 
-        flex: 1; 
-        text-align: center; 
-        font-size: 13px; 
-      }
-      .tabs input[type="radio"]:checked + .tab-label { background: #333; color: #fff; }
-
-      #admin-bar {
-        background: #fef9c3;
-        padding: 10px;
-        display: none;
-        align-items: center;
-        gap: 15px;
-        border-top: 1px solid #eab308;
-      }
-      .admin-active #admin-bar { display: flex !important; }
-
-      /* Table Styles */
-      .csv-table { 
-        overflow-x: auto; 
-        -webkit-overflow-scrolling: touch;
-        /* Ensure the container doesn't clip the sticky header */
-        overflow-y: visible; 
-      }
-      
-      table { 
-        width: 100%; 
-        border-collapse: collapse; 
-        font-family: var(--font-family-mono); 
-        font-size: 13px; 
-        table-layout: auto;
-      }
-      
-      th {
-        background-color: #f7f7f7;
-        color: #333;
-        text-align: left;
-        padding: 12px 8px;
-        border-bottom: 2px solid #ddd;
-        position: sticky;
-        top: 47px; /* Matches height of normal tabs */
-        z-index: 50;
-      }
-      /* When admin is active, we push headers down further */
-      .admin-active th { 
-        top: 98px; /* Offset for tabs + admin bar */
-      }
-
-      td { padding: 12px 8px; border-bottom: 1px solid #eee; white-space: nowrap; background: #fff; }
-      tr:nth-child(even) td { background-color: #fafafa; }
-      tr:hover td { background-color: #f0f7ff; }
-
-      /* Buttons & Admin tools */
-      .btn-primary { background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
-      .btn-save { background: #16a34a; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; }
-      .btn-exit { background: white; border: 1px solid #999; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; margin-left: auto; }
-      .btn-del { color: #dc2626; border: 1px solid #fee2e2; background: #fef2f2; cursor: pointer; padding: 2px 6px; border-radius: 4px; }
-
-      /* Editor Styles */
-      .admin-active .editable-val { 
-        background-color: #f0f9ff !important; 
-        border: 1px dashed #3bb2f6; 
-        color: #0369a1;
-      }
-
-      .admin-col { display: none; }
-      .admin-active .admin-col { display: table-cell !important; }
-      div.admin-col { display: none; }
-      .admin-active div.admin-col { display: block !important; }
-
-      @media (max-width: 600px) {
-        .tab-label { font-size: 11px; padding: 12px 2px; }
-        table { font-size: 11px; }
-        th, td { padding: 8px 4px; }
-        th { top: 41px; }
-        .admin-active th { top: 92px; }
-      }
-    </style>
-  </body>
+    }
+  </script>
+</body>
 </html>
