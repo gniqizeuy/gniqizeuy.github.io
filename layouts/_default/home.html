@@ -4,252 +4,1053 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ "css/common.css" | relURL }}">
   <style>
-    /* 页面基础 */
-    .main { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0; box-sizing: border-box; }
-    
-    /* 隐藏 Radio */
-    input[name="csv-tabs"] { display: none; }
+    :root {
+      --bg: #efe2de;
+      --bg-soft: #faf3f0;
+      --paper: rgba(252, 248, 246, 0.94);
+      --paper-solid: #fdf9f7;
+      --line: rgba(27, 31, 35, 0.11);
+      --line-strong: rgba(27, 31, 35, 0.22);
+      --text: #111418;
+      --muted: #69707a;
+      --accent: #cb3f3f;
+      --accent-deep: #991f25;
+      --accent-soft: rgba(203, 63, 63, 0.12);
+      --success: #b3262d;
+      --admin: #ffd8d8;
+      --shadow: 0 24px 60px rgba(24, 28, 31, 0.08);
+      --shadow-soft: 0 12px 26px rgba(24, 28, 31, 0.06);
+      --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --font-ui: "Avenir Next", "SF Pro Display", "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+      --font-mono: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+    }
 
-    /* 第1层贴合：Tab 导航 */
+    body {
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+      font-size: 100%;
+      font-family: var(--font-ui);
+      background:
+        linear-gradient(rgba(17, 20, 24, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17, 20, 24, 0.028) 1px, transparent 1px),
+        radial-gradient(circle at top left, rgba(203, 63, 63, 0.11), transparent 28%),
+        radial-gradient(circle at 92% 12%, rgba(160, 32, 47, 0.08), transparent 24%),
+        linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+      background-size: 32px 32px, 32px 32px, auto, auto, auto;
+      color: var(--text);
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      filter: blur(60px);
+      opacity: 0.24;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::before {
+      top: 36px;
+      right: -40px;
+      background: rgba(173, 34, 47, 0.18);
+    }
+    body::after {
+      left: -60px;
+      bottom: 40px;
+      background: rgba(203, 63, 63, 0.14);
+    }
+
+    .main {
+      position: relative;
+      z-index: 1;
+      width: min(1240px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 16px 0 38px;
+      box-sizing: border-box;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.6fr);
+      gap: 10px;
+      align-items: stretch;
+      margin-bottom: 10px;
+      animation: riseIn 0.5s ease both;
+    }
+    .brand-pill {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+      min-width: 220px;
+      padding: 16px 18px;
+      border: 1px solid rgba(17, 20, 24, 0.08);
+      border-radius: 20px;
+      background:
+        linear-gradient(135deg, rgba(70, 16, 23, 0.98) 0%, rgba(31, 18, 20, 0.96) 100%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .brand-pill::after {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      background: linear-gradient(180deg, #ff8c8c 0%, var(--accent) 50%, var(--accent-deep) 100%);
+    }
+    .brand-pill strong {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.96);
+    }
+    .brand-pill span {
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .overview-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .overview-chip {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border: 1px solid rgba(17, 20, 24, 0.08);
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 251, 250, 0.94) 0%, rgba(247, 238, 235, 0.9) 100%);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+    .overview-chip::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, rgba(203, 63, 63, 0.95) 0%, rgba(153, 31, 37, 0.78) 100%);
+    }
+    .overview-chip span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .overview-chip strong {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--accent-deep);
+    }
+
+    input[type="password"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+    button {
+      font: inherit;
+    }
+
     #tab-nav-wrapper {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: white;
-      border-bottom: 1px solid #333;
+      background: linear-gradient(180deg, rgba(255, 249, 248, 0.94) 0%, rgba(248, 239, 236, 0.92) 100%);
+      border: 1px solid rgba(203, 63, 63, 0.14);
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+      animation: riseIn 0.65s ease both;
     }
-    .tabs { display: flex; width: 100%; height: 48px; box-sizing: border-box; }
-    .tab-label { 
-      line-height: 48px; /* 强制对齐高度 */
-      cursor: pointer; 
-      background: #fafafa; 
-      font-weight: bold; 
-      color: #777; 
-      flex: 1; 
-      text-align: center; 
-      font-size: 13px; 
-      border-right: 1px solid #eee;
+    .tabs {
+      display: flex;
+      width: 100%;
+      height: 42px;
+      box-sizing: border-box;
+      padding: 4px;
+      gap: 4px;
+    }
+    .tab-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: transparent;
+      font-weight: 700;
+      color: var(--muted);
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      border-radius: 14px;
+      line-height: 1.15;
+      transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+      text-transform: uppercase;
+      border: 0;
+      font: inherit;
+    }
+    .tab-label:hover {
+      background: rgba(203, 63, 63, 0.08);
+      color: var(--accent-deep);
     }
 
-    /* 管理栏 */
     #admin-bar {
-      background: #fef9c3;
-      padding: 8px 15px;
+      background: linear-gradient(180deg, #ffe2e0 0%, #ffc7c3 100%);
+      padding: 8px 14px;
       display: none;
       align-items: center;
-      gap: 15px;
-      border-top: 1px solid #eab308;
-      height: 44px;
+      gap: 12px;
+      border-top: 1px solid rgba(17, 20, 24, 0.08);
+      min-height: 42px;
       box-sizing: border-box;
+      flex-wrap: wrap;
     }
     .admin-active #admin-bar { display: flex !important; }
 
-    /* 第2层贴合：表头 (关键修复) */
+    .btn-primary,
+    .btn-save,
+    .btn-exit,
+    .modal-btn {
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+    .btn-primary,
+    .btn-save,
+    .modal-btn-dark {
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 10px 20px rgba(59, 38, 21, 0.14);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #681821 0%, #2b181b 100%);
+    }
+    .btn-save {
+      background: linear-gradient(135deg, #ca3d3f 0%, #961f26 100%);
+    }
+    .btn-exit {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(17, 20, 24, 0.12);
+      color: var(--text);
+      padding: 7px 12px;
+      font-size: 11px;
+      margin-left: auto;
+    }
+    .btn-primary.is-disabled {
+      opacity: 0.42;
+      pointer-events: none;
+      box-shadow: none;
+    }
+    .btn-primary:hover,
+    .btn-save:hover,
+    .btn-exit:hover,
+    .modal-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(59, 38, 21, 0.16);
+    }
+    .status-text {
+      font-size: 12px;
+      color: var(--accent-deep);
+      margin-left: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
     th {
-      background-color: #f7f7f7 !important; /* 实色背景 */
+      background-color: rgba(250, 241, 239, 0.98) !important;
       position: sticky;
-      top: 48px; /* 紧贴 Tab 栏底部 */
+      top: 42px;
       z-index: 500;
-      border-bottom: 2px solid #ddd;
-      padding: 12px 8px;
-      text-align: left;
+      border-bottom: 1px solid rgba(203, 63, 63, 0.12);
+      padding: 11px 14px;
+      text-align: center;
+      color: var(--text);
+      backdrop-filter: blur(10px);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
     }
-    /* 管理栏激活时，表头吸附位置顺延 */
-    .admin-active th { top: 92px; }
+    .admin-active th { top: 84px; }
 
-    /* 表格样式 */
-    .csv-table { 
-      /* 移除可能引起 sticky 失效的 overflow 限制 */
+    .content-area {
+      margin-top: 14px;
+      animation: panelReveal 0.45s ease both;
+    }
+
+    .tab-label.active {
+      background: linear-gradient(135deg, #6f1b24 0%, #2a181b 100%);
+      color: #fff;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 18px rgba(123, 24, 35, 0.18);
+    }
+
+    .csv-table {
       width: 100%;
+      min-height: clamp(380px, 56vh, 720px);
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      border: 1px solid rgba(203, 63, 63, 0.12);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
     }
-    table { width: 100%; border-collapse: collapse; font-family: var(--font-family-mono); font-size: 13px; }
-    td { padding: 12px 8px; border-bottom: 1px solid #eee; white-space: nowrap; background: #fff; }
-    tr:nth-child(even) td { background-color: #fafafa; }
-    tr:hover td { background-color: #f0f7ff; }
-
-    /* Tab 激活样式 */
-    #tab-gf:checked ~ #tab-nav-wrapper label[for="tab-gf"],
-    #tab-yh:checked ~ #tab-nav-wrapper label[for="tab-yh"],
-    #tab-summary:checked ~ #tab-nav-wrapper label[for="tab-summary"] {
-      background: #333 !important; color: #fff !important;
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(203, 63, 63, 0.1);
+      background: linear-gradient(180deg, rgba(255, 250, 250, 0.82) 0%, rgba(251, 244, 242, 0.8) 100%);
     }
-    
-    .tab-panel { display: none; }
-    #tab-gf:checked ~ .content-area #content-gf { display: block; }
-    #tab-yh:checked ~ .content-area #content-yh { display: block; }
-    #tab-summary:checked ~ .content-area #content-summary { display: block; }
+    .panel-title {
+      margin: 0;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--accent-deep);
+    }
+    .panel-meta {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .panel-meta strong {
+      font-family: var(--font-mono);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0;
+      color: var(--accent-deep);
+    }
+    .table-shell {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      overflow-x: auto;
+      overflow-y: auto;
+    }
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      table-layout: fixed;
+      font-variant-numeric: tabular-nums;
+    }
+    #data-table th,
+    #data-table td {
+      width: 33.3333%;
+      box-sizing: border-box;
+    }
+    #data-table.admin-mode th:not(.admin-col),
+    #data-table.admin-mode td:not(.admin-col) {
+      width: calc((100% - 84px) / 3);
+    }
+    #data-table.admin-mode th.admin-col,
+    #data-table.admin-mode td.admin-col {
+      width: 84px;
+    }
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid rgba(17, 20, 24, 0.06);
+      white-space: nowrap;
+      background: transparent;
+      color: #2d3138;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      text-align: center;
+    }
+    tbody tr:nth-child(even) td {
+      background-color: rgba(171, 38, 48, 0.018);
+    }
+    tbody tr:hover td {
+      background-color: rgba(171, 38, 48, 0.05);
+    }
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+    td:first-child {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      color: var(--text);
+    }
+    .num-cell,
+    .num-th {
+      text-align: center;
+    }
+    .amount-value,
+    .editable-val {
+      font-weight: 700;
+      color: var(--accent-deep);
+    }
+    .src-cell {
+      text-align: center;
+    }
+    .src-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(203, 63, 63, 0.08);
+      color: var(--accent-deep);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
 
-    /* 通用 UI */
+    .sortable-th {
+      min-width: 0;
+    }
+    .sort-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      justify-content: center;
+    }
+    .sort-label {
+      font-weight: 700;
+    }
+    .sort-arrows {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .sort-arrow {
+      width: 16px;
+      height: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(203, 63, 63, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 251, 251, 0.9);
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 9px;
+      line-height: 1;
+      padding: 0;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+    }
+    .sort-arrow:hover {
+      background: rgba(203, 63, 63, 0.1);
+    }
+    .sort-arrow.active {
+      background: var(--accent-deep);
+      border-color: var(--accent-deep);
+      color: #fff;
+    }
+
     .admin-col { display: none; }
     .admin-active .admin-col { display: table-cell !important; }
     div.admin-active .admin-col { display: block !important; }
-    .admin-active .editable-val { background-color: #f0f9ff !important; color: #0284c7; font-weight: bold; border: 1px dashed #3bb2f6; }
+    .admin-active .editable-val {
+      background: rgba(203, 63, 63, 0.12) !important;
+      color: var(--success);
+      border: 1px dashed rgba(179, 38, 45, 0.5);
+    }
+    .row-action {
+      border: 1px solid rgba(203, 63, 63, 0.14);
+      background: rgba(255, 248, 248, 0.9);
+      color: var(--accent-deep);
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+    .row-action:hover {
+      background: rgba(203, 63, 63, 0.08);
+      transform: translateY(-1px);
+    }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .modal-btn {
+      flex: 1;
+      border: 1px solid rgba(203, 63, 63, 0.14);
+      background: rgba(255, 250, 250, 0.96);
+      color: var(--text);
+      padding: 10px 12px;
+    }
+    .modal-btn-dark {
+      background: linear-gradient(135deg, #7d1f29 0%, #331a1d 100%);
+      border: 0;
+    }
 
-    .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); }
-    .modal-content { background: white; margin: 15% auto; padding: 25px; border-radius: 12px; width: 320px; text-align: center; }
-    .btn-primary { background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
-    .btn-save { background: #10b981; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
-    .btn-exit { background: transparent; border: 1px solid #999; padding: 4px 10px; font-size: 11px; cursor: pointer; margin-left: auto; border-radius: 3px; }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(20, 12, 8, 0.58);
+      backdrop-filter: blur(8px);
+    }
+    .modal-content {
+      background: var(--paper-solid);
+      margin: 10% auto;
+      padding: 26px;
+      border-radius: 18px;
+      width: min(360px, calc(100% - 32px));
+      text-align: center;
+      border: 1px solid rgba(203, 63, 63, 0.16);
+      box-shadow: var(--shadow);
+      box-sizing: border-box;
+    }
+    .modal-content h3 {
+      margin: 0 0 16px;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes panelReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .overview-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+      .panel-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
 
     @media (max-width: 600px) {
-      .tab-label { font-size: 11px; height: 40px; line-height: 40px; }
-      th { top: 40px; padding: 8px 4px; font-size: 11px; }
-      .admin-active th { top: 84px; }
+      .main {
+        width: min(100%, calc(100% - 18px));
+        padding: 14px 0 34px;
+      }
+      .brand-pill {
+        min-width: 0;
+        padding: 12px 14px;
+        border-radius: 18px;
+      }
+      .overview-strip {
+        gap: 8px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .overview-chip {
+        padding: 12px 14px;
+        border-radius: 18px;
+      }
+      .overview-chip strong {
+        font-size: 26px;
+      }
+      .tabs {
+        height: 42px;
+      }
+      .tab-label {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+      }
+      th {
+        top: 42px;
+        padding: 10px 10px;
+        font-size: 11px;
+      }
+      .admin-active th {
+        top: 84px;
+      }
+      td {
+        padding: 12px 10px;
+      }
+      table {
+        min-width: 560px;
+      }
+      .sortable-th {
+        min-width: 96px;
+      }
+      .sort-header {
+        gap: 6px;
+      }
+      .sort-arrow {
+        width: 16px;
+        height: 11px;
+      }
+      .panel-head {
+        padding: 12px 14px 10px;
+      }
+      .panel-meta strong {
+        font-size: 16px;
+      }
+      .modal-content {
+        margin: 24% auto;
+        padding: 22px;
+      }
+      .btn-exit {
+        margin-left: 0;
+      }
+      .csv-table {
+        min-height: 320px;
+      }
     }
   </style>
 </head>
 
 <body>
   <div class="main">
-    <input type="radio" id="tab-gf" name="csv-tabs" checked>
-    <input type="radio" id="tab-yh" name="csv-tabs">
-    <input type="radio" id="tab-summary" name="csv-tabs">
+    {{ $heroGfData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
+    {{ $heroYhData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
+    {{ $heroScratch := newScratch }}
+    {{ $heroScratch.Set "names" (dict) }}
+    {{ $gfCount := 0 }}
+    {{ $yhCount := 0 }}
+    {{ $gfTotal := 0.0 }}
+    {{ $yhTotal := 0.0 }}
+    {{ $worstName := "" }}
+    {{ $worstValue := 0.0 }}
+    {{ range after 1 $heroGfData }}
+      {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ if $n }}
+        {{ $v := index . 1 | float }}
+        {{ $heroScratch.SetInMap "names" $n true }}
+        {{ $gfCount = add $gfCount 1 }}
+        {{ $gfTotal = add $gfTotal $v }}
+        {{ if or (eq $worstName "") (lt $v $worstValue) }}
+          {{ $worstName = $n }}
+          {{ $worstValue = $v }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ range after 1 $heroYhData }}
+      {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ if $n }}
+        {{ $v := index . 1 | float }}
+        {{ $heroScratch.SetInMap "names" $n true }}
+        {{ $yhCount = add $yhCount 1 }}
+        {{ $yhTotal = add $yhTotal $v }}
+        {{ if or (eq $worstName "") (lt $v $worstValue) }}
+          {{ $worstName = $n }}
+          {{ $worstValue = $v }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ $trackedNames := len ($heroScratch.Get "names") }}
+    {{ $netTotal := add $gfTotal $yhTotal }}
+    {{ $gfRows := slice }}
+    {{ range after 1 $heroGfData }}
+      {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ if $n }}
+        {{ $gfRows = $gfRows | append (dict "name" $n "pl" (index . 1) "roi" (index . 2)) }}
+      {{ end }}
+    {{ end }}
+    {{ $yhRows := slice }}
+    {{ range after 1 $heroYhData }}
+      {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ if $n }}
+        {{ $yhRows = $yhRows | append (dict "name" $n "pl" (index . 1) "roi" (index . 2) "move" (index . 3)) }}
+      {{ end }}
+    {{ end }}
 
-    <div id="tab-nav-wrapper">
-      <div class="tabs">
-        <label for="tab-gf" class="tab-label">1. GF Loss</label>
-        <label for="tab-yh" class="tab-label">2. YH Loss</label>
-        <label for="tab-summary" id="trigger-label" class="tab-label">3. Total Loss</label>
+    <div class="topbar">
+      <div class="brand-pill">
+        <strong>Loss Board</strong>
+        <span>Worst {{ $worstName }}</span>
       </div>
-      <div id="admin-bar">
-        <button class="btn-primary" onclick="addRowToActive()">➕ 加入新项</button>
-        <button class="btn-save" onclick="openSaveModal()">💾 导出同步</button>
-        <span id="save-status" style="font-size: 12px; color: #059669; margin-left:10px;"></span>
-        <button class="btn-exit" onclick="location.reload()">退出管理</button>
+      <div class="overview-strip">
+        <div class="overview-chip">
+          <span>GF rows</span>
+          <strong>{{ $gfCount }}</strong>
+        </div>
+        <div class="overview-chip">
+          <span>YH rows</span>
+          <strong>{{ $yhCount }}</strong>
+        </div>
+        <div class="overview-chip">
+          <span>Names</span>
+          <strong>{{ $trackedNames }}</strong>
+        </div>
+        <div class="overview-chip">
+          <span>Net</span>
+          <strong>{{ printf "%.2f" $netTotal }}</strong>
+        </div>
       </div>
     </div>
 
-    <!-- 弹窗部分... (略, 保持之前逻辑) -->
+    <div id="tab-nav-wrapper">
+      <div class="tabs">
+        <button type="button" class="tab-label active" data-view="gf" onclick="setView('gf', this)">GF</button>
+        <button type="button" class="tab-label" data-view="yh" onclick="setView('yh', this)">YH</button>
+        <button type="button" id="trigger-label" class="tab-label" data-view="all" onclick="setView('all', this)">ALL</button>
+      </div>
+      <div id="admin-bar">
+        <button class="btn-primary" onclick="addRowToActive()">Add</button>
+        <button class="btn-save" onclick="openSaveModal()">Sync</button>
+        <span id="save-status" class="status-text"></span>
+        <button class="btn-exit" onclick="location.reload()">Exit</button>
+      </div>
+    </div>
     <div id="admin-login-modal" class="modal">
       <div class="modal-content">
-        <h3>管理登录</h3>
-        <input type="password" id="admin-pass" placeholder="管理密码">
-        <div style="display:flex; gap:10px; margin-top:15px;">
-          <button style="flex:1" onclick="closeModal('admin-login-modal')">返回</button>
-          <button style="flex:1; background:#333; color:white; border:none; border-radius:4px;" onclick="handleUnlock()">进入</button>
+        <h3>Admin</h3>
+        <input type="password" id="admin-pass" placeholder="Passcode">
+        <div class="modal-actions">
+          <button class="modal-btn" onclick="closeModal('admin-login-modal')">Close</button>
+          <button class="modal-btn modal-btn-dark" onclick="handleUnlock()">Enter</button>
         </div>
       </div>
     </div>
     <div id="save-modal" class="modal">
       <div class="modal-content">
-        <h3>准备同步到云端</h3>
+        <h3>Sync</h3>
         <input type="password" id="gh-token" placeholder="GitHub Token">
-        <div style="display:flex; gap:10px; margin-top:15px;">
-          <button style="flex:1" onclick="closeModal('save-modal')">取消</button>
-          <button style="flex:1; background:#333; color:white; border:none; border-radius:4px;" onclick="handleSync()">确认同步</button>
+        <div class="modal-actions">
+          <button class="modal-btn" onclick="closeModal('save-modal')">Cancel</button>
+          <button class="modal-btn modal-btn-dark" onclick="handleSync()">Confirm</button>
         </div>
       </div>
     </div>
 
     <div class="content-area">
-      <!-- GF Panel -->
-      <div class="tab-panel" id="content-gf">
-        <div class="csv-table">
-          {{ $csvData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
-          <table>
-            <thead>
-              <tr>
-                {{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}
-                <th class="admin-col">操作</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-gf">
-              {{ range after 1 $csvData }}
-              <tr>
-                <td contenteditable="false">{{ index . 0 }}</td>
-                <td contenteditable="false" class="editable-val">{{ index . 1 }}</td>
-                <td contenteditable="false">{{ index . 2 }}</td>
-                <td class="admin-col"><button onclick="delRow(this)">删</button></td>
-              </tr>
-              {{ end }}
-            </tbody>
-          </table>
+      <div class="csv-table">
+        <div class="panel-head">
+          <h2 id="panel-title" class="panel-title">GF</h2>
+          <span id="panel-meta" class="panel-meta"><span>{{ $gfCount }} rows</span><strong>{{ printf "%.2f" $gfTotal }}</strong></span>
         </div>
-      </div>
-
-      <!-- YH Panel -->
-      <div class="tab-panel" id="content-yh">
-        <div class="csv-table">
-          {{ $csvData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
-          <table>
-            <thead>
-              <tr>
-                {{ range index $csvData 0 }}<th>{{ . }}</th>{{ end }}
-                <th class="admin-col">操作</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-yh">
-              {{ range after 1 $csvData }}
-              <tr>
-                <td contenteditable="false">{{ index . 0 }}</td>
-                <td contenteditable="false" class="editable-val">{{ index . 1 }}</td>
-                <td contenteditable="false">{{ index . 2 }}</td>
-                <td contenteditable="false">{{ index . 3 }}</td>
-                <td class="admin-col"><button onclick="delRow(this)">删</button></td>
-              </tr>
-              {{ end }}
-            </tbody>
+        <div class="table-shell">
+          <table id="data-table">
+            <colgroup id="table-cols"></colgroup>
+            <thead id="table-head"></thead>
+            <tbody id="table-body"></tbody>
           </table>
-        </div>
-      </div>
-
-      <!-- Summary Panel -->
-      <div class="tab-panel" id="content-summary">
-        <div class="csv-table">
-            {{ $gfData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
-            {{ $yhData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
-            {{ $s := newScratch }}
-            {{ range after 1 $gfData }}{{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}{{ $s.Add $n (index . 1 | float) }}{{ $s.SetInMap "src" $n "广发" }}{{ end }}
-            {{ range after 1 $yhData }}
-                {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}{{ $s.Add $n (index . 1 | float) }}
-                {{ $e := "" }}{{ if $s.Get "src" }}{{ $e = index ($s.Get "src") $n }}{{ end }}
-                {{ if $e }}{{ if ne $e "银河" }}{{ $s.SetInMap "src" $n "广发+银河" }}{{ end }}{{ else }}{{ $s.SetInMap "src" $n "银河" }}{{ end }}
-            {{ end }}
-            {{ $list := slice }}{{ $srcs := $s.Get "src" }}{{ range $k, $v := $s.Values }}{{ if and (ne $k "src") (ne $k "totals") }}{{ $list = $list | append (dict "n" $k "v" $v "s" (index $srcs $k)) }}{{ end }}{{ end }}
-            <table>
-              <thead><tr><th>股票名称</th><th>合计盈亏</th><th>账户来源</th></tr></thead>
-              <tbody>{{ range sort $list "v" "asc" }}<tr><td>{{ .n }}</td><td style="font-weight:bold;">{{ printf "%.2f" .v }}</td><td>{{ .s }}</td></tr>{{ end }}</tbody>
-            </table>
         </div>
       </div>
     </div>
   </div>
 
   <script>
+    const datasets = {
+      gf: JSON.parse({{ $gfRows | jsonify }}),
+      yh: JSON.parse({{ $yhRows | jsonify }}),
+    };
+    const viewState = {
+      gf: { sortKey: 'pl', type: 'amount', order: 'desc' },
+      yh: { sortKey: 'pl', type: 'amount', order: 'desc' },
+      all: { sortKey: 'net', type: 'amount', order: 'desc' },
+    };
+    const viewConfig = {
+      gf: {
+        title: 'GF',
+        columns: [
+          { key: 'name', label: 'Name', className: '' },
+          { key: 'pl', label: 'P/L', type: 'amount', className: 'sortable-th num-th' },
+          { key: 'roi', label: 'ROI', type: 'rate', className: 'sortable-th num-th' },
+        ],
+      },
+      yh: {
+        title: 'YH',
+        columns: [
+          { key: 'name', label: 'Name', className: '' },
+          { key: 'pl', label: 'P/L', type: 'amount', className: 'sortable-th num-th' },
+          { key: 'roi', label: 'ROI', type: 'rate', className: 'sortable-th num-th' },
+        ],
+      },
+      all: {
+        title: 'ALL',
+        columns: [
+          { key: 'name', label: 'Name', className: '' },
+          { key: 'net', label: 'Net', type: 'amount', className: 'sortable-th num-th' },
+          { key: 'src', label: 'Src', className: '' },
+        ],
+      },
+    };
+    let activeView = 'gf';
     let cc = 0;
-    document.getElementById('trigger-label').addEventListener('click', () => { if (++cc >= 5) { document.getElementById('admin-login-modal').style.display = 'block'; cc = 0; } setTimeout(() => { cc = 0; }, 3000); });
+    document.getElementById('trigger-label').addEventListener('click', () => {
+      if (++cc >= 5) {
+        document.getElementById('admin-login-modal').style.display = 'block';
+        cc = 0;
+      }
+      setTimeout(() => { cc = 0; }, 3000);
+    });
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     function openSaveModal() { document.getElementById('save-modal').style.display = 'block'; if (localStorage.getItem('gh_token')) document.getElementById('gh-token').value = localStorage.getItem('gh_token'); }
     function handleUnlock() {
       const p = document.getElementById('admin-pass').value;
-      if (p === 'xxxniu') { document.body.classList.add('admin-active'); document.querySelectorAll('td[contenteditable]').forEach(el => el.contentEditable = true); closeModal('admin-login-modal'); } else alert('密码错误');
+      if (p === 'xxxniu') {
+        document.body.classList.add('admin-active');
+        closeModal('admin-login-modal');
+        renderView();
+      } else alert('Wrong passcode');
     }
-    function delRow(btn) { if(confirm('确认删除？')) btn.closest('tr').remove(); }
+    function getSummaryRows() {
+      const totals = new Map();
+      const srcs = new Map();
+      datasets.gf.forEach(row => {
+        const key = row.name?.trim();
+        if (!key) return;
+        totals.set(key, (totals.get(key) || 0) + parseNumericValue(row.pl));
+        srcs.set(key, 'GF');
+      });
+      datasets.yh.forEach(row => {
+        const key = row.name?.trim();
+        if (!key) return;
+        totals.set(key, (totals.get(key) || 0) + parseNumericValue(row.pl));
+        const existing = srcs.get(key);
+        srcs.set(key, existing && existing !== 'YH' ? 'GF+YH' : 'YH');
+      });
+      return Array.from(totals.entries()).map(([name, net]) => ({
+        name,
+        net: net.toFixed(2),
+        src: srcs.get(name) || '',
+      }));
+    }
+    function getRows(view) {
+      return view === 'all' ? getSummaryRows() : datasets[view];
+    }
+    function getTotalValue(view) {
+      return getRows(view).reduce((sum, row) => {
+        const key = view === 'all' ? 'net' : 'pl';
+        return sum + parseNumericValue(row[key]);
+      }, 0);
+    }
+    function getWorstName() {
+      const rows = [...datasets.gf, ...datasets.yh];
+      let worstName = '';
+      let worstValue = Infinity;
+      rows.forEach(row => {
+        const value = parseNumericValue(row.pl);
+        if (row.name && value < worstValue) {
+          worstValue = value;
+          worstName = row.name;
+        }
+      });
+      return worstName || 'N/A';
+    }
+    function updateOverview() {
+      const chips = document.querySelectorAll('.overview-chip strong');
+      if (chips[0]) chips[0].textContent = datasets.gf.length;
+      if (chips[1]) chips[1].textContent = datasets.yh.length;
+      const names = new Set([...datasets.gf.map(row => row.name?.trim()), ...datasets.yh.map(row => row.name?.trim())].filter(Boolean));
+      if (chips[2]) chips[2].textContent = names.size;
+      if (chips[3]) chips[3].textContent = getTotalValue('all').toFixed(2);
+      const worst = document.querySelector('.brand-pill span');
+      if (worst) worst.textContent = `Worst ${getWorstName()}`;
+    }
+    function buildColGroup(view) {
+      const admin = document.body.classList.contains('admin-active') && view !== 'all';
+      const widths = admin
+        ? ['calc((100% - 84px) / 3)', 'calc((100% - 84px) / 3)', 'calc((100% - 84px) / 3)', '84px']
+        : ['33.3333%', '33.3333%', '33.3334%'];
+      const cols = widths.map(width => `<col style="width:${width}">`);
+      return cols.join('');
+    }
+    function buildHead(view) {
+      const { columns } = viewConfig[view];
+      const sort = viewState[view];
+      const headers = columns.map((column, index) => {
+        if (!column.type) return `<th class="${column.className || ''}">${column.label}</th>`;
+        const ascActive = sort.sortKey === column.key && sort.order === 'asc';
+        const descActive = sort.sortKey === column.key && sort.order === 'desc';
+        return `<th class="${column.className || ''}"><span class="sort-header"><span class="sort-label">${column.label}</span><span class="sort-arrows"><button type="button" class="sort-arrow ${ascActive ? 'active' : ''}" data-key="${column.key}" data-type="${column.type}" data-order="asc" aria-pressed="${ascActive}" aria-label="${column.label} ascending" onclick="sortActiveView('${column.key}', '${column.type}', 'asc', this)">▲</button><button type="button" class="sort-arrow ${descActive ? 'active' : ''}" data-key="${column.key}" data-type="${column.type}" data-order="desc" aria-pressed="${descActive}" aria-label="${column.label} descending" onclick="sortActiveView('${column.key}', '${column.type}', 'desc', this)">▼</button></span></span></th>`;
+      });
+      if (document.body.classList.contains('admin-active') && view !== 'all') headers.push('<th class="admin-col">Act</th>');
+      return `<tr>${headers.join('')}</tr>`;
+    }
+    function buildBody(view) {
+      const rows = getSortedRows(view);
+      const admin = document.body.classList.contains('admin-active') && view !== 'all';
+      return rows.map((row, index) => {
+        const cells = [];
+        if (view === 'gf') {
+          cells.push(renderCell(row.name, '', admin, index, 'name'));
+          cells.push(renderCell(row.pl, 'editable-val num-cell', admin, index, 'pl'));
+          cells.push(renderCell(row.roi, 'num-cell', admin, index, 'roi'));
+        } else if (view === 'yh') {
+          cells.push(renderCell(row.name, '', admin, index, 'name'));
+          cells.push(renderCell(row.pl, 'editable-val num-cell', admin, index, 'pl'));
+          cells.push(renderCell(row.roi, 'num-cell', admin, index, 'roi'));
+        } else {
+          cells.push(`<td>${escapeHtml(row.name)}</td>`);
+          cells.push(`<td class="amount-value num-cell">${escapeHtml(row.net)}</td>`);
+          cells.push(`<td class="src-cell"><span class="src-badge">${escapeHtml(row.src)}</span></td>`);
+        }
+        if (admin) cells.push(`<td class="admin-col"><button type="button" class="row-action" onclick="deleteRow(${index})">Del</button></td>`);
+        return `<tr>${cells.join('')}</tr>`;
+      }).join('');
+    }
+    function renderCell(value, className, editable, rowIndex, field) {
+      const safe = escapeHtml(value ?? '');
+      if (!editable) return `<td class="${className}">${safe}</td>`;
+      return `<td class="${className}" contenteditable="true" onblur="updateCell(${rowIndex}, '${field}', this.textContent)">${safe}</td>`;
+    }
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+    function getSortedRows(view) {
+      const rows = [...getRows(view)];
+      const { sortKey, type, order } = viewState[view];
+      rows.sort((a, b) => {
+        const av = getValueForSort(a[sortKey], type);
+        const bv = getValueForSort(b[sortKey], type);
+        if (av !== bv) return order === 'desc' ? bv - av : av - bv;
+        return (a.name || '').localeCompare(b.name || '', 'zh-Hans-CN');
+      });
+      return rows;
+    }
+    function getValueForSort(value, type) {
+      const parsed = parseNumericValue(value);
+      if (type === 'amount') return parsed < 0 ? Math.abs(parsed) : parsed;
+      return parsed;
+    }
+    function renderView() {
+      const rows = getRows(activeView);
+      const table = document.getElementById('data-table');
+      const admin = document.body.classList.contains('admin-active') && activeView !== 'all';
+      document.getElementById('panel-title').textContent = viewConfig[activeView].title;
+      document.getElementById('panel-meta').innerHTML = `<span>${rows.length} rows</span><strong>${getTotalValue(activeView).toFixed(2)}</strong>`;
+      document.getElementById('table-cols').innerHTML = buildColGroup(activeView);
+      document.getElementById('table-head').innerHTML = buildHead(activeView);
+      document.getElementById('table-body').innerHTML = buildBody(activeView);
+      table.classList.toggle('admin-mode', admin);
+      const addBtn = document.querySelector('.btn-primary');
+      addBtn.disabled = activeView === 'all';
+      addBtn.classList.toggle('is-disabled', activeView === 'all');
+      updateOverview();
+    }
+    function setView(view, button) {
+      activeView = view;
+      document.querySelectorAll('.tab-label').forEach(el => el.classList.toggle('active', el === button));
+      renderView();
+    }
+    function sortActiveView(sortKey, type, order) {
+      viewState[activeView] = { sortKey, type, order };
+      renderView();
+    }
+    function deleteRow(rowIndex) {
+      if (!confirm('Delete row?') || activeView === 'all') return;
+      const rows = getSortedRows(activeView);
+      const target = rows[rowIndex];
+      const dataset = datasets[activeView];
+      const sourceIndex = dataset.indexOf(target);
+      if (sourceIndex >= 0) dataset.splice(sourceIndex, 1);
+      renderView();
+    }
     function addRowToActive() {
-      if (document.getElementById('tab-gf').checked) addRow('tbody-gf', 3);
-      else if (document.getElementById('tab-yh').checked) addRow('tbody-yh', 4);
+      if (activeView === 'all') return;
+      addRow(activeView);
     }
-    function addRow(tid, cols) {
-      const tb = document.getElementById(tid); const tr = document.createElement('tr');
-      for (let i = 0; i < cols; i++) {
-        const td = document.createElement('td'); td.contentEditable = true;
-        td.textContent = (i === 1) ? '0.00' : '新项'; tr.appendChild(td);
-      }
-      const dt = document.createElement('td'); dt.className = 'admin-col'; dt.innerHTML = '<button onclick="delRow(this)">删</button>';
-      tr.appendChild(dt); tb.prepend(tr);
+    function addRow(view) {
+      const row = view === 'yh'
+        ? { name: 'New', pl: '0.00', roi: '0.00%', move: '0.00%' }
+        : { name: 'New', pl: '0.00', roi: '0.00%' };
+      datasets[view].push(row);
+      renderView();
+    }
+    function updateCell(rowIndex, field, value) {
+      if (activeView === 'all') return;
+      const rows = getSortedRows(activeView);
+      const target = rows[rowIndex];
+      const dataset = datasets[activeView];
+      const sourceIndex = dataset.indexOf(target);
+      if (sourceIndex < 0) return;
+      dataset[sourceIndex][field] = value.trim();
+      renderView();
+    }
+    function normalizeNumericText(text) {
+      const raw = (text || '').replace(/,/g, '').replace(/%/g, '').replace(/\s+/g, '');
+      const sign = raw.startsWith('-') ? '-' : '';
+      let body = raw.replace(/^[+-]/, '');
+      const parts = body.split('.');
+      if (parts.length > 1) body = `${parts[0]}.${parts.slice(1).join('')}`;
+      return `${sign}${body}`;
+    }
+    function parseNumericValue(text) {
+      const value = Number.parseFloat(normalizeNumericText(text));
+      return Number.isFinite(value) ? value : 0;
     }
     const O = 'gniqizeuy'; const R = 'gniqizeuy.github.io';
     async function handleSync() {
       const t = document.getElementById('gh-token').value; if (!t) return;
-      localStorage.setItem('gh_token', t); const s = document.getElementById('save-status'); s.textContent = '☕ 同步中...';
+      localStorage.setItem('gh_token', t); const s = document.getElementById('save-status'); s.textContent = 'Syncing...';
       closeModal('save-modal');
-      try { await sf('assets/data/gf_losses.csv', 'tbody-gf', t); await sf('assets/data/yh_losses.csv', 'tbody-yh', t); s.textContent = '✅ 已提交'; } catch (e) { s.textContent = '❌ 失败'; }
+      try { await sf('assets/data/gf_losses.csv', 'gf', t); await sf('assets/data/yh_losses.csv', 'yh', t); s.textContent = 'Synced'; } catch (e) { s.textContent = 'Failed'; }
     }
-    async function sf(p, tid, t) {
-      const r = Array.from(document.getElementById(tid).querySelectorAll('tr'));
+    async function sf(p, view, t) {
       let h = p.includes('gf') ? ['股票名称', '盈亏金额', '收益率'] : ['股票名称', '盈亏金额', '收益率', '区间涨幅'];
       let csv = h.join(',') + '\n';
-      r.forEach(tr => { const x = Array.from(tr.querySelectorAll('td:not(.admin-col)')); csv += x.map(td => td.textContent.trim()).join(',') + '\n'; });
+      const rows = datasets[view];
+      rows.forEach(row => {
+        const data = p.includes('gf')
+          ? [row.name || '', row.pl || '', row.roi || '']
+          : [row.name || '', row.pl || '', row.roi || '', row.move || ''];
+        csv += data.map(item => String(item).trim()).join(',') + '\n';
+      });
       const api_h = { 'Authorization': `Bearer ${t}`, 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
       const get = await fetch(`https://api.github.com/repos/${O}/${R}/contents/${p}`, { headers: api_h });
       const { sha } = await get.json();
@@ -258,6 +1059,7 @@
         body: JSON.stringify({ message: `Update: ${p}`, content: btoa(unescape(encodeURIComponent(csv))), sha })
       });
     }
+    renderView();
   </script>
 </body>
 </html>
