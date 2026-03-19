@@ -651,13 +651,24 @@
 
     @media (max-width: 600px) {
       .main {
-        width: min(100%, calc(100% - 18px));
-        padding: 14px 0 34px;
+        width: min(100%, calc(100% - 16px));
+        padding: 12px 0 26px;
+      }
+      .topbar {
+        gap: 8px;
+        margin-bottom: 8px;
       }
       .brand-pill {
         min-width: 0;
         padding: 12px 14px;
         border-radius: 18px;
+      }
+      .brand-pill strong {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+      }
+      .brand-pill span {
+        font-size: 11px;
       }
       .overview-strip {
         gap: 8px;
@@ -667,45 +678,85 @@
         padding: 12px 14px;
         border-radius: 18px;
       }
+      .overview-chip span {
+        font-size: 10px;
+        letter-spacing: 0.12em;
+      }
       .overview-chip strong {
-        font-size: 26px;
+        font-size: 22px;
+        overflow-wrap: anywhere;
+      }
+      #tab-nav-wrapper {
+        border-radius: 16px;
       }
       .tabs {
-        height: 42px;
+        height: 40px;
+        padding: 3px;
+        gap: 3px;
       }
       .tab-label {
-        font-size: 11px;
-        letter-spacing: 0.08em;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        border-radius: 12px;
       }
       th {
         top: 0;
-        padding: 10px 10px;
-        font-size: 11px;
+        padding: 10px 8px;
+        font-size: 10px;
+        letter-spacing: 0.12em;
       }
       .admin-active th {
         top: 0;
       }
       td {
-        padding: 12px 10px;
+        padding: 11px 8px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        text-overflow: clip;
+        line-height: 1.35;
       }
       table {
-        min-width: 560px;
+        min-width: 0;
+        width: 100%;
+        font-size: 11px;
       }
       .sortable-th {
-        min-width: 96px;
+        min-width: 0;
       }
       .sort-header {
-        gap: 6px;
+        gap: 4px;
+      }
+      .sort-label {
+        letter-spacing: 0.08em;
       }
       .sort-arrow {
-        width: 16px;
-        height: 11px;
+        width: 14px;
+        height: 10px;
+        font-size: 8px;
       }
       .panel-head {
-        padding: 12px 14px 10px;
+        padding: 12px 12px 10px;
+        gap: 10px;
+      }
+      .panel-meta {
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        font-size: 9px;
+        letter-spacing: 0.08em;
       }
       .panel-meta strong {
-        font-size: 16px;
+        font-size: 15px;
+      }
+      .search-box {
+        padding: 7px 10px;
+      }
+      .search-input {
+        font-size: 12px;
+      }
+      .content-area {
+        margin-top: 10px;
       }
       .modal-content {
         margin: 24% auto;
@@ -715,7 +766,24 @@
         margin-left: 0;
       }
       .csv-table {
-        min-height: 320px;
+        min-height: 0;
+      }
+      .table-shell {
+        max-height: min(62vh, 520px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .empty-state {
+        padding: 20px 12px;
+        font-size: 12px;
+      }
+      td:first-child {
+        font-size: 12px;
+      }
+      .src-badge {
+        font-size: 9px;
+        letter-spacing: 0.08em;
       }
     }
   </style>
