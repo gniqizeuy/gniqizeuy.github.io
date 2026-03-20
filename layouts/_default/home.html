@@ -910,7 +910,7 @@
           <span id="panel-meta" class="panel-meta"><span>{{ $gfCount }} rows</span><strong>{{ printf "%.2f" $gfTotal }}</strong></span>
           <div class="panel-tools">
             <div class="search-box">
-              <input id="name-filter" class="search-input" type="search" placeholder="Search name" autocomplete="off" oninput="handleFilterInput(this.value)">
+              <input id="name-filter" class="search-input" type="search" placeholder="Search stock" autocomplete="off" oninput="handleFilterInput(this.value)">
               <button id="name-filter-clear" class="search-clear" type="button" onclick="clearFilter()" hidden>Clear</button>
             </div>
           </div>
@@ -979,7 +979,10 @@
       if (p === 'xxxniu') {
         document.body.classList.add('admin-active');
         closeModal('admin-login-modal');
-        renderView();
+        const gfTab = document.querySelector('.tab-label[data-view="gf"]');
+        setView('gf', gfTab);
+        const status = document.getElementById('save-status');
+        if (status) status.textContent = 'Admin mode: edit rows in GF/YH';
       } else alert('Wrong passcode');
     }
     function getSummaryRows() {
@@ -1155,7 +1158,7 @@
       const clear = document.getElementById('name-filter-clear');
       if (!input || !clear) return;
       input.value = nameFilter;
-      input.placeholder = activeView === 'all' ? 'Search merged name' : `Search ${viewConfig[activeView].title} name`;
+      input.placeholder = 'Search stock';
       clear.hidden = !nameFilter.trim();
     }
     function handleFilterInput(value) {
