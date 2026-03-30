@@ -20,14 +20,18 @@ function sortCsvContent(content) {
   if (lines.length <= 1) return `${content.endsWith("\n") ? content : `${content}\n`}`;
 
   const [header, ...rows] = lines;
+  const headerCells = header.split(",");
+  const hasCodeColumn = headerCells[0] === "证券代码";
+  const amountIndex = hasCodeColumn ? 2 : 1;
+  const nameIndex = hasCodeColumn ? 1 : 0;
   const sortedRows = rows
     .filter(Boolean)
     .map((line, index) => ({ line, index, cells: line.split(",") }))
     .sort((a, b) => {
-      const amountDiff = parseAmount(a.cells[1]) - parseAmount(b.cells[1]);
+      const amountDiff = parseAmount(a.cells[amountIndex]) - parseAmount(b.cells[amountIndex]);
       if (amountDiff !== 0) return amountDiff;
-      const nameA = a.cells[0] ?? "";
-      const nameB = b.cells[0] ?? "";
+      const nameA = a.cells[nameIndex] ?? "";
+      const nameB = b.cells[nameIndex] ?? "";
       const nameDiff = nameA.localeCompare(nameB, "zh-Hans-CN");
       if (nameDiff !== 0) return nameDiff;
       return a.index - b.index;
@@ -45,4 +49,3 @@ for (const file of files) {
     await writeFile(fullPath, sorted, "utf8");
   }
 }
-

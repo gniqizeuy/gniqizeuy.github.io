@@ -303,6 +303,10 @@
 
     .content-area {
       margin-top: 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
+      gap: 16px;
+      align-items: start;
       animation: panelReveal 0.45s ease both;
     }
 
@@ -322,6 +326,112 @@
       border-radius: 18px;
       overflow: hidden;
       box-shadow: var(--shadow);
+    }
+    .chart-panel {
+      position: sticky;
+      top: 16px;
+      min-height: clamp(380px, 56vh, 720px);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(255, 252, 252, 0.98) 0%, rgba(249, 243, 242, 0.96) 100%);
+      border: 1px solid rgba(203, 63, 63, 0.12);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .chart-panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .chart-panel-copy {
+      min-width: 0;
+      display: grid;
+      gap: 7px;
+    }
+    .chart-panel-eyebrow {
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .chart-panel-title {
+      margin: 0;
+      color: var(--accent-deep);
+      font-family: var(--font-ui);
+      font-size: clamp(20px, 2vw, 28px);
+      font-weight: 800;
+      line-height: 1.05;
+    }
+    .chart-panel-meta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .chart-panel-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(203, 63, 63, 0.09);
+      color: var(--accent-deep);
+    }
+    .chart-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      border-radius: 18px;
+      border: 1px solid rgba(203, 63, 63, 0.12);
+      background:
+        radial-gradient(circle at top right, rgba(203, 63, 63, 0.08), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 242, 241, 0.96) 100%);
+      overflow: hidden;
+    }
+    .chart-stage.is-loading {
+      animation: klinePulse 1.2s ease-in-out infinite;
+    }
+    .chart-stage img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+      background: transparent;
+    }
+    .chart-empty {
+      width: min(100%, 320px);
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--muted);
+    }
+    .chart-empty strong {
+      color: var(--accent-deep);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .chart-empty span {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      line-height: 1.5;
     }
     .panel-head {
       display: flex;
@@ -418,7 +528,7 @@
     }
     table {
       width: 100%;
-      min-width: 720px;
+      min-width: 0;
       border-collapse: separate;
       border-spacing: 0;
       font-family: var(--font-mono);
@@ -428,16 +538,7 @@
     }
     #data-table th,
     #data-table td {
-      width: 33.3333%;
       box-sizing: border-box;
-    }
-    #data-table.admin-mode th:not(.admin-col),
-    #data-table.admin-mode td:not(.admin-col) {
-      width: calc((100% - 84px) / 3);
-    }
-    #data-table.admin-mode th.admin-col,
-    #data-table.admin-mode td.admin-col {
-      width: 84px;
     }
     td {
       padding: 13px 14px;
@@ -455,8 +556,14 @@
     tbody tr:hover td {
       background-color: rgba(171, 38, 48, 0.05);
     }
+    tbody tr.is-selected td {
+      background-color: rgba(171, 38, 48, 0.1);
+    }
     tbody tr:last-child td {
       border-bottom: 0;
+    }
+    tbody tr.is-row-selectable {
+      cursor: pointer;
     }
     .empty-state {
       padding: 24px 16px;
@@ -496,7 +603,6 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
-
     .sortable-th {
       min-width: 0;
     }
@@ -630,8 +736,24 @@
         transform: translateY(0);
       }
     }
+    @keyframes klinePulse {
+      0%, 100% {
+        opacity: 0.32;
+      }
+      50% {
+        opacity: 0.8;
+      }
+    }
 
     @media (max-width: 900px) {
+      .content-area {
+        grid-template-columns: 1fr;
+      }
+      .chart-panel {
+        position: static;
+        min-height: 320px;
+        order: 2;
+      }
       .overview-strip {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -717,7 +839,6 @@
       }
       table {
         min-width: 0;
-        width: 100%;
         font-size: 11px;
       }
       .sortable-th {
@@ -785,6 +906,16 @@
         font-size: 9px;
         letter-spacing: 0.08em;
       }
+      .chart-panel {
+        padding: 14px;
+        border-radius: 16px;
+      }
+      .chart-panel-title {
+        font-size: 20px;
+      }
+      .chart-stage {
+        min-height: 240px;
+      }
     }
   </style>
 </head>
@@ -802,9 +933,9 @@
     {{ $worstName := "" }}
     {{ $worstValue := 0.0 }}
     {{ range after 1 $heroGfData }}
-      {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
       {{ if $n }}
-        {{ $v := index . 1 | float }}
+        {{ $v := index . 2 | float }}
         {{ $heroScratch.SetInMap "names" $n true }}
         {{ $gfCount = add $gfCount 1 }}
         {{ $gfTotal = add $gfTotal $v }}
@@ -815,9 +946,9 @@
       {{ end }}
     {{ end }}
     {{ range after 1 $heroYhData }}
-      {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
       {{ if $n }}
-        {{ $v := index . 1 | float }}
+        {{ $v := index . 2 | float }}
         {{ $heroScratch.SetInMap "names" $n true }}
         {{ $yhCount = add $yhCount 1 }}
         {{ $yhTotal = add $yhTotal $v }}
@@ -831,16 +962,18 @@
     {{ $netTotal := add $gfTotal $yhTotal }}
     {{ $gfRows := slice }}
     {{ range after 1 $heroGfData }}
-      {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ $c := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
       {{ if $n }}
-        {{ $gfRows = $gfRows | append (dict "name" $n "pl" (index . 1) "roi" (index . 2)) }}
+        {{ $gfRows = $gfRows | append (dict "code" $c "name" $n "pl" (index . 2) "roi" (index . 3)) }}
       {{ end }}
     {{ end }}
     {{ $yhRows := slice }}
     {{ range after 1 $heroYhData }}
-      {{ $n := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ $c := strings.TrimPrefix "\ufeff" (index . 0) }}
+      {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
       {{ if $n }}
-        {{ $yhRows = $yhRows | append (dict "name" $n "pl" (index . 1) "roi" (index . 2) "move" (index . 3)) }}
+        {{ $yhRows = $yhRows | append (dict "code" $c "name" $n "pl" (index . 2) "roi" (index . 3) "move" (index . 4)) }}
       {{ end }}
     {{ end }}
 
@@ -923,6 +1056,23 @@
           </table>
         </div>
       </div>
+      <aside class="chart-panel">
+        <div class="chart-panel-head">
+          <div class="chart-panel-copy">
+            <span class="chart-panel-eyebrow">Daily K Preview</span>
+            <h3 id="chart-panel-title" class="chart-panel-title">Select A Stock</h3>
+            <div id="chart-panel-meta" class="chart-panel-meta">
+              <span class="chart-panel-badge">Click a row</span>
+            </div>
+          </div>
+        </div>
+        <div id="chart-stage" class="chart-stage">
+          <div class="chart-empty">
+            <strong>No Selection</strong>
+            <span>点击左侧任意股票行，这里会展示对应的日 K 大图。</span>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 
@@ -962,8 +1112,26 @@
         ],
       },
     };
+    const symbolCacheKey = 'loss-board-symbol-cache-v1';
+    const symbolOverrides = createNormalizedSymbolMap({
+      '国风新材': 'sz000859',
+      '园林股份': 'sh605303',
+      '金瑞矿业': 'sh600714',
+      '星网锐捷': 'sz002396',
+      '香港证券': 'sh513090',
+      '黄金9999': 'sh518850',
+      'HK创新药': 'sh513120',
+      '信创ETF': 'sz159537',
+      '光伏E': 'sh562970',
+      '纳指科技': 'sz159509',
+    });
+    const symbolCache = loadSymbolCache();
+    const symbolLookupCache = new Map();
+    let suggestLookupQueue = Promise.resolve('');
     let activeView = 'gf';
     let nameFilter = '';
+    const selectedStockByView = { gf: '', yh: '', all: '' };
+    let previewRequestId = 0;
     let cc = 0;
     document.getElementById('trigger-label').addEventListener('click', () => {
       if (++cc >= 5) {
@@ -988,11 +1156,13 @@
     function getSummaryRows() {
       const totals = new Map();
       const srcs = new Map();
+      const codes = new Map();
       datasets.gf.forEach(row => {
         const key = row.name?.trim();
         if (!key) return;
         totals.set(key, (totals.get(key) || 0) + parseNumericValue(row.pl));
         srcs.set(key, 'GF');
+        if (!codes.get(key) && isMarketSymbol(row.code)) codes.set(key, row.code);
       });
       datasets.yh.forEach(row => {
         const key = row.name?.trim();
@@ -1000,8 +1170,10 @@
         totals.set(key, (totals.get(key) || 0) + parseNumericValue(row.pl));
         const existing = srcs.get(key);
         srcs.set(key, existing && existing !== 'YH' ? 'GF+YH' : 'YH');
+        if (!codes.get(key) && isMarketSymbol(row.code)) codes.set(key, row.code);
       });
       return Array.from(totals.entries()).map(([name, net]) => ({
+        code: codes.get(name) || '',
         name,
         net: net.toFixed(2),
         src: srcs.get(name) || '',
@@ -1046,11 +1218,205 @@
       const worst = document.querySelector('.brand-pill span');
       if (worst) worst.textContent = `Worst ${getWorstName()}`;
     }
+    function createNormalizedSymbolMap(source) {
+      return Object.entries(source).reduce((acc, [name, symbol]) => {
+        const normalized = normalizeStockName(name);
+        if (normalized && isMarketSymbol(symbol)) acc[normalized] = symbol;
+        return acc;
+      }, {});
+    }
+    function loadSymbolCache() {
+      const cache = new Map(Object.entries(symbolOverrides));
+      try {
+        const raw = localStorage.getItem(symbolCacheKey);
+        if (!raw) return cache;
+        const parsed = JSON.parse(raw);
+        Object.entries(parsed || {}).forEach(([name, symbol]) => {
+          if (name && isMarketSymbol(symbol)) cache.set(name, symbol);
+        });
+      } catch (error) {}
+      return cache;
+    }
+    function persistSymbolCache() {
+      try {
+        localStorage.setItem(symbolCacheKey, JSON.stringify(Object.fromEntries(symbolCache)));
+      } catch (error) {}
+    }
+    function normalizeStockName(name) {
+      return String(name || '').trim().replace(/\s+/g, '').toUpperCase();
+    }
+    function isMarketSymbol(symbol) {
+      return /^(sh|sz|bj)\d{6}$/i.test(symbol || '');
+    }
+    function getCachedSymbol(stockName) {
+      return symbolCache.get(normalizeStockName(stockName)) || '';
+    }
+    function getKLineImageUrl(symbol) {
+      return `https://image.sinajs.cn/newchart/daily/n/${encodeURIComponent(symbol)}.gif`;
+    }
+    function parseSuggestEntries(raw) {
+      return String(raw || '')
+        .split(';')
+        .map(item => item.trim())
+        .filter(Boolean)
+        .map(item => {
+          const fields = item.split(',');
+          return {
+            name: fields[0] || '',
+            type: fields[1] || '',
+            code: fields[2] || '',
+            symbol: fields[3] || '',
+            altName: fields[4] || '',
+          };
+        });
+    }
+    function matchesSuggestEntry(entry, stockName) {
+      const target = normalizeStockName(stockName);
+      return [entry.name, entry.altName].some(candidate => {
+        const normalized = normalizeStockName(candidate);
+        return normalized && (normalized === target || normalized.includes(target) || target.includes(normalized));
+      });
+    }
+    function pickSymbolFromSuggest(raw, stockName) {
+      const entries = parseSuggestEntries(raw).filter(entry => isMarketSymbol(entry.symbol));
+      const exact = entries.find(entry => matchesSuggestEntry(entry, stockName));
+      return exact ? exact.symbol : '';
+    }
+    function loadSuggestValue(stockName) {
+      const name = String(stockName || '').trim();
+      if (!name) return Promise.resolve('');
+      suggestLookupQueue = suggestLookupQueue.then(() => new Promise(resolve => {
+        const script = document.createElement('script');
+        const cleanup = () => {
+          script.remove();
+          window.suggestvalue = '';
+        };
+        let settled = false;
+        const finish = value => {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timeoutId);
+          cleanup();
+          resolve(typeof value === 'string' ? value : '');
+        };
+        const timeoutId = window.setTimeout(() => finish(''), 6000);
+        window.suggestvalue = '';
+        script.async = true;
+        script.charset = 'gbk';
+        script.src = `https://suggest3.sinajs.cn/suggest/key=${encodeURIComponent(name)}&_=${Date.now()}`;
+        script.onload = () => finish(window.suggestvalue);
+        script.onerror = () => finish('');
+        document.head.appendChild(script);
+      }));
+      return suggestLookupQueue;
+    }
+    function getSymbolForStock(stockName) {
+      const normalized = normalizeStockName(stockName);
+      if (!normalized) return Promise.resolve('');
+      const cached = symbolCache.get(normalized);
+      if (cached) return Promise.resolve(cached);
+      if (symbolLookupCache.has(normalized)) return symbolLookupCache.get(normalized);
+      const lookup = loadSuggestValue(stockName)
+        .then(raw => {
+          const symbol = pickSymbolFromSuggest(raw, stockName);
+          if (symbol) {
+            symbolCache.set(normalized, symbol);
+            persistSymbolCache();
+          }
+          symbolLookupCache.delete(normalized);
+          return symbol;
+        })
+        .catch(() => {
+          symbolLookupCache.delete(normalized);
+          return '';
+      });
+      symbolLookupCache.set(normalized, lookup);
+      return lookup;
+    }
+    function getSymbolForRow(row) {
+      const direct = row?.code || '';
+      if (isMarketSymbol(direct)) return Promise.resolve(direct);
+      return getSymbolForStock(row?.name || '');
+    }
+    function getSelectedStockName(view) {
+      return selectedStockByView[view] || '';
+    }
+    function setSelectedStock(view, stockName) {
+      selectedStockByView[view] = stockName || '';
+    }
+    function getPreviewBadge(view, row) {
+      if (!row) return '';
+      return view === 'all' ? (row.src || 'ALL') : view.toUpperCase();
+    }
+    function renderPreviewEmpty(title, message, badge) {
+      document.getElementById('chart-panel-title').textContent = title;
+      document.getElementById('chart-panel-meta').innerHTML = badge ? `<span class="chart-panel-badge">${escapeHtml(badge)}</span>` : '';
+      const stage = document.getElementById('chart-stage');
+      stage.classList.remove('is-loading');
+      stage.innerHTML = `<div class="chart-empty"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span></div>`;
+    }
+    function renderPreviewLoading(view, row) {
+      document.getElementById('chart-panel-title').textContent = row?.name || 'Loading';
+      document.getElementById('chart-panel-meta').innerHTML = [
+        `<span class="chart-panel-badge">${escapeHtml(getPreviewBadge(view, row))}</span>`,
+        '<span>Loading daily K</span>',
+      ].join('');
+      const stage = document.getElementById('chart-stage');
+      stage.classList.add('is-loading');
+      stage.innerHTML = `<div class="chart-empty"><strong>Loading</strong><span>正在加载 ${escapeHtml(row?.name || '')} 的日 K 图。</span></div>`;
+    }
+    function renderPreviewChart(view, row, symbol) {
+      document.getElementById('chart-panel-title').textContent = row?.name || 'N/A';
+      document.getElementById('chart-panel-meta').innerHTML = [
+        `<span class="chart-panel-badge">${escapeHtml(getPreviewBadge(view, row))}</span>`,
+        `<span>${escapeHtml(symbol.toUpperCase())}</span>`,
+      ].join('');
+      const stage = document.getElementById('chart-stage');
+      stage.classList.remove('is-loading');
+      stage.innerHTML = `<img src="${getKLineImageUrl(symbol)}" alt="${escapeHtml(row?.name || '')} daily K chart" loading="eager" referrerpolicy="no-referrer" onerror="handlePreviewError()">`;
+    }
+    function ensureSelectedRow(view, rows) {
+      const current = getSelectedStockName(view);
+      const hasCurrent = rows.some(row => (row.name || '') === current);
+      const next = hasCurrent ? current : (rows[0]?.name || '');
+      setSelectedStock(view, next);
+      return next;
+    }
+    function updatePreviewPanel() {
+      const rows = getSortedRows(activeView);
+      const selectedName = ensureSelectedRow(activeView, rows);
+      const selectedRow = rows.find(row => (row.name || '') === selectedName);
+      const requestId = ++previewRequestId;
+      if (!selectedRow) {
+        renderPreviewEmpty('No Selection', '当前列表里没有可预览的股票。', activeView.toUpperCase());
+        return;
+      }
+      renderPreviewLoading(activeView, selectedRow);
+      getSymbolForRow(selectedRow).then(symbol => {
+        if (requestId !== previewRequestId) return;
+        if (!symbol) {
+          renderPreviewEmpty(selectedRow.name || 'No Chart', '暂时找不到这支股票的证券代码，无法加载日 K 图。', getPreviewBadge(activeView, selectedRow));
+          return;
+        }
+        renderPreviewChart(activeView, selectedRow, symbol);
+      });
+    }
+    function handlePreviewError() {
+      const rows = getSortedRows(activeView);
+      const selectedName = getSelectedStockName(activeView);
+      const selectedRow = rows.find(row => (row.name || '') === selectedName);
+      renderPreviewEmpty(selectedRow?.name || 'No Chart', '图源返回失败，稍后再试或切换另一只股票。', getPreviewBadge(activeView, selectedRow));
+    }
+    function selectStock(stockName) {
+      setSelectedStock(activeView, stockName);
+      renderView();
+    }
     function buildColGroup(view) {
       const admin = document.body.classList.contains('admin-active') && view !== 'all';
+      const valueRatios = view === 'all' ? [0.48, 0.24, 0.28] : [0.46, 0.31, 0.23];
       const widths = admin
-        ? ['calc((100% - 84px) / 3)', 'calc((100% - 84px) / 3)', 'calc((100% - 84px) / 3)', '84px']
-        : ['33.3333%', '33.3333%', '33.3334%'];
+        ? valueRatios.map(ratio => `calc((100% - 84px) * ${ratio})`).concat('84px')
+        : valueRatios.map(ratio => `${ratio * 100}%`);
       const cols = widths.map(width => `<col style="width:${width}">`);
       return cols.join('');
     }
@@ -1069,8 +1435,9 @@
     function buildBody(view) {
       const rows = getSortedRows(view);
       const admin = document.body.classList.contains('admin-active') && view !== 'all';
-      const colCount = admin ? 4 : 3;
+      const colCount = viewConfig[view].columns.length + (admin ? 1 : 0);
       if (!rows.length) return `<tr><td class="empty-state" colspan="${colCount}">No matching rows</td></tr>`;
+      const selectedName = ensureSelectedRow(view, rows);
       return rows.map((row, index) => {
         const cells = [];
         if (view === 'gf') {
@@ -1086,8 +1453,9 @@
           cells.push(`<td class="amount-value num-cell">${escapeHtml(row.net)}</td>`);
           cells.push(`<td class="src-cell"><span class="src-badge">${escapeHtml(row.src)}</span></td>`);
         }
-        if (admin) cells.push(`<td class="admin-col"><button type="button" class="row-action" onclick="deleteRow(${index})">Del</button></td>`);
-        return `<tr>${cells.join('')}</tr>`;
+        if (admin) cells.push(`<td class="admin-col"><button type="button" class="row-action" onclick="event.stopPropagation(); deleteRow(${index})">Del</button></td>`);
+        const selectedClass = row.name === selectedName ? 'is-selected' : '';
+        return `<tr class="is-row-selectable ${selectedClass}" onclick='selectStock(${JSON.stringify(row.name || "")})'>${cells.join('')}</tr>`;
       }).join('');
     }
     function renderCell(value, className, editable, rowIndex, field) {
@@ -1133,6 +1501,7 @@
       const addBtn = document.querySelector('.btn-primary');
       addBtn.disabled = activeView === 'all';
       addBtn.classList.toggle('is-disabled', activeView === 'all');
+      updatePreviewPanel();
       syncFilterUi();
       updateOverview();
     }
@@ -1189,8 +1558,8 @@
     }
     function addRow(view) {
       const row = view === 'yh'
-        ? { name: 'New', pl: '0.00', roi: '0.00%', move: '0.00%' }
-        : { name: 'New', pl: '0.00', roi: '0.00%' };
+        ? { code: '', name: 'New', pl: '0.00', roi: '0.00%', move: '0.00%' }
+        : { code: '', name: 'New', pl: '0.00', roi: '0.00%' };
       datasets[view].push(row);
       renderView();
       resetTableScroll();
@@ -1226,13 +1595,14 @@
       try { await sf('assets/data/gf_losses.csv', 'gf', t); await sf('assets/data/yh_losses.csv', 'yh', t); s.textContent = 'Synced'; } catch (e) { s.textContent = 'Failed'; }
     }
     async function sf(p, view, t) {
-      let h = p.includes('gf') ? ['股票名称', '盈亏金额', '收益率'] : ['股票名称', '盈亏金额', '收益率', '区间涨幅'];
-      let csv = h.join(',') + '\n';
       const rows = datasets[view];
+      const hasMove = rows.some(row => String(row.move || '').trim());
+      let h = ['证券代码', '股票名称', '盈亏金额', '收益率'];
+      if (hasMove) h.push('区间涨幅');
+      let csv = h.join(',') + '\n';
       rows.forEach(row => {
-        const data = p.includes('gf')
-          ? [row.name || '', row.pl || '', row.roi || '']
-          : [row.name || '', row.pl || '', row.roi || '', row.move || ''];
+        const data = [row.code || '', row.name || '', row.pl || '', row.roi || ''];
+        if (hasMove) data.push(row.move || '');
         csv += data.map(item => String(item).trim()).join(',') + '\n';
       });
       const api_h = { 'Authorization': `Bearer ${t}`, 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
