@@ -16,8 +16,6 @@
       --accent: #cb3f3f;
       --accent-deep: #991f25;
       --accent-soft: rgba(203, 63, 63, 0.12);
-      --success: #b3262d;
-      --admin: #ffd8d8;
       --shadow: 0 24px 60px rgba(24, 28, 31, 0.08);
       --shadow-soft: 0 12px 26px rgba(24, 28, 31, 0.06);
       --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
@@ -160,17 +158,6 @@
       color: var(--accent-deep);
     }
 
-    input[type="password"] {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fff;
-      color: var(--text);
-      font: inherit;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
-    }
     button {
       font: inherit;
     }
@@ -219,71 +206,6 @@
       color: var(--accent-deep);
     }
 
-    #admin-bar {
-      background: linear-gradient(180deg, #ffe2e0 0%, #ffc7c3 100%);
-      padding: 8px 14px;
-      display: none;
-      align-items: center;
-      gap: 12px;
-      border-top: 1px solid rgba(17, 20, 24, 0.08);
-      min-height: 42px;
-      box-sizing: border-box;
-      flex-wrap: wrap;
-    }
-    .admin-active #admin-bar { display: flex !important; }
-
-    .btn-primary,
-    .btn-save,
-    .btn-exit,
-    .modal-btn {
-      border-radius: 999px;
-      cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-    }
-    .btn-primary,
-    .btn-save,
-    .modal-btn-dark {
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      box-shadow: 0 10px 20px rgba(59, 38, 21, 0.14);
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #681821 0%, #2b181b 100%);
-    }
-    .btn-save {
-      background: linear-gradient(135deg, #ca3d3f 0%, #961f26 100%);
-    }
-    .btn-exit {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(17, 20, 24, 0.12);
-      color: var(--text);
-      padding: 7px 12px;
-      font-size: 11px;
-      margin-left: auto;
-    }
-    .btn-primary.is-disabled {
-      opacity: 0.42;
-      pointer-events: none;
-      box-shadow: none;
-    }
-    .btn-primary:hover,
-    .btn-save:hover,
-    .btn-exit:hover,
-    .modal-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(59, 38, 21, 0.16);
-    }
-    .status-text {
-      font-size: 12px;
-      color: var(--accent-deep);
-      margin-left: 10px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-
     th {
       background-color: rgba(250, 241, 239, 0.98) !important;
       position: sticky;
@@ -299,8 +221,6 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
     }
-    .admin-active th { top: 0; }
-
     .content-area {
       margin-top: 14px;
       display: grid;
@@ -327,10 +247,42 @@
       overflow: hidden;
       box-shadow: var(--shadow);
     }
-    .chart-panel {
+    .side-rail {
       position: sticky;
       top: 16px;
-      min-height: clamp(380px, 56vh, 720px);
+      display: grid;
+      gap: 12px;
+      align-self: start;
+    }
+    .side-tags {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid rgba(203, 63, 63, 0.12);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255, 252, 252, 0.96) 0%, rgba(249, 243, 242, 0.92) 100%);
+      box-shadow: var(--shadow-soft);
+    }
+    .side-tags-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .side-tags-head strong {
+      color: var(--accent-deep);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0;
+    }
+    .chart-panel {
+      min-height: clamp(300px, 46vh, 560px);
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -340,6 +292,13 @@
       border-radius: 18px;
       box-shadow: var(--shadow);
       overflow: hidden;
+      transition: min-height 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .chart-panel.is-concealed {
+      min-height: 172px;
+      gap: 10px;
+      background: linear-gradient(180deg, rgba(255, 253, 252, 0.88) 0%, rgba(245, 240, 238, 0.84) 100%);
+      box-shadow: var(--shadow-soft);
     }
     .chart-panel-head {
       display: flex;
@@ -368,6 +327,12 @@
       font-weight: 800;
       line-height: 1.05;
     }
+    .chart-panel.is-concealed .chart-panel-title {
+      color: rgba(17, 20, 24, 0.58);
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
     .chart-panel-meta {
       display: inline-flex;
       flex-wrap: wrap;
@@ -388,7 +353,30 @@
       background: rgba(203, 63, 63, 0.09);
       color: var(--accent-deep);
     }
+    .chart-privacy-toggle {
+      flex: 0 0 auto;
+      border: 1px solid rgba(17, 20, 24, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: rgba(17, 20, 24, 0.58);
+      cursor: pointer;
+      padding: 6px 10px;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+    .chart-privacy-toggle:hover {
+      background: rgba(203, 63, 63, 0.08);
+      border-color: rgba(203, 63, 63, 0.18);
+      color: var(--accent-deep);
+      transform: translateY(-1px);
+    }
     .chart-stage {
+      position: relative;
       flex: 1;
       display: flex;
       align-items: center;
@@ -400,9 +388,34 @@
         radial-gradient(circle at top right, rgba(203, 63, 63, 0.08), transparent 34%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 242, 241, 0.96) 100%);
       overflow: hidden;
+      transition: flex-basis 0.2s ease, min-height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .chart-panel.is-concealed .chart-stage {
+      flex: 0 0 96px;
+      border-color: rgba(17, 20, 24, 0.08);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(239, 235, 233, 0.78) 100%);
+    }
+    .chart-panel.is-concealed .chart-stage > * {
+      opacity: 0.12;
+      filter: blur(14px) grayscale(1);
+      transform: scale(0.98);
+    }
+    .chart-panel.is-concealed .chart-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(135deg, rgba(250, 248, 247, 0.98) 0%, rgba(238, 234, 232, 0.96) 100%),
+        repeating-linear-gradient(135deg, rgba(17, 20, 24, 0.04) 0 1px, transparent 1px 8px);
+      pointer-events: none;
     }
     .chart-stage.is-loading {
       animation: klinePulse 1.2s ease-in-out infinite;
+    }
+    .chart-panel.is-concealed .chart-stage.is-loading {
+      animation: none;
+      opacity: 1;
     }
     .chart-stage img {
       width: 100%;
@@ -442,14 +455,6 @@
       padding: 12px 16px;
       border-bottom: 1px solid rgba(203, 63, 63, 0.1);
       background: linear-gradient(180deg, rgba(255, 250, 250, 0.82) 0%, rgba(251, 244, 242, 0.8) 100%);
-    }
-    .panel-tools {
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 10px;
-      min-width: min(100%, 280px);
-      margin-left: auto;
     }
     .panel-title {
       margin: 0;
@@ -519,6 +524,56 @@
     .search-clear[hidden] {
       display: none;
     }
+    .filter-strip {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+      animation: panelReveal 0.45s ease both;
+    }
+    .filter-search {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .filter-search .search-box {
+      width: min(100%, 340px);
+    }
+    .tag-filter {
+      display: none;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 6px;
+      width: 100%;
+    }
+    .tag-filter.has-tags {
+      display: flex;
+    }
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 24px;
+      padding: 4px 9px;
+      border: 1px solid rgba(203, 63, 63, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+    .tag-chip:hover {
+      background: rgba(203, 63, 63, 0.08);
+      color: var(--accent-deep);
+      transform: translateY(-1px);
+    }
+    .tag-chip.is-active {
+      background: var(--accent-deep);
+      border-color: var(--accent-deep);
+      color: #fff;
+    }
     .table-shell {
       flex: 1;
       display: flex;
@@ -583,10 +638,15 @@
     .num-th {
       text-align: center;
     }
-    .amount-value,
-    .editable-val {
+    .amount-value {
       font-weight: 700;
       color: var(--accent-deep);
+    }
+    .stock-cell {
+      text-align: left;
+    }
+    .stock-name {
+      display: block;
     }
     .src-cell {
       text-align: center;
@@ -646,76 +706,6 @@
       color: #fff;
     }
 
-    .admin-col { display: none; }
-    .admin-active .admin-col { display: table-cell !important; }
-    div.admin-active .admin-col { display: block !important; }
-    .admin-active .editable-val {
-      background: rgba(203, 63, 63, 0.12) !important;
-      color: var(--success);
-      border: 1px dashed rgba(179, 38, 45, 0.5);
-    }
-    .row-action {
-      border: 1px solid rgba(203, 63, 63, 0.14);
-      background: rgba(255, 248, 248, 0.9);
-      color: var(--accent-deep);
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background 0.18s ease, transform 0.18s ease;
-    }
-    .row-action:hover {
-      background: rgba(203, 63, 63, 0.08);
-      transform: translateY(-1px);
-    }
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    .modal-btn {
-      flex: 1;
-      border: 1px solid rgba(203, 63, 63, 0.14);
-      background: rgba(255, 250, 250, 0.96);
-      color: var(--text);
-      padding: 10px 12px;
-    }
-    .modal-btn-dark {
-      background: linear-gradient(135deg, #7d1f29 0%, #331a1d 100%);
-      border: 0;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(20, 12, 8, 0.58);
-      backdrop-filter: blur(8px);
-    }
-    .modal-content {
-      background: var(--paper-solid);
-      margin: 10% auto;
-      padding: 26px;
-      border-radius: 18px;
-      width: min(360px, calc(100% - 32px));
-      text-align: center;
-      border: 1px solid rgba(203, 63, 63, 0.16);
-      box-shadow: var(--shadow);
-      box-sizing: border-box;
-    }
-    .modal-content h3 {
-      margin: 0 0 16px;
-      font-family: var(--font-ui);
-      font-size: 14px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
     @keyframes riseIn {
       from {
         opacity: 0;
@@ -750,9 +740,14 @@
         grid-template-columns: 1fr;
       }
       .chart-panel {
-        position: static;
         min-height: 320px;
+      }
+      .side-rail {
+        position: static;
         order: 2;
+      }
+      .chart-panel.is-concealed {
+        min-height: 156px;
       }
       .overview-strip {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -764,10 +759,15 @@
         align-items: flex-start;
         flex-direction: column;
       }
-      .panel-tools,
       .search-box {
         width: 100%;
         min-width: 0;
+      }
+      .filter-search {
+        justify-content: stretch;
+      }
+      .filter-search .search-box {
+        width: 100%;
       }
     }
 
@@ -827,9 +827,6 @@
         font-size: 10px;
         letter-spacing: 0.12em;
       }
-      .admin-active th {
-        top: 0;
-      }
       td {
         padding: 11px 8px;
         white-space: normal;
@@ -876,15 +873,13 @@
       .search-input {
         font-size: 12px;
       }
+      .tag-chip {
+        min-height: 23px;
+        padding: 4px 8px;
+        font-size: 9px;
+      }
       .content-area {
         margin-top: 10px;
-      }
-      .modal-content {
-        margin: 24% auto;
-        padding: 22px;
-      }
-      .btn-exit {
-        margin-left: 0;
       }
       .csv-table {
         min-height: 0;
@@ -910,11 +905,20 @@
         padding: 14px;
         border-radius: 16px;
       }
+      .chart-panel.is-concealed {
+        min-height: 148px;
+      }
       .chart-panel-title {
         font-size: 20px;
       }
+      .chart-panel.is-concealed .chart-panel-title {
+        font-size: 13px;
+      }
       .chart-stage {
         min-height: 240px;
+      }
+      .chart-panel.is-concealed .chart-stage {
+        min-height: 86px;
       }
     }
   </style>
@@ -964,16 +968,24 @@
     {{ range after 1 $heroGfData }}
       {{ $c := strings.TrimPrefix "\ufeff" (index . 0) }}
       {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
+      {{ $tags := "" }}
+      {{ if ge (len .) 5 }}
+        {{ $tags = index . 4 }}
+      {{ end }}
       {{ if $n }}
-        {{ $gfRows = $gfRows | append (dict "code" $c "name" $n "pl" (index . 2) "roi" (index . 3)) }}
+        {{ $gfRows = $gfRows | append (dict "code" $c "name" $n "pl" (index . 2) "roi" (index . 3) "tags" $tags) }}
       {{ end }}
     {{ end }}
     {{ $yhRows := slice }}
     {{ range after 1 $heroYhData }}
       {{ $c := strings.TrimPrefix "\ufeff" (index . 0) }}
       {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
+      {{ $tags := "" }}
+      {{ if ge (len .) 5 }}
+        {{ $tags = index . 4 }}
+      {{ end }}
       {{ if $n }}
-        {{ $yhRows = $yhRows | append (dict "code" $c "name" $n "pl" (index . 2) "roi" (index . 3) "move" (index . 4)) }}
+        {{ $yhRows = $yhRows | append (dict "code" $c "name" $n "pl" (index . 2) "roi" (index . 3) "tags" $tags) }}
       {{ end }}
     {{ end }}
 
@@ -1006,32 +1018,14 @@
       <div class="tabs">
         <button type="button" class="tab-label active" data-view="gf" onclick="setView('gf', this)">GF</button>
         <button type="button" class="tab-label" data-view="yh" onclick="setView('yh', this)">YH</button>
-        <button type="button" id="trigger-label" class="tab-label" data-view="all" onclick="setView('all', this)">ALL</button>
-      </div>
-      <div id="admin-bar">
-        <button class="btn-primary" onclick="addRowToActive()">Add</button>
-        <button class="btn-save" onclick="openSaveModal()">Sync</button>
-        <span id="save-status" class="status-text"></span>
-        <button class="btn-exit" onclick="location.reload()">Exit</button>
+        <button type="button" class="tab-label" data-view="all" onclick="setView('all', this)">ALL</button>
       </div>
     </div>
-    <div id="admin-login-modal" class="modal">
-      <div class="modal-content">
-        <h3>Admin</h3>
-        <input type="password" id="admin-pass" placeholder="Passcode">
-        <div class="modal-actions">
-          <button class="modal-btn" onclick="closeModal('admin-login-modal')">Close</button>
-          <button class="modal-btn modal-btn-dark" onclick="handleUnlock()">Enter</button>
-        </div>
-      </div>
-    </div>
-    <div id="save-modal" class="modal">
-      <div class="modal-content">
-        <h3>Sync</h3>
-        <input type="password" id="gh-token" placeholder="GitHub Token">
-        <div class="modal-actions">
-          <button class="modal-btn" onclick="closeModal('save-modal')">Cancel</button>
-          <button class="modal-btn modal-btn-dark" onclick="handleSync()">Confirm</button>
+    <div class="filter-strip">
+      <div class="filter-search">
+        <div class="search-box">
+          <input id="name-filter" class="search-input" type="search" placeholder="Search stock" autocomplete="off" oninput="handleFilterInput(this.value)">
+          <button id="name-filter-clear" class="search-clear" type="button" onclick="clearFilter()" hidden>Clear</button>
         </div>
       </div>
     </div>
@@ -1041,12 +1035,6 @@
         <div class="panel-head">
           <h2 id="panel-title" class="panel-title">GF</h2>
           <span id="panel-meta" class="panel-meta"><span>{{ $gfCount }} rows</span><strong>{{ printf "%.2f" $gfTotal }}</strong></span>
-          <div class="panel-tools">
-            <div class="search-box">
-              <input id="name-filter" class="search-input" type="search" placeholder="Search stock" autocomplete="off" oninput="handleFilterInput(this.value)">
-              <button id="name-filter-clear" class="search-clear" type="button" onclick="clearFilter()" hidden>Clear</button>
-            </div>
-          </div>
         </div>
         <div class="table-shell">
           <table id="data-table">
@@ -1056,22 +1044,32 @@
           </table>
         </div>
       </div>
-      <aside class="chart-panel">
-        <div class="chart-panel-head">
-          <div class="chart-panel-copy">
-            <span class="chart-panel-eyebrow">Daily K Preview</span>
-            <h3 id="chart-panel-title" class="chart-panel-title">Select A Stock</h3>
-            <div id="chart-panel-meta" class="chart-panel-meta">
-              <span class="chart-panel-badge">Click a row</span>
+      <aside class="side-rail">
+        <section class="side-tags">
+          <div class="side-tags-head">
+            <span>Tags</span>
+            <strong id="tag-filter-count">0</strong>
+          </div>
+          <div id="tag-filter" class="tag-filter" aria-label="Tag filter"></div>
+        </section>
+        <section id="chart-panel" class="chart-panel is-concealed">
+          <div class="chart-panel-head">
+            <div class="chart-panel-copy">
+              <span class="chart-panel-eyebrow">Reference</span>
+              <h3 id="chart-panel-title" class="chart-panel-title">Reference</h3>
+              <div id="chart-panel-meta" class="chart-panel-meta">
+                <span class="chart-panel-badge">Ready</span>
+              </div>
+            </div>
+            <button id="chart-privacy-toggle" class="chart-privacy-toggle" type="button" onclick="toggleChartConceal()" aria-pressed="false">Open</button>
+          </div>
+          <div id="chart-stage" class="chart-stage">
+            <div class="chart-empty">
+              <strong>Ready</strong>
+              <span>Select an item to load details.</span>
             </div>
           </div>
-        </div>
-        <div id="chart-stage" class="chart-stage">
-          <div class="chart-empty">
-            <strong>No Selection</strong>
-            <span>点击左侧任意股票行，这里会展示对应的日 K 大图。</span>
-          </div>
-        </div>
+        </section>
       </aside>
     </div>
   </div>
@@ -1081,6 +1079,9 @@
       gf: JSON.parse({{ $gfRows | jsonify }}),
       yh: JSON.parse({{ $yhRows | jsonify }}),
     };
+    Object.values(datasets).forEach(rows => rows.forEach(row => {
+      row.tags = parseTags(row.tags);
+    }));
     const viewState = {
       gf: { sortKey: 'pl', type: 'amount', order: 'desc' },
       yh: { sortKey: 'pl', type: 'amount', order: 'desc' },
@@ -1130,39 +1131,66 @@
     let suggestLookupQueue = Promise.resolve('');
     let activeView = 'gf';
     let nameFilter = '';
+    const selectedTags = new Set();
     const selectedStockByView = { gf: '', yh: '', all: '' };
     let previewRequestId = 0;
-    let cc = 0;
-    document.getElementById('trigger-label').addEventListener('click', () => {
-      if (++cc >= 5) {
-        document.getElementById('admin-login-modal').style.display = 'block';
-        cc = 0;
-      }
-      setTimeout(() => { cc = 0; }, 3000);
+    let chartConcealed = true;
+    let chartHeaderTitle = 'Reference';
+    let chartHeaderMeta = '<span class="chart-panel-badge">Ready</span>';
+    document.getElementById('tag-filter').addEventListener('click', event => {
+      const chip = event.target.closest('.tag-chip');
+      if (!chip) return;
+      toggleTagFilter(chip.dataset.tag || '');
     });
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    function openSaveModal() { document.getElementById('save-modal').style.display = 'block'; if (localStorage.getItem('gh_token')) document.getElementById('gh-token').value = localStorage.getItem('gh_token'); }
-    function handleUnlock() {
-      const p = document.getElementById('admin-pass').value;
-      if (p === 'xxxniu') {
-        document.body.classList.add('admin-active');
-        closeModal('admin-login-modal');
-        const gfTab = document.querySelector('.tab-label[data-view="gf"]');
-        setView('gf', gfTab);
-        const status = document.getElementById('save-status');
-        if (status) status.textContent = 'Admin mode: edit rows in GF/YH';
-      } else alert('Wrong passcode');
+    function toggleChartConceal() {
+      chartConcealed = !chartConcealed;
+      applyChartConcealState();
+    }
+    function setChartHeader(title, metaHtml) {
+      chartHeaderTitle = title || 'Reference';
+      chartHeaderMeta = metaHtml || '';
+      applyChartConcealState();
+    }
+    function applyChartConcealState() {
+      const panel = document.getElementById('chart-panel');
+      const title = document.getElementById('chart-panel-title');
+      const meta = document.getElementById('chart-panel-meta');
+      const toggle = document.getElementById('chart-privacy-toggle');
+      panel.classList.toggle('is-concealed', chartConcealed);
+      title.textContent = chartConcealed ? 'Reference' : chartHeaderTitle;
+      meta.innerHTML = chartConcealed ? '<span class="chart-panel-badge">Ready</span>' : chartHeaderMeta;
+      toggle.textContent = chartConcealed ? 'Open' : 'Hide';
+      toggle.setAttribute('aria-pressed', String(!chartConcealed));
+    }
+    function parseTags(value) {
+      if (Array.isArray(value)) return value.map(tag => String(tag).trim()).filter(Boolean);
+      return String(value || '')
+        .split(/[|｜、;；]/)
+        .map(tag => tag.trim())
+        .filter(Boolean);
+    }
+    function getRowTags(row) {
+      return parseTags(row?.tags || []);
+    }
+    function mergeRowTags(target, key, row) {
+      const existing = target.get(key) || [];
+      getRowTags(row).forEach(tag => {
+        if (!existing.includes(tag)) existing.push(tag);
+      });
+      target.set(key, existing);
     }
     function getSummaryRows() {
       const totals = new Map();
       const srcs = new Map();
       const codes = new Map();
+      const tags = new Map();
       datasets.gf.forEach(row => {
         const key = row.name?.trim();
         if (!key) return;
         totals.set(key, (totals.get(key) || 0) + parseNumericValue(row.pl));
         srcs.set(key, 'GF');
         if (!codes.get(key) && isMarketSymbol(row.code)) codes.set(key, row.code);
+        mergeRowTags(tags, key, row);
       });
       datasets.yh.forEach(row => {
         const key = row.name?.trim();
@@ -1171,12 +1199,14 @@
         const existing = srcs.get(key);
         srcs.set(key, existing && existing !== 'YH' ? 'GF+YH' : 'YH');
         if (!codes.get(key) && isMarketSymbol(row.code)) codes.set(key, row.code);
+        mergeRowTags(tags, key, row);
       });
       return Array.from(totals.entries()).map(([name, net]) => ({
         code: codes.get(name) || '',
         name,
         net: net.toFixed(2),
         src: srcs.get(name) || '',
+        tags: tags.get(name) || [],
       }));
     }
     function getRows(view) {
@@ -1184,9 +1214,14 @@
     }
     function getFilteredRows(view) {
       const keyword = nameFilter.trim().toLocaleLowerCase();
+      const hasTagFilter = selectedTags.size > 0;
       const rows = getRows(view);
-      if (!keyword) return rows;
-      return rows.filter(row => (row.name || '').toLocaleLowerCase().includes(keyword));
+      if (!keyword && !hasTagFilter) return rows;
+      return rows.filter(row => {
+        const matchesKeyword = !keyword || (row.name || '').toLocaleLowerCase().includes(keyword);
+        const matchesTags = !hasTagFilter || getRowTags(row).some(tag => selectedTags.has(tag));
+        return matchesKeyword && matchesTags;
+      });
     }
     function getTotalValue(view, filtered = false) {
       const rows = filtered ? getFilteredRows(view) : getRows(view);
@@ -1349,31 +1384,28 @@
       return view === 'all' ? (row.src || 'ALL') : view.toUpperCase();
     }
     function renderPreviewEmpty(title, message, badge) {
-      document.getElementById('chart-panel-title').textContent = title;
-      document.getElementById('chart-panel-meta').innerHTML = badge ? `<span class="chart-panel-badge">${escapeHtml(badge)}</span>` : '';
+      setChartHeader(title, badge ? `<span class="chart-panel-badge">${escapeHtml(badge)}</span>` : '');
       const stage = document.getElementById('chart-stage');
       stage.classList.remove('is-loading');
       stage.innerHTML = `<div class="chart-empty"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span></div>`;
     }
     function renderPreviewLoading(view, row) {
-      document.getElementById('chart-panel-title').textContent = row?.name || 'Loading';
-      document.getElementById('chart-panel-meta').innerHTML = [
+      setChartHeader(row?.name || 'Loading', [
         `<span class="chart-panel-badge">${escapeHtml(getPreviewBadge(view, row))}</span>`,
-        '<span>Loading daily K</span>',
-      ].join('');
+        '<span>Loading</span>',
+      ].join(''));
       const stage = document.getElementById('chart-stage');
       stage.classList.add('is-loading');
-      stage.innerHTML = `<div class="chart-empty"><strong>Loading</strong><span>正在加载 ${escapeHtml(row?.name || '')} 的日 K 图。</span></div>`;
+      stage.innerHTML = `<div class="chart-empty"><strong>Loading</strong><span>正在加载 ${escapeHtml(row?.name || '')} 的预览。</span></div>`;
     }
     function renderPreviewChart(view, row, symbol) {
-      document.getElementById('chart-panel-title').textContent = row?.name || 'N/A';
-      document.getElementById('chart-panel-meta').innerHTML = [
+      setChartHeader(row?.name || 'N/A', [
         `<span class="chart-panel-badge">${escapeHtml(getPreviewBadge(view, row))}</span>`,
         `<span>${escapeHtml(symbol.toUpperCase())}</span>`,
-      ].join('');
+      ].join(''));
       const stage = document.getElementById('chart-stage');
       stage.classList.remove('is-loading');
-      stage.innerHTML = `<img src="${getKLineImageUrl(symbol)}" alt="${escapeHtml(row?.name || '')} daily K chart" loading="eager" referrerpolicy="no-referrer" onerror="handlePreviewError()">`;
+      stage.innerHTML = `<img src="${getKLineImageUrl(symbol)}" alt="${escapeHtml(row?.name || '')} preview" loading="eager" referrerpolicy="no-referrer" onerror="handlePreviewError()">`;
     }
     function ensureSelectedRow(view, rows) {
       const current = getSelectedStockName(view);
@@ -1395,7 +1427,7 @@
       getSymbolForRow(selectedRow).then(symbol => {
         if (requestId !== previewRequestId) return;
         if (!symbol) {
-          renderPreviewEmpty(selectedRow.name || 'No Chart', '暂时找不到这支股票的证券代码，无法加载日 K 图。', getPreviewBadge(activeView, selectedRow));
+          renderPreviewEmpty(selectedRow.name || 'No Chart', '暂时找不到这支股票的证券代码，无法加载预览。', getPreviewBadge(activeView, selectedRow));
           return;
         }
         renderPreviewChart(activeView, selectedRow, symbol);
@@ -1412,11 +1444,8 @@
       renderView();
     }
     function buildColGroup(view) {
-      const admin = document.body.classList.contains('admin-active') && view !== 'all';
       const valueRatios = view === 'all' ? [0.48, 0.24, 0.28] : [0.46, 0.31, 0.23];
-      const widths = admin
-        ? valueRatios.map(ratio => `calc((100% - 84px) * ${ratio})`).concat('84px')
-        : valueRatios.map(ratio => `${ratio * 100}%`);
+      const widths = valueRatios.map(ratio => `${ratio * 100}%`);
       const cols = widths.map(width => `<col style="width:${width}">`);
       return cols.join('');
     }
@@ -1429,39 +1458,38 @@
         const descActive = sort.sortKey === column.key && sort.order === 'desc';
         return `<th class="${column.className || ''}"><span class="sort-header"><span class="sort-label">${column.label}</span><span class="sort-arrows"><button type="button" class="sort-arrow ${ascActive ? 'active' : ''}" data-key="${column.key}" data-type="${column.type}" data-order="asc" aria-pressed="${ascActive}" aria-label="${column.label} ascending" onclick="sortActiveView('${column.key}', '${column.type}', 'asc', this)">▲</button><button type="button" class="sort-arrow ${descActive ? 'active' : ''}" data-key="${column.key}" data-type="${column.type}" data-order="desc" aria-pressed="${descActive}" aria-label="${column.label} descending" onclick="sortActiveView('${column.key}', '${column.type}', 'desc', this)">▼</button></span></span></th>`;
       });
-      if (document.body.classList.contains('admin-active') && view !== 'all') headers.push('<th class="admin-col">Act</th>');
       return `<tr>${headers.join('')}</tr>`;
     }
     function buildBody(view) {
       const rows = getSortedRows(view);
-      const admin = document.body.classList.contains('admin-active') && view !== 'all';
-      const colCount = viewConfig[view].columns.length + (admin ? 1 : 0);
+      const colCount = viewConfig[view].columns.length;
       if (!rows.length) return `<tr><td class="empty-state" colspan="${colCount}">No matching rows</td></tr>`;
       const selectedName = ensureSelectedRow(view, rows);
       return rows.map((row, index) => {
         const cells = [];
         if (view === 'gf') {
-          cells.push(renderCell(row.name, '', admin, index, 'name'));
-          cells.push(renderCell(row.pl, 'editable-val num-cell', admin, index, 'pl'));
-          cells.push(renderCell(row.roi, 'num-cell', admin, index, 'roi'));
+          cells.push(renderNameCell(row));
+          cells.push(renderCell(row.pl, 'amount-value num-cell'));
+          cells.push(renderCell(row.roi, 'num-cell'));
         } else if (view === 'yh') {
-          cells.push(renderCell(row.name, '', admin, index, 'name'));
-          cells.push(renderCell(row.pl, 'editable-val num-cell', admin, index, 'pl'));
-          cells.push(renderCell(row.roi, 'num-cell', admin, index, 'roi'));
+          cells.push(renderNameCell(row));
+          cells.push(renderCell(row.pl, 'amount-value num-cell'));
+          cells.push(renderCell(row.roi, 'num-cell'));
         } else {
-          cells.push(`<td>${escapeHtml(row.name)}</td>`);
+          cells.push(renderNameCell(row));
           cells.push(`<td class="amount-value num-cell">${escapeHtml(row.net)}</td>`);
           cells.push(`<td class="src-cell"><span class="src-badge">${escapeHtml(row.src)}</span></td>`);
         }
-        if (admin) cells.push(`<td class="admin-col"><button type="button" class="row-action" onclick="event.stopPropagation(); deleteRow(${index})">Del</button></td>`);
         const selectedClass = row.name === selectedName ? 'is-selected' : '';
         return `<tr class="is-row-selectable ${selectedClass}" onclick='selectStock(${JSON.stringify(row.name || "")})'>${cells.join('')}</tr>`;
       }).join('');
     }
-    function renderCell(value, className, editable, rowIndex, field) {
+    function renderCell(value, className) {
       const safe = escapeHtml(value ?? '');
-      if (!editable) return `<td class="${className}">${safe}</td>`;
-      return `<td class="${className}" contenteditable="true" onblur="updateCell(${rowIndex}, '${field}', this.textContent)">${safe}</td>`;
+      return `<td class="${className}">${safe}</td>`;
+    }
+    function renderNameCell(row) {
+      return `<td class="stock-cell"><span class="stock-name">${escapeHtml(row?.name || '')}</span></td>`;
     }
     function escapeHtml(value) {
       return String(value)
@@ -1487,20 +1515,67 @@
       if (type === 'amount') return parsed < 0 ? Math.abs(parsed) : parsed;
       return parsed;
     }
+    function getAvailableTags(view) {
+      const stats = new Map();
+      const valueKey = view === 'all' ? 'net' : 'pl';
+      getRows(view).forEach(row => {
+        const loss = Math.max(0, -parseNumericValue(row[valueKey]));
+        getRowTags(row).forEach(tag => {
+          const current = stats.get(tag) || { tag, count: 0, loss: 0 };
+          current.count += 1;
+          current.loss += loss;
+          stats.set(tag, current);
+        });
+      });
+      return Array.from(stats.values())
+        .sort((a, b) => (b.loss - a.loss) || (b.count - a.count) || a.tag.localeCompare(b.tag, 'zh-Hans-CN'));
+    }
+    function pruneSelectedTags(view) {
+      const available = new Set(getAvailableTags(view).map(item => item.tag));
+      selectedTags.forEach(tag => {
+        if (!available.has(tag)) selectedTags.delete(tag);
+      });
+    }
+    function renderTagFilter() {
+      const box = document.getElementById('tag-filter');
+      const count = document.getElementById('tag-filter-count');
+      const tags = getAvailableTags(activeView);
+      if (count) count.textContent = tags.length;
+      box.classList.toggle('has-tags', tags.length > 0);
+      if (!tags.length) {
+        box.innerHTML = '';
+        return;
+      }
+      const allActive = selectedTags.size === 0;
+      const allChip = `<button type="button" class="tag-chip ${allActive ? 'is-active' : ''}" data-tag="">全部标签</button>`;
+      const tagChips = tags.map(({ tag, count }) => {
+        const active = selectedTags.has(tag);
+        return `<button type="button" class="tag-chip ${active ? 'is-active' : ''}" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)} ${count}</button>`;
+      }).join('');
+      box.innerHTML = allChip + tagChips;
+    }
+    function toggleTagFilter(tag) {
+      if (!tag) {
+        selectedTags.clear();
+      } else if (selectedTags.has(tag)) {
+        selectedTags.delete(tag);
+      } else {
+        selectedTags.add(tag);
+      }
+      renderView();
+      resetTableScroll();
+    }
     function renderView() {
+      pruneSelectedTags(activeView);
       const rows = getFilteredRows(activeView);
       const totalRows = getRows(activeView).length;
-      const table = document.getElementById('data-table');
-      const admin = document.body.classList.contains('admin-active') && activeView !== 'all';
+      const hasFilter = Boolean(nameFilter.trim()) || selectedTags.size > 0;
       document.getElementById('panel-title').textContent = viewConfig[activeView].title;
-      document.getElementById('panel-meta').innerHTML = `<span>${nameFilter ? `${rows.length} / ${totalRows} rows` : `${rows.length} rows`}</span><strong>${getTotalValue(activeView, true).toFixed(2)}</strong>`;
+      document.getElementById('panel-meta').innerHTML = `<span>${hasFilter ? `${rows.length} / ${totalRows} rows` : `${rows.length} rows`}</span><strong>${getTotalValue(activeView, true).toFixed(2)}</strong>`;
       document.getElementById('table-cols').innerHTML = buildColGroup(activeView);
       document.getElementById('table-head').innerHTML = buildHead(activeView);
       document.getElementById('table-body').innerHTML = buildBody(activeView);
-      table.classList.toggle('admin-mode', admin);
-      const addBtn = document.querySelector('.btn-primary');
-      addBtn.disabled = activeView === 'all';
-      addBtn.classList.toggle('is-disabled', activeView === 'all');
+      renderTagFilter();
       updatePreviewPanel();
       syncFilterUi();
       updateOverview();
@@ -1542,39 +1617,6 @@
       const input = document.getElementById('name-filter');
       if (input) input.focus();
     }
-    function deleteRow(rowIndex) {
-      if (!confirm('Delete row?') || activeView === 'all') return;
-      const rows = getSortedRows(activeView);
-      const target = rows[rowIndex];
-      const dataset = datasets[activeView];
-      const sourceIndex = dataset.indexOf(target);
-      if (sourceIndex >= 0) dataset.splice(sourceIndex, 1);
-      renderView();
-      resetTableScroll();
-    }
-    function addRowToActive() {
-      if (activeView === 'all') return;
-      addRow(activeView);
-    }
-    function addRow(view) {
-      const row = view === 'yh'
-        ? { code: '', name: 'New', pl: '0.00', roi: '0.00%', move: '0.00%' }
-        : { code: '', name: 'New', pl: '0.00', roi: '0.00%' };
-      datasets[view].push(row);
-      renderView();
-      resetTableScroll();
-    }
-    function updateCell(rowIndex, field, value) {
-      if (activeView === 'all') return;
-      const rows = getSortedRows(activeView);
-      const target = rows[rowIndex];
-      const dataset = datasets[activeView];
-      const sourceIndex = dataset.indexOf(target);
-      if (sourceIndex < 0) return;
-      dataset[sourceIndex][field] = value.trim();
-      renderView();
-      resetTableScroll();
-    }
     function normalizeNumericText(text) {
       const raw = (text || '').replace(/,/g, '').replace(/%/g, '').replace(/\s+/g, '');
       const sign = raw.startsWith('-') ? '-' : '';
@@ -1586,32 +1628,6 @@
     function parseNumericValue(text) {
       const value = Number.parseFloat(normalizeNumericText(text));
       return Number.isFinite(value) ? value : 0;
-    }
-    const O = 'gniqizeuy'; const R = 'gniqizeuy.github.io';
-    async function handleSync() {
-      const t = document.getElementById('gh-token').value; if (!t) return;
-      localStorage.setItem('gh_token', t); const s = document.getElementById('save-status'); s.textContent = 'Syncing...';
-      closeModal('save-modal');
-      try { await sf('assets/data/gf_losses.csv', 'gf', t); await sf('assets/data/yh_losses.csv', 'yh', t); s.textContent = 'Synced'; } catch (e) { s.textContent = 'Failed'; }
-    }
-    async function sf(p, view, t) {
-      const rows = datasets[view];
-      const hasMove = rows.some(row => String(row.move || '').trim());
-      let h = ['证券代码', '股票名称', '盈亏金额', '收益率'];
-      if (hasMove) h.push('区间涨幅');
-      let csv = h.join(',') + '\n';
-      rows.forEach(row => {
-        const data = [row.code || '', row.name || '', row.pl || '', row.roi || ''];
-        if (hasMove) data.push(row.move || '');
-        csv += data.map(item => String(item).trim()).join(',') + '\n';
-      });
-      const api_h = { 'Authorization': `Bearer ${t}`, 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
-      const get = await fetch(`https://api.github.com/repos/${O}/${R}/contents/${p}`, { headers: api_h });
-      const { sha } = await get.json();
-      await fetch(`https://api.github.com/repos/${O}/${R}/contents/${p}`, {
-        method: 'PUT', headers: { ...api_h, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: `Update: ${p}`, content: btoa(unescape(encodeURIComponent(csv))), sha })
-      });
     }
     renderView();
   </script>
