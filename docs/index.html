@@ -79,13 +79,20 @@
       min-height: 0;
     }
 
-    .topbar {
-      flex: 0 0 auto;
+    .layout {
+      flex: 1 1 auto;
+      min-height: 0;
       display: grid;
-      grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.6fr);
-      gap: 10px;
+      grid-template-columns: minmax(200px, 0.62fr) minmax(0, 2.1fr) minmax(320px, 0.95fr);
+      gap: 16px;
       align-items: stretch;
-      margin-bottom: 10px;
+    }
+    .app-sidebar {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
       animation: riseIn 0.5s ease both;
     }
     .brand-pill {
@@ -94,7 +101,6 @@
       flex-direction: column;
       justify-content: center;
       gap: 8px;
-      min-width: 220px;
       padding: 16px 18px;
       border: 1px solid rgba(17, 20, 24, 0.08);
       border-radius: 20px;
@@ -125,8 +131,8 @@
     }
 
     .overview-strip {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 10px;
     }
     .overview-chip {
@@ -142,6 +148,33 @@
       background: linear-gradient(180deg, rgba(255, 251, 250, 0.94) 0%, rgba(247, 238, 235, 0.9) 100%);
       box-shadow: var(--shadow-soft);
       overflow: hidden;
+    }
+    .overview-chip.is-view {
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      width: 100%;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    }
+    .overview-chip.is-view:hover {
+      border-color: rgba(203, 63, 63, 0.4);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+    .overview-chip.is-view.active {
+      border-color: transparent;
+      background: linear-gradient(135deg, #6f1b24 0%, #2a181b 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 18px rgba(123, 24, 35, 0.18);
+    }
+    .overview-chip.is-view.active::before {
+      opacity: 0;
+    }
+    .overview-chip.is-view.active span {
+      color: rgba(255, 255, 255, 0.66);
+    }
+    .overview-chip.is-view.active strong {
+      color: #fff;
     }
     .overview-chip::before {
       content: "";
@@ -169,53 +202,6 @@
       font: inherit;
     }
 
-    #tab-nav-wrapper {
-      flex: 0 0 auto;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      min-height: 42px;
-      background: linear-gradient(180deg, rgba(255, 249, 248, 0.94) 0%, rgba(248, 239, 236, 0.92) 100%);
-      border: 1px solid rgba(203, 63, 63, 0.14);
-      border-radius: 18px;
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(18px);
-      overflow: hidden;
-      animation: riseIn 0.65s ease both;
-    }
-    .tabs {
-      flex: 0 0 42px;
-      display: flex;
-      width: 100%;
-      height: 42px;
-      box-sizing: border-box;
-      padding: 4px;
-      gap: 4px;
-    }
-    .tab-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      background: transparent;
-      font-weight: 700;
-      color: var(--muted);
-      flex: 1;
-      text-align: center;
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      border-radius: 14px;
-      line-height: 1.15;
-      transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
-      text-transform: uppercase;
-      border: 0;
-      font: inherit;
-    }
-    .tab-label:hover {
-      background: rgba(203, 63, 63, 0.08);
-      color: var(--accent-deep);
-    }
-
     th {
       background-color: rgba(250, 241, 239, 0.98) !important;
       position: sticky;
@@ -234,18 +220,12 @@
     .content-area {
       flex: 1 1 auto;
       min-height: 0;
-      margin-top: 14px;
+      margin-top: 0;
       display: grid;
       grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
       gap: 16px;
       align-items: stretch;
       animation: panelReveal 0.45s ease both;
-    }
-
-    .tab-label.active {
-      background: linear-gradient(135deg, #6f1b24 0%, #2a181b 100%);
-      color: #fff;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 18px rgba(123, 24, 35, 0.18);
     }
 
     .csv-table {
@@ -261,15 +241,21 @@
       box-shadow: var(--shadow);
     }
     .side-rail {
-      position: sticky;
-      top: 16px;
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
+      display: flex;
+      flex-direction: column;
       gap: 12px;
-      align-self: start;
       height: 100%;
       min-height: 0;
       overflow: hidden;
+    }
+    .side-rail .filter-search {
+      flex: 0 0 auto;
+    }
+    .side-rail .side-tags {
+      flex: 0 0 auto;
+    }
+    .side-rail .chart-panel {
+      flex: 1 1 auto;
     }
     .side-tags {
       display: grid;
@@ -545,15 +531,15 @@
       flex: 0 0 auto;
       display: flex;
       justify-content: flex-end;
-      margin-top: 10px;
+      margin-bottom: 12px;
       animation: panelReveal 0.45s ease both;
     }
     .filter-search {
       display: flex;
-      justify-content: flex-end;
+      justify-content: stretch;
     }
     .filter-search .search-box {
-      width: min(100%, 340px);
+      width: 100%;
     }
     .tag-filter {
       display: none;
@@ -785,9 +771,16 @@
       .content-area {
         grid-template-columns: 1fr;
       }
+      .layout {
+        display: block;
+      }
+      .app-sidebar {
+        margin-bottom: 12px;
+      }
       .csv-table {
         height: auto;
         min-height: 0;
+        margin-bottom: 12px;
       }
       .table-shell {
         max-height: min(62vh, 520px);
@@ -796,8 +789,6 @@
         min-height: 320px;
       }
       .side-rail {
-        position: static;
-        order: 2;
         height: auto;
         overflow: visible;
       }
@@ -805,10 +796,11 @@
         min-height: 156px;
       }
       .overview-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        flex-direction: row;
+        flex-wrap: wrap;
       }
-      .topbar {
-        grid-template-columns: 1fr;
+      .overview-strip > * {
+        flex: 1 1 calc(50% - 5px);
       }
       .panel-head {
         align-items: flex-start;
@@ -831,7 +823,7 @@
         width: min(100%, calc(100% - 16px));
         padding: 12px 0 26px;
       }
-      .topbar {
+      .app-sidebar {
         gap: 8px;
         margin-bottom: 8px;
       }
@@ -849,7 +841,6 @@
       }
       .overview-strip {
         gap: 8px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .overview-chip {
         padding: 12px 14px;
@@ -862,19 +853,6 @@
       .overview-chip strong {
         font-size: 22px;
         overflow-wrap: anywhere;
-      }
-      #tab-nav-wrapper {
-        border-radius: 16px;
-      }
-      .tabs {
-        height: 40px;
-        padding: 3px;
-        gap: 3px;
-      }
-      .tab-label {
-        font-size: 10px;
-        letter-spacing: 0.12em;
-        border-radius: 12px;
       }
       th {
         top: 0;
@@ -3421,48 +3399,32 @@
       
     
 
-    <div class="topbar">
-      <div class="brand-pill">
-        <strong>Loss Board</strong>
-        <span>Worst 惠泉啤酒</span>
-      </div>
-      <div class="overview-strip">
-        <div class="overview-chip">
-          <span>GF rows</span>
-          <strong>73</strong>
+    <div class="layout">
+      <aside class="app-sidebar">
+        <div class="brand-pill">
+          <strong>Loss Board</strong>
+          <span>Worst 惠泉啤酒</span>
         </div>
-        <div class="overview-chip">
-          <span>YH rows</span>
-          <strong>54</strong>
+        <div class="overview-strip">
+          <button type="button" class="overview-chip is-view active" data-view="gf" onclick="setView('gf', this)">
+            <span>GF rows</span>
+            <strong>73</strong>
+          </button>
+          <button type="button" class="overview-chip is-view" data-view="yh" onclick="setView('yh', this)">
+            <span>YH rows</span>
+            <strong>54</strong>
+          </button>
+          <button type="button" class="overview-chip is-view" data-view="all" onclick="setView('all', this)">
+            <span>Names</span>
+            <strong>123</strong>
+          </button>
+          <div class="overview-chip">
+            <span>Net</span>
+            <strong>-401165.18</strong>
+          </div>
         </div>
-        <div class="overview-chip">
-          <span>Names</span>
-          <strong>123</strong>
-        </div>
-        <div class="overview-chip">
-          <span>Net</span>
-          <strong>-401165.18</strong>
-        </div>
-      </div>
-    </div>
+      </aside>
 
-    <div id="tab-nav-wrapper">
-      <div class="tabs">
-        <button type="button" class="tab-label active" data-view="gf" onclick="setView('gf', this)">GF</button>
-        <button type="button" class="tab-label" data-view="yh" onclick="setView('yh', this)">YH</button>
-        <button type="button" class="tab-label" data-view="all" onclick="setView('all', this)">ALL</button>
-      </div>
-    </div>
-    <div class="filter-strip">
-      <div class="filter-search">
-        <div class="search-box">
-          <input id="name-filter" class="search-input" type="search" placeholder="Search stock" autocomplete="off" oninput="handleFilterInput(this.value)">
-          <button id="name-filter-clear" class="search-clear" type="button" onclick="clearFilter()" hidden>Clear</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="content-area">
       <div class="csv-table">
         <div class="panel-head">
           <h2 id="panel-title" class="panel-title">GF</h2>
@@ -3476,7 +3438,14 @@
           </table>
         </div>
       </div>
+
       <aside class="side-rail">
+        <div class="filter-search">
+          <div class="search-box">
+            <input id="name-filter" class="search-input" type="search" placeholder="Search stock" autocomplete="off" oninput="handleFilterInput(this.value)">
+            <button id="name-filter-clear" class="search-clear" type="button" onclick="clearFilter()" hidden>Clear</button>
+          </div>
+        </div>
         <section class="side-tags">
           <div class="side-tags-head">
             <span>Tags</span>
@@ -4016,7 +3985,7 @@
     }
     function setView(view, button) {
       activeView = view;
-      document.querySelectorAll('.tab-label').forEach(el => el.classList.toggle('active', el === button));
+      document.querySelectorAll('.overview-chip.is-view').forEach(el => el.classList.toggle('active', el === button));
       renderView();
       resetTableScroll();
     }
