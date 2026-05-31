@@ -1025,11 +1025,11 @@
       {{ $c := strings.TrimPrefix "\ufeff" (index . 0) }}
       {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
       {{ $tags := "" }}
-      {{ if ge (len .) 5 }}
-        {{ $tags = index . 4 }}
+      {{ if ge (len .) 4 }}
+        {{ $tags = index . 3 }}
       {{ end }}
       {{ if $n }}
-        {{ $gfRows = $gfRows | append (dict "code" $c "name" $n "pl" (index . 2) "roi" (index . 3) "tags" $tags) }}
+        {{ $gfRows = $gfRows | append (dict "code" $c "name" $n "pl" (index . 2) "tags" $tags) }}
       {{ end }}
     {{ end }}
     {{ $yhRows := slice }}
@@ -1037,11 +1037,11 @@
       {{ $c := strings.TrimPrefix "\ufeff" (index . 0) }}
       {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
       {{ $tags := "" }}
-      {{ if ge (len .) 5 }}
-        {{ $tags = index . 4 }}
+      {{ if ge (len .) 4 }}
+        {{ $tags = index . 3 }}
       {{ end }}
       {{ if $n }}
-        {{ $yhRows = $yhRows | append (dict "code" $c "name" $n "pl" (index . 2) "roi" (index . 3) "tags" $tags) }}
+        {{ $yhRows = $yhRows | append (dict "code" $c "name" $n "pl" (index . 2) "tags" $tags) }}
       {{ end }}
     {{ end }}
 
@@ -1149,7 +1149,6 @@
         columns: [
           { key: 'name', label: 'Name', className: '' },
           { key: 'pl', label: 'P/L', type: 'amount', className: 'sortable-th num-th' },
-          { key: 'roi', label: 'ROI', type: 'rate', className: 'sortable-th num-th' },
         ],
       },
       yh: {
@@ -1157,7 +1156,6 @@
         columns: [
           { key: 'name', label: 'Name', className: '' },
           { key: 'pl', label: 'P/L', type: 'amount', className: 'sortable-th num-th' },
-          { key: 'roi', label: 'ROI', type: 'rate', className: 'sortable-th num-th' },
         ],
       },
       all: {
@@ -1500,7 +1498,7 @@
       renderView();
     }
     function buildColGroup(view) {
-      const valueRatios = view === 'all' ? [0.48, 0.24, 0.28] : [0.46, 0.31, 0.23];
+      const valueRatios = view === 'all' ? [0.48, 0.24, 0.28] : [0.6, 0.4];
       const widths = valueRatios.map(ratio => `${ratio * 100}%`);
       const cols = widths.map(width => `<col style="width:${width}">`);
       return cols.join('');
@@ -1526,11 +1524,9 @@
         if (view === 'gf') {
           cells.push(renderNameCell(row));
           cells.push(renderCell(row.pl, 'amount-value num-cell'));
-          cells.push(renderCell(row.roi, 'num-cell'));
         } else if (view === 'yh') {
           cells.push(renderNameCell(row));
           cells.push(renderCell(row.pl, 'amount-value num-cell'));
-          cells.push(renderCell(row.roi, 'num-cell'));
         } else {
           cells.push(renderNameCell(row));
           cells.push(`<td class="amount-value num-cell">${escapeHtml(row.net)}</td>`);
