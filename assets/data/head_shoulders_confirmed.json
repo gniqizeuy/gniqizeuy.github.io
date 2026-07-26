@@ -1,0 +1,112 @@
+{
+  "asOf": "2026-07-17",
+  "generatedAt": "2026-07-18",
+  "method": "前复权日线；局部峰谷与颈线破位筛选，人工复核后确认",
+  "patterns": [
+    {
+      "symbol": "sz002235",
+      "name": "安妮股份",
+      "status": "confirmed",
+      "score": 95,
+      "leftShoulder": { "date": "2026-04-08", "price": 10.56 },
+      "neckline1": { "date": "2026-04-15", "price": 9.29 },
+      "head": { "date": "2026-05-08", "price": 12.35 },
+      "neckline2": { "date": "2026-05-29", "price": 10.00 },
+      "rightShoulder": { "date": "2026-06-01", "price": 11.00 },
+      "breakout": { "date": "2026-06-09", "price": 9.92, "neckline": 10.1714 },
+      "latest": { "date": "2026-07-17", "price": 8.47 }
+    },
+    {
+      "symbol": "sh600573",
+      "name": "惠泉啤酒",
+      "status": "confirmed",
+      "score": 91,
+      "leftShoulder": { "date": "2026-04-10", "price": 12.63 },
+      "neckline1": { "date": "2026-04-14", "price": 11.58 },
+      "head": { "date": "2026-05-06", "price": 13.95 },
+      "neckline2": { "date": "2026-05-26", "price": 11.70 },
+      "rightShoulder": { "date": "2026-06-01", "price": 13.48 },
+      "breakout": { "date": "2026-06-17", "price": 11.58, "neckline": 11.7711 },
+      "latest": { "date": "2026-07-17", "price": 9.12 }
+    },
+    {
+      "symbol": "sh603026",
+      "name": "石大胜华",
+      "status": "confirmed",
+      "score": 89,
+      "leftShoulder": { "date": "2026-03-27", "price": 93.81 },
+      "neckline1": { "date": "2026-04-09", "price": 77.38 },
+      "head": { "date": "2026-05-06", "price": 120.36 },
+      "neckline2": { "date": "2026-06-08", "price": 79.30 },
+      "rightShoulder": { "date": "2026-06-23", "price": 99.21 },
+      "breakout": { "date": "2026-07-08", "price": 72.36, "neckline": 80.3338 },
+      "latest": { "date": "2026-07-17", "price": 60.00 }
+    },
+    {
+      "symbol": "sh603093",
+      "name": "南华期货",
+      "status": "confirmed",
+      "score": 92,
+      "leftShoulder": { "date": "2026-03-12", "price": 22.97 },
+      "neckline1": { "date": "2026-04-07", "price": 17.25 },
+      "head": { "date": "2026-05-14", "price": 25.89 },
+      "neckline2": { "date": "2026-06-09", "price": 18.00 },
+      "rightShoulder": { "date": "2026-06-22", "price": 21.88 },
+      "breakout": { "date": "2026-07-07", "price": 17.43, "neckline": 18.3393 },
+      "latest": { "date": "2026-07-17", "price": 16.58 }
+    },
+    {
+      "symbol": "sz002456",
+      "name": "欧菲光",
+      "status": "confirmed",
+      "score": 88,
+      "leftShoulder": { "date": "2026-04-20", "price": 9.50 },
+      "neckline1": { "date": "2026-05-20", "price": 8.62 },
+      "head": { "date": "2026-06-04", "price": 10.05 },
+      "neckline2": { "date": "2026-06-11", "price": 8.67 },
+      "rightShoulder": { "date": "2026-06-17", "price": 9.62 },
+      "breakout": { "date": "2026-07-15", "price": 8.57, "neckline": 8.7419 },
+      "latest": { "date": "2026-07-17", "price": 7.58 }
+    },
+    {
+      "symbol": "sh600358",
+      "name": "国旅联合",
+      "status": "confirmed",
+      "score": 95,
+      "leftShoulder": { "date": "2026-04-16", "price": 6.49 },
+      "neckline1": { "date": "2026-05-06", "price": 5.86 },
+      "head": { "date": "2026-05-13", "price": 6.90 },
+      "neckline2": { "date": "2026-06-03", "price": 5.75 },
+      "rightShoulder": { "date": "2026-06-04", "price": 6.13 },
+      "breakout": { "date": "2026-06-16", "price": 5.69, "neckline": 5.7005 },
+      "latest": { "date": "2026-07-17", "price": 5.02 }
+    },
+    {
+      "symbol": "sh600111",
+      "name": "北方稀土",
+      "status": "confirmed",
+      "score": 92,
+      "leftShoulder": { "date": "2026-04-13", "price": 52.21 },
+      "neckline1": { "date": "2026-04-28", "price": 46.19 },
+      "head": { "date": "2026-05-11", "price": 57.72 },
+      "neckline2": { "date": "2026-06-08", "price": 46.85 },
+      "rightShoulder": { "date": "2026-06-22", "price": 54.15 },
+      "breakout": { "date": "2026-07-08", "price": 46.02, "neckline": 47.3831 },
+      "latest": { "date": "2026-07-17", "price": 37.45 }
+    },
+    {
+      "symbol": "sh600388",
+      "name": "龙净环保",
+      "status": "retest_watch",
+      "score": 100,
+      "leftShoulder": { "date": "2026-01-28", "price": 18.151 },
+      "neckline1": { "date": "2026-02-02", "price": 17.281 },
+      "head": { "date": "2026-02-27", "price": 20.371 },
+      "neckline2": { "date": "2026-03-23", "price": 16.901 },
+      "rightShoulder": { "date": "2026-03-25", "price": 18.251 },
+      "breakout": { "date": "2026-06-23", "price": 15.84, "neckline": 16.1017 },
+      "latest": { "date": "2026-07-17", "price": 15.88 }
+    }
+  ]
+}
+

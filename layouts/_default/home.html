@@ -377,6 +377,34 @@
       color: var(--accent-deep);
       transform: translateY(-1px);
     }
+    .chart-panel-actions {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chart-action {
+      border: 1px solid rgba(203, 63, 63, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--accent-deep);
+      cursor: pointer;
+      padding: 6px 10px;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      transition: background 0.18s ease, opacity 0.18s ease, transform 0.18s ease;
+    }
+    .chart-action:hover:not(:disabled) {
+      background: rgba(203, 63, 63, 0.09);
+      transform: translateY(-1px);
+    }
+    .chart-action:disabled {
+      cursor: not-allowed;
+      opacity: 0.38;
+    }
     .chart-stage {
       position: relative;
       flex: 1;
@@ -426,6 +454,12 @@
       object-fit: contain;
       object-position: center;
       background: transparent;
+    }
+    .kline-chart {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      background: #fffdfc;
     }
     .chart-empty {
       width: min(100%, 320px);
@@ -962,6 +996,7 @@
   <div class="main">
     {{ $heroGfData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
     {{ $heroYhData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
+    {{ $headShouldersData := resources.Get "data/head_shoulders_confirmed.json" | transform.Unmarshal }}
     {{ $heroScratch := newScratch }}
     {{ $heroScratch.Set "names" (dict) }}
     {{ $gfCount := 0 }}
@@ -1086,7 +1121,11 @@
                 <span class="chart-panel-badge">Ready</span>
               </div>
             </div>
-            <button id="chart-privacy-toggle" class="chart-privacy-toggle" type="button" onclick="toggleChartConceal()" aria-pressed="false">Open</button>
+            <div class="chart-panel-actions">
+              <button id="chart-overlay-toggle" class="chart-action" type="button" onclick="togglePatternAnnotations()" disabled>隐藏标注</button>
+              <button id="chart-download" class="chart-action" type="button" onclick="saveCurrentChart()" disabled>保存 PNG</button>
+              <button id="chart-privacy-toggle" class="chart-privacy-toggle" type="button" onclick="toggleChartConceal()" aria-pressed="false">Open</button>
+            </div>
           </div>
           <div id="chart-stage" class="chart-stage">
             <div class="chart-empty">
@@ -1099,11 +1138,16 @@
     </div>
   </div>
 
+  <script src="{{ "vendor/klinecharts/klinecharts.min.js" | relURL }}"></script>
   <script>
     const datasets = {
       gf: JSON.parse({{ $gfRows | jsonify }}),
       yh: JSON.parse({{ $yhRows | jsonify }}),
     };
+    const headShouldersData = JSON.parse({{ $headShouldersData | jsonify }});
+    const headShouldersBySymbol = new Map(
+      headShouldersData.patterns.map(pattern => [pattern.symbol.toLowerCase(), pattern]),
+    );
     Object.values(datasets).forEach(rows => rows.forEach(row => {
       row.tags = parseTags(row.tags);
     }));
@@ -1160,6 +1204,12 @@
     let chartConcealed = true;
     let chartHeaderTitle = 'Reference';
     let chartHeaderMeta = '<span class="chart-panel-badge">Ready</span>';
+    let activeKLineChart = null;
+    let activeKLineSymbol = '';
+    let activeKLinePattern = null;
+    let patternAnnotationsVisible = true;
+    const klineDataCache = new Map();
+    const patternOverlayGroupId = 'head-shoulders-confirmed';
     document.getElementById('tag-filter').addEventListener('click', event => {
       const chip = event.target.closest('.tag-chip');
       if (!chip) return;
@@ -1168,6 +1218,7 @@
     function toggleChartConceal() {
       chartConcealed = !chartConcealed;
       applyChartConcealState();
+      window.setTimeout(() => activeKLineChart?.resize(), 240);
     }
     function setChartHeader(title, metaHtml) {
       chartHeaderTitle = title || 'Reference';
@@ -1184,6 +1235,13 @@
       meta.innerHTML = chartConcealed ? '<span class="chart-panel-badge">Ready</span>' : chartHeaderMeta;
       toggle.textContent = chartConcealed ? 'Open' : 'Hide';
       toggle.setAttribute('aria-pressed', String(!chartConcealed));
+    }
+    function setChartControlsEnabled(enabled, hasPattern = false) {
+      const download = document.getElementById('chart-download');
+      const overlay = document.getElementById('chart-overlay-toggle');
+      download.disabled = !enabled;
+      overlay.disabled = !enabled || !hasPattern;
+      overlay.textContent = patternAnnotationsVisible ? '隐藏标注' : '显示标注';
     }
     function parseTags(value) {
       if (Array.isArray(value)) return value.map(tag => String(tag).trim()).filter(Boolean);
@@ -1309,8 +1367,44 @@
     function getCachedSymbol(stockName) {
       return symbolCache.get(normalizeStockName(stockName)) || '';
     }
-    function getKLineImageUrl(symbol) {
-      return `https://image.sinajs.cn/newchart/daily/n/${encodeURIComponent(symbol)}.gif`;
+    function toMarketTimestamp(date) {
+      return Date.parse(`${date}T00:00:00+08:00`);
+    }
+    function fetchDailyKLine(symbol) {
+      const normalized = String(symbol || '').toLowerCase();
+      if (klineDataCache.has(normalized)) return klineDataCache.get(normalized);
+      const request = fetch(`https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=${encodeURIComponent(normalized)},day,,,360,qfq`)
+        .then(response => {
+          if (!response.ok) throw new Error(`行情请求失败：${response.status}`);
+          return response.json();
+        })
+        .then(payload => {
+          if (payload?.code !== 0) throw new Error(payload?.msg || '行情接口返回异常');
+          const stock = payload?.data?.[normalized];
+          const rows = stock?.qfqday || stock?.day || [];
+          const bars = rows.map(row => ({
+            timestamp: toMarketTimestamp(row[0]),
+            open: Number(row[1]),
+            close: Number(row[2]),
+            high: Number(row[3]),
+            low: Number(row[4]),
+            volume: Number(row[5]),
+          })).filter(bar => (
+            Number.isFinite(bar.timestamp) &&
+            Number.isFinite(bar.open) &&
+            Number.isFinite(bar.close) &&
+            Number.isFinite(bar.high) &&
+            Number.isFinite(bar.low)
+          ));
+          if (!bars.length) throw new Error('没有可用的日 K 数据');
+          return bars;
+        })
+        .catch(error => {
+          klineDataCache.delete(normalized);
+          throw error;
+        });
+      klineDataCache.set(normalized, request);
+      return request;
     }
     function parseSuggestEntries(raw) {
       return String(raw || '')
@@ -1406,13 +1500,24 @@
       if (!row) return '';
       return view === 'all' ? (row.src || 'ALL') : view.toUpperCase();
     }
+    function disposeActiveKLineChart() {
+      if (activeKLineChart && window.klinecharts) {
+        window.klinecharts.dispose(activeKLineChart);
+      }
+      activeKLineChart = null;
+      activeKLineSymbol = '';
+      activeKLinePattern = null;
+      setChartControlsEnabled(false);
+    }
     function renderPreviewEmpty(title, message, badge) {
+      disposeActiveKLineChart();
       setChartHeader(title, badge ? `<span class="chart-panel-badge">${escapeHtml(badge)}</span>` : '');
       const stage = document.getElementById('chart-stage');
       stage.classList.remove('is-loading');
       stage.innerHTML = `<div class="chart-empty"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span></div>`;
     }
     function renderPreviewLoading(view, row) {
+      disposeActiveKLineChart();
       setChartHeader(row?.name || 'Loading', [
         `<span class="chart-panel-badge">${escapeHtml(getPreviewBadge(view, row))}</span>`,
         '<span>Loading</span>',
@@ -1421,14 +1526,119 @@
       stage.classList.add('is-loading');
       stage.innerHTML = `<div class="chart-empty"><strong>Loading</strong><span>正在加载 ${escapeHtml(row?.name || '')} 的预览。</span></div>`;
     }
-    function renderPreviewChart(view, row, symbol) {
+    function createPatternPoint(point) {
+      return { timestamp: toMarketTimestamp(point.date), value: Number(point.price) };
+    }
+    function createAnnotationStyles(color) {
+      return {
+        line: { color, size: 1, style: 'solid' },
+        polygon: { color, borderColor: color, borderSize: 1, style: 'fill' },
+        text: {
+          color,
+          size: 12,
+          weight: 700,
+          backgroundColor: 'rgba(255,255,255,0.88)',
+          borderColor: color,
+          borderSize: 0,
+          borderRadius: 4,
+          style: 'fill',
+          paddingLeft: 4,
+          paddingRight: 4,
+          paddingTop: 2,
+          paddingBottom: 2,
+        },
+      };
+    }
+    function applyPatternOverlays() {
+      if (!activeKLineChart) return;
+      activeKLineChart.removeOverlay({ groupId: patternOverlayGroupId });
+      if (!activeKLinePattern || !patternAnnotationsVisible) {
+        setChartControlsEnabled(true, Boolean(activeKLinePattern));
+        return;
+      }
+      const pattern = activeKLinePattern;
+      const annotations = [
+        ['左肩', pattern.leftShoulder, '#b36b00'],
+        ['头部', pattern.head, '#b4232d'],
+        ['右肩', pattern.rightShoulder, '#b36b00'],
+        ['破位', pattern.breakout, '#16324f'],
+      ].map(([label, point, color]) => ({
+        name: 'simpleAnnotation',
+        groupId: patternOverlayGroupId,
+        lock: true,
+        zLevel: 20,
+        points: [createPatternPoint(point)],
+        extendData: label,
+        styles: createAnnotationStyles(color),
+      }));
+      activeKLineChart.createOverlay([
+        {
+          name: 'rayLine',
+          groupId: patternOverlayGroupId,
+          lock: true,
+          zLevel: 18,
+          points: [createPatternPoint(pattern.neckline1), createPatternPoint(pattern.neckline2)],
+          styles: {
+            line: { color: '#7c3aed', size: 2, style: 'dashed', dashedValue: [7, 5] },
+          },
+        },
+        ...annotations,
+      ]);
+      setChartControlsEnabled(true, true);
+    }
+    function togglePatternAnnotations() {
+      patternAnnotationsVisible = !patternAnnotationsVisible;
+      applyPatternOverlays();
+    }
+    function saveCurrentChart() {
+      if (!activeKLineChart) return;
+      const url = activeKLineChart.getConvertPictureUrl(true, 'png', '#fffdfc');
+      const link = document.createElement('a');
+      const suffix = activeKLinePattern ? '-head-shoulders' : '';
+      link.download = `${activeKLineSymbol}-${headShouldersData.asOf}-daily${suffix}.png`;
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+    async function renderPreviewChart(view, row, symbol, requestId) {
+      const normalized = symbol.toLowerCase();
+      const pattern = headShouldersBySymbol.get(normalized) || null;
+      const bars = await fetchDailyKLine(normalized);
+      if (requestId !== previewRequestId) return;
+      if (!window.klinecharts) throw new Error('KLineChart 未加载');
       setChartHeader(row?.name || 'N/A', [
         `<span class="chart-panel-badge">${escapeHtml(getPreviewBadge(view, row))}</span>`,
-        `<span>${escapeHtml(symbol.toUpperCase())}</span>`,
+        `<span>${escapeHtml(normalized.toUpperCase())}</span>`,
+        '<span>前复权日 K</span>',
+        pattern ? `<span class="chart-panel-badge">${pattern.status === 'retest_watch' ? '回抽观察' : `头肩顶 ${pattern.score}`}</span>` : '',
       ].join(''));
       const stage = document.getElementById('chart-stage');
       stage.classList.remove('is-loading');
-      stage.innerHTML = `<img src="${getKLineImageUrl(symbol)}" alt="${escapeHtml(row?.name || '')} preview" loading="eager" referrerpolicy="no-referrer" onerror="handlePreviewError()">`;
+      stage.innerHTML = '<div id="kline-chart" class="kline-chart" aria-label="日 K 线图"></div>';
+      const chart = window.klinecharts.init('kline-chart', {
+        locale: 'zh-CN',
+        timezone: 'Asia/Shanghai',
+      });
+      if (!chart) throw new Error('KLineChart 初始化失败');
+      activeKLineChart = chart;
+      activeKLineSymbol = normalized;
+      activeKLinePattern = pattern;
+      chart.setDataLoader({
+        getBars({ type, callback }) {
+          callback(type === 'init' ? bars : [], false);
+        },
+      });
+      chart.setSymbol({ ticker: normalized, pricePrecision: 3, volumePrecision: 0 });
+      chart.setPeriod({ span: 1, type: 'day' });
+      chart.createIndicator('VOL', false);
+      chart.setBarSpace(6);
+      chart.setOffsetRightDistance(34);
+      window.requestAnimationFrame(() => {
+        if (chart !== activeKLineChart) return;
+        applyPatternOverlays();
+        chart.resize();
+      });
     }
     function ensureSelectedRow(view, rows) {
       const current = getSelectedStockName(view);
@@ -1453,14 +1663,17 @@
           renderPreviewEmpty(selectedRow.name || 'No Chart', '暂时找不到这支股票的证券代码，无法加载预览。', getPreviewBadge(activeView, selectedRow));
           return;
         }
-        renderPreviewChart(activeView, selectedRow, symbol);
-      });
+        renderPreviewChart(activeView, selectedRow, symbol, requestId)
+          .catch(error => handlePreviewError(error, requestId));
+      }).catch(error => handlePreviewError(error, requestId));
     }
-    function handlePreviewError() {
+    function handlePreviewError(error, requestId = previewRequestId) {
+      if (requestId !== previewRequestId) return;
       const rows = getSortedRows(activeView);
       const selectedName = getSelectedStockName(activeView);
       const selectedRow = rows.find(row => (row.name || '') === selectedName);
-      renderPreviewEmpty(selectedRow?.name || 'No Chart', '图源返回失败，稍后再试或切换另一只股票。', getPreviewBadge(activeView, selectedRow));
+      const detail = error?.message ? `（${error.message}）` : '';
+      renderPreviewEmpty(selectedRow?.name || 'No Chart', `K 线数据加载失败，请稍后重试或切换股票。${detail}`, getPreviewBadge(activeView, selectedRow));
     }
     function selectStock(stockName) {
       setSelectedStock(activeView, stockName);
