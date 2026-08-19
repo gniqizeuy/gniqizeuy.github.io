@@ -15,6 +15,11 @@ function parseAmount(value) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function parseLoss(value) {
+  const amount = parseAmount(value);
+  return amount < 0 ? Math.abs(amount) : amount;
+}
+
 function sortCsvContent(content) {
   const lines = content.replace(/\r\n/g, "\n").trimEnd().split("\n");
   if (lines.length <= 1) return `${content.endsWith("\n") ? content : `${content}\n`}`;
@@ -28,7 +33,7 @@ function sortCsvContent(content) {
     .filter(Boolean)
     .map((line, index) => ({ line, index, cells: line.split(",") }))
     .sort((a, b) => {
-      const amountDiff = parseAmount(a.cells[amountIndex]) - parseAmount(b.cells[amountIndex]);
+      const amountDiff = parseLoss(b.cells[amountIndex]) - parseLoss(a.cells[amountIndex]);
       if (amountDiff !== 0) return amountDiff;
       const nameA = a.cells[nameIndex] ?? "";
       const nameB = b.cells[nameIndex] ?? "";
