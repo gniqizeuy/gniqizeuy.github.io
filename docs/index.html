@@ -1,894 +1,438 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
 	<meta name="generator" content="Hugo 0.167.0">
-  <title>gniqizeuy</title>
+  <meta charset="utf-8">
+  <title>Loss Board · gniqizeuy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/css/common.css">
   <style>
     :root {
-      --bg: #efe2de;
-      --bg-soft: #faf3f0;
-      --paper: rgba(252, 248, 246, 0.94);
-      --paper-solid: #fdf9f7;
-      --line: rgba(27, 31, 35, 0.11);
-      --line-strong: rgba(27, 31, 35, 0.22);
-      --text: #111418;
-      --muted: #69707a;
-      --accent: #cb3f3f;
-      --accent-deep: #991f25;
-      --accent-soft: rgba(203, 63, 63, 0.12);
-      --shadow: 0 24px 60px rgba(24, 28, 31, 0.08);
-      --shadow-soft: 0 12px 26px rgba(24, 28, 31, 0.06);
-      --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-      --font-ui: "Avenir Next", "SF Pro Display", "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
-      --font-mono: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+      --bg: #09090b;
+      --bg-subtle: #121215;
+      --surface: #18181b;
+      --surface-hover: #222227;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(255, 255, 255, 0.22);
+      --text: #fafafa;
+      --text-muted: #a1a1aa;
+      --text-faint: #52525b;
+      --loss: #f43f5e;
+      --loss-subtle: rgba(244, 63, 94, 0.1);
+      --loss-glow: rgba(244, 63, 94, 0.35);
+      --badge-bg: rgba(255, 255, 255, 0.05);
+      --badge-text: #d4d4d8;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --font-mono: "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      padding: 0;
-      margin: 0;
-      min-height: 100vh;
-      font-size: 100%;
-      font-family: var(--font-ui);
-      background:
-        linear-gradient(rgba(17, 20, 24, 0.028) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(17, 20, 24, 0.028) 1px, transparent 1px),
-        radial-gradient(circle at top left, rgba(203, 63, 63, 0.11), transparent 28%),
-        radial-gradient(circle at 92% 12%, rgba(160, 32, 47, 0.08), transparent 24%),
-        linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
-      background-size: 32px 32px, 32px 32px, auto, auto, auto;
+      background-color: var(--bg);
       color: var(--text);
-      position: relative;
-      overflow-x: hidden;
-      overflow-y: hidden;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    body::before,
-    body::after {
+
+     
+    body::before {
       content: "";
       position: fixed;
-      inset: auto;
-      width: 240px;
-      height: 240px;
-      border-radius: 999px;
-      filter: blur(60px);
-      opacity: 0.24;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 720px;
+      height: 360px;
+      background: radial-gradient(ellipse at center, rgba(244, 63, 94, 0.07) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
-    body::before {
-      top: 36px;
-      right: -40px;
-      background: rgba(173, 34, 47, 0.18);
-    }
-    body::after {
-      left: -60px;
-      bottom: 40px;
-      background: rgba(203, 63, 63, 0.14);
-    }
 
-    .main {
+    .app-shell {
       position: relative;
       z-index: 1;
-      width: min(1240px, calc(100% - 28px));
-      height: 100dvh;
+      width: 100%;
+      max-width: 860px;
       margin: 0 auto;
-      padding: 16px 0;
-      box-sizing: border-box;
+      padding: 48px 20px 80px;
       display: flex;
       flex-direction: column;
-      min-height: 0;
+      gap: 32px;
     }
 
-    .layout {
-      flex: 1 1 auto;
-      min-height: 0;
-      display: grid;
-      grid-template-columns: minmax(200px, 0.62fr) minmax(0, 2.1fr) minmax(320px, 0.95fr);
-      gap: 16px;
-      align-items: stretch;
-    }
-    .app-sidebar {
-      flex: 0 0 auto;
+     
+    .hero-header {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-      min-height: 0;
-      animation: riseIn 0.5s ease both;
-    }
-    .brand-pill {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 8px;
-      padding: 16px 18px;
-      border: 1px solid rgba(17, 20, 24, 0.08);
-      border-radius: 20px;
-      background:
-        linear-gradient(135deg, rgba(70, 16, 23, 0.98) 0%, rgba(31, 18, 20, 0.96) 100%);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .brand-pill::after {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 5px;
-      background: linear-gradient(180deg, #ff8c8c 0%, var(--accent) 50%, var(--accent-deep) 100%);
-    }
-    .brand-pill strong {
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.96);
-    }
-    .brand-pill span {
-      color: rgba(255, 255, 255, 0.62);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-    }
-
-    .overview-strip {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .overview-chip {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 16px;
-      border: 1px solid rgba(17, 20, 24, 0.08);
-      border-radius: 20px;
-      background: linear-gradient(180deg, rgba(255, 251, 250, 0.94) 0%, rgba(247, 238, 235, 0.9) 100%);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-    }
-    .overview-chip.is-view {
-      cursor: pointer;
-      text-align: left;
-      font: inherit;
-      color: inherit;
-      width: 100%;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
-    }
-    .overview-chip.is-view:hover {
-      border-color: rgba(203, 63, 63, 0.4);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow);
-    }
-    .overview-chip.is-view.active {
-      border-color: transparent;
-      background: linear-gradient(135deg, #6f1b24 0%, #2a181b 100%);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 18px rgba(123, 24, 35, 0.18);
-    }
-    .overview-chip.is-view.active::before {
-      opacity: 0;
-    }
-    .overview-chip.is-view.active span {
-      color: rgba(255, 255, 255, 0.66);
-    }
-    .overview-chip.is-view.active strong {
-      color: #fff;
-    }
-    .overview-chip::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 3px;
-      background: linear-gradient(90deg, rgba(203, 63, 63, 0.95) 0%, rgba(153, 31, 37, 0.78) 100%);
-    }
-    .overview-chip span {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-    .overview-chip strong {
-      font-family: var(--font-mono);
-      font-size: 26px;
-      font-weight: 700;
-      line-height: 1;
-      color: var(--accent-deep);
-    }
-
-    button {
-      font: inherit;
-    }
-
-    th {
-      background-color: rgba(250, 241, 239, 0.98) !important;
-      position: sticky;
-      top: 0;
-      z-index: 500;
-      border-bottom: 1px solid rgba(203, 63, 63, 0.12);
-      padding: 11px 14px;
-      text-align: center;
-      color: var(--text);
-      backdrop-filter: blur(10px);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-    .content-area {
-      flex: 1 1 auto;
-      min-height: 0;
-      margin-top: 0;
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
-      gap: 16px;
-      align-items: stretch;
-      animation: panelReveal 0.45s ease both;
-    }
-
-    .csv-table {
-      width: 100%;
-      height: 100%;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      background: var(--paper);
-      border: 1px solid rgba(203, 63, 63, 0.12);
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .side-rail {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      height: 100%;
-      min-height: 0;
-      overflow: hidden;
-    }
-    .side-rail .filter-search {
-      flex: 0 0 auto;
-    }
-    .side-rail .chart-panel {
-      flex: 1 1 auto;
-    }
-    .chart-panel {
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      padding: 16px;
-      background: linear-gradient(180deg, rgba(255, 252, 252, 0.98) 0%, rgba(249, 243, 242, 0.96) 100%);
-      border: 1px solid rgba(203, 63, 63, 0.12);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      transition: min-height 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-    }
-    .chart-panel.is-concealed {
-      min-height: 172px;
-      gap: 10px;
-      background: linear-gradient(180deg, rgba(255, 253, 252, 0.88) 0%, rgba(245, 240, 238, 0.84) 100%);
-      box-shadow: var(--shadow-soft);
-    }
-    .chart-panel-head {
-      display: flex;
-      align-items: flex-start;
       justify-content: space-between;
-      gap: 12px;
-    }
-    .chart-panel-copy {
-      min-width: 0;
-      display: grid;
-      gap: 7px;
-    }
-    .chart-panel-eyebrow {
-      color: var(--muted);
-      font-family: var(--font-ui);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-    .chart-panel-title {
-      margin: 0;
-      color: var(--accent-deep);
-      font-family: var(--font-ui);
-      font-size: clamp(20px, 2vw, 28px);
-      font-weight: 800;
-      line-height: 1.05;
-    }
-    .chart-panel.is-concealed .chart-panel-title {
-      color: rgba(17, 20, 24, 0.58);
-      font-size: 14px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .chart-panel-meta {
-      display: inline-flex;
+      align-items: flex-end;
       flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      gap: 20px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
     }
-    .chart-panel-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 5px 9px;
-      border-radius: 999px;
-      background: rgba(203, 63, 63, 0.09);
-      color: var(--accent-deep);
+
+    .brand-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
-    .chart-privacy-toggle {
-      flex: 0 0 auto;
-      border: 1px solid rgba(17, 20, 24, 0.1);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.7);
-      color: rgba(17, 20, 24, 0.58);
-      cursor: pointer;
-      padding: 6px 10px;
-      font-family: var(--font-ui);
-      font-size: 10px;
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-    }
-    .chart-privacy-toggle:hover {
-      background: rgba(203, 63, 63, 0.08);
-      border-color: rgba(203, 63, 63, 0.18);
-      color: var(--accent-deep);
-      transform: translateY(-1px);
-    }
-    .chart-stage {
-      position: relative;
-      flex: 1;
+
+    .brand-title-wrap {
       display: flex;
       align-items: center;
-      justify-content: center;
-      min-height: 0;
-      border-radius: 18px;
-      border: 1px solid rgba(203, 63, 63, 0.12);
-      background:
-        radial-gradient(circle at top right, rgba(203, 63, 63, 0.08), transparent 34%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 242, 241, 0.96) 100%);
-      overflow: hidden;
-      transition: flex-basis 0.2s ease, min-height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    }
-    .chart-panel.is-concealed .chart-stage {
-      flex: 0 0 96px;
-      border-color: rgba(17, 20, 24, 0.08);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(239, 235, 233, 0.78) 100%);
-    }
-    .chart-panel.is-concealed .chart-stage > * {
-      opacity: 0.12;
-      filter: blur(14px) grayscale(1);
-      transform: scale(0.98);
-    }
-    .chart-panel.is-concealed .chart-stage::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background:
-        linear-gradient(135deg, rgba(250, 248, 247, 0.98) 0%, rgba(238, 234, 232, 0.96) 100%),
-        repeating-linear-gradient(135deg, rgba(17, 20, 24, 0.04) 0 1px, transparent 1px 8px);
-      pointer-events: none;
-    }
-    .chart-stage.is-loading {
-      animation: klinePulse 1.2s ease-in-out infinite;
-    }
-    .chart-panel.is-concealed .chart-stage.is-loading {
-      animation: none;
-      opacity: 1;
-    }
-    .chart-stage img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: contain;
-      object-position: center;
-      background: transparent;
-    }
-    .chart-empty {
-      width: min(100%, 320px);
-      display: grid;
       gap: 10px;
-      justify-items: center;
-      padding: 28px 18px;
-      text-align: center;
-      color: var(--muted);
     }
-    .chart-empty strong {
-      color: var(--accent-deep);
-      font-family: var(--font-ui);
-      font-size: 14px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-    .chart-empty span {
-      font-family: var(--font-ui);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    .panel-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(203, 63, 63, 0.1);
-      background: linear-gradient(180deg, rgba(255, 250, 250, 0.82) 0%, rgba(251, 244, 242, 0.8) 100%);
-    }
-    .panel-title {
-      margin: 0;
-      font-family: var(--font-ui);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      line-height: 1;
-      color: var(--accent-deep);
-    }
-    .panel-meta {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .panel-meta strong {
-      font-family: var(--font-mono);
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 0;
-      color: var(--accent-deep);
-    }
-    .search-box {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-width: min(100%, 280px);
-      padding: 8px 10px;
-      border: 1px solid rgba(203, 63, 63, 0.14);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.88);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    }
-    .search-input {
-      flex: 1;
-      min-width: 0;
-      border: 0;
-      outline: 0;
-      padding: 0;
-      background: transparent;
-      color: var(--text);
-      font-family: var(--font-ui);
-      font-size: 13px;
+
+    .brand-title {
+      font-size: 20px;
       font-weight: 600;
-    }
-    .search-input::placeholder {
-      color: rgba(62, 47, 49, 0.46);
-    }
-    .search-clear {
-      border: 0;
-      padding: 0;
-      background: transparent;
-      color: var(--accent-deep);
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-    .search-clear[hidden] {
-      display: none;
-    }
-    .filter-strip {
-      flex: 0 0 auto;
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 12px;
-      animation: panelReveal 0.45s ease both;
-    }
-    .filter-search {
-      display: flex;
-      justify-content: stretch;
-    }
-    .filter-search .search-box {
-      width: 100%;
-    }
-    .table-shell {
-      flex: 1 1 auto;
-      min-height: 0;
-      display: flex;
-      align-items: flex-start;
-      overflow-x: auto;
-      overflow-y: scroll;
-      overscroll-behavior: contain;
-      scrollbar-gutter: stable;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(153, 31, 37, 0.42) transparent;
-    }
-    .table-shell::-webkit-scrollbar {
-      width: 7px;
-      height: 7px;
-    }
-    .table-shell::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .table-shell::-webkit-scrollbar-thumb {
-      background: rgba(153, 31, 37, 0.32);
-      border-radius: 999px;
-    }
-    .table-shell::-webkit-scrollbar-thumb:hover {
-      background: rgba(153, 31, 37, 0.48);
-    }
-    table {
-      width: 100%;
-      min-width: 0;
-      border-collapse: separate;
-      border-spacing: 0;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      table-layout: fixed;
-      font-variant-numeric: tabular-nums;
-    }
-    #data-table th,
-    #data-table td {
-      box-sizing: border-box;
-    }
-    td {
-      padding: 13px 14px;
-      border-bottom: 1px solid rgba(17, 20, 24, 0.06);
-      white-space: nowrap;
-      background: transparent;
-      color: #2d3138;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      text-align: center;
-    }
-    tbody tr:nth-child(even) td {
-      background-color: rgba(171, 38, 48, 0.018);
-    }
-    tbody tr:hover td {
-      background-color: rgba(171, 38, 48, 0.05);
-    }
-    tbody tr.is-selected td {
-      background-color: rgba(171, 38, 48, 0.1);
-    }
-    tbody tr:last-child td {
-      border-bottom: 0;
-    }
-    tbody tr.is-row-selectable {
-      cursor: pointer;
-    }
-    .empty-state {
-      padding: 24px 16px;
-      color: var(--muted);
-      font-family: var(--font-ui);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    td:first-child {
-      font-family: var(--font-ui);
-      font-weight: 700;
+      letter-spacing: -0.02em;
       color: var(--text);
     }
-    .num-cell,
-    .num-th {
-      text-align: center;
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--loss);
+      box-shadow: 0 0 10px var(--loss-glow);
     }
-    .amount-value {
-      font-weight: 700;
-      color: var(--accent-deep);
-    }
-    .stock-cell {
-      text-align: left;
-    }
-    .stock-name {
-      display: block;
-    }
-    .src-cell {
-      text-align: center;
-    }
-    .src-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(203, 63, 63, 0.08);
-      color: var(--accent-deep);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .sortable-th {
-      min-width: 0;
-    }
-    .sort-header {
-      display: inline-flex;
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      display: flex;
       align-items: center;
       gap: 8px;
-      width: 100%;
-      justify-content: center;
     }
-    .sort-label {
-      font-weight: 700;
-    }
-    .sort-arrows {
-      display: inline-flex;
+
+    .hero-metric {
+      text-align: right;
+      display: flex;
       flex-direction: column;
       gap: 2px;
     }
-    .sort-arrow {
-      width: 16px;
-      height: 10px;
+
+    .hero-metric-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+    }
+
+    .hero-metric-val {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--loss);
+    }
+
+     
+    .controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+     
+    .segment-tabs {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(203, 63, 63, 0.14);
-      border-radius: 999px;
-      background: rgba(255, 251, 251, 0.9);
-      color: var(--muted);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .segment-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 6px;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .segment-tab:hover {
+      color: var(--text);
+    }
+
+    .segment-tab.is-active {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    .tab-count {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-faint);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    .segment-tab.is-active .tab-count {
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+     
+    .search-wrap {
+      position: relative;
+      width: 200px;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 32px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 28px 0 10px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .search-input:focus {
+      background: var(--surface);
+      border-color: var(--border-focus);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-faint);
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-faint);
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      padding: 2px;
+    }
+
+    .search-clear:hover {
+      color: var(--text);
+    }
+
+     
+    .table-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    thead {
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      padding: 10px 18px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    th.num-th, td.num-cell {
+      text-align: right;
+    }
+
+    th.center-th, td.center-cell {
+      text-align: center;
+    }
+
+    td {
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    tbody tr {
+      transition: background-color 0.12s ease;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background-color: var(--surface-hover);
+    }
+
+     
+    .stock-title {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .stock-name {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .stock-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    .amount-value {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+      color: var(--loss);
+    }
+
+    .src-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      border: 1px solid var(--border);
+    }
+
+     
+    .sortable-col {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .sortable-col:hover {
+      color: var(--text);
+    }
+
+    .sort-indicator {
       font-size: 9px;
       line-height: 1;
-      padding: 0;
-      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
-    }
-    .sort-arrow:hover {
-      background: rgba(203, 63, 63, 0.1);
-    }
-    .sort-arrow.active {
-      background: var(--accent-deep);
-      border-color: var(--accent-deep);
-      color: #fff;
+      color: var(--text-faint);
     }
 
-    @keyframes riseIn {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes panelReveal {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes klinePulse {
-      0%, 100% {
-        opacity: 0.32;
-      }
-      50% {
-        opacity: 0.8;
-      }
+    .sort-indicator.active {
+      color: var(--text);
     }
 
-    @media (max-width: 900px) {
-      body {
-        overflow-y: auto;
+     
+    .table-footer {
+      padding: 10px 18px;
+      background: rgba(255, 255, 255, 0.015);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-faint);
+      font-family: var(--font-mono);
+    }
+
+    .empty-state {
+      padding: 48px 16px;
+      text-align: center;
+      color: var(--text-faint);
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      .app-shell {
+        padding: 32px 14px 60px;
+        gap: 24px;
       }
-      .main {
-        height: auto;
-        min-height: 100vh;
-        display: block;
-        padding-bottom: 38px;
-      }
-      .content-area {
-        grid-template-columns: 1fr;
-      }
-      .layout {
-        display: block;
-      }
-      .app-sidebar {
-        margin-bottom: 12px;
-      }
-      .csv-table {
-        height: auto;
-        min-height: 0;
-        margin-bottom: 12px;
-      }
-      .table-shell {
-        max-height: min(62vh, 520px);
-      }
-      .chart-panel {
-        min-height: 320px;
-      }
-      .side-rail {
-        height: auto;
-        overflow: visible;
-      }
-      .chart-panel.is-concealed {
-        min-height: 156px;
-      }
-      .overview-strip {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-      .overview-strip > * {
-        flex: 1 1 calc(50% - 5px);
-      }
-      .panel-head {
-        align-items: flex-start;
+
+      .hero-header {
         flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
       }
-      .search-box {
-        width: 100%;
-        min-width: 0;
-      }
-      .filter-search {
-        justify-content: stretch;
-      }
-      .filter-search .search-box {
-        width: 100%;
-      }
-    }
 
-    @media (max-width: 600px) {
-      .main {
-        width: min(100%, calc(100% - 16px));
-        padding: 12px 0 26px;
+      .hero-metric {
+        text-align: left;
       }
-      .app-sidebar {
-        gap: 8px;
-        margin-bottom: 8px;
+
+      .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
       }
-      .brand-pill {
-        min-width: 0;
-        padding: 12px 14px;
-        border-radius: 18px;
-      }
-      .brand-pill strong {
-        font-size: 10px;
-        letter-spacing: 0.2em;
-      }
-      .brand-pill span {
-        font-size: 11px;
-      }
-      .overview-strip {
-        gap: 8px;
-      }
-      .overview-chip {
-        padding: 12px 14px;
-        border-radius: 18px;
-      }
-      .overview-chip span {
-        font-size: 10px;
-        letter-spacing: 0.12em;
-      }
-      .overview-chip strong {
-        font-size: 22px;
-        overflow-wrap: anywhere;
-      }
-      th {
-        top: 0;
-        padding: 10px 8px;
-        font-size: 10px;
-        letter-spacing: 0.12em;
-      }
-      td {
-        padding: 11px 8px;
-        white-space: normal;
-        overflow-wrap: anywhere;
-        text-overflow: clip;
-        line-height: 1.35;
-      }
-      table {
-        min-width: 0;
-        font-size: 11px;
-      }
-      .sortable-th {
-        min-width: 0;
-      }
-      .sort-header {
-        gap: 4px;
-      }
-      .sort-label {
-        letter-spacing: 0.08em;
-      }
-      .sort-arrow {
-        width: 14px;
-        height: 10px;
-        font-size: 8px;
-      }
-      .panel-head {
-        padding: 12px 12px 10px;
-        gap: 10px;
-      }
-      .panel-meta {
+
+      .segment-tabs {
         width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        gap: 8px;
-        font-size: 9px;
-        letter-spacing: 0.08em;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
       }
-      .panel-meta strong {
-        font-size: 15px;
+
+      .segment-tab {
+        justify-content: center;
       }
-      .search-box {
-        padding: 7px 10px;
+
+      .search-wrap {
+        width: 100%;
       }
-      .search-input {
-        font-size: 12px;
-      }
-      .content-area {
-        margin-top: 10px;
-      }
-      .csv-table {
-        height: auto;
-        min-height: 0;
-      }
-      .table-shell {
-        max-height: min(62vh, 520px);
-        overflow-x: hidden;
-        overflow-y: scroll;
-        scrollbar-gutter: stable;
-        -webkit-overflow-scrolling: touch;
-      }
-      .empty-state {
-        padding: 20px 12px;
-        font-size: 12px;
-      }
-      td:first-child {
-        font-size: 12px;
-      }
-      .src-badge {
-        font-size: 9px;
-        letter-spacing: 0.08em;
-      }
-      .chart-panel {
-        padding: 14px;
-        border-radius: 16px;
-      }
-      .chart-panel.is-concealed {
-        min-height: 148px;
-      }
-      .chart-panel-title {
-        font-size: 20px;
-      }
-      .chart-panel.is-concealed .chart-panel-title {
-        font-size: 13px;
-      }
-      .chart-stage {
-        min-height: 240px;
-      }
-      .chart-panel.is-concealed .chart-stage {
-        min-height: 86px;
+
+      th, td {
+        padding: 10px 12px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="main">
+  <div class="app-shell">
     
     
     
@@ -2159,73 +1703,66 @@
       
     
 
-    <div class="layout">
-      <aside class="app-sidebar">
-        <div class="brand-pill">
-          <strong>Loss Board</strong>
-          <span>Worst 惠泉啤酒</span>
+    
+    <header class="hero-header">
+      <div class="brand-meta">
+        <div class="brand-title-wrap">
+          <span class="status-dot"></span>
+          <h1 class="brand-title">Loss Board</h1>
         </div>
-        <div class="overview-strip">
-          <button type="button" class="overview-chip is-view active" data-view="gf" onclick="setView('gf', this)">
-            <span>GF</span>
-            <strong>49</strong>
-          </button>
-          <button type="button" class="overview-chip is-view" data-view="yh" onclick="setView('yh', this)">
-            <span>YH</span>
-            <strong>34</strong>
-          </button>
-          <button type="button" class="overview-chip is-view" data-view="all" onclick="setView('all', this)">
-            <span>ALL</span>
-            <strong>81</strong>
-          </button>
-          <div class="overview-chip">
-            <span>Net</span>
-            <strong>-535013.99</strong>
-          </div>
-        </div>
-      </aside>
-
-      <div class="csv-table">
-        <div class="panel-head">
-          <h2 id="panel-title" class="panel-title">GF</h2>
-          <span id="panel-meta" class="panel-meta"><span>49 rows</span><strong>-262108.31</strong></span>
-        </div>
-        <div class="table-shell">
-          <table id="data-table">
-            <colgroup id="table-cols"></colgroup>
-            <thead id="table-head"></thead>
-            <tbody id="table-body"></tbody>
-          </table>
+        <div class="brand-sub">
+          <span>PORTFOLIO LOSS TRACKER</span>
+          
+          <span>·</span>
+          <span>WORST: 惠泉啤酒</span>
+          
         </div>
       </div>
 
-      <aside class="side-rail">
-        <div class="filter-search">
-          <div class="search-box">
-            <input id="name-filter" class="search-input" type="search" placeholder="Search stock" autocomplete="off" oninput="handleFilterInput(this.value)">
-            <button id="name-filter-clear" class="search-clear" type="button" onclick="clearFilter()" hidden>Clear</button>
-          </div>
-        </div>
-        <section id="chart-panel" class="chart-panel is-concealed">
-          <div class="chart-panel-head">
-            <div class="chart-panel-copy">
-              <span class="chart-panel-eyebrow">Reference</span>
-              <h3 id="chart-panel-title" class="chart-panel-title">Reference</h3>
-              <div id="chart-panel-meta" class="chart-panel-meta">
-                <span class="chart-panel-badge">Ready</span>
-              </div>
-            </div>
-            <button id="chart-privacy-toggle" class="chart-privacy-toggle" type="button" onclick="toggleChartConceal()" aria-pressed="false">Open</button>
-          </div>
-          <div id="chart-stage" class="chart-stage">
-            <div class="chart-empty">
-              <strong>Ready</strong>
-              <span>Select an item to load details.</span>
-            </div>
-          </div>
-        </section>
-      </aside>
+      <div class="hero-metric">
+        <span class="hero-metric-label">Cumulative Net Loss</span>
+        <span class="hero-metric-val">-535013.99</span>
+      </div>
+    </header>
+
+    
+    <div class="controls-bar">
+      <div class="segment-tabs" role="tablist">
+        <button type="button" class="segment-tab is-active" data-view="gf" onclick="setView('gf', this)">
+          <span>GF</span>
+          <span class="tab-count">49</span>
+        </button>
+        <button type="button" class="segment-tab" data-view="yh" onclick="setView('yh', this)">
+          <span>YH</span>
+          <span class="tab-count">34</span>
+        </button>
+        <button type="button" class="segment-tab" data-view="all" onclick="setView('all', this)">
+          <span>ALL</span>
+          <span class="tab-count">81</span>
+        </button>
+      </div>
+
+      <div class="search-wrap">
+        <input id="name-filter" class="search-input" type="search" placeholder="搜索名称或代码..." autocomplete="off" oninput="handleFilterInput(this.value)">
+        <button id="name-filter-clear" class="search-clear" type="button" onclick="clearFilter()" hidden>×</button>
+      </div>
     </div>
+
+    
+    <main class="table-card">
+      <div class="table-wrapper">
+        <table id="data-table">
+          <colgroup id="table-cols"></colgroup>
+          <thead id="table-head"></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        <span id="footer-count"></span>
+        <span id="footer-subtotal"></span>
+      </div>
+    </main>
   </div>
 
   <script>
@@ -2242,69 +1779,34 @@
       gf: {
         title: 'GF',
         columns: [
-          { key: 'name', label: 'Name', className: '' },
-          { key: 'pl', label: 'P/L', type: 'amount', className: 'sortable-th num-th' },
+          { key: 'name', label: 'Security', className: '' },
+          { key: 'pl', label: 'Amount', type: 'amount', className: 'num-th' },
         ],
       },
       yh: {
         title: 'YH',
         columns: [
-          { key: 'name', label: 'Name', className: '' },
-          { key: 'pl', label: 'P/L', type: 'amount', className: 'sortable-th num-th' },
+          { key: 'name', label: 'Security', className: '' },
+          { key: 'pl', label: 'Amount', type: 'amount', className: 'num-th' },
         ],
       },
       all: {
         title: 'ALL',
         columns: [
-          { key: 'name', label: 'Name', className: '' },
-          { key: 'net', label: 'Net', type: 'amount', className: 'sortable-th num-th' },
-          { key: 'src', label: 'Src', className: '' },
+          { key: 'name', label: 'Security', className: '' },
+          { key: 'net', label: 'Net Loss', type: 'amount', className: 'num-th' },
+          { key: 'src', label: 'Source', className: 'center-th' },
         ],
       },
     };
-    const symbolCacheKey = 'loss-board-symbol-cache-v1';
-    const symbolOverrides = createNormalizedSymbolMap({
-      '国风新材': 'sz000859',
-      '园林股份': 'sh605303',
-      '金瑞矿业': 'sh600714',
-      '星网锐捷': 'sz002396',
-      '香港证券': 'sh513090',
-      '黄金9999': 'sh518850',
-      'HK创新药': 'sh513120',
-      '信创ETF': 'sz159537',
-      '光伏E': 'sh562970',
-      '纳指科技': 'sz159509',
-    });
-    const symbolCache = loadSymbolCache();
-    const symbolLookupCache = new Map();
-    let suggestLookupQueue = Promise.resolve('');
+
     let activeView = 'gf';
     let nameFilter = '';
-    const selectedStockByView = { gf: '', yh: '', all: '' };
-    let previewRequestId = 0;
-    let chartConcealed = true;
-    let chartHeaderTitle = 'Reference';
-    let chartHeaderMeta = '<span class="chart-panel-badge">Ready</span>';
-    function toggleChartConceal() {
-      chartConcealed = !chartConcealed;
-      applyChartConcealState();
+
+    function isMarketSymbol(symbol) {
+      return /^(sh|sz|bj)\d{6}$/i.test(symbol || '');
     }
-    function setChartHeader(title, metaHtml) {
-      chartHeaderTitle = title || 'Reference';
-      chartHeaderMeta = metaHtml || '';
-      applyChartConcealState();
-    }
-    function applyChartConcealState() {
-      const panel = document.getElementById('chart-panel');
-      const title = document.getElementById('chart-panel-title');
-      const meta = document.getElementById('chart-panel-meta');
-      const toggle = document.getElementById('chart-privacy-toggle');
-      panel.classList.toggle('is-concealed', chartConcealed);
-      title.textContent = chartConcealed ? 'Reference' : chartHeaderTitle;
-      meta.innerHTML = chartConcealed ? '<span class="chart-panel-badge">Ready</span>' : chartHeaderMeta;
-      toggle.textContent = chartConcealed ? 'Open' : 'Hide';
-      toggle.setAttribute('aria-pressed', String(!chartConcealed));
-    }
+
     function getSummaryRows() {
       const totals = new Map();
       const srcs = new Map();
@@ -2331,17 +1833,21 @@
         src: srcs.get(name) || '',
       }));
     }
+
     function getRows(view) {
       return view === 'all' ? getSummaryRows() : datasets[view];
     }
+
     function getFilteredRows(view) {
       const keyword = nameFilter.trim().toLocaleLowerCase();
       const rows = getRows(view);
       if (!keyword) return rows;
       return rows.filter(row => {
-        return (row.name || '').toLocaleLowerCase().includes(keyword);
+        return (row.name || '').toLocaleLowerCase().includes(keyword) ||
+               (row.code || '').toLocaleLowerCase().includes(keyword);
       });
     }
+
     function getTotalValue(view, filtered = false) {
       const rows = filtered ? getFilteredRows(view) : getRows(view);
       return rows.reduce((sum, row) => {
@@ -2349,273 +1855,61 @@
         return sum + parseNumericValue(row[key]);
       }, 0);
     }
-    function getWorstName() {
-      const rows = [...datasets.gf, ...datasets.yh];
-      let worstName = '';
-      let worstValue = Infinity;
-      rows.forEach(row => {
-        const value = parseNumericValue(row.pl);
-        if (row.name && value < worstValue) {
-          worstValue = value;
-          worstName = row.name;
-        }
-      });
-      return worstName || 'N/A';
-    }
-    function updateOverview() {
-      const chips = document.querySelectorAll('.overview-chip strong');
-      if (chips[0]) chips[0].textContent = datasets.gf.length;
-      if (chips[1]) chips[1].textContent = datasets.yh.length;
-      const names = new Set([...datasets.gf.map(row => row.name?.trim()), ...datasets.yh.map(row => row.name?.trim())].filter(Boolean));
-      if (chips[2]) chips[2].textContent = names.size;
-      if (chips[3]) chips[3].textContent = getTotalValue('all').toFixed(2);
-      const worst = document.querySelector('.brand-pill span');
-      if (worst) worst.textContent = `Worst ${getWorstName()}`;
-    }
-    function createNormalizedSymbolMap(source) {
-      return Object.entries(source).reduce((acc, [name, symbol]) => {
-        const normalized = normalizeStockName(name);
-        if (normalized && isMarketSymbol(symbol)) acc[normalized] = symbol;
-        return acc;
-      }, {});
-    }
-    function loadSymbolCache() {
-      const cache = new Map(Object.entries(symbolOverrides));
-      try {
-        const raw = localStorage.getItem(symbolCacheKey);
-        if (!raw) return cache;
-        const parsed = JSON.parse(raw);
-        Object.entries(parsed || {}).forEach(([name, symbol]) => {
-          if (name && isMarketSymbol(symbol)) cache.set(name, symbol);
-        });
-      } catch (error) {}
-      return cache;
-    }
-    function persistSymbolCache() {
-      try {
-        localStorage.setItem(symbolCacheKey, JSON.stringify(Object.fromEntries(symbolCache)));
-      } catch (error) {}
-    }
-    function normalizeStockName(name) {
-      return String(name || '').trim().replace(/\s+/g, '').toUpperCase();
-    }
-    function isMarketSymbol(symbol) {
-      return /^(sh|sz|bj)\d{6}$/i.test(symbol || '');
-    }
-    function getCachedSymbol(stockName) {
-      return symbolCache.get(normalizeStockName(stockName)) || '';
-    }
-    function getKLineImageUrl(symbol) {
-      return `https://image.sinajs.cn/newchart/daily/n/${encodeURIComponent(symbol)}.gif`;
-    }
-    function parseSuggestEntries(raw) {
-      return String(raw || '')
-        .split(';')
-        .map(item => item.trim())
-        .filter(Boolean)
-        .map(item => {
-          const fields = item.split(',');
-          return {
-            name: fields[0] || '',
-            type: fields[1] || '',
-            code: fields[2] || '',
-            symbol: fields[3] || '',
-            altName: fields[4] || '',
-          };
-        });
-    }
-    function matchesSuggestEntry(entry, stockName) {
-      const target = normalizeStockName(stockName);
-      return [entry.name, entry.altName].some(candidate => {
-        const normalized = normalizeStockName(candidate);
-        return normalized && (normalized === target || normalized.includes(target) || target.includes(normalized));
-      });
-    }
-    function pickSymbolFromSuggest(raw, stockName) {
-      const entries = parseSuggestEntries(raw).filter(entry => isMarketSymbol(entry.symbol));
-      const exact = entries.find(entry => matchesSuggestEntry(entry, stockName));
-      return exact ? exact.symbol : '';
-    }
-    function loadSuggestValue(stockName) {
-      const name = String(stockName || '').trim();
-      if (!name) return Promise.resolve('');
-      suggestLookupQueue = suggestLookupQueue.then(() => new Promise(resolve => {
-        const script = document.createElement('script');
-        const cleanup = () => {
-          script.remove();
-          window.suggestvalue = '';
-        };
-        let settled = false;
-        const finish = value => {
-          if (settled) return;
-          settled = true;
-          window.clearTimeout(timeoutId);
-          cleanup();
-          resolve(typeof value === 'string' ? value : '');
-        };
-        const timeoutId = window.setTimeout(() => finish(''), 6000);
-        window.suggestvalue = '';
-        script.async = true;
-        script.charset = 'gbk';
-        script.src = `https://suggest3.sinajs.cn/suggest/key=${encodeURIComponent(name)}&_=${Date.now()}`;
-        script.onload = () => finish(window.suggestvalue);
-        script.onerror = () => finish('');
-        document.head.appendChild(script);
-      }));
-      return suggestLookupQueue;
-    }
-    function getSymbolForStock(stockName) {
-      const normalized = normalizeStockName(stockName);
-      if (!normalized) return Promise.resolve('');
-      const cached = symbolCache.get(normalized);
-      if (cached) return Promise.resolve(cached);
-      if (symbolLookupCache.has(normalized)) return symbolLookupCache.get(normalized);
-      const lookup = loadSuggestValue(stockName)
-        .then(raw => {
-          const symbol = pickSymbolFromSuggest(raw, stockName);
-          if (symbol) {
-            symbolCache.set(normalized, symbol);
-            persistSymbolCache();
-          }
-          symbolLookupCache.delete(normalized);
-          return symbol;
-        })
-        .catch(() => {
-          symbolLookupCache.delete(normalized);
-          return '';
-      });
-      symbolLookupCache.set(normalized, lookup);
-      return lookup;
-    }
-    function getSymbolForRow(row) {
-      const direct = row?.code || '';
-      if (isMarketSymbol(direct)) return Promise.resolve(direct);
-      return getSymbolForStock(row?.name || '');
-    }
-    function getSelectedStockName(view) {
-      return selectedStockByView[view] || '';
-    }
-    function setSelectedStock(view, stockName) {
-      selectedStockByView[view] = stockName || '';
-    }
-    function getPreviewBadge(view, row) {
-      if (!row) return '';
-      return view === 'all' ? (row.src || 'ALL') : view.toUpperCase();
-    }
-    function renderPreviewEmpty(title, message, badge) {
-      setChartHeader(title, badge ? `<span class="chart-panel-badge">${escapeHtml(badge)}</span>` : '');
-      const stage = document.getElementById('chart-stage');
-      stage.classList.remove('is-loading');
-      stage.innerHTML = `<div class="chart-empty"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span></div>`;
-    }
-    function renderPreviewLoading(view, row) {
-      setChartHeader(row?.name || 'Loading', [
-        `<span class="chart-panel-badge">${escapeHtml(getPreviewBadge(view, row))}</span>`,
-        '<span>Loading</span>',
-      ].join(''));
-      const stage = document.getElementById('chart-stage');
-      stage.classList.add('is-loading');
-      stage.innerHTML = `<div class="chart-empty"><strong>Loading</strong><span>正在加载 ${escapeHtml(row?.name || '')} 的预览。</span></div>`;
-    }
-    function renderPreviewChart(view, row, symbol) {
-      setChartHeader(row?.name || 'N/A', [
-        `<span class="chart-panel-badge">${escapeHtml(getPreviewBadge(view, row))}</span>`,
-        `<span>${escapeHtml(symbol.toUpperCase())}</span>`,
-      ].join(''));
-      const stage = document.getElementById('chart-stage');
-      stage.classList.remove('is-loading');
-      stage.innerHTML = `<img src="${getKLineImageUrl(symbol)}" alt="${escapeHtml(row?.name || '')} preview" loading="eager" referrerpolicy="no-referrer" onerror="handlePreviewError()">`;
-    }
-    function ensureSelectedRow(view, rows) {
-      const current = getSelectedStockName(view);
-      const hasCurrent = rows.some(row => (row.name || '') === current);
-      const next = hasCurrent ? current : (rows[0]?.name || '');
-      setSelectedStock(view, next);
-      return next;
-    }
-    function updatePreviewPanel() {
-      const rows = getSortedRows(activeView);
-      const selectedName = ensureSelectedRow(activeView, rows);
-      const selectedRow = rows.find(row => (row.name || '') === selectedName);
-      const requestId = ++previewRequestId;
-      if (!selectedRow) {
-        renderPreviewEmpty('No Selection', '当前列表里没有可预览的股票。', activeView.toUpperCase());
-        return;
-      }
-      renderPreviewLoading(activeView, selectedRow);
-      getSymbolForRow(selectedRow).then(symbol => {
-        if (requestId !== previewRequestId) return;
-        if (!symbol) {
-          renderPreviewEmpty(selectedRow.name || 'No Chart', '暂时找不到这支股票的证券代码，无法加载预览。', getPreviewBadge(activeView, selectedRow));
-          return;
-        }
-        renderPreviewChart(activeView, selectedRow, symbol);
-      });
-    }
-    function handlePreviewError() {
-      const rows = getSortedRows(activeView);
-      const selectedName = getSelectedStockName(activeView);
-      const selectedRow = rows.find(row => (row.name || '') === selectedName);
-      renderPreviewEmpty(selectedRow?.name || 'No Chart', '图源返回失败，稍后再试或切换另一只股票。', getPreviewBadge(activeView, selectedRow));
-    }
-    function selectStock(stockName) {
-      setSelectedStock(activeView, stockName);
-      renderView();
-    }
+
     function buildColGroup(view) {
-      const valueRatios = view === 'all' ? [0.48, 0.24, 0.28] : [0.6, 0.4];
-      const widths = valueRatios.map(ratio => `${ratio * 100}%`);
-      const cols = widths.map(width => `<col style="width:${width}">`);
-      return cols.join('');
+      const widths = view === 'all' ? ['52%', '30%', '18%'] : ['65%', '35%'];
+      return widths.map(width => `<col style="width:${width}">`).join('');
     }
+
     function buildHead(view) {
       const { columns } = viewConfig[view];
       const sort = viewState[view];
-      const headers = columns.map((column, index) => {
+      const headers = columns.map(column => {
         if (!column.type) return `<th class="${column.className || ''}">${column.label}</th>`;
-        const ascActive = sort.sortKey === column.key && sort.order === 'asc';
-        const descActive = sort.sortKey === column.key && sort.order === 'desc';
-        return `<th class="${column.className || ''}"><span class="sort-header"><span class="sort-label">${column.label}</span><span class="sort-arrows"><button type="button" class="sort-arrow ${ascActive ? 'active' : ''}" data-key="${column.key}" data-type="${column.type}" data-order="asc" aria-pressed="${ascActive}" aria-label="${column.label} ascending" onclick="sortActiveView('${column.key}', '${column.type}', 'asc', this)">▲</button><button type="button" class="sort-arrow ${descActive ? 'active' : ''}" data-key="${column.key}" data-type="${column.type}" data-order="desc" aria-pressed="${descActive}" aria-label="${column.label} descending" onclick="sortActiveView('${column.key}', '${column.type}', 'desc', this)">▼</button></span></span></th>`;
+        const isActive = sort.sortKey === column.key;
+        const arrow = isActive ? (sort.order === 'asc' ? '▲' : '▼') : '↕';
+        return `
+          <th class="${column.className || ''}">
+            <div class="sortable-col" onclick="toggleSort('${column.key}', '${column.type}')" style="justify-content: flex-end;">
+              <span>${column.label}</span>
+              <span class="sort-indicator ${isActive ? 'active' : ''}">${arrow}</span>
+            </div>
+          </th>`;
       });
       return `<tr>${headers.join('')}</tr>`;
     }
+
     function buildBody(view) {
       const rows = getSortedRows(view);
       const colCount = viewConfig[view].columns.length;
-      if (!rows.length) return `<tr><td class="empty-state" colspan="${colCount}">No matching rows</td></tr>`;
-      const selectedName = ensureSelectedRow(view, rows);
-      return rows.map((row, index) => {
+      if (!rows.length) return `<tr><td class="empty-state" colspan="${colCount}">No records found</td></tr>`;
+      return rows.map(row => {
         const cells = [];
-        if (view === 'gf') {
-          cells.push(renderNameCell(row));
-          cells.push(renderCell(row.pl, 'amount-value num-cell'));
-        } else if (view === 'yh') {
-          cells.push(renderNameCell(row));
-          cells.push(renderCell(row.pl, 'amount-value num-cell'));
-        } else {
-          cells.push(renderNameCell(row));
+        cells.push(renderNameCell(row));
+        if (view === 'all') {
           cells.push(`<td class="amount-value num-cell">${escapeHtml(row.net)}</td>`);
-          cells.push(`<td class="src-cell"><span class="src-badge">${escapeHtml(row.src)}</span></td>`);
+          cells.push(`<td class="center-cell"><span class="src-badge">${escapeHtml(row.src)}</span></td>`);
+        } else {
+          cells.push(`<td class="amount-value num-cell">${escapeHtml(row.pl)}</td>`);
         }
-        const selectedClass = row.name === selectedName ? 'is-selected' : '';
-        return `<tr class="is-row-selectable ${selectedClass}" onclick='selectStock(${JSON.stringify(row.name || "")})'>${cells.join('')}</tr>`;
+        return `<tr>${cells.join('')}</tr>`;
       }).join('');
     }
-    function renderCell(value, className) {
-      const safe = escapeHtml(value ?? '');
-      return `<td class="${className}">${safe}</td>`;
-    }
+
     function renderNameCell(row) {
-      return `<td class="stock-cell"><span class="stock-name">${escapeHtml(row?.name || '')}</span></td>`;
+      const codePart = row.code ? `<span class="stock-code">${escapeHtml(row.code)}</span>` : '';
+      return `<td><div class="stock-title"><span class="stock-name">${escapeHtml(row?.name || '')}</span>${codePart}</div></td>`;
     }
+
     function escapeHtml(value) {
-      return String(value)
+      return String(value ?? '')
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
     }
+
     function getSortedRows(view) {
       const rows = [...getFilteredRows(view)];
       const { sortKey, type, order } = viewState[view];
@@ -2627,61 +1921,67 @@
       });
       return rows;
     }
+
     function getValueForSort(value, type) {
       const parsed = parseNumericValue(value);
       if (type === 'amount') return parsed < 0 ? Math.abs(parsed) : parsed;
       return parsed;
     }
+
+    function toggleSort(sortKey, type) {
+      const current = viewState[activeView];
+      if (current.sortKey === sortKey) {
+        current.order = current.order === 'desc' ? 'asc' : 'desc';
+      } else {
+        viewState[activeView] = { sortKey, type, order: 'desc' };
+      }
+      renderView();
+    }
+
     function renderView() {
       const rows = getFilteredRows(activeView);
       const totalRows = getRows(activeView).length;
       const hasFilter = Boolean(nameFilter.trim());
-      document.getElementById('panel-title').textContent = viewConfig[activeView].title;
-      document.getElementById('panel-meta').innerHTML = `<span>${hasFilter ? `${rows.length} / ${totalRows} rows` : `${rows.length} rows`}</span><strong>${getTotalValue(activeView, true).toFixed(2)}</strong>`;
+      
       document.getElementById('table-cols').innerHTML = buildColGroup(activeView);
       document.getElementById('table-head').innerHTML = buildHead(activeView);
       document.getElementById('table-body').innerHTML = buildBody(activeView);
-      updatePreviewPanel();
+      
+      document.getElementById('footer-count').textContent = hasFilter
+        ? `FILTERED: ${rows.length} / ${totalRows}`
+        : `TOTAL: ${rows.length} ENTRIES`;
+      document.getElementById('footer-subtotal').textContent = `SUBTOTAL: ${getTotalValue(activeView, true).toFixed(2)}`;
       syncFilterUi();
-      updateOverview();
     }
-    function resetTableScroll() {
-      const shell = document.querySelector('.table-shell');
-      if (!shell) return;
-      shell.scrollTop = 0;
-      shell.scrollLeft = 0;
-    }
-    function setView(view, button) {
+
+    function setView(view, tabEl) {
       activeView = view;
-      document.querySelectorAll('.overview-chip.is-view').forEach(el => el.classList.toggle('active', el === button));
+      document.querySelectorAll('.segment-tab').forEach(el => {
+        el.classList.toggle('is-active', el === tabEl);
+      });
       renderView();
-      resetTableScroll();
     }
-    function sortActiveView(sortKey, type, order) {
-      viewState[activeView] = { sortKey, type, order };
-      renderView();
-      resetTableScroll();
-    }
+
     function syncFilterUi() {
       const input = document.getElementById('name-filter');
       const clear = document.getElementById('name-filter-clear');
       if (!input || !clear) return;
       input.value = nameFilter;
-      input.placeholder = 'Search stock';
       clear.hidden = !nameFilter.trim();
     }
+
     function handleFilterInput(value) {
       nameFilter = value;
       renderView();
-      resetTableScroll();
     }
+
     function clearFilter() {
       nameFilter = '';
       renderView();
-      resetTableScroll();
       const input = document.getElementById('name-filter');
       if (input) input.focus();
     }
+
     function normalizeNumericText(text) {
       const raw = (text || '').replace(/,/g, '').replace(/%/g, '').replace(/\s+/g, '');
       const sign = raw.startsWith('-') ? '-' : '';
@@ -2690,10 +1990,12 @@
       if (parts.length > 1) body = `${parts[0]}.${parts.slice(1).join('')}`;
       return `${sign}${body}`;
     }
+
     function parseNumericValue(text) {
       const value = Number.parseFloat(normalizeNumericText(text));
       return Number.isFinite(value) ? value : 0;
     }
+
     renderView();
   </script>
 </body>
