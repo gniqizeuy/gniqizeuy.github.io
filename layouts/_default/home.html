@@ -250,38 +250,8 @@
     .side-rail .filter-search {
       flex: 0 0 auto;
     }
-    .side-rail .side-tags {
-      flex: 0 0 auto;
-    }
     .side-rail .chart-panel {
       flex: 1 1 auto;
-    }
-    .side-tags {
-      display: grid;
-      gap: 8px;
-      padding: 12px;
-      border: 1px solid rgba(203, 63, 63, 0.12);
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255, 252, 252, 0.96) 0%, rgba(249, 243, 242, 0.92) 100%);
-      box-shadow: var(--shadow-soft);
-    }
-    .side-tags-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      color: var(--muted);
-      font-family: var(--font-ui);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-    .side-tags-head strong {
-      color: var(--accent-deep);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0;
     }
     .chart-panel {
       min-height: 0;
@@ -539,43 +509,6 @@
     }
     .filter-search .search-box {
       width: 100%;
-    }
-    .tag-filter {
-      display: none;
-      align-items: center;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      gap: 6px;
-      width: 100%;
-    }
-    .tag-filter.has-tags {
-      display: flex;
-    }
-    .tag-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 24px;
-      padding: 4px 9px;
-      border: 1px solid rgba(203, 63, 63, 0.16);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.74);
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 10px;
-      font-weight: 800;
-      line-height: 1;
-      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
-    }
-    .tag-chip:hover {
-      background: rgba(203, 63, 63, 0.08);
-      color: var(--accent-deep);
-      transform: translateY(-1px);
-    }
-    .tag-chip.is-active {
-      background: var(--accent-deep);
-      border-color: var(--accent-deep);
-      color: #fff;
     }
     .table-shell {
       flex: 1 1 auto;
@@ -905,11 +838,6 @@
       .search-input {
         font-size: 12px;
       }
-      .tag-chip {
-        min-height: 23px;
-        padding: 4px 8px;
-        font-size: 9px;
-      }
       .content-area {
         margin-top: 10px;
       }
@@ -1002,24 +930,16 @@
     {{ range after 1 $heroGfData }}
       {{ $c := strings.TrimPrefix "\ufeff" (index . 0) }}
       {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
-      {{ $tags := "" }}
-      {{ if ge (len .) 4 }}
-        {{ $tags = index . 3 }}
-      {{ end }}
       {{ if $n }}
-        {{ $gfRows = $gfRows | append (dict "code" $c "name" $n "pl" (index . 2) "tags" $tags) }}
+        {{ $gfRows = $gfRows | append (dict "code" $c "name" $n "pl" (index . 2)) }}
       {{ end }}
     {{ end }}
     {{ $yhRows := slice }}
     {{ range after 1 $heroYhData }}
       {{ $c := strings.TrimPrefix "\ufeff" (index . 0) }}
       {{ $n := strings.TrimPrefix "\ufeff" (index . 1) }}
-      {{ $tags := "" }}
-      {{ if ge (len .) 4 }}
-        {{ $tags = index . 3 }}
-      {{ end }}
       {{ if $n }}
-        {{ $yhRows = $yhRows | append (dict "code" $c "name" $n "pl" (index . 2) "tags" $tags) }}
+        {{ $yhRows = $yhRows | append (dict "code" $c "name" $n "pl" (index . 2)) }}
       {{ end }}
     {{ end }}
 
@@ -1070,13 +990,6 @@
             <button id="name-filter-clear" class="search-clear" type="button" onclick="clearFilter()" hidden>Clear</button>
           </div>
         </div>
-        <section class="side-tags">
-          <div class="side-tags-head">
-            <span>Tags</span>
-            <strong id="tag-filter-count">0</strong>
-          </div>
-          <div id="tag-filter" class="tag-filter" aria-label="Tag filter"></div>
-        </section>
         <section id="chart-panel" class="chart-panel is-concealed">
           <div class="chart-panel-head">
             <div class="chart-panel-copy">
@@ -1104,9 +1017,6 @@
       gf: JSON.parse({{ $gfRows | jsonify }}),
       yh: JSON.parse({{ $yhRows | jsonify }}),
     };
-    Object.values(datasets).forEach(rows => rows.forEach(row => {
-      row.tags = parseTags(row.tags);
-    }));
     const viewState = {
       gf: { sortKey: 'pl', type: 'amount', order: 'desc' },
       yh: { sortKey: 'pl', type: 'amount', order: 'desc' },
@@ -1154,17 +1064,11 @@
     let suggestLookupQueue = Promise.resolve('');
     let activeView = 'gf';
     let nameFilter = '';
-    const selectedTags = new Set();
     const selectedStockByView = { gf: '', yh: '', all: '' };
     let previewRequestId = 0;
     let chartConcealed = true;
     let chartHeaderTitle = 'Reference';
     let chartHeaderMeta = '<span class="chart-panel-badge">Ready</span>';
-    document.getElementById('tag-filter').addEventListener('click', event => {
-      const chip = event.target.closest('.tag-chip');
-      if (!chip) return;
-      toggleTagFilter(chip.dataset.tag || '');
-    });
     function toggleChartConceal() {
       chartConcealed = !chartConcealed;
       applyChartConcealState();
@@ -1185,35 +1089,16 @@
       toggle.textContent = chartConcealed ? 'Open' : 'Hide';
       toggle.setAttribute('aria-pressed', String(!chartConcealed));
     }
-    function parseTags(value) {
-      if (Array.isArray(value)) return value.map(tag => String(tag).trim()).filter(Boolean);
-      return String(value || '')
-        .split(/[|｜、;；]/)
-        .map(tag => tag.trim())
-        .filter(Boolean);
-    }
-    function getRowTags(row) {
-      return parseTags(row?.tags || []);
-    }
-    function mergeRowTags(target, key, row) {
-      const existing = target.get(key) || [];
-      getRowTags(row).forEach(tag => {
-        if (!existing.includes(tag)) existing.push(tag);
-      });
-      target.set(key, existing);
-    }
     function getSummaryRows() {
       const totals = new Map();
       const srcs = new Map();
       const codes = new Map();
-      const tags = new Map();
       datasets.gf.forEach(row => {
         const key = row.name?.trim();
         if (!key) return;
         totals.set(key, (totals.get(key) || 0) + parseNumericValue(row.pl));
         srcs.set(key, 'GF');
         if (!codes.get(key) && isMarketSymbol(row.code)) codes.set(key, row.code);
-        mergeRowTags(tags, key, row);
       });
       datasets.yh.forEach(row => {
         const key = row.name?.trim();
@@ -1222,14 +1107,12 @@
         const existing = srcs.get(key);
         srcs.set(key, existing && existing !== 'YH' ? 'GF+YH' : 'YH');
         if (!codes.get(key) && isMarketSymbol(row.code)) codes.set(key, row.code);
-        mergeRowTags(tags, key, row);
       });
       return Array.from(totals.entries()).map(([name, net]) => ({
         code: codes.get(name) || '',
         name,
         net: net.toFixed(2),
         src: srcs.get(name) || '',
-        tags: tags.get(name) || [],
       }));
     }
     function getRows(view) {
@@ -1237,13 +1120,10 @@
     }
     function getFilteredRows(view) {
       const keyword = nameFilter.trim().toLocaleLowerCase();
-      const hasTagFilter = selectedTags.size > 0;
       const rows = getRows(view);
-      if (!keyword && !hasTagFilter) return rows;
+      if (!keyword) return rows;
       return rows.filter(row => {
-        const matchesKeyword = !keyword || (row.name || '').toLocaleLowerCase().includes(keyword);
-        const matchesTags = !hasTagFilter || getRowTags(row).some(tag => selectedTags.has(tag));
-        return matchesKeyword && matchesTags;
+        return (row.name || '').toLocaleLowerCase().includes(keyword);
       });
     }
     function getTotalValue(view, filtered = false) {
@@ -1536,67 +1416,15 @@
       if (type === 'amount') return parsed < 0 ? Math.abs(parsed) : parsed;
       return parsed;
     }
-    function getAvailableTags(view) {
-      const stats = new Map();
-      const valueKey = view === 'all' ? 'net' : 'pl';
-      getRows(view).forEach(row => {
-        const loss = Math.max(0, -parseNumericValue(row[valueKey]));
-        getRowTags(row).forEach(tag => {
-          const current = stats.get(tag) || { tag, count: 0, loss: 0 };
-          current.count += 1;
-          current.loss += loss;
-          stats.set(tag, current);
-        });
-      });
-      return Array.from(stats.values())
-        .sort((a, b) => (b.loss - a.loss) || (b.count - a.count) || a.tag.localeCompare(b.tag, 'zh-Hans-CN'));
-    }
-    function pruneSelectedTags(view) {
-      const available = new Set(getAvailableTags(view).map(item => item.tag));
-      selectedTags.forEach(tag => {
-        if (!available.has(tag)) selectedTags.delete(tag);
-      });
-    }
-    function renderTagFilter() {
-      const box = document.getElementById('tag-filter');
-      const count = document.getElementById('tag-filter-count');
-      const tags = getAvailableTags(activeView);
-      if (count) count.textContent = tags.length;
-      box.classList.toggle('has-tags', tags.length > 0);
-      if (!tags.length) {
-        box.innerHTML = '';
-        return;
-      }
-      const allActive = selectedTags.size === 0;
-      const allChip = `<button type="button" class="tag-chip ${allActive ? 'is-active' : ''}" data-tag="">全部标签</button>`;
-      const tagChips = tags.map(({ tag, count }) => {
-        const active = selectedTags.has(tag);
-        return `<button type="button" class="tag-chip ${active ? 'is-active' : ''}" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)} ${count}</button>`;
-      }).join('');
-      box.innerHTML = allChip + tagChips;
-    }
-    function toggleTagFilter(tag) {
-      if (!tag) {
-        selectedTags.clear();
-      } else if (selectedTags.has(tag)) {
-        selectedTags.delete(tag);
-      } else {
-        selectedTags.add(tag);
-      }
-      renderView();
-      resetTableScroll();
-    }
     function renderView() {
-      pruneSelectedTags(activeView);
       const rows = getFilteredRows(activeView);
       const totalRows = getRows(activeView).length;
-      const hasFilter = Boolean(nameFilter.trim()) || selectedTags.size > 0;
+      const hasFilter = Boolean(nameFilter.trim());
       document.getElementById('panel-title').textContent = viewConfig[activeView].title;
       document.getElementById('panel-meta').innerHTML = `<span>${hasFilter ? `${rows.length} / ${totalRows} rows` : `${rows.length} rows`}</span><strong>${getTotalValue(activeView, true).toFixed(2)}</strong>`;
       document.getElementById('table-cols').innerHTML = buildColGroup(activeView);
       document.getElementById('table-head').innerHTML = buildHead(activeView);
       document.getElementById('table-body').innerHTML = buildBody(activeView);
-      renderTagFilter();
       updatePreviewPanel();
       syncFilterUi();
       updateOverview();
