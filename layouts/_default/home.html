@@ -1,437 +1,773 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Loss Board · gniqizeuy</title>
+  <title>gniqizeuy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ "css/common.css" | relURL }}">
   <style>
     :root {
-      --bg: #09090b;
-      --bg-subtle: #121215;
-      --surface: #18181b;
-      --surface-hover: #222227;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-focus: rgba(255, 255, 255, 0.22);
-      --text: #fafafa;
-      --text-muted: #a1a1aa;
-      --text-faint: #52525b;
-      --loss: #f43f5e;
-      --loss-subtle: rgba(244, 63, 94, 0.1);
-      --loss-glow: rgba(244, 63, 94, 0.35);
-      --badge-bg: rgba(255, 255, 255, 0.05);
-      --badge-text: #d4d4d8;
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      --font-mono: "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      --bg: #f5f5f7;
+      --bg-soft: #fafafa;
+      --paper: rgba(255, 255, 255, 0.94);
+      --paper-solid: #ffffff;
+      --line: rgba(60, 60, 67, 0.11);
+      --line-strong: rgba(60, 60, 67, 0.22);
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --accent: #007aff;
+      --accent-deep: #c63c36;
+      --accent-soft: rgba(0, 122, 255, 0.12);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 12px 26px rgba(0, 0, 0, 0.06);
+      --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --font-ui: "Avenir Next", "SF Pro Display", "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+      --font-mono: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
     }
 
     body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: var(--font-sans);
-      font-size: 13px;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
+      padding: 0;
+      margin: 0;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      font-size: 100%;
+      font-family: var(--font-ui);
+      background: var(--bg);
+      color: var(--text);
+      position: relative;
+      overflow-x: hidden;
+      overflow-y: hidden;
     }
 
-    /* 背景氛围光 */
-    body::before {
-      content: "";
-      position: fixed;
-      top: -120px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 720px;
-      height: 360px;
-      background: radial-gradient(ellipse at center, rgba(244, 63, 94, 0.07) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .app-shell {
+    .main {
       position: relative;
       z-index: 1;
-      width: 100%;
-      max-width: 860px;
+      width: min(904px, calc(100% - 28px));
+      height: 100dvh;
       margin: 0 auto;
-      padding: 48px 20px 80px;
+      padding: 16px 0;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      gap: 32px;
+      min-height: 0;
     }
 
-    /* 顶部品牌与概要栏 */
-    .hero-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 20px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
+    .layout {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(200px, 0.62fr) minmax(0, 2.1fr);
+      gap: 16px;
+      align-items: stretch;
     }
-
-    .brand-meta {
+    .app-sidebar {
+      flex: 0 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 12px;
+      min-height: 0;
+      animation: riseIn 0.5s ease both;
     }
 
-    .brand-title-wrap {
+    .overview-strip {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 10px;
     }
-
-    .brand-title {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--text);
-    }
-
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--loss);
-      box-shadow: 0 0 10px var(--loss-glow);
-    }
-
-    .brand-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .hero-metric {
-      text-align: right;
+    .overview-chip {
+      position: relative;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border: 1px solid rgba(29, 29, 31, 0.08);
+      border-radius: 20px;
+      background: var(--paper-solid);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
     }
-
-    .hero-metric-label {
+    .overview-chip.is-view {
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      width: 100%;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    }
+    .overview-chip.is-view:hover {
+      border-color: var(--line-strong);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+    .overview-chip.is-view.active {
+      border-color: var(--line-strong);
+      background: #e8e8ed;
+      box-shadow: var(--shadow-soft);
+    }
+    .overview-chip.is-view.active span {
+      color: var(--muted);
+    }
+    .overview-chip.is-view.active strong {
+      color: var(--text);
+    }
+    .overview-chip span {
+      color: var(--muted);
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-faint);
     }
-
-    .hero-metric-val {
+    .overview-chip strong {
       font-family: var(--font-mono);
       font-size: 26px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--loss);
-    }
-
-    /* 视图切换 Tabs + 搜索输入条 */
-    .controls-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    /* Linear/Vercel 式 Segmented Tabs */
-    .segment-tabs {
-      display: inline-flex;
-      align-items: center;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 3px;
-      gap: 2px;
-    }
-
-    .segment-tab {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-family: var(--font-sans);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease;
-      user-select: none;
-    }
-
-    .segment-tab:hover {
-      color: var(--text);
-    }
-
-    .segment-tab.is-active {
-      background: var(--surface);
-      color: var(--text);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-    }
-
-    .tab-count {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-faint);
-      background: rgba(255, 255, 255, 0.04);
-      padding: 1px 5px;
-      border-radius: 4px;
-    }
-
-    .segment-tab.is-active .tab-count {
-      color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    /* 极简搜索框 */
-    .search-wrap {
-      position: relative;
-      width: 200px;
-    }
-
-    .search-input {
-      width: 100%;
-      height: 32px;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0 28px 0 10px;
-      font-family: var(--font-sans);
-      font-size: 12px;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.15s ease, background 0.15s ease;
-    }
-
-    .search-input:focus {
-      background: var(--surface);
-      border-color: var(--border-focus);
-    }
-
-    .search-input::placeholder {
-      color: var(--text-faint);
-    }
-
-    .search-clear {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--text-faint);
-      cursor: pointer;
-      font-size: 14px;
+      font-weight: 700;
       line-height: 1;
-      padding: 2px;
-    }
-
-    .search-clear:hover {
       color: var(--text);
     }
 
-    /* 表格容器卡片 */
-    .table-card {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    .overview-chip:not(.is-view) strong {
+      color: var(--accent-deep);
     }
 
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-    }
-
-    thead {
-      background: rgba(255, 255, 255, 0.02);
-      border-bottom: 1px solid var(--border);
+    button {
+      font: inherit;
     }
 
     th {
-      padding: 10px 18px;
+      background-color: rgba(249, 249, 251, 0.98) !important;
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      border-bottom: 1px solid rgba(0, 122, 255, 0.12);
+      padding: 11px 14px;
+      text-align: center;
+      color: var(--text);
+      backdrop-filter: blur(10px);
       font-size: 11px;
-      font-weight: 500;
-      color: var(--text-muted);
+      font-weight: 800;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+    }
+    .content-area {
+      flex: 1 1 auto;
+      min-height: 0;
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
+      gap: 16px;
+      align-items: stretch;
+      animation: panelReveal 0.45s ease both;
+    }
+
+    .csv-table {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      border: 1px solid rgba(0, 122, 255, 0.12);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .side-rail {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .side-rail .filter-search {
+      flex: 0 0 auto;
+    }
+    .side-rail .chart-panel {
+      flex: 1 1 auto;
+    }
+    .chart-panel {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 248, 250, 0.96) 100%);
+      border: 1px solid rgba(0, 122, 255, 0.12);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: min-height 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .chart-panel.is-concealed {
+      min-height: 172px;
+      gap: 10px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(246, 246, 248, 0.84) 100%);
+      box-shadow: var(--shadow-soft);
+    }
+    .chart-panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .chart-panel-copy {
+      min-width: 0;
+      display: grid;
+      gap: 7px;
+    }
+    .chart-panel-eyebrow {
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .chart-panel-title {
+      margin: 0;
+      color: var(--accent-deep);
+      font-family: var(--font-ui);
+      font-size: clamp(20px, 2vw, 28px);
+      font-weight: 800;
+      line-height: 1.05;
+    }
+    .chart-panel.is-concealed .chart-panel-title {
+      color: rgba(29, 29, 31, 0.58);
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .chart-panel-meta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .chart-panel-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(0, 122, 255, 0.09);
+      color: var(--accent-deep);
+    }
+    .chart-privacy-toggle {
+      flex: 0 0 auto;
+      border: 1px solid rgba(29, 29, 31, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: rgba(29, 29, 31, 0.58);
+      cursor: pointer;
+      padding: 6px 10px;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+    .chart-privacy-toggle:hover {
+      background: rgba(0, 122, 255, 0.08);
+      border-color: rgba(0, 122, 255, 0.18);
+      color: var(--accent-deep);
+      transform: translateY(-1px);
+    }
+    .chart-stage {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      border-radius: 18px;
+      border: 1px solid rgba(0, 122, 255, 0.12);
+      background:
+        radial-gradient(circle at top right, rgba(0, 122, 255, 0.08), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 248, 250, 0.96) 100%);
+      overflow: hidden;
+      transition: flex-basis 0.2s ease, min-height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .chart-panel.is-concealed .chart-stage {
+      flex: 0 0 96px;
+      border-color: rgba(29, 29, 31, 0.08);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(240, 240, 244, 0.78) 100%);
+    }
+    .chart-panel.is-concealed .chart-stage > * {
+      opacity: 0.12;
+      filter: blur(14px) grayscale(1);
+      transform: scale(0.98);
+    }
+    .chart-panel.is-concealed .chart-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(135deg, rgba(250, 250, 252, 0.98) 0%, rgba(239, 239, 243, 0.96) 100%),
+        repeating-linear-gradient(135deg, rgba(29, 29, 31, 0.04) 0 1px, transparent 1px 8px);
+      pointer-events: none;
+    }
+    .chart-stage.is-loading {
+      animation: klinePulse 1.2s ease-in-out infinite;
+    }
+    .chart-panel.is-concealed .chart-stage.is-loading {
+      animation: none;
+      opacity: 1;
+    }
+    .chart-stage img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+      background: transparent;
+    }
+    .chart-empty {
+      width: min(100%, 320px);
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--muted);
+    }
+    .chart-empty strong {
+      color: var(--accent-deep);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .chart-empty span {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .search-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: min(100%, 280px);
+      padding: 8px 10px;
+      border: 1px solid rgba(0, 122, 255, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+    .search-input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .search-input::placeholder {
+      color: rgba(110, 110, 115, 0.46);
+    }
+    .search-clear {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--accent-deep);
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .search-clear[hidden] {
+      display: none;
+    }
+    .filter-strip {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+      animation: panelReveal 0.45s ease both;
+    }
+    .filter-search {
+      display: flex;
+      justify-content: stretch;
+    }
+    .filter-search .search-box {
+      width: 100%;
+    }
+    .table-shell {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      align-items: flex-start;
+      overflow-x: auto;
+      overflow-y: scroll;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 95, 196, 0.42) transparent;
+    }
+    .table-shell::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    .table-shell::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .table-shell::-webkit-scrollbar-thumb {
+      background: rgba(0, 95, 196, 0.32);
+      border-radius: 999px;
+    }
+    .table-shell::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 95, 196, 0.48);
+    }
+    table {
+      width: 100%;
+      min-width: 0;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      table-layout: fixed;
+      font-variant-numeric: tabular-nums;
+    }
+    #data-table th,
+    #data-table td {
+      box-sizing: border-box;
+    }
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid rgba(29, 29, 31, 0.06);
       white-space: nowrap;
-      user-select: none;
-    }
-
-    th.num-th, td.num-cell {
-      text-align: right;
-    }
-
-    th.center-th, td.center-cell {
+      background: transparent;
+      color: #333338;
+      text-overflow: ellipsis;
+      overflow: hidden;
       text-align: center;
     }
-
-    td {
-      padding: 13px 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      color: var(--text);
-      font-size: 13px;
+    tbody tr:nth-child(even) td {
+      background-color: rgba(60, 60, 67, 0.018);
     }
-
-    tbody tr {
-      transition: background-color 0.12s ease;
+    tbody tr:hover td {
+      background-color: rgba(0, 122, 255, 0.05);
     }
-
+    tbody tr.is-selected td {
+      background-color: rgba(0, 122, 255, 0.1);
+    }
     tbody tr:last-child td {
-      border-bottom: none;
+      border-bottom: 0;
     }
-
-    tbody tr:hover {
-      background-color: var(--surface-hover);
+    tbody tr.is-row-selectable {
+      cursor: pointer;
     }
-
-    /* 单元格排版 */
-    .stock-title {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 8px;
+    .empty-state {
+      padding: 24px 16px;
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
-
-    .stock-name {
-      font-weight: 500;
+    td:first-child {
+      font-family: var(--font-ui);
+      font-weight: 700;
       color: var(--text);
     }
-
+    .num-cell,
+    .num-th {
+      text-align: center;
+    }
+    .amount-value {
+      font-weight: 700;
+      color: var(--accent-deep);
+    }
+    .stock-cell {
+      text-align: left;
+    }
+    .stock-title {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      min-width: 0;
+    }
     .stock-code {
+      flex: 0 0 8ch;
+      color: var(--muted);
       font-family: var(--font-mono);
       font-size: 11px;
-      color: var(--text-faint);
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
-
-    .amount-value {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
-      font-weight: 500;
-      color: var(--loss);
+    .stock-name {
+      display: block;
+      min-width: 0;
     }
-
+    .src-cell {
+      text-align: center;
+    }
     .src-badge {
       display: inline-flex;
       align-items: center;
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: var(--badge-bg);
-      color: var(--badge-text);
-      font-family: var(--font-mono);
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(0, 122, 255, 0.08);
+      color: var(--accent-deep);
       font-size: 10px;
-      border: 1px solid var(--border);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
-
-    /* 排序指示器 */
-    .sortable-col {
-      cursor: pointer;
+    .sortable-th {
+      min-width: 0;
+    }
+    .sort-header {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 8px;
+      width: 100%;
+      justify-content: center;
     }
-
-    .sortable-col:hover {
-      color: var(--text);
+    .sort-label {
+      font-weight: 700;
     }
-
-    .sort-indicator {
+    .sort-arrows {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .sort-arrow {
+      width: 16px;
+      height: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 122, 255, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--muted);
+      cursor: pointer;
       font-size: 9px;
       line-height: 1;
-      color: var(--text-faint);
+      padding: 0;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+    }
+    .sort-arrow:hover {
+      background: rgba(0, 122, 255, 0.1);
+    }
+    .sort-arrow.active {
+      background: var(--accent-deep);
+      border-color: var(--accent-deep);
+      color: #fff;
     }
 
-    .sort-indicator.active {
-      color: var(--text);
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes panelReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes klinePulse {
+      0%, 100% {
+        opacity: 0.32;
+      }
+      50% {
+        opacity: 0.8;
+      }
     }
 
-    /* 表格底部状态栏 */
-    .table-footer {
-      padding: 10px 18px;
-      background: rgba(255, 255, 255, 0.015);
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      color: var(--text-faint);
-      font-family: var(--font-mono);
-    }
-
-    .empty-state {
-      padding: 48px 16px;
-      text-align: center;
-      color: var(--text-faint);
-      font-size: 13px;
-    }
-
-    @media (max-width: 640px) {
-      .app-shell {
-        padding: 32px 14px 60px;
-        gap: 24px;
+    @media (max-width: 900px) {
+      body {
+        overflow-y: auto;
       }
-
-      .hero-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
+      .main {
+        height: auto;
+        min-height: 100vh;
+        display: block;
+        padding-bottom: 38px;
       }
-
-      .hero-metric {
-        text-align: left;
+      .content-area {
+        grid-template-columns: 1fr;
       }
-
-      .controls-bar {
-        flex-direction: column;
-        align-items: stretch;
+      .layout {
+        display: block;
       }
-
-      .segment-tabs {
+      .app-sidebar {
+        margin-bottom: 12px;
+      }
+      .csv-table {
+        height: auto;
+        min-height: 0;
+        margin-bottom: 12px;
+      }
+      .table-shell {
+        max-height: min(62vh, 520px);
+      }
+      .chart-panel {
+        min-height: 320px;
+      }
+      .side-rail {
+        height: auto;
+        overflow: visible;
+      }
+      .chart-panel.is-concealed {
+        min-height: 156px;
+      }
+      .overview-strip {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .overview-strip > * {
+        flex: 1 1 calc(50% - 5px);
+      }
+      .search-box {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        min-width: 0;
       }
-
-      .segment-tab {
-        justify-content: center;
+      .filter-search {
+        justify-content: stretch;
       }
-
-      .search-wrap {
+      .filter-search .search-box {
         width: 100%;
       }
+    }
 
-      th, td {
-        padding: 10px 12px;
+    @media (max-width: 600px) {
+      .main {
+        width: min(100%, calc(100% - 16px));
+        padding: 12px 0 26px;
+      }
+      .app-sidebar {
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+      .overview-strip {
+        gap: 8px;
+      }
+      .overview-chip {
+        padding: 12px 14px;
+        border-radius: 18px;
+      }
+      .overview-chip span {
+        font-size: 10px;
+        letter-spacing: 0.12em;
+      }
+      .overview-chip strong {
+        font-size: 22px;
+        overflow-wrap: anywhere;
+      }
+      th {
+        top: 0;
+        padding: 10px 8px;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+      }
+      td {
+        padding: 11px 8px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        text-overflow: clip;
+        line-height: 1.35;
+      }
+      table {
+        min-width: 0;
+        font-size: 11px;
+      }
+      .sortable-th {
+        min-width: 0;
+      }
+      .sort-header {
+        gap: 4px;
+      }
+      .sort-label {
+        letter-spacing: 0.08em;
+      }
+      .sort-arrow {
+        width: 14px;
+        height: 10px;
+        font-size: 8px;
+      }
+      .search-box {
+        padding: 7px 10px;
+      }
+      .search-input {
+        font-size: 12px;
+      }
+      .content-area {
+        margin-top: 10px;
+      }
+      .csv-table {
+        height: auto;
+        min-height: 0;
+      }
+      .table-shell {
+        max-height: min(62vh, 520px);
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-gutter: stable;
+        -webkit-overflow-scrolling: touch;
+      }
+      .empty-state {
+        padding: 20px 12px;
+        font-size: 12px;
+      }
+      td:first-child {
+        font-size: 12px;
+      }
+      .src-badge {
+        font-size: 9px;
+        letter-spacing: 0.08em;
+      }
+      .chart-panel {
+        padding: 14px;
+        border-radius: 16px;
+      }
+      .chart-panel.is-concealed {
+        min-height: 148px;
+      }
+      .chart-panel-title {
+        font-size: 20px;
+      }
+      .chart-panel.is-concealed .chart-panel-title {
+        font-size: 13px;
+      }
+      .chart-stage {
+        min-height: 240px;
+      }
+      .chart-panel.is-concealed .chart-stage {
+        min-height: 86px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="app-shell">
+  <div class="main">
     {{ $heroGfData := resources.Get "data/gf_losses.csv" | transform.Unmarshal }}
     {{ $heroYhData := resources.Get "data/yh_losses.csv" | transform.Unmarshal }}
     {{ $heroScratch := newScratch }}
@@ -487,66 +823,39 @@
       {{ end }}
     {{ end }}
 
-    <!-- 顶部概览 Header -->
-    <header class="hero-header">
-      <div class="brand-meta">
-        <div class="brand-title-wrap">
-          <span class="status-dot"></span>
-          <h1 class="brand-title">Loss Board</h1>
+    <div class="layout">
+      <aside class="app-sidebar">
+        <div class="overview-strip">
+          <button type="button" class="overview-chip is-view active" data-view="gf" onclick="setView('gf', this)">
+            <span>GF</span>
+            <strong>{{ $gfCount }}</strong>
+          </button>
+          <button type="button" class="overview-chip is-view" data-view="yh" onclick="setView('yh', this)">
+            <span>YH</span>
+            <strong>{{ $yhCount }}</strong>
+          </button>
+          <button type="button" class="overview-chip is-view" data-view="all" onclick="setView('all', this)">
+            <span>ALL</span>
+            <strong>{{ $trackedNames }}</strong>
+          </button>
+          <div class="overview-chip">
+            <span>Net</span>
+            <strong>{{ printf "%.2f" $netTotal }}</strong>
+          </div>
         </div>
-        <div class="brand-sub">
-          <span>PORTFOLIO LOSS TRACKER</span>
-          {{ if $worstName }}
-          <span>·</span>
-          <span>WORST: {{ $worstName }}</span>
-          {{ end }}
+      </aside>
+
+      <div class="csv-table">
+        <div class="table-shell">
+          <table id="data-table" aria-label="证券亏损明细">
+            <colgroup id="table-cols"></colgroup>
+            <thead id="table-head"></thead>
+            <tbody id="table-body"></tbody>
+          </table>
         </div>
       </div>
 
-      <div class="hero-metric">
-        <span class="hero-metric-label">Cumulative Net Loss</span>
-        <span class="hero-metric-val">{{ printf "%.2f" $netTotal }}</span>
-      </div>
-    </header>
-
-    <!-- 控制栏：Tab 切换 + 实时检索 -->
-    <div class="controls-bar">
-      <div class="segment-tabs" role="tablist">
-        <button type="button" class="segment-tab is-active" data-view="gf" onclick="setView('gf', this)">
-          <span>GF</span>
-          <span class="tab-count">{{ $gfCount }}</span>
-        </button>
-        <button type="button" class="segment-tab" data-view="yh" onclick="setView('yh', this)">
-          <span>YH</span>
-          <span class="tab-count">{{ $yhCount }}</span>
-        </button>
-        <button type="button" class="segment-tab" data-view="all" onclick="setView('all', this)">
-          <span>ALL</span>
-          <span class="tab-count">{{ $trackedNames }}</span>
-        </button>
-      </div>
-
-      <div class="search-wrap">
-        <input id="name-filter" class="search-input" type="search" placeholder="搜索名称或代码..." autocomplete="off" oninput="handleFilterInput(this.value)">
-        <button id="name-filter-clear" class="search-clear" type="button" onclick="clearFilter()" hidden>×</button>
-      </div>
     </div>
-
-    <!-- 表格卡片 -->
-    <main class="table-card">
-      <div class="table-wrapper">
-        <table id="data-table">
-          <colgroup id="table-cols"></colgroup>
-          <thead id="table-head"></thead>
-          <tbody id="table-body"></tbody>
-        </table>
-      </div>
-
-      <div class="table-footer">
-        <span id="footer-count"></span>
-        <span id="footer-subtotal"></span>
-      </div>
-    </main>
   </div>
 
   <script>
@@ -563,34 +872,29 @@
       gf: {
         title: 'GF',
         columns: [
-          { key: 'name', label: 'Security', className: '' },
-          { key: 'pl', label: 'Amount', type: 'amount', className: 'num-th' },
+          { key: 'name', label: 'Name', className: '' },
+          { key: 'pl', label: 'P/L', type: 'amount', className: 'sortable-th num-th' },
         ],
       },
       yh: {
         title: 'YH',
         columns: [
-          { key: 'name', label: 'Security', className: '' },
-          { key: 'pl', label: 'Amount', type: 'amount', className: 'num-th' },
+          { key: 'name', label: 'Name', className: '' },
+          { key: 'pl', label: 'P/L', type: 'amount', className: 'sortable-th num-th' },
         ],
       },
       all: {
         title: 'ALL',
         columns: [
-          { key: 'name', label: 'Security', className: '' },
-          { key: 'net', label: 'Net Loss', type: 'amount', className: 'num-th' },
-          { key: 'src', label: 'Source', className: 'center-th' },
+          { key: 'name', label: 'Name', className: '' },
+          { key: 'net', label: 'Net', type: 'amount', className: 'sortable-th num-th' },
+          { key: 'src', label: 'Src', className: '' },
         ],
       },
     };
-
     let activeView = 'gf';
     let nameFilter = '';
-
-    function isMarketSymbol(symbol) {
-      return /^(sh|sz|bj)\d{6}$/i.test(symbol || '');
-    }
-
+    const selectedStockByView = { gf: '', yh: '', all: '' };
     function getSummaryRows() {
       const totals = new Map();
       const srcs = new Map();
@@ -617,21 +921,17 @@
         src: srcs.get(name) || '',
       }));
     }
-
     function getRows(view) {
       return view === 'all' ? getSummaryRows() : datasets[view];
     }
-
     function getFilteredRows(view) {
       const keyword = nameFilter.trim().toLocaleLowerCase();
       const rows = getRows(view);
       if (!keyword) return rows;
       return rows.filter(row => {
-        return (row.name || '').toLocaleLowerCase().includes(keyword) ||
-               (row.code || '').toLocaleLowerCase().includes(keyword);
+        return (row.name || '').toLocaleLowerCase().includes(keyword);
       });
     }
-
     function getTotalValue(view, filtered = false) {
       const rows = filtered ? getFilteredRows(view) : getRows(view);
       return rows.reduce((sum, row) => {
@@ -639,61 +939,101 @@
         return sum + parseNumericValue(row[key]);
       }, 0);
     }
-
-    function buildColGroup(view) {
-      const widths = view === 'all' ? ['52%', '30%', '18%'] : ['65%', '35%'];
-      return widths.map(width => `<col style="width:${width}">`).join('');
+    function getWorstName() {
+      const rows = [...datasets.gf, ...datasets.yh];
+      let worstName = '';
+      let worstValue = Infinity;
+      rows.forEach(row => {
+        const value = parseNumericValue(row.pl);
+        if (row.name && value < worstValue) {
+          worstValue = value;
+          worstName = row.name;
+        }
+      });
+      return worstName || 'N/A';
     }
-
+    function updateOverview() {
+      const chips = document.querySelectorAll('.overview-chip strong');
+      if (chips[0]) chips[0].textContent = datasets.gf.length;
+      if (chips[1]) chips[1].textContent = datasets.yh.length;
+      const names = new Set([...datasets.gf.map(row => row.name?.trim()), ...datasets.yh.map(row => row.name?.trim())].filter(Boolean));
+      if (chips[2]) chips[2].textContent = names.size;
+      if (chips[3]) chips[3].textContent = getTotalValue('all').toFixed(2);
+    }
+    function isMarketSymbol(symbol) {
+      return /^(sh|sz|bj)\d{6}$/i.test(symbol || '');
+    }
+    function getSelectedStockName(view) {
+      return selectedStockByView[view] || '';
+    }
+    function setSelectedStock(view, stockName) {
+      selectedStockByView[view] = stockName || '';
+    }
+    function ensureSelectedRow(view, rows) {
+      const current = getSelectedStockName(view);
+      const hasCurrent = rows.some(row => (row.name || '') === current);
+      const next = hasCurrent ? current : (rows[0]?.name || '');
+      setSelectedStock(view, next);
+      return next;
+    }
+    function selectStock(stockName) {
+      setSelectedStock(activeView, stockName);
+      renderView();
+    }
+    function buildColGroup(view) {
+      const valueRatios = view === 'all' ? [0.48, 0.24, 0.28] : [0.6, 0.4];
+      const widths = valueRatios.map(ratio => `${ratio * 100}%`);
+      const cols = widths.map(width => `<col style="width:${width}">`);
+      return cols.join('');
+    }
     function buildHead(view) {
       const { columns } = viewConfig[view];
       const sort = viewState[view];
-      const headers = columns.map(column => {
+      const headers = columns.map((column, index) => {
         if (!column.type) return `<th class="${column.className || ''}">${column.label}</th>`;
-        const isActive = sort.sortKey === column.key;
-        const arrow = isActive ? (sort.order === 'asc' ? '▲' : '▼') : '↕';
-        return `
-          <th class="${column.className || ''}">
-            <div class="sortable-col" onclick="toggleSort('${column.key}', '${column.type}')" style="justify-content: flex-end;">
-              <span>${column.label}</span>
-              <span class="sort-indicator ${isActive ? 'active' : ''}">${arrow}</span>
-            </div>
-          </th>`;
+        const ascActive = sort.sortKey === column.key && sort.order === 'asc';
+        const descActive = sort.sortKey === column.key && sort.order === 'desc';
+        return `<th class="${column.className || ''}"><span class="sort-header"><span class="sort-label">${column.label}</span><span class="sort-arrows"><button type="button" class="sort-arrow ${ascActive ? 'active' : ''}" data-key="${column.key}" data-type="${column.type}" data-order="asc" aria-pressed="${ascActive}" aria-label="${column.label} ascending" onclick="sortActiveView('${column.key}', '${column.type}', 'asc', this)">▲</button><button type="button" class="sort-arrow ${descActive ? 'active' : ''}" data-key="${column.key}" data-type="${column.type}" data-order="desc" aria-pressed="${descActive}" aria-label="${column.label} descending" onclick="sortActiveView('${column.key}', '${column.type}', 'desc', this)">▼</button></span></span></th>`;
       });
       return `<tr>${headers.join('')}</tr>`;
     }
-
     function buildBody(view) {
       const rows = getSortedRows(view);
       const colCount = viewConfig[view].columns.length;
-      if (!rows.length) return `<tr><td class="empty-state" colspan="${colCount}">No records found</td></tr>`;
-      return rows.map(row => {
+      if (!rows.length) return `<tr><td class="empty-state" colspan="${colCount}">No matching rows</td></tr>`;
+      const selectedName = ensureSelectedRow(view, rows);
+      return rows.map((row, index) => {
         const cells = [];
-        cells.push(renderNameCell(row));
-        if (view === 'all') {
-          cells.push(`<td class="amount-value num-cell">${escapeHtml(row.net)}</td>`);
-          cells.push(`<td class="center-cell"><span class="src-badge">${escapeHtml(row.src)}</span></td>`);
+        if (view === 'gf') {
+          cells.push(renderNameCell(row));
+          cells.push(renderCell(row.pl, 'amount-value num-cell'));
+        } else if (view === 'yh') {
+          cells.push(renderNameCell(row));
+          cells.push(renderCell(row.pl, 'amount-value num-cell'));
         } else {
-          cells.push(`<td class="amount-value num-cell">${escapeHtml(row.pl)}</td>`);
+          cells.push(renderNameCell(row));
+          cells.push(`<td class="amount-value num-cell">${escapeHtml(row.net)}</td>`);
+          cells.push(`<td class="src-cell"><span class="src-badge">${escapeHtml(row.src)}</span></td>`);
         }
-        return `<tr>${cells.join('')}</tr>`;
+        const selectedClass = row.name === selectedName ? 'is-selected' : '';
+        return `<tr class="is-row-selectable ${selectedClass}" onclick='selectStock(${JSON.stringify(row.name || "")})'>${cells.join('')}</tr>`;
       }).join('');
     }
-
-    function renderNameCell(row) {
-      const codePart = row.code ? `<span class="stock-code">${escapeHtml(row.code)}</span>` : '';
-      return `<td><div class="stock-title"><span class="stock-name">${escapeHtml(row?.name || '')}</span>${codePart}</div></td>`;
+    function renderCell(value, className) {
+      const safe = escapeHtml(value ?? '');
+      return `<td class="${className}">${safe}</td>`;
     }
-
+    function renderNameCell(row) {
+      return `<td class="stock-cell"><div class="stock-title"><span class="stock-code">${escapeHtml(row?.code || '—')}</span><span class="stock-name">${escapeHtml(row?.name || '')}</span></div></td>`;
+    }
     function escapeHtml(value) {
-      return String(value ?? '')
+      return String(value)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
     }
-
     function getSortedRows(view) {
       const rows = [...getFilteredRows(view)];
       const { sortKey, type, order } = viewState[view];
@@ -705,67 +1045,56 @@
       });
       return rows;
     }
-
     function getValueForSort(value, type) {
       const parsed = parseNumericValue(value);
       if (type === 'amount') return parsed < 0 ? Math.abs(parsed) : parsed;
       return parsed;
     }
-
-    function toggleSort(sortKey, type) {
-      const current = viewState[activeView];
-      if (current.sortKey === sortKey) {
-        current.order = current.order === 'desc' ? 'asc' : 'desc';
-      } else {
-        viewState[activeView] = { sortKey, type, order: 'desc' };
-      }
-      renderView();
-    }
-
     function renderView() {
       const rows = getFilteredRows(activeView);
-      const totalRows = getRows(activeView).length;
-      const hasFilter = Boolean(nameFilter.trim());
-      
       document.getElementById('table-cols').innerHTML = buildColGroup(activeView);
       document.getElementById('table-head').innerHTML = buildHead(activeView);
       document.getElementById('table-body').innerHTML = buildBody(activeView);
-      
-      document.getElementById('footer-count').textContent = hasFilter
-        ? `FILTERED: ${rows.length} / ${totalRows}`
-        : `TOTAL: ${rows.length} ENTRIES`;
-      document.getElementById('footer-subtotal').textContent = `SUBTOTAL: ${getTotalValue(activeView, true).toFixed(2)}`;
       syncFilterUi();
+      updateOverview();
     }
-
-    function setView(view, tabEl) {
+    function resetTableScroll() {
+      const shell = document.querySelector('.table-shell');
+      if (!shell) return;
+      shell.scrollTop = 0;
+      shell.scrollLeft = 0;
+    }
+    function setView(view, button) {
       activeView = view;
-      document.querySelectorAll('.segment-tab').forEach(el => {
-        el.classList.toggle('is-active', el === tabEl);
-      });
+      document.querySelectorAll('.overview-chip.is-view').forEach(el => el.classList.toggle('active', el === button));
       renderView();
+      resetTableScroll();
     }
-
+    function sortActiveView(sortKey, type, order) {
+      viewState[activeView] = { sortKey, type, order };
+      renderView();
+      resetTableScroll();
+    }
     function syncFilterUi() {
       const input = document.getElementById('name-filter');
       const clear = document.getElementById('name-filter-clear');
       if (!input || !clear) return;
       input.value = nameFilter;
+      input.placeholder = 'Search stock';
       clear.hidden = !nameFilter.trim();
     }
-
     function handleFilterInput(value) {
       nameFilter = value;
       renderView();
+      resetTableScroll();
     }
-
     function clearFilter() {
       nameFilter = '';
       renderView();
+      resetTableScroll();
       const input = document.getElementById('name-filter');
       if (input) input.focus();
     }
-
     function normalizeNumericText(text) {
       const raw = (text || '').replace(/,/g, '').replace(/%/g, '').replace(/\s+/g, '');
       const sign = raw.startsWith('-') ? '-' : '';
@@ -774,12 +1103,10 @@
       if (parts.length > 1) body = `${parts[0]}.${parts.slice(1).join('')}`;
       return `${sign}${body}`;
     }
-
     function parseNumericValue(text) {
       const value = Number.parseFloat(normalizeNumericText(text));
       return Number.isFinite(value) ? value : 0;
     }
-
     renderView();
   </script>
 </body>
